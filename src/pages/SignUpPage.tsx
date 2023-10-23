@@ -1,4 +1,6 @@
-import SignUp from "../components/signUp/SignUp";
+import { lazy } from "react";
+
+const SignUp = lazy(() => import("../components/signUp/SignUp"));
 
 const SignUpPage = () => {
 	return <SignUp />;
