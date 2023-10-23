@@ -1,13 +1,16 @@
 import { ReactComponent as GoogleLogo } from "../../assets/svg/googleLogo.svg";
 import { ReactComponent as KakaoLogo } from "../../assets/svg/kakaoTalkLogo.svg";
 import { ReactComponent as NaverLogo } from "../../assets/svg/naverLogo.svg";
+import { Link } from "react-router-dom";
 
 const SocialLogin = () => {
 	return (
 		<div className="mb-16">
 			<div className="flex justify-center my-8 text-sm text-[#B9B9B9]">
 				<div className="mx-1">아직 회원이 아니신가요?</div>
-				<div className="mx-1 font-bold">회원가입</div>
+				<Link to={"/choiceSignUpType"} className="mx-1 font-bold">
+					회원가입
+				</Link>
 			</div>
 			<div className="flex flex-col items-center w-[20rem] border-t">
 				<div className="mt-4 text-sm text-[#B9B9B9] text-center">

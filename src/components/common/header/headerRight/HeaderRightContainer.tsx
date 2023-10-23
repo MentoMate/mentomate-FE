@@ -1,11 +1,18 @@
-import { useState } from "react";
-import AfterLogin from "./AfterLogin";
-import BeforeLogin from "./BeforeLogin";
+import { useState, lazy, Suspense } from "react";
+
+const AfterLogin = lazy(() => import("./AfterLogin"));
+const BeforeLogin = lazy(() => import("./BeforeLogin"));
 
 const HeaderRightContainer = () => {
 	const [isLogin] = useState<boolean>(true);
 
-	return <>{isLogin ? <AfterLogin /> : <BeforeLogin />}</>;
+	return (
+		<>
+			<Suspense fallback={""}>
+				{isLogin ? <AfterLogin /> : <BeforeLogin />}
+			</Suspense>
+		</>
+	);
 };
 
 export default HeaderRightContainer;

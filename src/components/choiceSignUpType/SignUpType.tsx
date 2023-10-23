@@ -2,11 +2,15 @@ import { ReactComponent as Email } from "../../assets/svg/email.svg";
 import { ReactComponent as GoogleLogo } from "../../assets/svg/googleLogo.svg";
 import { ReactComponent as KakaoTalkLogo } from "../../assets/svg/kakaoTalkLogo.svg";
 import { ReactComponent as NaverLogo } from "../../assets/svg/naverLogo.svg";
+import { Link } from "react-router-dom";
 
 const SignUpType = () => {
 	return (
 		<div>
-			<div className="flex justify-between items-center my-3 py-4 border border-[#E5E5E5] rounded-md">
+			<Link
+				to={"/signUp"}
+				className="flex justify-between items-center my-3 py-4 border border-[#E5E5E5] rounded-md"
+			>
 				<div className="flex">
 					<div className="flex justify-center px-2 w-[4rem]">
 						<Email width={30} height={30} />
@@ -18,7 +22,7 @@ const SignUpType = () => {
 				<div className="px-2 text-[0.7rem] sm:text-sm text-[#8A8A8A]">
 					이메일과 비밀번호로 회원가입
 				</div>
-			</div>
+			</Link>
 			<div className="flex justify-between items-center my-3 py-4 border border-[#E5E5E5] rounded-md">
 				<div className="flex">
 					<div className="flex justify-center px-2 w-[4rem]">
