@@ -1,5 +1,11 @@
+import ChoiceSignUpType from "../components/choiceSignUpType/ChoiceSignUpType";
+
 const ChoiceSignUpTypePage = () => {
-	return;
+	return (
+		<>
+			<ChoiceSignUpType />
+		</>
+	);
 };
 
 export default ChoiceSignUpTypePage;
