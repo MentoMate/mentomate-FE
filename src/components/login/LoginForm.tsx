@@ -1,8 +1,6 @@
-import SocialLogin from "./SocialLogin";
-
 const LoginForm = () => {
 	return (
-		<form className="flex flex-col mx-auto w-[20rem]">
+		<form className="flex flex-col mx-auto w-[15rem] sm:w-[20rem]">
 			<input
 				type="text"
 				className="my-1 p-4 border border-[#E5E5E5] rounded-md placeholder:text-sm focus:outline-[#ABDEE6]"
