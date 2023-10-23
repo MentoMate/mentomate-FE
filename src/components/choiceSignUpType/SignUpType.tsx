@@ -9,7 +9,7 @@ const SignUpType = () => {
 		<div>
 			<Link
 				to={"/signUp"}
-				className="flex justify-between items-center my-3 py-4 border border-[#E5E5E5] rounded-md"
+				className="flex justify-between items-center my-3 py-4 border border-black-200 rounded-md"
 			>
 				<div className="flex">
 					<div className="flex justify-center px-2 w-[4rem]">
@@ -19,11 +19,11 @@ const SignUpType = () => {
 						이메일로 회원가입
 					</div>
 				</div>
-				<div className="px-2 text-[0.7rem] sm:text-sm text-[#8A8A8A]">
+				<div className="px-2 text-[0.7rem] sm:text-sm text-black-400">
 					이메일과 비밀번호로 회원가입
 				</div>
 			</Link>
-			<div className="flex justify-between items-center my-3 py-4 border border-[#E5E5E5] rounded-md">
+			<div className="flex justify-between items-center my-3 py-4 border border-black-200 rounded-md">
 				<div className="flex">
 					<div className="flex justify-center px-2 w-[4rem]">
 						<GoogleLogo width={30} height={30} />
@@ -33,11 +33,11 @@ const SignUpType = () => {
 						회원가입
 					</div>
 				</div>
-				<div className="px-2 text-[0.7rem] sm:text-sm text-[#8A8A8A]">
+				<div className="px-2 text-[0.7rem] sm:text-sm text-black-400">
 					Google로 인증하여 회원가입
 				</div>
 			</div>
-			<div className="flex justify-between items-center my-3 py-4 rounded-md bg-[#FEE500]">
+			<div className="flex justify-between items-center my-3 py-4 rounded-md bg-yellow-100">
 				<div className="flex">
 					<div className="flex justify-center px-2 w-[4rem]">
 						<KakaoTalkLogo width={30} height={30} />
@@ -46,11 +46,11 @@ const SignUpType = () => {
 						카카오로 회원가입
 					</div>
 				</div>
-				<div className="px-2 text-[0.7rem] sm:text-sm text-[#8A8A8A]">
+				<div className="px-2 text-[0.7rem] sm:text-sm text-black-400">
 					카카오로 인증하여 회원가입
 				</div>
 			</div>
-			<div className="flex flex justify-between items-center my-3 py-4 rounded-md bg-[#03C75A] text-white">
+			<div className="flex flex justify-between items-center my-3 py-4 rounded-md bg-green-100 text-white">
 				<div className="flex">
 					<div className="flex justify-center items-center px-2 w-[4rem]">
 						<NaverLogo width={20} height={20} fill="white" />

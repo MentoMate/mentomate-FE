@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
 	return (
 		<>
-			<footer className="flex flex-col items-center w-full py-12 bg-[#ABDEE6] text-white font-medium">
+			<footer className="flex flex-col items-center w-full py-12 bg-main-color text-white font-medium">
 				<div className="flex justify-center items-center">
 					<a
 						href="https://github.com/MentoMate"

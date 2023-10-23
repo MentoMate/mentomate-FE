@@ -12,11 +12,11 @@ const ChoiceSignUpType = () => {
 			<Link to={"/"} className="my-16">
 				<Logo className="w-[15rem] h-[5rem]" />
 			</Link>
-			<div className="mb-6 sm:text-2xl text-sm text-[#ABDEE6] font-bold">
+			<div className="mb-6 sm:text-2xl text-sm text-main-color font-bold">
 				회원가입 후 다양한 서비스를 즐겨보세요.
 			</div>
 			<div>
-				<div className="flex flex-col w-[15rem] sm:w-[30rem] border-t border-[#E5E5E5]">
+				<div className="flex flex-col w-[15rem] sm:w-[30rem] border-t border-black-200">
 					<div className="flex justify-center my-8">
 						<div className="flex items-center mx-1">
 							<CheckMark width={20} height={20} />

@@ -3,17 +3,17 @@ const LoginForm = () => {
 		<form className="flex flex-col mx-auto w-[15rem] sm:w-[20rem]">
 			<input
 				type="text"
-				className="my-1 p-4 border border-[#E5E5E5] rounded-md placeholder:text-sm focus:outline-[#ABDEE6]"
+				className="my-1 p-4 border border-black-200 rounded-md placeholder:text-sm focus:outline-main-color"
 				placeholder="이메일"
 			/>
 			<input
 				type="text"
-				className="my-1 p-4 border border-[#E5E5E5] rounded-md placeholder:text-sm focus:outline-[#ABDEE6]"
+				className="my-1 p-4 border border-black-200 rounded-md placeholder:text-sm focus:outline-main-color"
 				placeholder="비밀번호"
 			/>
 			<button
 				type="submit"
-				className="mt-8 px-3 py-4 bg-[#ABDEE6] rounded-md font-bold text-white text-lg"
+				className="mt-8 px-3 py-4 bg-main-color rounded-md font-bold text-white text-lg"
 			>
 				로그인
 			</button>
