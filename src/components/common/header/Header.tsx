@@ -17,7 +17,6 @@ const Toggle = lazy(() => import("./toggle/Toggle"));
 
 const Header = () => {
 	const [isUseToggle, setIsUseToggle] = useState<boolean>(false);
-
 	const headerRef = useRef<HTMLDivElement>(null);
 
 	const resizeHeaderHandler = () => {
@@ -42,7 +41,7 @@ const Header = () => {
 
 	return (
 		<>
-			<header className="sticky top-0 border-b border-b-black-200">
+			<header className="sticky top-0 bg-white border-b border-b-black-200 z-99">
 				<div
 					className="flex justify-between items-center mx-auto lg:w-[60rem] md:w-[45rem] py-4"
 					ref={headerRef}
