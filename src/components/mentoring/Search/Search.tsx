@@ -6,7 +6,7 @@ const Search = () => {
 	return (
 		<div className="mt-12">
 			<Sort />
-			<div className="flex mt-4">
+			<div className="flex flex-col sm:flex-row lg:flex-row mt-4">
 				<Category />
 				<Keyword />
 			</div>

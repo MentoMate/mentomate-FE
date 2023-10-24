@@ -7,7 +7,7 @@ const Mentoring = () => {
 	const test = 1;
 	return (
 		<div>
-			<div className="mx-auto w-[60rem]">
+			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
 				<Search />
 				<MentoringTitle />
 				{test === 1 ? <MentoringList /> : <NonExistMentoringList />}

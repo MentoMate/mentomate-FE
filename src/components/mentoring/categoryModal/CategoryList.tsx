@@ -28,7 +28,7 @@ const CategoryList = () => {
 					(category: IElement) => (
 						<div
 							key={category.key}
-							className={`py-2 w-[25rem] border-b border-black-200 ${
+							className={`py-2 w-full sm:w-[23rem] border-b border-black-200 ${
 								categoryState.selectedCategory === category.key &&
 								"text-main-color font-semibold"
 							} cursor-pointer`}

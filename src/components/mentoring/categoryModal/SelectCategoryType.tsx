@@ -1,5 +1,4 @@
 import { useRecoilState } from "recoil";
-import { ReactComponent as CheckMark } from "../../../assets/svg/checkmark.svg";
 import { selectedCategoryState } from "../../../state/selectedCategory";
 
 const SelectCategoryType = () => {
@@ -24,10 +23,7 @@ const SelectCategoryType = () => {
 				} font-semibold cursor-pointer`}
 				onClick={() => selectCategoryTypeHandler("all")}
 			>
-				{categoryState.selectedCategoryType === "all" && (
-					<CheckMark width={10} height={10} fill="#ABDEE6" />
-				)}
-				<div className="ml-2">전체</div>
+				<div>전체</div>
 			</div>
 			<div
 				className={`flex items-center mr-4 ${
@@ -36,10 +32,7 @@ const SelectCategoryType = () => {
 				} font-semibold cursor-pointer`}
 				onClick={() => selectCategoryTypeHandler("Occupation")}
 			>
-				{categoryState.selectedCategoryType === "Occupation" && (
-					<CheckMark width={10} height={10} fill="#ABDEE6" />
-				)}
-				<div className="ml-2">직업 및 업무분야</div>
+				<div>직업 및 업무분야</div>
 			</div>
 			<div
 				className={`flex items-center ${
@@ -48,10 +41,7 @@ const SelectCategoryType = () => {
 				} font-semibold cursor-pointer`}
 				onClick={() => selectCategoryTypeHandler("Career")}
 			>
-				{categoryState.selectedCategoryType === "Career" && (
-					<CheckMark width={10} height={10} fill="#ABDEE6" />
-				)}
-				<div className="ml-2">진로</div>
+				<div>진로</div>
 			</div>
 		</div>
 	);

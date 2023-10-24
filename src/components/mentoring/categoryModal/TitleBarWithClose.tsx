@@ -15,7 +15,7 @@ const TitleBarWithClose = () => {
 
 	return (
 		<>
-			<div className="flex flex-row-reverse mt-6 mr-10">
+			<div className="flex flex-row-reverse mt-6 mr-10 cursor-pointer">
 				<Close width={30} height={30} onClick={closeCategoryModalHandler} />
 			</div>
 			<div className="flex justify-between">
