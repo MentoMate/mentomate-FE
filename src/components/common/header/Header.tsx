@@ -17,7 +17,6 @@ const Toggle = lazy(() => import("./toggle/Toggle"));
 
 const Header = () => {
 	const [isUseToggle, setIsUseToggle] = useState<boolean>(false);
-
 	const headerRef = useRef<HTMLDivElement>(null);
 
 	const resizeHeaderHandler = () => {
