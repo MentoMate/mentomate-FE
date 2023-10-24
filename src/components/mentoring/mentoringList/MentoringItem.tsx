@@ -1,7 +1,7 @@
-import { ReactComponent as Calendar } from "../../../assets/svg/blackCalendar.svg";
-import { ReactComponent as Star } from "../../../assets/svg/star.svg";
-import { ReactComponent as Group } from "../../../assets/svg/people.svg";
-import { ReactComponent as Cash } from "../../../assets/svg/cash.svg";
+import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
+import { ReactComponent as Star } from "@assets/svg/star.svg";
+import { ReactComponent as Group } from "@assets/svg/people.svg";
+import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 
 const MentoringItem = () => {
 	return (

@@ -1,9 +1,9 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { categories } from "../../../constants/categories";
-import useBodyScrollLock from "../../../hooks/useBodyScrollLock";
-import { openCategoryModalState } from "../../../state/openCategoryModal";
-import { selectedCategoryState } from "../../../state/selectedCategory";
-import { IElement } from "../../../types/categoty";
+import { categories } from "@/constants/categories";
+import useBodyScrollLock from "@/hooks/useBodyScrollLock";
+import { openCategoryModalState } from "@/state/openCategoryModal";
+import { selectedCategoryState } from "@/state/selectedCategory";
+import { IElement } from "@/types/categoty";
 
 const CategoryList = () => {
 	const [categoryState, setSelectedCategory] = useRecoilState(

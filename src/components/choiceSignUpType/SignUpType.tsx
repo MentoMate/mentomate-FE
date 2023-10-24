@@ -1,7 +1,7 @@
-import { ReactComponent as Email } from "../../assets/svg/email.svg";
-import { ReactComponent as GoogleLogo } from "../../assets/svg/googleLogo.svg";
-import { ReactComponent as KakaoTalkLogo } from "../../assets/svg/kakaoTalkLogo.svg";
-import { ReactComponent as NaverLogo } from "../../assets/svg/naverLogo.svg";
+import { ReactComponent as Email } from "@assets/svg/email.svg";
+import { ReactComponent as GoogleLogo } from "@assets/svg/googleLogo.svg";
+import { ReactComponent as KakaoTalkLogo } from "@assets/svg/kakaoTalkLogo.svg";
+import { ReactComponent as NaverLogo } from "@assets/svg/naverLogo.svg";
 import { Link } from "react-router-dom";
 
 const SignUpType = () => {

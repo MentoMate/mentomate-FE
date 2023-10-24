@@ -1,4 +1,4 @@
-import { ReactComponent as Alert } from "../../../../assets/svg/alert.svg";
+import { ReactComponent as Alert } from "@assets/svg/alert.svg";
 
 const AfterLogin = () => {
 	return (

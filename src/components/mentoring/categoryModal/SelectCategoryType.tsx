@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { selectedCategoryState } from "../../../state/selectedCategory";
+import { selectedCategoryState } from "@/state/selectedCategory";
 
 const SelectCategoryType = () => {
 	const [categoryState, setCategoryState] = useRecoilState(

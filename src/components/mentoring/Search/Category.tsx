@@ -1,9 +1,9 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ReactComponent as BottomArrow } from "../../../assets/svg/bottom_arrow.svg";
-import { ReactComponent as CategoryIcon } from "../../../assets/svg/category.svg";
-import { openCategoryModalState } from "../../../state/openCategoryModal";
-import useBodyScrollLock from "../../../hooks/useBodyScrollLock";
-import { selectedCategoryState } from "../../../state/selectedCategory";
+import { ReactComponent as BottomArrow } from "@assets/svg/bottom_arrow.svg";
+import { ReactComponent as CategoryIcon } from "@assets/svg/category.svg";
+import { openCategoryModalState } from "@/state/openCategoryModal";
+import useBodyScrollLock from "@/hooks/useBodyScrollLock";
+import { selectedCategoryState } from "@/state/selectedCategory";
 
 const Category = () => {
 	const setOpenCategoryModalState = useSetRecoilState(openCategoryModalState);

@@ -20,7 +20,14 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 
-		"typeRoots": ["@types"]
+		"typeRoots": ["@types"],
+		"baseUrl": "src",
+		"paths": {
+			"@/*": ["*"],
+			"@assets/*": ["assets/*"],
+			"@components/*": ["components/*"],
+			"@pages/*": ["pages/*"]
+		}
 	},
 	"include": ["src", "svg.d.ts", "src/Router.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]

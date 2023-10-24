@@ -1,4 +1,4 @@
-import { ReactComponent as SearchIcon } from "../../../assets/svg/search.svg";
+import { ReactComponent as SearchIcon } from "@assets/svg/search.svg";
 
 const Keyword = () => {
 	return (

@@ -1,5 +1,5 @@
-import { ReactComponent as Github } from "../../../assets/svg/github-mark.svg";
-import { ReactComponent as Logo } from "../../../assets/svg/Logo.svg";
+import { ReactComponent as Github } from "@assets/svg/github-mark.svg";
+import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
