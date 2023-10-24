@@ -21,19 +21,19 @@ const MentoringItem = () => {
 			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
 				치어리더가 되기 위한 준비과정 그리고 노하우asdasd asd
 			</p>
-			<div className="flex items-center mt-4 ml-2">
+			<div className="flex items-center mt-4 ml-3">
 				<Calendar width={23} height={23} />
-				<div className="ml-1 font-semibold text-sm">
+				<div className="ml-2 font-semibold text-sm">
 					2023.10.24 ~ 2023.10.31
 				</div>
 			</div>
-			<div className="flex items-center mt-2 ml-2">
+			<div className="flex items-center mt-2 ml-3">
 				<Cash width={23} height={23} />
-				<div className="ml-1 font-semibold text-sm">59,900 ₩</div>
+				<div className="ml-2 font-semibold text-sm">59,900 ₩</div>
 			</div>
-			<div className="flex items-center mt-2 mb-4 ml-2">
+			<div className="flex items-center mt-2 mb-4 ml-3">
 				<Group width={23} height={23} />
-				<div className="ml-1 font-semibold text-sm">6명</div>
+				<div className="ml-2 font-semibold text-sm">6명</div>
 			</div>
 		</div>
 	);
