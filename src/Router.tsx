@@ -4,6 +4,7 @@ import LoginPage from "@pages/LoginPage";
 import SignUpPage from "@pages/SignUpPage";
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
 import MentoringPage from "@pages/MentoringPage";
+import MentoringDetailPage from "@pages/MentoringDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function Router() {
 				<Route path="/choiceSignUpType" element={<ChoiceSignUpTypePage />} />
 				<Route path="/signUp" element={<SignUpPage />} />
 				<Route path="/mentoring" element={<MentoringPage />} />
+				<Route path="/mentoringDetail" element={<MentoringDetailPage />} />
 			</Routes>
 		</QueryClientProvider>
 	);

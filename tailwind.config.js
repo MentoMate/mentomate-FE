@@ -13,6 +13,7 @@ export default {
 				"black-600": "#121212",
 				"red-100": "#F60000",
 				"yellow-100": "#FEE500",
+				"yellow-200": "#F6EAC2",
 				"green-100": "#03C75A",
 			},
 		},
