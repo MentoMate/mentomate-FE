@@ -19,7 +19,7 @@ const MentoringItem = () => {
 				<div className="ml-3 text-md font-semibold">김도아 멘토</div>
 			</div>
 			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
-				치어리더가 되기 위한 준비과정 그리고 노하우asdasd asd
+				치어리더가 되기 위한 준비과정 그리고 노하우
 			</p>
 			<div className="flex items-center mt-4 ml-3">
 				<Calendar width={23} height={23} />
