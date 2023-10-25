@@ -2,7 +2,7 @@ import Category from "./Category";
 import Keyword from "./Keyword";
 import Sort from "./Sort";
 
-const Search = () => {
+const SortAndSearch = () => {
 	return (
 		<div className="mt-12">
 			<Sort />
@@ -14,4 +14,4 @@ const Search = () => {
 	);
 };
 
-export default Search;
+export default SortAndSearch;
