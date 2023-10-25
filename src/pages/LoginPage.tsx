@@ -1,6 +1,4 @@
-import { lazy } from "react";
-
-const Login = lazy(() => import("../components/login/Login"));
+import Login from "@components/login/Login";
 
 const LoginPage = () => {
 	return <Login />;

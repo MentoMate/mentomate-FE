@@ -1,10 +1,36 @@
+import { Link } from "react-router-dom";
+
+const menus = [
+	{
+		path: "/",
+		menuName: "홈",
+	},
+	{
+		path: "/mentoring",
+		menuName: "멘토링",
+	},
+	{
+		path: "/mentor",
+		menuName: "멘토",
+	},
+	{
+		path: "/",
+		menuName: "커뮤니티",
+	},
+];
+
 const Menu = () => {
 	return (
 		<>
-			<div className="ml-4 px-2 font-semibold">홈</div>
-			<div className="px-2 font-semibold">멘토링</div>
-			<div className="px-2 font-semibold">멘토</div>
-			<div className="px-2 font-semibold">커뮤니티</div>
+			{menus.map((menu) => (
+				<Link
+					key={menu.menuName}
+					to={menu.path}
+					className={`${menu.menuName === "홈" && "ml-4"} px-2 font-semibold`}
+				>
+					{menu.menuName}
+				</Link>
+			))}
 		</>
 	);
 };

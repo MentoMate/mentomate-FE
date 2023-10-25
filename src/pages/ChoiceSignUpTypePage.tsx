@@ -1,8 +1,4 @@
-import { lazy } from "react";
-
-const ChoiceSignUpType = lazy(
-	() => import("../components/choiceSignUpType/ChoiceSignUpType"),
-);
+import ChoiceSignUpType from "@components/choiceSignUpType/ChoiceSignUpType";
 
 const ChoiceSignUpTypePage = () => {
 	return (
