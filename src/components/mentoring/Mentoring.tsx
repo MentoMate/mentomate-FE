@@ -1,5 +1,5 @@
+import SortAndSearch from "../common/search/SortAndSearch";
 import MentoringTitle from "./MentoringTitle";
-import Search from "./Search/Search";
 import MentoringList from "./mentoringList/MentoringList";
 import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
 
@@ -8,7 +8,7 @@ const Mentoring = () => {
 	return (
 		<div>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-				<Search />
+				<SortAndSearch />
 				<MentoringTitle />
 				{test === 1 ? <MentoringList /> : <NonExistMentoringList />}
 			</div>
