@@ -12,6 +12,7 @@
 		"format:fix": "prettier --write --ignore-path .gitignore ."
 	},
 	"dependencies": {
+		"@types/node": "^20.8.8",
 		"@types/react-router-dom": "^5.3.3",
 		"axios": "^1.5.1",
 		"react": "^18.2.0",

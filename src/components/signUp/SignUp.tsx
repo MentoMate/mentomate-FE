@@ -1,7 +1,7 @@
-import { ReactComponent as Logo } from "../../assets/svg/Logo.svg";
+import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
 import { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
-import Spinner from "../common/spinner/Spinner";
+import Spinner from "@/components/common/spinner/Spinner";
 
 const SignUpForm = lazy(() => import("./SignUpForm"));
 

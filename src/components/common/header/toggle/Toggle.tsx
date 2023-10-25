@@ -1,5 +1,5 @@
-import { ReactComponent as Logo } from "../../../../assets/svg/Logo.svg";
-import { ReactComponent as ToggleIcon } from "../../../../assets/svg/toggle.svg";
+import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
+import { ReactComponent as ToggleIcon } from "@assets/svg/toggle.svg";
 
 const Toggle = () => {
 	return (
