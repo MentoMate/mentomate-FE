@@ -10,7 +10,7 @@ const menus = [
 		menuName: "멘토링",
 	},
 	{
-		path: "/",
+		path: "/mentor",
 		menuName: "멘토",
 	},
 	{
