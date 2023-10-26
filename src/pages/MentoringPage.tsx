@@ -6,7 +6,9 @@ import Spinner from "@components/common/spinner/Spinner";
 import CategoryModal from "@components/common/categoryModal/CategoryModal";
 import { openCategoryModalState } from "@/state/openCategoryModal";
 
-const Mentoring = lazy(() => import("@components/mentoring/Mentoring"));
+const MentoringContainer = lazy(
+	() => import("@/components/mentoring/MentoringContainer"),
+);
 
 const MentoringPage = () => {
 	const [isOpenCategoryModal, setIsOpenCategoryModal] = useRecoilState(
@@ -21,7 +23,7 @@ const MentoringPage = () => {
 		<div className="relative">
 			<Header />
 			<Suspense fallback={<Spinner />}>
-				<Mentoring />
+				<MentoringContainer />
 			</Suspense>
 			<Footer />
 			{isOpenCategoryModal && <CategoryModal />}

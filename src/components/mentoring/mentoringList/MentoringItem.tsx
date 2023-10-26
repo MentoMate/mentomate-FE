@@ -5,7 +5,7 @@ import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 
 const MentoringItem = () => {
 	return (
-		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg">
+		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
 				src="src/assets/image/sample.jpg"
 				alt="asd"

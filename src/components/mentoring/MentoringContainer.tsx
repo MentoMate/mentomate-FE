@@ -3,7 +3,7 @@ import MentoringTitle from "./MentoringTitle";
 import MentoringList from "./mentoringList/MentoringList";
 import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
 
-const Mentoring = () => {
+const MentoringContainer = () => {
 	const test = 1;
 	return (
 		<div>
@@ -16,4 +16,4 @@ const Mentoring = () => {
 	);
 };
 
-export default Mentoring;
+export default MentoringContainer;
