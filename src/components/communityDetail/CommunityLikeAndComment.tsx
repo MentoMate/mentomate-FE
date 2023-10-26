@@ -10,7 +10,7 @@ const CommunityLikeAndComment = () => {
 				<div className="mx-1.5 font-bold">0</div>
 			</div>
 			<div className="flex items-center ml-4">
-				<Comment width={25} height={25} className="mx-1" />
+				<Comment width={25} height={25} fill="#8A8A8A" className="mx-1" />
 				<div>댓글</div>
 				<div className="mx-1.5 font-bold">0</div>
 			</div>
