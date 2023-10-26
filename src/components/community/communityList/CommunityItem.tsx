@@ -1,5 +1,5 @@
 import { ReactComponent as User } from "@assets/svg/user.svg";
-import { ReactComponent as ThumbsUp } from "@assets/svg/thumbsUp.svg";
+import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 
 const CommunityItem = () => {
@@ -20,7 +20,7 @@ const CommunityItem = () => {
 					홍길동
 				</div>
 				<div className="flex justify-center items-center">
-					<ThumbsUp width={25} height={25} className="mx-1" />0
+					<FillHeart width={20} height={20} className="mx-1" />0
 				</div>
 				<div className="flex justify-center items-center">
 					<Comment width={18} height={18} className="mx-2" />0
