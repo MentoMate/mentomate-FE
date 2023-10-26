@@ -5,7 +5,7 @@ import Spinner from "@/components/common/spinner/Spinner";
 
 const SignUpForm = lazy(() => import("./SignUpForm"));
 
-const SignUp = () => {
+const SignUpContainer = () => {
 	return (
 		<div className="flex flex-col justify-center items-center w-full min-h-screen">
 			<Link to={"/"} className="mt-12">
@@ -21,4 +21,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default SignUpContainer;

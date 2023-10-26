@@ -1,9 +1,9 @@
-import ChoiceSignUpType from "@components/choiceSignUpType/ChoiceSignUpType";
+import ChoiceSignUpTypeContainer from "@/components/choiceSignUpType/ChoiceSignUpTypeContainer";
 
 const ChoiceSignUpTypePage = () => {
 	return (
 		<>
-			<ChoiceSignUpType />
+			<ChoiceSignUpTypeContainer />
 		</>
 	);
 };
