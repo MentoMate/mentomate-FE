@@ -9,6 +9,16 @@
 }
 
 @layer components {
+	.community-overflow {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		word-break: break-word;
+
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+	}
+
 	.title-overflow {
 		text-overflow: ellipsis;
 		overflow: hidden;
