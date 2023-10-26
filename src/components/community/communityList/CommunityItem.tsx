@@ -4,7 +4,7 @@ import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 
 const CommunityItem = () => {
 	return (
-		<div className="my-4 px-6 py-6 md:w-[25rem] sm:w-[20rem] w-[18rem] border border-black-200 rounded-md">
+		<div className="my-4 px-6 py-6 md:w-[25rem] sm:w-[20rem] w-[18rem] border border-black-200 rounded-md duration-100 hover:scale-110">
 			<div className="text-black-300 text-sm">소통해요</div>
 			<p className="mb-4 text-lg font-bold community-overflow">
 				코딩 멘토링 추천
