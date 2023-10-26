@@ -14,7 +14,7 @@ function Router() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Routes>
-				<Route path="/main" element={<MainPage />} />
+				<Route path="/" element={<MainPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/choiceSignUpType" element={<ChoiceSignUpTypePage />} />
 				<Route path="/signUp" element={<SignUpPage />} />

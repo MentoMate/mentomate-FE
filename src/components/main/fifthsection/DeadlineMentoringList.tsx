@@ -1,5 +1,5 @@
 import Card from "../firstsection/MentoringCard";
-import React, { useState } from "react";
+import { useState } from "react";
 const cardData = [
 	{
 		src: "https://i.namu.wiki/i/2s3qra3zMVF-7OaddPxrA_PokTAjSItF_gByFSWnOT9O6l5XLS62QhKtlcQJdxGv5z1_cFbFGaM0bzfpm3a8ew.webp",
@@ -36,8 +36,7 @@ const cardData = [
 ];
 
 const DeadlineMentoringList = () => {
-	const [mentoringData, setMentoringData] = useState(cardData);
-	console.log(mentoringData);
+	const [mentoringData] = useState(cardData);
 
 	return (
 		<div className="flex flex-wrap justify-center items-center mx-auto lg:w-[80rem] mt-10 ">

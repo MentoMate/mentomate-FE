@@ -1,5 +1,5 @@
 import MentoringCard from "./MentoringCard";
-import React, { useState } from "react";
+import { useState } from "react";
 const cardData = [
 	{
 		src: "https://i.namu.wiki/i/2s3qra3zMVF-7OaddPxrA_PokTAjSItF_gByFSWnOT9O6l5XLS62QhKtlcQJdxGv5z1_cFbFGaM0bzfpm3a8ew.webp",
@@ -36,11 +36,10 @@ const cardData = [
 ];
 
 const CardList = () => {
-	const [mentoringData, setMentoringData] = useState(cardData);
-	console.log(mentoringData);
+	const [mentoringData] = useState(cardData);
 
 	return (
-		<div className="flex flex-wrap justify-center items-center mx-auto lg:w-[80rem] mt-10 ">
+		<div className="flex flex-wrap  justify-center items-center mx-auto lg:w-[80rem] mt-10 ">
 			{mentoringData.map((card: any, index: any) => (
 				<MentoringCard
 					key={index}
