@@ -35,11 +35,12 @@ const CommunityTab = () => {
 	};
 
 	return (
-		<div className="sticky top-[3.7rem] bg-white border-b border-black-200">
+		<div className="sticky top-[3.7rem] bg-white border-b border-black-200 z-[44]">
 			<div className="mx-auto lg:w-[60rem] md:w-[45rem] sm:w-[40rem] w-[20rem]">
 				<div className="flex sm:mx-4">
 					{TABS.map((tab) => (
 						<div
+							key={tab.key}
 							className={`flex justify-center items-center sm:px-3 sm:py-4 px-1 py-2 sm:font-semibold font-bold sm:text-base text-[0.8rem] cursor-pointer ${
 								selectedTab === tab.key
 									? "border-b-2 border-main-color text-main-color"
