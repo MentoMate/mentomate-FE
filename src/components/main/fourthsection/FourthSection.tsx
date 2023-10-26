@@ -1,5 +1,4 @@
 import ComunityItemList from "./ComunityItemList";
-import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
 const FourthSection = () => {
 	return (
 		<>
