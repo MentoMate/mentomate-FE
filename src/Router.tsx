@@ -7,6 +7,7 @@ import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
 import MentoringPage from "@pages/MentoringPage";
 import MentoringDetailPage from "@pages/MentoringDetailPage";
 import MentorPage from "@pages/MentorPage";
+import MentoringRoom from "@pages/MentoringRoomPage";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function Router() {
 				<Route path="/mentoring" element={<MentoringPage />} />
 				<Route path="/mentoringDetail" element={<MentoringDetailPage />} />
 				<Route path="/mentor" element={<MentorPage />} />
+				<Route path="/mentoringRoom" element={<MentoringRoom />} />
 			</Routes>
 		</QueryClientProvider>
 	);
