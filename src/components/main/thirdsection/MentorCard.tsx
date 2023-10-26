@@ -1,6 +1,6 @@
 import { ReactComponent as Star } from "@/assets/svg/star.svg";
 
-const MentorCard = (props: any) => {
+const MentorCard = () => {
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg">
 			<img
