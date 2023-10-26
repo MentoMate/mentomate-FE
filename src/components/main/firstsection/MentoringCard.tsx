@@ -5,38 +5,35 @@ import { ReactComponent as Group } from "@/assets/svg/people.svg";
 
 const MentoringCard = (props: any) => {
 	return (
-		<div className="flex justify-between items-center   p-4 lg:w-[20rem] md:w-[20rem] ">
-			<div className=" shadow-md h-full rounded-2xl border border-[#E5E5E5]">
-				<img
-					className="rounded-t-lg h-[15rem] w-[15rem] lg:w-[15rem]"
-					src={props.src}
-					alt="card image"
-				/>
-				<div className=" p-4 w-[15rem] ">
-					<h2 className="text-base font-medium ">
-						<div className="flex justify-center items-center  ">
-							<div className="flex justify-center items-center mb-2">
-								<Star width={25} height={25} />
-								<span>4.9</span>
-							</div>
-
-							<span className="text-ex ml-4 mr-2 mb-2">{props.name}</span>
-						</div>
-					</h2>
-					<div className="font-bold mb-2">{props.detail}</div>
-					<div className="flex items-center  mb-2">
-						<Calendar width={15} height={15} />
-						<span className="ml-2 text-sm">{props.date}</span>
-					</div>
-					<div className="flex items-center  mb-2">
-						<Cash width={15} height={15} />
-						<span className="ml-2 text-sm">{props.price}</span>
-					</div>
-					<div className="flex items-center  mb-2">
-						<Group width={15} height={15} />
-						<span className="ml-2 text-sm">{props.people}</span>
-					</div>
+		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg">
+			<img
+				src={props.src}
+				alt="asd"
+				className="w-full h-[15rem] rounded-t-lg object-cover"
+			/>
+			<div className="flex justify-center items-center mt-2">
+				<div className="flex justify-center items-center px-2 py-1 bg-white rounded-xl shadow-sm">
+					<Star width={20} height={20} className="mr-1" />
+					<div className="font-semibold text-sm">4.9</div>
 				</div>
+				<div className="ml-3 text-md font-semibold">{props.name}</div>
+			</div>
+			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
+				치어리더가 되기 위한 준비과정 그리고 노하우
+			</p>
+			<div className="flex items-center mt-4 ml-3">
+				<Calendar width={23} height={23} />
+				<div className="ml-2 font-semibold text-sm">
+					2023.10.24 ~ 2023.10.31
+				</div>
+			</div>
+			<div className="flex items-center mt-2 ml-3">
+				<Cash width={23} height={23} />
+				<div className="ml-2 font-semibold text-sm">59,900 ₩</div>
+			</div>
+			<div className="flex items-center mt-2 mb-4 ml-3">
+				<Group width={23} height={23} />
+				<div className="ml-2 font-semibold text-sm">6명</div>
 			</div>
 		</div>
 	);

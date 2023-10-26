@@ -2,14 +2,14 @@ import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
 const SecondSection = () => {
 	return (
 		<>
-			<div className="flex flex-col justify-center items-center mx-auto lg:w-[80rem] mt-40">
-				<div className="font-bold lg:ml-5 mx-auto lg:text-3xl  md:text-base">
+			<div className="flex flex-col justify-center items-center mx-auto lg:w-[60rem] mt-40 mb-32">
+				<div className="font-bold lg:ml-5 mx-auto text-xl sm:text-2xl font-bold">
 					멘토를 등록해보세요
 				</div>
 
-				<div className="flex justify-center items-center mx-auto  lg:w-[80rem] md:w-[45rem] mt-20">
+				<div className="flex justify-center items-center mx-auto  lg:w-[60rem] md:w-[45rem] mt-20">
 					<img
-						className=" lg:w-[30rem] md:w-[30rem] ml-16 hidden lg:block "
+						className=" lg:w-[20rem] md:w-[20rem] ml-16 hidden lg:block "
 						src="https://www.robertwalters.co.kr/content/dam/robert-walters/country/japan/images/website-update-2019/mentor-system.jpg"
 						alt="card image"
 					/>

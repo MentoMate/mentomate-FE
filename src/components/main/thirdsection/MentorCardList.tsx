@@ -24,7 +24,7 @@ const cardData = [
 
 const CardList = () => {
 	return (
-		<div className="flex flex-wrap justify-center items-center mx-auto lg:w-[80rem] mt-10 ">
+		<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mx-auto mb-32 ">
 			{cardData.map((card, index) => (
 				<MentorCard
 					key={index}
