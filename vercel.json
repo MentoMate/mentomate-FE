@@ -6,7 +6,7 @@
 			"use": "@vercel/node"
 		},
 		{
-			"src": "public/css/tailwind.css",
+			"src": "dist/output.css",
 			"use": "@vercel/static"
 		},
 		{
