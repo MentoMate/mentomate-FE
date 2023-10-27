@@ -26,6 +26,20 @@ const SOLT_TYPES = {
 			sortName: "평점순",
 		},
 	],
+	community: [
+		{
+			key: "latest",
+			sortName: "최신순",
+		},
+		{
+			key: "like",
+			sortName: "좋아요수",
+		},
+		{
+			key: "comment",
+			sortName: "댓글수",
+		},
+	],
 };
 
 interface ISort {
@@ -60,6 +74,9 @@ const Sort = () => {
 		} else if (path === "/mentor") {
 			setSelectedType(SOLT_TYPES["mentor"][0].key);
 			setSortType(SOLT_TYPES["mentor"]);
+		} else if (path === "/community") {
+			setSelectedType(SOLT_TYPES["community"][0].key);
+			setSortType(SOLT_TYPES["community"]);
 		}
 	};
 

@@ -6,7 +6,7 @@ import Spinner from "@components/common/spinner/Spinner";
 
 const SignUpType = lazy(() => import("./SignUpType"));
 
-const ChoiceSignUpType = () => {
+const ChoiceSignUpTypeContainer = () => {
 	return (
 		<div className="flex flex-col items-center md:mt-20 sm:mt-12 min-h-screen">
 			<Link to={"/"} className="my-16">
@@ -40,4 +40,4 @@ const ChoiceSignUpType = () => {
 	);
 };
 
-export default ChoiceSignUpType;
+export default ChoiceSignUpTypeContainer;
