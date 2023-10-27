@@ -1,7 +1,6 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import Header from "@/components/common/header/Header";
-import BottomNav from "./BottomNav";
 import MentoringInfoModal from "./MentoringInfoModal";
 import { useState } from "react";
 
@@ -53,8 +52,6 @@ const MyCalendar = () => {
 				<MentoringInfoModal />
 
 				<ScduleAddModal />
-
-				<BottomNav />
 			</div>
 		</>
 	);
