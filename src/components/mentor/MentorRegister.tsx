@@ -1,6 +1,20 @@
 import { ReactComponent as RightArrow } from "@assets/svg/rightArrow.svg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MentorRegister = () => {
+	const navigate = useNavigate();
+
+	const [auth] = useState<string>("guest");
+
+	const clickRegisterMentorHandler = () => {
+		if (auth === "user") {
+			navigate("/mentorRegistration");
+		} else {
+			navigate("/login");
+		}
+	};
+
 	return (
 		<>
 			<div className="flex justify-center items-center w-full md:h-[18rem] bg-black-500">
@@ -20,6 +34,7 @@ const MentorRegister = () => {
 						<div className="flex md:justify-normal justify-center">
 							<button
 								type="button"
+								onClick={clickRegisterMentorHandler}
 								className="flex items-center md:mt-3 mt-8 px-4 py-3 bg-main-color rounded-lg md:text-xl text-lg text-white font-bold"
 							>
 								멘토 등록
