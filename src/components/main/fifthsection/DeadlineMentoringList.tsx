@@ -2,6 +2,7 @@ import Card from "../firstsection/MentoringCard";
 import { useState } from "react";
 const cardData = [
 	{
+		key: 1,
 		src: "https://i.namu.wiki/i/2s3qra3zMVF-7OaddPxrA_PokTAjSItF_gByFSWnOT9O6l5XLS62QhKtlcQJdxGv5z1_cFbFGaM0bzfpm3a8ew.webp",
 		name: "김도아 멘토",
 		detail: "치어리더가 되기 위한 준비 과정 그리고 노하우",
@@ -10,6 +11,7 @@ const cardData = [
 		people: "6명",
 	},
 	{
+		key: 2,
 		src: "https://i.namu.wiki/i/2s3qra3zMVF-7OaddPxrA_PokTAjSItF_gByFSWnOT9O6l5XLS62QhKtlcQJdxGv5z1_cFbFGaM0bzfpm3a8ew.webp",
 		name: "김도아 멘토",
 		detail: "치어리더가 되기 위한 준비 과정 그리고 노하우",
@@ -18,6 +20,7 @@ const cardData = [
 		people: "6명",
 	},
 	{
+		key: 3,
 		src: "https://i.namu.wiki/i/2s3qra3zMVF-7OaddPxrA_PokTAjSItF_gByFSWnOT9O6l5XLS62QhKtlcQJdxGv5z1_cFbFGaM0bzfpm3a8ew.webp",
 		name: "김도아 멘토",
 		detail: "치어리더가 되기 위한 준비 과정 그리고 노하우",
@@ -26,6 +29,7 @@ const cardData = [
 		people: "6명",
 	},
 	{
+		key: 4,
 		src: "https://i.namu.wiki/i/2s3qra3zMVF-7OaddPxrA_PokTAjSItF_gByFSWnOT9O6l5XLS62QhKtlcQJdxGv5z1_cFbFGaM0bzfpm3a8ew.webp",
 		name: "김도아 멘토",
 		detail: "치어리더가 되기 위한 준비 과정 그리고 노하우",
@@ -40,9 +44,9 @@ const DeadlineMentoringList = () => {
 
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mx-auto mb-32">
-			{mentoringData.map((card: any, index: any) => (
+			{mentoringData.map((card: any) => (
 				<Card
-					key={index}
+					key={card.key}
 					src={card.src}
 					name={card.name}
 					detail={card.detail}
