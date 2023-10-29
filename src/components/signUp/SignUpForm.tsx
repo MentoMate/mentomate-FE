@@ -3,10 +3,11 @@ import { useFetch } from "@/hooks/useFetch";
 import useInput from "@/hooks/useInput";
 import { alertHandler } from "@/utils/alert";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
+import { checkRegex } from "@/utils/regex";
 import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
 import Loading from "@components/common/spinner/Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -20,23 +21,47 @@ interface IFormValues {
 const SignUpForm = () => {
 	const navigate = useNavigate();
 	const { fetchCall, isLoading, isError } = useFetch();
-	const [email, onChangeEmail] = useInput(null);
-	const [nickName, onChangeNickName] = useInput(null);
-	const [isEmailDuplicateDisabled, setIsEmailDuplicateDisabled] =
+	const [email, onChangeEmail] = useInput("");
+	const [nickName, onChangeNickName] = useInput("");
+	const [isBtnEmailDuplicateDisabled, setIsBtnEmailDuplicateDisabled] =
 		useState<boolean>(true);
-	const [isNickNameDuplicateDisabled, setNickNameDuplicateDisabled] =
+	const [isBtnNickNameDuplicateDisabled, setBtnNickNameDuplicateDisabled] =
 		useState<boolean>(true);
+	const [isEmailDuplicate, setIsEmailDuplicate] = useState<boolean>(false);
+	const [isNickNameDuplicate, setIsNickNameDuplicate] =
+		useState<boolean>(false);
 	const {
 		register,
 		handleSubmit,
 		getValues,
+		setError,
+		setFocus,
+		clearErrors,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(SIGN_UP_SCHEMA),
 		mode: "onBlur",
 	});
 
-	const onClickSubmitHandler = async (data: IFormValues) => {
+	const submitHandler = async (data: IFormValues) => {
+		if (!isEmailDuplicate) {
+			setError("email", {
+				type: "custom",
+				message: "이메일 중복체크를 해주세요.",
+			});
+			setFocus("email");
+			return;
+		}
+
+		if (!isNickNameDuplicate) {
+			setError("nickName", {
+				type: "custom",
+				message: "닉네임 중복체크를 해주세요.",
+			});
+			setFocus("nickName");
+			return;
+		}
+
 		const response = await fetchCall("/api/user/join/email", {
 			method: "POST",
 			headers: {
@@ -50,16 +75,40 @@ const SignUpForm = () => {
 		});
 
 		if (response && response.status === 200) {
-			navigate("/");
+			navigate("/successSignUp");
 		}
 	};
 
 	const emailDuplicateCheckHandler = async () => {
 		const email = getValues("email");
 
-		await fetchCall(`/api/user/join/email/auth?email=${email}`, {
-			method: "post",
-		});
+		const response = await fetchCall(
+			`/api/user/join/email/auth?email=${email}`,
+			{
+				method: "post",
+			},
+		);
+
+		if (response && response.status === 200) {
+			setIsEmailDuplicate(true);
+			clearErrors("email");
+		}
+	};
+
+	const nickNameDuplicateHandler = async () => {
+		// 닉네임 API 개발 완료되면 넣을 예정
+		setIsNickNameDuplicate(true);
+		clearErrors("nickName");
+	};
+
+	const onKeyUpHandler = (type: string) => {
+		if (type === "email") {
+			setIsNickNameDuplicate(false);
+		}
+
+		if (type === "nickName") {
+			setIsNickNameDuplicate(false);
+		}
 	};
 
 	useEffect(() => {
@@ -67,18 +116,20 @@ const SignUpForm = () => {
 	}, [isLoading]);
 
 	useEffect(() => {
-		if (email !== null && email.length !== 0) {
-			setIsEmailDuplicateDisabled(false);
+		checkRegex("email", email);
+
+		if (email !== null && email.length !== 0 && checkRegex("email", email)) {
+			setIsBtnEmailDuplicateDisabled(false);
 		} else {
-			setIsEmailDuplicateDisabled(true);
+			setIsBtnEmailDuplicateDisabled(true);
 		}
 	}, [email]);
 
 	useEffect(() => {
-		if (nickName === null || nickName.length === 0) {
-			setNickNameDuplicateDisabled(true);
+		if (nickName === "" && nickName.length === 0) {
+			setBtnNickNameDuplicateDisabled(true);
 		} else {
-			setNickNameDuplicateDisabled(false);
+			setBtnNickNameDuplicateDisabled(false);
 		}
 	}, [nickName]);
 
@@ -93,10 +144,7 @@ const SignUpForm = () => {
 
 	return (
 		<>
-			<form
-				onSubmit={handleSubmit(onClickSubmitHandler)}
-				className="flex flex-col"
-			>
+			<form onSubmit={handleSubmit(submitHandler)} className="flex flex-col">
 				<div className="flex flex-col mb-6">
 					<label className="mb-2 text-md sm:text-lg font-bold">이메일</label>
 					<div className="flex items-center">
@@ -105,19 +153,20 @@ const SignUpForm = () => {
 							className="p-3 w-full border border-black-200 outline-main-color rounded-md placeholder:text-sm"
 							placeholder="이메일"
 							{...register("email")}
-							onChange={onChangeEmail as ChangeEventHandler<HTMLInputElement>}
+							onChange={onChangeEmail}
+							onKeyDown={() => onKeyUpHandler("email")}
 						/>
 					</div>
 					{errors.email && <ErrorMsg message={errors.email?.message} />}
 					<button
 						type="button"
 						className={`mt-4 py-3 rounded-md text-md sm:text-lg font-bold ${
-							isEmailDuplicateDisabled
+							isBtnEmailDuplicateDisabled
 								? "bg-black-300 text-black-200"
 								: "bg-main-color text-white"
 						}`}
 						onClick={emailDuplicateCheckHandler}
-						disabled={isEmailDuplicateDisabled}
+						disabled={isBtnEmailDuplicateDisabled}
 					>
 						이메일 인증
 					</button>
@@ -156,17 +205,19 @@ const SignUpForm = () => {
 						className=" p-3 border border-black-200 outline-main-color rounded-md placeholder:text-sm"
 						placeholder="닉네임"
 						{...register("nickName")}
-						onChange={onChangeNickName as ChangeEventHandler<HTMLInputElement>}
+						onChange={onChangeNickName}
+						onKeyDown={() => onKeyUpHandler("nickName")}
 					/>
 					{errors.nickName && <ErrorMsg message={errors.nickName?.message} />}
 					<button
 						type="button"
 						className={`mt-4 py-3 rounded-sm text-md sm:text-lg font-bold ${
-							isNickNameDuplicateDisabled
+							isBtnNickNameDuplicateDisabled
 								? "bg-black-300 text-black-200"
 								: "bg-main-color text-white"
 						}`}
-						disabled={isNickNameDuplicateDisabled}
+						disabled={isBtnNickNameDuplicateDisabled}
+						onClick={nickNameDuplicateHandler}
 					>
 						닉네임 중복확인
 					</button>
