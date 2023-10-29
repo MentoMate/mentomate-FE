@@ -1,12 +1,11 @@
-import { useSetRecoilState } from "recoil";
-import { ReactComponent as Close } from "@assets/svg/close.svg";
-import { ReactComponent as CategoryIcon } from "@assets/svg/category.svg";
-import useBodyScrollLock from "@/hooks/useBodyScrollLock";
 import { openCategoryModalState } from "@/state/openCategoryModal";
+import { cancelLockScroll } from "@/utils/controlBodyScroll";
+import { ReactComponent as CategoryIcon } from "@assets/svg/category.svg";
+import { ReactComponent as Close } from "@assets/svg/close.svg";
+import { useSetRecoilState } from "recoil";
 
 const TitleBarWithClose = () => {
 	const setOpenCategoryModalState = useSetRecoilState(openCategoryModalState);
-	const { cancelLockScroll } = useBodyScrollLock();
 
 	const closeCategoryModalHandler = () => {
 		cancelLockScroll();
