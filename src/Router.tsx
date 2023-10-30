@@ -13,6 +13,7 @@ import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
+import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function Router() {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/choiceSignUpType" element={<ChoiceSignUpTypePage />} />
 				<Route path="/signUp" element={<SignUpPage />} />
+				<Route path="/successSignUp" element={<SuccessSignUpPage />} />
 				<Route path="/mentoring" element={<MentoringPage />} />
 				<Route path="/mentoringDetail" element={<MentoringDetailPage />} />
 				<Route path="/mentor" element={<MentorPage />} />
