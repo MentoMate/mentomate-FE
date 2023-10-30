@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import EmailAuthentication from "./EmailAuthentication";
 
 interface IFormValues {
 	readonly email: string;
@@ -91,6 +92,7 @@ const SignUpForm = () => {
 
 		if (response && response.status === 200) {
 			setIsEmailDuplicate(true);
+			setIsBtnEmailDuplicateDisabled(true);
 			clearErrors("email");
 		}
 	};
@@ -103,7 +105,7 @@ const SignUpForm = () => {
 
 	const onKeyUpHandler = (type: string) => {
 		if (type === "email") {
-			setIsNickNameDuplicate(false);
+			setIsEmailDuplicate(false);
 		}
 
 		if (type === "nickName") {
@@ -171,6 +173,12 @@ const SignUpForm = () => {
 						이메일 인증
 					</button>
 				</div>
+				{isEmailDuplicate && (
+					<EmailAuthentication
+						email={email}
+						emailDuplicateCheckHandler={emailDuplicateCheckHandler}
+					/>
+				)}
 				<div className="flex flex-col mb-6">
 					<label className="mb-1 text-md sm:text-lg font-bold">비밀번호</label>
 					<p className="mb-1 text-black-400 text-[0.7rem] sm:text-[0.8rem]">
