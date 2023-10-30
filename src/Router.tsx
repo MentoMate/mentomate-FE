@@ -12,6 +12,7 @@ import MentorDetailPage from "@pages/MentorDetailPage";
 import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
+import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,10 @@ function Router() {
 				<Route
 					path="/mentorRegistration"
 					element={<MentorRegistrationPage />}
+				/>
+				<Route
+					path="/mentoringRegistration"
+					element={<MentoringRegistrationPage />}
 				/>
 			</Routes>
 		</QueryClientProvider>
