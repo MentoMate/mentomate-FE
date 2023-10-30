@@ -7,6 +7,7 @@ import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
 import MentoringPage from "@pages/MentoringPage";
 import MentoringDetailPage from "@pages/MentoringDetailPage";
 import MentorPage from "@pages/MentorPage";
+import MentoringRoom from "@pages/MentoringRoomPage";
 import MentorDetailPage from "@pages/MentorDetailPage";
 import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
@@ -28,6 +29,7 @@ function Router() {
 				<Route path="/mentoring" element={<MentoringPage />} />
 				<Route path="/mentoringDetail" element={<MentoringDetailPage />} />
 				<Route path="/mentor" element={<MentorPage />} />
+				<Route path="/mentoringRoom" element={<MentoringRoom />} />
 				<Route path="/mentorDetail" element={<MentorDetailPage />} />
 				<Route path="/community" element={<CommunityPage />} />
 				<Route path="/communityDetail" element={<CommunityDetailPage />} />
