@@ -2,9 +2,9 @@ import Swal from "sweetalert2";
 
 export const alertHandler = (
 	iconType: string,
-	msg: string,
-	url: string = "",
+	msg: string
 ) => {
+export const alertHandler = (iconType: string, msg: string) => {
 	if (iconType === "warning") {
 		Swal.fire({
 			icon: "warning",
@@ -36,20 +36,5 @@ export const alertHandler = (
 			showCancelButton: false,
 			confirmButtonText: "확인",
 		});
-	}
-	if (iconType === "confirm") {
-		let confirm = false;
-		Swal.fire({
-			icon: "question",
-			text: msg,
-			showCancelButton: true,
-			confirmButtonText: "확인",
-			cancelButtonText: "취소",
-		}).then((result) => {
-			if (result.isConfirmed) {
-				confirm = true;
-			}
-		});
-		return confirm;
 	}
 };

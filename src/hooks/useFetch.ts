@@ -10,6 +10,7 @@ export const useFetch = () => {
 			const response = await fetch(url, options);
 			return response;
 		} catch (error) {
+			console.log(error);
 			setIsError(true);
 		} finally {
 			setIsLoading(false);

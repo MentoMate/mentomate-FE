@@ -6,7 +6,7 @@ const AfterLogin = lazy(() => import("./AfterLogin"));
 const BeforeLogin = lazy(() => import("./BeforeLogin"));
 
 const HeaderRightContainer = () => {
-	const isLogin = useRecoilValue(loginState);
+  const isLogin = useRecoilValue(loginState);
 
 	return (
 		<>

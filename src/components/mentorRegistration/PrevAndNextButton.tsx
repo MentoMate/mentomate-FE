@@ -1,12 +1,11 @@
-import useAlert from "@/hooks/useAlert";
 import { registrationStep } from "@/state/mentorRegistrationStep";
 import { selectedCategoryState } from "@/state/selectedCategory";
+import { alertHandler } from "@/utils/alert";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 const PrevAndNextButton = () => {
 	const [step, setStep] = useRecoilState(registrationStep);
 	const selectedCategoryType = useRecoilValue(selectedCategoryState);
-	const { alertHandler } = useAlert();
 
 	const onClickbuttonHandler = (type: string) => {
 		let iconType = "";

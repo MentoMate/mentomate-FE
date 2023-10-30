@@ -1,11 +1,11 @@
-interface IProps {
-	message: string | undefined;
+interface IErrorMsgProps {
+	readonly message: string | undefined;
 }
 
-const ErrorMsg = ({ message }: IProps) => {
+const ErrorMsg = ({ message }: IErrorMsgProps) => {
 	return (
 		<>
-			<p className="text-sm text-red-100">{message}</p>
+			<p className="text-[0.8rem] text-red-100">{message}</p>
 		</>
 	);
 };
