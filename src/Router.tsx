@@ -1,8 +1,3 @@
-import { QueryClientProvider, QueryClient } from "react-query";
-import { Route, Routes } from "react-router-dom";
-import MainPage from "@pages/MainPage";
-import LoginPage from "@pages/LoginPage";
-import SignUpPage from "@pages/SignUpPage";
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
 import MentoringPage from "@pages/MentoringPage";
 import MentoringDetailPage from "@pages/MentoringDetailPage";
@@ -11,10 +6,17 @@ import MentoringRoom from "@pages/MentoringRoomPage";
 import MentorDetailPage from "@pages/MentorDetailPage";
 import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
+import CommunityPage from "@pages/CommunityPage";
+import LoginPage from "@pages/LoginPage";
+import MainPage from "@pages/MainPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
+import SignUpPage from "@pages/SignUpPage";
+import OauthRedirect from "./components/login/OauthRedirect";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
-
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Route, Routes } from "react-router-dom";
+          
 const queryClient = new QueryClient();
 
 function Router() {
@@ -24,6 +26,7 @@ function Router() {
 				<Route path="/" element={<MainPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/choiceSignUpType" element={<ChoiceSignUpTypePage />} />
+				<Route path="/login/oauth2/code/kakao" element={<OauthRedirect />} />
 				<Route path="/signUp" element={<SignUpPage />} />
 				<Route path="/successSignUp" element={<SuccessSignUpPage />} />
 				<Route path="/mentoring" element={<MentoringPage />} />
