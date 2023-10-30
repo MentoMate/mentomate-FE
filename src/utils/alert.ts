@@ -1,9 +1,5 @@
 import Swal from "sweetalert2";
 
-export const alertHandler = (
-	iconType: string,
-	msg: string
-) => {
 export const alertHandler = (iconType: string, msg: string) => {
 	if (iconType === "warning") {
 		Swal.fire({

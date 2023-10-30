@@ -6,7 +6,6 @@ import MentoringRoom from "@pages/MentoringRoomPage";
 import MentorDetailPage from "@pages/MentorDetailPage";
 import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
-import CommunityPage from "@pages/CommunityPage";
 import LoginPage from "@pages/LoginPage";
 import MainPage from "@pages/MainPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
@@ -16,7 +15,7 @@ import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
-          
+
 const queryClient = new QueryClient();
 
 function Router() {
