@@ -1,24 +1,20 @@
 import { useState } from "react";
 
-type RequestOption = {
-	method: string;
-	body: any;
-};
-
 export const useFetch = () => {
-	const [loading, setLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isError, setIsError] = useState<boolean>(false);
 
-	const fetchData = async (url: string, options: RequestOption) => {
+	const fetchCall = async (url: string, options: RequestInit | any) => {
 		try {
-			setLoading(true);
+			setIsLoading(true);
 			const response = await fetch(url, options);
-			console.log(response);
+			return response;
 		} catch (error) {
-			throw new Error();
+			setIsError(true);
 		} finally {
-			setLoading(false);
+			setIsLoading(false);
 		}
 	};
 
-	return { fetchData, loading };
+	return { fetchCall, isLoading, isError };
 };

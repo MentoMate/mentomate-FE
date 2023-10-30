@@ -20,9 +20,13 @@ const SocialLogin = () => {
 					<div className="flex justify-center items-center mx-2 w-[3.5rem] h-[3.5rem] border border-black-200 rounded-full">
 						<GoogleLogo width={40} height={40} />
 					</div>
-					<div className="flex justify-center items-center mx-2 w-[3.5rem] h-[3.5rem] bg-yellow-100  rounded-full">
+					{/* <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`} className="flex justify-center items-center mx-2 w-[3.5rem] h-[3.5rem] bg-yellow-100  rounded-full"> */}
+					<a
+						href={`https://kauth.kakao.com/oauth/authorize?client_id=32a3e303979a0fb4452018aa4b939e28&redirect_uri=http://localhost:5173/login/oauth2/code/kakao&response_type=code`}
+						className="flex justify-center items-center mx-2 w-[3.5rem] h-[3.5rem] bg-yellow-100  rounded-full"
+					>
 						<KakaoLogo width={35} height={35} />
-					</div>
+					</a>
 					<div className="flex justify-center items-center mx-2 w-[3.5rem] h-[3.5rem] bg-green-100  rounded-full">
 						<NaverLogo width={25} height={25} fill="white" />
 					</div>

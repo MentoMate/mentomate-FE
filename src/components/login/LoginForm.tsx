@@ -1,33 +1,50 @@
-import { useFetch } from "@/hooks/useFetch";
-import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
+import { LOGIN_SCHEMA } from "@/constants/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import Loading from "../common/spinner/Loading";
+import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
+import { useFetch } from "@/hooks/useFetch";
+import { useNavigate } from "react-router-dom";
+import Loading from "@components/common/spinner/Loading";
+import { setCookie } from "@/utils/cookies";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "@/state/loginState";
 
-export type FormValues = {
+interface ILoginFormValues {
 	email: string;
 	password: string;
-};
-
-const schema = yup.object().shape({
-	email: yup.string().required("이메일을 입력하세요."),
-	password: yup.string().required("비밀번호를 입력하세요."),
-});
+}
 
 const LoginForm = () => {
+	const navigate = useNavigate();
+	const setLoginState = useSetRecoilState(loginState);
+	const { isError, fetchCall, isLoading } = useFetch();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({ mode: "onSubmit", resolver: yupResolver(schema) });
-	const { loading, fetchData } = useFetch();
+	} = useForm({
+		resolver: yupResolver(LOGIN_SCHEMA),
+		mode: "onBlur",
+	});
 
-	const submitHandler = (e: FormValues) => {
-		fetchData("/api/login", {
+	const submitHandler = async (data: ILoginFormValues) => {
+		const response = await fetchCall("/api/login", {
 			method: "POST",
-			body: { email: e.email, password: e.password },
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: data.email,
+				password: data.password,
+			}),
 		});
+
+		if (response && response.status === 200) {
+			setCookie("accessToken", response.headers.get("Authorization"));
+			setCookie("refreshToken", response.headers.get("Authorization-refresh"));
+			setLoginState(true);
+			navigate("/");
+		}
 	};
 
 	return (
@@ -64,7 +81,7 @@ const LoginForm = () => {
 					로그인
 				</button>
 			</form>
-			{loading && <Loading />}
+			{isLoading && <Loading />}
 		</>
 	);
 };
