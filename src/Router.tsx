@@ -13,6 +13,8 @@ import SignUpPage from "@pages/SignUpPage";
 import OauthRedirect from "./components/login/OauthRedirect";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
+import Mypage from "@pages/MyPage";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
 
@@ -35,6 +37,7 @@ function Router() {
 				<Route path="/mentorDetail" element={<MentorDetailPage />} />
 				<Route path="/community" element={<CommunityPage />} />
 				<Route path="/communityDetail" element={<CommunityDetailPage />} />
+				<Route path="/mypage" element={<Mypage />} />
 				<Route
 					path="/mentorRegistration"
 					element={<MentorRegistrationPage />}
