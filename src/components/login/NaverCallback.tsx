@@ -24,13 +24,17 @@ const NaverCallback = () => {
 		);
 
 		if (response && response.status === 200) {
-			setCookie("accessToken", response.headers.get("Authorization"));
-			setCookie("refreshToken", response.headers.get("Authorization-refresh"));
-			setLoginState(true);
-
-			response.headers.get("isSignUp")
-				? navigate("/successSignUp")
-				: navigate("/");
+			if (!response.headers.get("isSignUp")) {
+				setCookie("accessToken", response.headers.get("Authorization"));
+				setCookie(
+					"refreshToken",
+					response.headers.get("Authorization-refresh"),
+				);
+				setLoginState(true);
+				navigate("/");
+			} else {
+				navigate("/successSignUp");
+			}
 		}
 
 		if (response && response.status === 500) {
