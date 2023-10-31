@@ -8,21 +8,24 @@ export const alertHandler = (iconType: string, msg: string) => {
 			showCancelButton: false,
 			confirmButtonText: "확인",
 		});
-	} else if (iconType === "success") {
+	}
+	if (iconType === "success") {
 		Swal.fire({
 			icon: "success",
 			text: msg,
 			showCancelButton: false,
 			confirmButtonText: "확인",
 		});
-	} else if (iconType === "error") {
+	}
+	if (iconType === "error") {
 		Swal.fire({
 			icon: "error",
 			text: msg,
 			showCancelButton: false,
 			confirmButtonText: "확인",
 		});
-	} else if (iconType === "info") {
+	}
+	if (iconType === "info") {
 		Swal.fire({
 			icon: "info",
 			text: msg,
