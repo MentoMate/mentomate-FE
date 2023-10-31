@@ -1,40 +1,74 @@
+import { useFetch } from "@/hooks/useFetch";
 import useInput from "@/hooks/useInput";
 import { useEffect, useState } from "react";
 
 interface IProps {
 	email: string;
 	emailDuplicateCheckHandler: (email: string) => void;
+	timeLeft: number;
+	setTimeLeft: (time: number | ((time: number) => number)) => void;
+	isEmailAuthenticataion: boolean;
+	setIsEmailAuthentication: (authenticate: boolean) => void;
 }
 
-const MINUTES_IN_MS = 3 * 60 * 1000;
 const INTEVAL = 1000;
 
-const EmailAuthentication = ({ email, emailDuplicateCheckHandler }: IProps) => {
+const EmailAuthentication = ({
+	email,
+	emailDuplicateCheckHandler,
+	timeLeft,
+	setTimeLeft,
+	isEmailAuthenticataion,
+	setIsEmailAuthentication,
+}: IProps) => {
+	const { fetchCall } = useFetch();
 	const [authenticationNumber, setAuthenticationNumber] = useInput("");
-	const [inputDisabled, setinputDisabled] = useState<boolean>(false);
+	const [inputDisabled, setInputDisabled] = useState<boolean>(false);
 	const [btnDisabeld, setBtnDisabled] = useState<boolean>(true);
-	const [timeLeft, setTimeLeft] = useState<number>(MINUTES_IN_MS);
 	const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(
 		2,
 		"0",
 	);
 	const second = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, "0");
 
+	const emailAuthenticationHandler = async () => {
+		const response = await fetchCall(
+			`/api/user/join/email/auth/verify?authCode=${authenticationNumber}&email=${email}`,
+			{
+				method: "POST",
+			},
+		);
+
+		if (response && response.status === 200) {
+			setIsEmailAuthentication(true);
+			setInputDisabled(true);
+			setBtnDisabled(true);
+		}
+	};
+
+	const resendEmailAuthentication = () => {
+		emailDuplicateCheckHandler(email);
+	};
+
 	useEffect(() => {
 		const timer = setInterval(() => {
-			setTimeLeft((prevTime) => prevTime - INTEVAL);
+			setTimeLeft((prev: number) => prev - INTEVAL);
 		}, INTEVAL);
 
 		if (timeLeft <= 0) {
 			clearInterval(timer);
 			setBtnDisabled(true);
-			setinputDisabled(true);
+			setInputDisabled(true);
 		}
 
 		return () => {
 			clearInterval(timer);
 		};
 	}, [timeLeft]);
+
+	useEffect(() => {
+		isEmailAuthenticataion ? setInputDisabled(true) : setInputDisabled(false);
+	}, [isEmailAuthenticataion]);
 
 	useEffect(() => {
 		if (authenticationNumber.length !== 0 && authenticationNumber !== "") {
@@ -68,14 +102,15 @@ const EmailAuthentication = ({ email, emailDuplicateCheckHandler }: IProps) => {
 					btnDisabeld ? "bg-black-200" : "bg-main-color"
 				} rounded-md text-white font-semiboild`}
 				disabled={btnDisabeld}
+				onClick={emailAuthenticationHandler}
 			>
 				인증하기
 			</button>
 			<p className="pt-4 text-black-400 text-[0.8rem]">
 				이메일이 오지 않으셨나요?
 				<span
-					className="ml-2 font-semibold"
-					onClick={() => emailDuplicateCheckHandler(email)}
+					className="ml-2 font-semibold cursor-pointer"
+					onClick={resendEmailAuthentication}
 				>
 					이메일 재전송
 				</span>
