@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import EmailAuthentication from "./EmailAuthentication";
+import { ReactComponent as YesCheckMark } from "@assets/svg/yesCheck.svg";
+import SuccessAuthenticationMsg from "./SuccessAuthenticationMsg";
 
 interface IFormValues {
 	readonly email: string;
@@ -22,15 +24,18 @@ interface IFormValues {
 const SignUpForm = () => {
 	const navigate = useNavigate();
 	const { fetchCall, isLoading, isError } = useFetch();
-	const [email, onChangeEmail] = useInput("");
-	const [nickName, onChangeNickName] = useInput("");
+	const [email, setEmail] = useInput("");
+	const [nickName, setNickName] = useInput("");
 	const [isBtnEmailDuplicateDisabled, setIsBtnEmailDuplicateDisabled] =
 		useState<boolean>(true);
 	const [isBtnNickNameDuplicateDisabled, setBtnNickNameDuplicateDisabled] =
 		useState<boolean>(true);
 	const [isEmailDuplicate, setIsEmailDuplicate] = useState<boolean>(false);
+	const [isEmailAuthenticataion, setIsEmailAuthentication] =
+		useState<boolean>(false);
 	const [isNickNameDuplicate, setIsNickNameDuplicate] =
 		useState<boolean>(false);
+	const [timeLeft, setTimeLeft] = useState<number>(3 * 60 * 1000);
 	const {
 		register,
 		handleSubmit,
@@ -45,21 +50,30 @@ const SignUpForm = () => {
 	});
 
 	const submitHandler = async (data: IFormValues) => {
-		if (!isEmailDuplicate) {
-			setError("email", {
-				type: "custom",
-				message: "이메일 중복체크를 해주세요.",
-			});
-			setFocus("email");
-			return;
-		}
+		if (!isEmailDuplicate || !isEmailAuthenticataion || !isNickNameDuplicate) {
+			if (!isEmailDuplicate) {
+				setError("email", {
+					type: "custom",
+					message: "이메일 중복체크를 해주세요.",
+				});
+				setFocus("email");
+			}
 
-		if (!isNickNameDuplicate) {
-			setError("nickName", {
-				type: "custom",
-				message: "닉네임 중복체크를 해주세요.",
-			});
-			setFocus("nickName");
+			if (!isEmailAuthenticataion) {
+				setError("email", {
+					type: "custom",
+					message: "이메일 인증을 해주세요.",
+				});
+				setFocus("email");
+			}
+
+			if (!isNickNameDuplicate) {
+				setError("nickName", {
+					type: "custom",
+					message: "닉네임 중복체크를 해주세요.",
+				});
+				setFocus("nickName");
+			}
 			return;
 		}
 
@@ -86,26 +100,38 @@ const SignUpForm = () => {
 		const response = await fetchCall(
 			`/api/user/join/email/auth?email=${email}`,
 			{
-				method: "post",
+				method: "POST",
 			},
 		);
 
 		if (response && response.status === 200) {
 			setIsEmailDuplicate(true);
 			setIsBtnEmailDuplicateDisabled(true);
+			setIsEmailAuthentication(false);
+			setTimeLeft(3 * 60 * 1000);
 			clearErrors("email");
 		}
 	};
 
 	const nickNameDuplicateHandler = async () => {
-		// 닉네임 API 개발 완료되면 넣을 예정
-		setIsNickNameDuplicate(true);
-		clearErrors("nickName");
+		const response = await fetchCall(
+			`/api/user/join/email/nickname/verify?nickName=${nickName}`,
+			{
+				method: "POST",
+			},
+		);
+
+		if (response && response.status === 200) {
+			setIsNickNameDuplicate(true);
+			setBtnNickNameDuplicateDisabled(true);
+			clearErrors("nickName");
+		}
 	};
 
 	const onKeyUpHandler = (type: string) => {
 		if (type === "email") {
 			setIsEmailDuplicate(false);
+			setIsEmailAuthentication(false);
 		}
 
 		if (type === "nickName") {
@@ -128,6 +154,12 @@ const SignUpForm = () => {
 	}, [email]);
 
 	useEffect(() => {
+		isEmailAuthenticataion
+			? setIsBtnEmailDuplicateDisabled(true)
+			: setIsBtnEmailDuplicateDisabled(false);
+	}, [isEmailAuthenticataion]);
+
+	useEffect(() => {
 		if (nickName === "" && nickName.length === 0) {
 			setBtnNickNameDuplicateDisabled(true);
 		} else {
@@ -148,17 +180,22 @@ const SignUpForm = () => {
 		<>
 			<form onSubmit={handleSubmit(submitHandler)} className="flex flex-col">
 				<div className="flex flex-col mb-6">
-					<label className="mb-2 text-md sm:text-lg font-bold">이메일</label>
+					<label className="flex items-center mb-2 text-md sm:text-lg font-bold">
+						이메일
+					</label>
 					<div className="flex items-center">
 						<input
 							type="text"
 							className="p-3 w-full border border-black-200 outline-main-color rounded-md placeholder:text-sm"
 							placeholder="이메일"
 							{...register("email")}
-							onChange={onChangeEmail}
+							onChange={setEmail}
 							onKeyDown={() => onKeyUpHandler("email")}
 						/>
 					</div>
+					{isEmailAuthenticataion && (
+						<SuccessAuthenticationMsg message="이메일 인증 완료" />
+					)}
 					{errors.email && <ErrorMsg message={errors.email?.message} />}
 					<button
 						type="button"
@@ -173,10 +210,14 @@ const SignUpForm = () => {
 						이메일 인증
 					</button>
 				</div>
-				{isEmailDuplicate && (
+				{isEmailDuplicate && !isEmailAuthenticataion && (
 					<EmailAuthentication
 						email={email}
 						emailDuplicateCheckHandler={emailDuplicateCheckHandler}
+						timeLeft={timeLeft}
+						setTimeLeft={setTimeLeft}
+						isEmailAuthenticataion={isEmailAuthenticataion}
+						setIsEmailAuthentication={setIsEmailAuthentication}
 					/>
 				)}
 				<div className="flex flex-col mb-6">
@@ -207,15 +248,20 @@ const SignUpForm = () => {
 					)}
 				</div>
 				<div className="flex flex-col mb-6">
-					<label className="mb-2 text-md sm:text-lg font-bold">닉네임</label>
+					<label className="flex items-center mb-2 text-md sm:text-lg font-bold">
+						닉네임
+					</label>
 					<input
 						type="text"
 						className=" p-3 border border-black-200 outline-main-color rounded-md placeholder:text-sm"
 						placeholder="닉네임"
 						{...register("nickName")}
-						onChange={onChangeNickName}
+						onChange={setNickName}
 						onKeyDown={() => onKeyUpHandler("nickName")}
 					/>
+					{isNickNameDuplicate && (
+						<SuccessAuthenticationMsg message="닉네임 중복확인 완료" />
+					)}
 					{errors.nickName && <ErrorMsg message={errors.nickName?.message} />}
 					<button
 						type="button"
