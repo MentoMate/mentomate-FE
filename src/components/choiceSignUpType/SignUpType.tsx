@@ -28,7 +28,6 @@ const SignUpType = () => {
 					<div className="flex justify-center px-2 w-[4rem]">
 						<KakaoTalkLogo width={30} height={30} />
 					</div>
-					{/* <a href={`https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`} className="flex justify-center items-center mx-2 w-[3.5rem] h-[3.5rem] bg-yellow-100  rounded-full"> */}
 					<a
 						href={`https://kauth.kakao.com/oauth/authorize?client_id=32a3e303979a0fb4452018aa4b939e28&redirect_uri=http://localhost:5173/login/oauth2/code/kakao&response_type=code`}
 						className="px-1 text-sm sm:text-lg font-bold"
@@ -40,7 +39,10 @@ const SignUpType = () => {
 					카카오로 인증하여 회원가입
 				</div>
 			</div>
-			<div className="flex flex justify-between items-center my-3 py-4 rounded-md bg-green-100 text-white">
+			<a
+				href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=OrpnAjlttv8YhDER3qSW&state=1234&redirect_uri=http://localhost:5173/login/oauth2/code/naver"
+				className="flex flex justify-between items-center my-3 py-4 rounded-md bg-green-100 text-white"
+			>
 				<div className="flex">
 					<div className="flex justify-center items-center px-2 w-[4rem]">
 						<NaverLogo width={20} height={20} fill="white" />
@@ -52,7 +54,7 @@ const SignUpType = () => {
 				<div className="px-2 text-[0.7rem] sm:text-sm">
 					네이버로 인증하여 회원가입
 				</div>
-			</div>
+			</a>
 		</div>
 	);
 };
