@@ -1,13 +1,13 @@
 import { LOGIN_SCHEMA } from "@/constants/schema";
+import { useFetch } from "@/hooks/useFetch";
+import { loginState } from "@/state/loginState";
+import { setCookie } from "@/utils/cookies";
+import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
+import Loading from "@components/common/spinner/Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
-import { useFetch } from "@/hooks/useFetch";
 import { useNavigate } from "react-router-dom";
-import Loading from "@components/common/spinner/Loading";
-import { setCookie } from "@/utils/cookies";
 import { useSetRecoilState } from "recoil";
-import { loginState } from "@/state/loginState";
 
 interface ILoginFormValues {
 	email: string;

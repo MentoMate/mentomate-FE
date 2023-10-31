@@ -1,18 +1,14 @@
+import { loginState } from "@/state/loginState";
 import { ReactComponent as RightArrow } from "@assets/svg/rightArrow.svg";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 const MentorRegister = () => {
+	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();
 
-	const [auth] = useState<string>("guest");
-
 	const clickRegisterMentorHandler = () => {
-		if (auth === "user") {
-			navigate("/mentorRegistration");
-		} else {
-			navigate("/login");
-		}
+		isLogin ? navigate("/mentorRegistration") : navigate("/login");
 	};
 
 	return (

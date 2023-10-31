@@ -10,13 +10,14 @@ import LoginPage from "@pages/LoginPage";
 import MainPage from "@pages/MainPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
 import SignUpPage from "@pages/SignUpPage";
-import OauthRedirect from "./components/login/OauthRedirect";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 import Mypage from "@pages/MyPage";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
+import KaKaoCallback from "@components/login/KaKaoCallback";
+import NaverCallback from "@components/login/NaverCallback";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +28,8 @@ function Router() {
 				<Route path="/" element={<MainPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/choiceSignUpType" element={<ChoiceSignUpTypePage />} />
-				<Route path="/login/oauth2/code/kakao" element={<OauthRedirect />} />
+				<Route path="/login/oauth2/code/kakao" element={<KaKaoCallback />} />
+				<Route path="/login/oauth2/code/naver" element={<NaverCallback />} />
 				<Route path="/signUp" element={<SignUpPage />} />
 				<Route path="/successSignUp" element={<SuccessSignUpPage />} />
 				<Route path="/mentoring" element={<MentoringPage />} />
