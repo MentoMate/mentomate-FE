@@ -6,5 +6,10 @@ export const checkRegex = (type: string, value: string) => {
 		result = emailRegex.test(value);
 	}
 
+	if (type === "name") {
+		const nameRegex = /^[가-힣]{6}$/;
+		result = nameRegex.test(value);
+	}
+
 	return result;
 };

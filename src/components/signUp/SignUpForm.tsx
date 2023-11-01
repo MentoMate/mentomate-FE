@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import EmailAuthentication from "./EmailAuthentication";
-import { ReactComponent as YesCheckMark } from "@assets/svg/yesCheck.svg";
 import SuccessAuthenticationMsg from "./SuccessAuthenticationMsg";
 
 interface IFormValues {
