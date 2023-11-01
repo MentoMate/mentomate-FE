@@ -23,30 +23,27 @@ const SaveAndBackButton = ({ fileList }: IProps) => {
 			numberOfPeople: registrationForm.numberOfPeople,
 			amount: registrationForm.amount,
 			category: category.selectedCategory,
+			status: "PROGRESS",
 		};
 
-		console.log(data);
-
-		const formData = new FormData();
-		formData.append("mentoringDto", JSON.stringify(data));
-		if (fileList !== null) {
-			formData.append("img", fileList[0]);
-		}
-		console.log(data);
+		// const formData = new FormData();
+		// formData.append("mentoringDto", JSON.stringify(data));
+		// if (fileList !== null) {
+		// 	formData.append("img", fileList[0]);
+		// 	formData.append("img", fileList[0]);
+		// 	formData.append("img", fileList[0]);
+		// }
+		// console.log(formData.getAll("img"));
+		const asd = JSON.stringify(data);
 
 		const token = getCookie("accessToken");
-		const response = await axios.post(
-			"/api/mentoring",
-			{
-				formData,
+		const response = await axios.post("/api/mentoring", asd, {
+			headers: {
+				// "Content-Type": "multipart/form-data",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
 			},
-			{
-				headers: {
-					"Content-Type": "multipart/form-data",
-					Authorization: `Bearer ${token}`,
-				},
-			},
-		);
+		});
 
 		console.log(response);
 	};
