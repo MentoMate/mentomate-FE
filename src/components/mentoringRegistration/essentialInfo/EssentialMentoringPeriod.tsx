@@ -1,12 +1,41 @@
+import { mentoringRegistrationData } from "@/data/mentoringRegistrationData";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Tidle } from "@assets/svg/tidle.svg";
 import { ko } from "date-fns/esm/locale";
-import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useRecoilState } from "recoil";
 
 const MentoringPeriod = () => {
-	const [startDate, setStartDate] = useState<Date>(new Date());
+	const [formData, setFormData] = useRecoilState(mentoringRegistrationData);
+
+	const onChangeDateHandler = (type: string, date: Date) => {
+		if (type === "startDate") {
+			setFormData({
+				title: formData.title,
+				content: formData.content,
+				startDate: date,
+				endDate: formData.endDate,
+				numberOfPeople: formData.numberOfPeople,
+				amount: formData.amount,
+				category: formData.category,
+				// img: formData.img,
+			});
+		}
+
+		if (type === "endDate") {
+			setFormData({
+				title: formData.title,
+				content: formData.content,
+				startDate: formData.startDate,
+				endDate: date,
+				numberOfPeople: formData.numberOfPeople,
+				amount: formData.amount,
+				category: formData.category,
+				// img: formData.img,
+			});
+		}
+	};
 
 	return (
 		<div className="flex sm:flex-row flex-col lg:text-lg md:text-base text-sm">
@@ -18,10 +47,10 @@ const MentoringPeriod = () => {
 				<div>
 					<DatePicker
 						locale={ko}
-						selected={startDate}
+						selected={formData.startDate}
 						onChange={(date) => {
 							if (date) {
-								setStartDate(date);
+								onChangeDateHandler("startDate", date);
 							}
 						}}
 						placeholderText="날짜를 선택해주세요"
@@ -32,10 +61,10 @@ const MentoringPeriod = () => {
 				<div>
 					<DatePicker
 						locale={ko}
-						selected={startDate}
+						selected={formData.endDate}
 						onChange={(date) => {
 							if (date) {
-								setStartDate(date);
+								onChangeDateHandler("endDate", date);
 							}
 						}}
 						placeholderText="날짜를 선택해주세요"
