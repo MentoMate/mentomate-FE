@@ -28,7 +28,7 @@ const MentorRegistrationContainer = () => {
 
 	return (
 		<div>
-			<div className="py-12 bg-black-100 h-[60rem]">
+			<div className="py-20 bg-black-100 min-h-[60rem]">
 				<RegistrationStepContainer />
 			</div>
 			<PrevAndNextButton />

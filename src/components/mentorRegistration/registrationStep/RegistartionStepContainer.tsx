@@ -23,7 +23,7 @@ const RegistrationStepContainer = () => {
 	}, [step]);
 
 	return (
-		<div className="mx-auto lg:w-[48rem] sm:w-[33rem] w-[20rem] h-[45rem] bg-white shadow-md">
+		<div className="mx-auto lg:w-[48rem] sm:w-[33rem] w-[20rem] min-h-[45rem] bg-white shadow-md">
 			<div className="sm:mx-12 mx-4 py-8">
 				<div className="flex items-center">
 					<RegisterMentor width={40} height={40} />
@@ -33,7 +33,7 @@ const RegistrationStepContainer = () => {
 					<progress
 						value={progressState}
 						max={100}
-						className="w-full h-2 bg-black-200"
+						className="sm:w-full w-full h-2 bg-black-200"
 					/>
 					<div className="flex ml-4 font-semibold">
 						<div>
