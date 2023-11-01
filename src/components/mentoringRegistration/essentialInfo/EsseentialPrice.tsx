@@ -18,7 +18,6 @@ const EsseentialPrice = () => {
 			numberOfPeople: formData.numberOfPeople,
 			amount: Number(value),
 			category: formData.category,
-			// img: formData.img,
 		});
 	};
 

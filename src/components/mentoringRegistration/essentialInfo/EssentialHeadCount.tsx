@@ -17,7 +17,6 @@ const HeadCount = () => {
 			numberOfPeople: Number(value),
 			amount: formData.amount,
 			category: formData.category,
-			// img: formData.img,
 		});
 	};
 

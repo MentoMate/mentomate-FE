@@ -19,7 +19,6 @@ const MentoringPeriod = () => {
 				numberOfPeople: formData.numberOfPeople,
 				amount: formData.amount,
 				category: formData.category,
-				// img: formData.img,
 			});
 		}
 
@@ -32,7 +31,6 @@ const MentoringPeriod = () => {
 				numberOfPeople: formData.numberOfPeople,
 				amount: formData.amount,
 				category: formData.category,
-				// img: formData.img,
 			});
 		}
 	};

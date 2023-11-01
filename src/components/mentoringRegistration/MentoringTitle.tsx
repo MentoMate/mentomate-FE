@@ -17,7 +17,6 @@ const MentoringTitle = () => {
 			numberOfPeople: formData.numberOfPeople,
 			amount: formData.amount,
 			category: formData.category,
-			// img: formData.img,
 		});
 		setTitle(value.length);
 	};
