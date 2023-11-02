@@ -1,5 +1,5 @@
 import { LOGIN_SCHEMA } from "@/constants/schema";
-import { useFetch } from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import { loginState } from "@/state/loginState";
 import { setCookie } from "@/utils/cookies";
 import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
@@ -17,7 +17,7 @@ interface ILoginFormValues {
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const setLoginState = useSetRecoilState(loginState);
-	const { isError, fetchCall, isLoading } = useFetch();
+	const { isLoading, fetchDataUseAxios } = useAxios();
 	const {
 		register,
 		handleSubmit,
@@ -28,20 +28,18 @@ const LoginForm = () => {
 	});
 
 	const submitHandler = async (data: ILoginFormValues) => {
-		const response = await fetchCall("/api/login", {
+		const response = await fetchDataUseAxios("defaultAxios", {
+			url: "/login",
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
+			data: {
 				email: data.email,
 				password: data.password,
-			}),
+			},
 		});
 
 		if (response && response.status === 200) {
-			setCookie("accessToken", response.headers.get("Authorization"));
-			setCookie("refreshToken", response.headers.get("Authorization-refresh"));
+			setCookie("accessToken", response.headers.authorization);
+			setCookie("refreshToken", response.headers["authorization-refresh"]);
 			setLoginState(true);
 			navigate("/");
 		}
