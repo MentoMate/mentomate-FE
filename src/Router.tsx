@@ -33,7 +33,10 @@ function Router() {
 				<Route path="/signUp" element={<SignUpPage />} />
 				<Route path="/successSignUp" element={<SuccessSignUpPage />} />
 				<Route path="/mentoring" element={<MentoringPage />} />
-				<Route path="/mentoringDetail" element={<MentoringDetailPage />} />
+				<Route
+					path="/mentoringDetail/:mentoringId"
+					element={<MentoringDetailPage />}
+				/>
 				<Route path="/mentor" element={<MentorPage />} />
 				<Route path="/mentoringRoom" element={<MentoringRoom />} />
 				<Route path="/mentorDetail" element={<MentorDetailPage />} />
