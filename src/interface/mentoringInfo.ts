@@ -1,8 +1,12 @@
 export interface IMentoringDetailProps {
-	data: IMentoringDetailInfo;
+	data: IMentoringInfo;
 }
 
-interface IMentoringDetailInfo {
+export interface IMentoringEditProps {
+	data: IMentoringInfo;
+}
+
+interface IMentoringInfo {
 	readonly mentoringId: number;
 	readonly title: string;
 	readonly content: string;

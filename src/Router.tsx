@@ -1,23 +1,24 @@
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
-import MentoringPage from "@pages/MentoringPage";
-import MentoringDetailPage from "@pages/MentoringDetailPage";
-import MentorPage from "@pages/MentorPage";
-import MentoringRoom from "@pages/MentoringRoomPage";
-import MentorDetailPage from "@pages/MentorDetailPage";
-import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
+import CommunityPage from "@pages/CommunityPage";
 import LoginPage from "@pages/LoginPage";
 import MainPage from "@pages/MainPage";
+import MentorDetailPage from "@pages/MentorDetailPage";
+import MentorPage from "@pages/MentorPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
-import SignUpPage from "@pages/SignUpPage";
+import MentoringDetailPage from "@pages/MentoringDetailPage";
+import MentoringEditPage from "@pages/MentoringEditPage";
+import MentoringPage from "@pages/MentoringPage";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
-import SuccessSignUpPage from "@pages/SuccessSignUpPage";
+import MentoringRoom from "@pages/MentoringRoomPage";
 import Mypage from "@pages/MyPage";
+import SignUpPage from "@pages/SignUpPage";
+import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 
-import { QueryClient, QueryClientProvider } from "react-query";
-import { Route, Routes } from "react-router-dom";
 import KaKaoCallback from "@components/login/KaKaoCallback";
 import NaverCallback from "@components/login/NaverCallback";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Route, Routes } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,10 @@ function Router() {
 				<Route
 					path="/mentoringDetail/:mentoringId"
 					element={<MentoringDetailPage />}
+				/>
+				<Route
+					path="/mentoringEdit/:mentoringId"
+					element={<MentoringEditPage />}
 				/>
 				<Route path="/mentor" element={<MentorPage />} />
 				<Route path="/mentoringRoom" element={<MentoringRoom />} />

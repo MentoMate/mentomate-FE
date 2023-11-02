@@ -1,4 +1,4 @@
-import { IMentoringDetailProps } from "@/interface/mentoringDetailInfo";
+import { IMentoringDetailProps } from "@/interface/mentoringInfo";
 import MentorProfile from "../MentorProfile";
 import Button from "./Button";
 import MentoringInfo from "./MentoringInfo";

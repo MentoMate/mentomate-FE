@@ -1,6 +1,6 @@
 const SaveAndBackButton = () => {
 	return (
-		<div className="sticky bottom-0 mx-auto w-full bg-white">
+		<div className="fixed bottom-0 mx-auto w-full bg-white">
 			<div className="flex justify-center py-4 border-t border-black-200">
 				<button className="mx-4 px-6 py-4 bg-main-color rounded-md text-white font-bold">
 					저장하기

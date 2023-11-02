@@ -4,8 +4,9 @@ import EsseentialPrice from "./EsseentialPrice";
 import EssentialCategory from "./EssentialCategory";
 import EssentialHeadCount from "./EssentialHeadCount";
 import EssentialMentoringPeriod from "./EssentialMentoringPeriod";
+import { IMentoringEditProps } from "@/interface/mentoringInfo";
 
-const EssentialInfo = () => {
+const EssentialInfo = ({ data }: IMentoringEditProps) => {
 	return (
 		<div className="mt-8 sm:px-8 px-6 py-10 border border-black-200 rounded-md">
 			<div className="flex items-center font-semibold text-lg">
@@ -13,10 +14,10 @@ const EssentialInfo = () => {
 				필수 정보 입력란
 			</div>
 			<div className="flex flex-col mt-8 lg:w-[45rem] md:w-[30rem] sm:w-[25rem] mx-auto">
-				<EssentialMentoringPeriod />
-				<EssentialHeadCount />
-				<EsseentialPrice />
-				<EssentialCategory />
+				<EssentialMentoringPeriod data={data} />
+				<EssentialHeadCount data={data} />
+				<EsseentialPrice data={data} />
+				<EssentialCategory data={data} />
 			</div>
 		</div>
 	);

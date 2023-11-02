@@ -1,4 +1,4 @@
-import { IMentoringDetailProps } from "@/interface/mentoringDetailInfo";
+import { IMentoringDetailProps } from "@/interface/mentoringInfo";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";

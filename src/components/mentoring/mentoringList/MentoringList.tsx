@@ -8,7 +8,9 @@ const MentoringList = () => {
 				<Link to={"/mentoringDetail/3"}>
 					<MentoringItem />
 				</Link>
-				<MentoringItem />
+				<Link to={"/mentoringDetail/2"}>
+					<MentoringItem />
+				</Link>
 				<MentoringItem />
 				<MentoringItem />
 				<MentoringItem />
