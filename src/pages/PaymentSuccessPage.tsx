@@ -4,7 +4,7 @@ import Spinner from "@components/common/spinner/Spinner";
 import { lazy, Suspense } from "react";
 
 const PaymentSuccess = lazy(
-	() => import("@/components/mentoringDetail/PaymentSuccess"),
+	() => import("@/components/mentoringpayment/PaymentSuccess"),
 );
 
 const PaymentSuccessPage = () => {
