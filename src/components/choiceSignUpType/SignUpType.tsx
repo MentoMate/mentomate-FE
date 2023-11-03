@@ -29,7 +29,11 @@ const SignUpType = () => {
 						<KakaoTalkLogo width={30} height={30} />
 					</div>
 					<a
-						href={`https://kauth.kakao.com/oauth/authorize?client_id=32a3e303979a0fb4452018aa4b939e28&redirect_uri=http://localhost:5173/login/oauth2/code/kakao&response_type=code`}
+						href={`https://kauth.kakao.com/oauth/authorize?client_id=${
+							import.meta.env.VITE_KAKAO_APP_KEY
+						}&redirect_uri=${
+							import.meta.env.VITE_KAKAO_REDIRECT_URI
+						}&response_type=code`}
 						className="px-1 text-sm sm:text-lg font-bold"
 					>
 						카카오로 회원가입
@@ -40,7 +44,9 @@ const SignUpType = () => {
 				</div>
 			</div>
 			<a
-				href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=OrpnAjlttv8YhDER3qSW&state=1234&redirect_uri=http://localhost:5173/login/oauth2/code/naver"
+				href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${
+					import.meta.env.VITE_NAVER_APP_KEY
+				}&redirect_uri=${import.meta.env.VITE_NAVER_REDIRECT_URI}`}
 				className="flex flex justify-between items-center my-3 py-4 rounded-md bg-green-100 text-white"
 			>
 				<div className="flex">
