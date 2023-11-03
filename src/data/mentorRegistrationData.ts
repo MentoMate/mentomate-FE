@@ -14,7 +14,7 @@ const INITIAL_VALUE: IMentorRegistrationForm = {
 	introduceContent: "",
 };
 
-export const mentorRegistrationForm = atom<IMentorRegistrationForm>({
+export const mentorRegistrationData = atom<IMentorRegistrationForm>({
 	key: "mentorRegistrationForm",
 	default: INITIAL_VALUE,
 });

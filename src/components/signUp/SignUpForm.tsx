@@ -1,11 +1,8 @@
 import { SIGN_UP_SCHEMA } from "@/constants/schema";
-import { useFetch } from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
-import { alertHandler } from "@/utils/alert";
-import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 import { checkRegex } from "@/utils/regex";
 import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
-import Loading from "@components/common/spinner/Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,7 +19,7 @@ interface IFormValues {
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
-	const { fetchCall, isLoading, isError } = useFetch();
+	const { fetchDataUseAxios } = useAxios();
 	const [email, setEmail] = useInput("");
 	const [nickName, setNickName] = useInput("");
 	const [isBtnEmailDuplicateDisabled, setIsBtnEmailDuplicateDisabled] =
@@ -76,16 +73,14 @@ const SignUpForm = () => {
 			return;
 		}
 
-		const response = await fetchCall("/api/user/join/email", {
+		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
+			url: "/user/join/email",
+			data: {
 				email: data.email,
 				password: data.password,
 				nickName: data.nickName,
-			}),
+			},
 		});
 
 		if (response && response.status === 200) {
@@ -96,12 +91,10 @@ const SignUpForm = () => {
 	const emailDuplicateCheckHandler = async () => {
 		const email = getValues("email");
 
-		const response = await fetchCall(
-			`/api/user/join/email/auth?email=${email}`,
-			{
-				method: "POST",
-			},
-		);
+		const response = await fetchDataUseAxios("defaultAxios", {
+			method: "POST",
+			url: `/user/join/email/auth?email=${email}`,
+		});
 
 		if (response && response.status === 200) {
 			setIsEmailDuplicate(true);
@@ -113,12 +106,11 @@ const SignUpForm = () => {
 	};
 
 	const nickNameDuplicateHandler = async () => {
-		const response = await fetchCall(
-			`/api/user/join/email/nickname/verify?nickName=${nickName}`,
-			{
-				method: "POST",
-			},
-		);
+		console.log("asd");
+		const response = await fetchDataUseAxios("defaultAxios", {
+			method: "POST",
+			url: `/user/join/email/nickname/verify?nickName=${nickName}`,
+		});
 
 		if (response && response.status === 200) {
 			setIsNickNameDuplicate(true);
@@ -138,9 +130,9 @@ const SignUpForm = () => {
 		}
 	};
 
-	useEffect(() => {
-		isLoading ? lockScroll() : cancelLockScroll();
-	}, [isLoading]);
+	// useEffect(() => {
+	// 	isLoading ? lockScroll() : cancelLockScroll();
+	// }, [isLoading]);
 
 	useEffect(() => {
 		checkRegex("email", email);
@@ -165,15 +157,6 @@ const SignUpForm = () => {
 			setBtnNickNameDuplicateDisabled(false);
 		}
 	}, [nickName]);
-
-	useEffect(() => {
-		if (isError) {
-			alertHandler(
-				"warning",
-				"회원가입이 정상적으로 등록되지 않았습니다. 잠시후에 다시 시도해주세요.",
-			);
-		}
-	}, [isError]);
 
 	return (
 		<>
@@ -282,7 +265,6 @@ const SignUpForm = () => {
 					회원가입
 				</button>
 			</form>
-			{isLoading && <Loading />}
 		</>
 	);
 };

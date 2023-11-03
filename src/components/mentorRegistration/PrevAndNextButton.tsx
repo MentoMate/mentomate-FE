@@ -1,4 +1,4 @@
-import { mentorRegistrationForm } from "@/data/mentorRegistrationData";
+import { mentorRegistrationData } from "@/data/mentorRegistrationData";
 import { useFetch } from "@/hooks/useFetch";
 import { registrationStep } from "@/state/mentorRegistrationStep";
 import { selectedCategoryState } from "@/state/selectedCategory";
@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 const PrevAndNextButton = () => {
 	const selectedCategoryType = useRecoilValue(selectedCategoryState);
 	const [step, setStep] = useRecoilState(registrationStep);
-	const mentorRegistraionFormData = useRecoilValue(mentorRegistrationForm);
+	const mentorRegistraionFormData = useRecoilValue(mentorRegistrationData);
 	const { fetchCall } = useFetch();
 	const navigate = useNavigate();
 

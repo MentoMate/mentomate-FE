@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import PrevAndNextButton from "./PrevAndNextButton";
 import RegistrationStepContainer from "./registrationStep/RegistartionStepContainer";
 import { useSetRecoilState } from "recoil";
-import { mentorRegistrationForm } from "@/data/mentorRegistrationData";
+import { mentorRegistrationData } from "@/data/mentorRegistrationData";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { registrationStep } from "@/state/mentorRegistrationStep";
 
 const MentorRegistrationContainer = () => {
 	const setCategory = useSetRecoilState(selectedCategoryState);
 	const setStep = useSetRecoilState(registrationStep);
-	const setMentorRegistrationForm = useSetRecoilState(mentorRegistrationForm);
+	const setMentorRegistrationForm = useSetRecoilState(mentorRegistrationData);
 
 	useEffect(() => {
 		setStep(1);

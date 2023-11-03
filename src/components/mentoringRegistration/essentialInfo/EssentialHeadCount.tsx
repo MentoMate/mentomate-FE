@@ -1,22 +1,25 @@
-import { mentoringRegistrationData } from "@/data/mentoringRegistrationData";
+import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
 import { ReactComponent as People } from "@assets/svg/people.svg";
 import { useRecoilState } from "recoil";
-import { ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 
 const HeadCount = () => {
-	const [formData, setFormData] = useRecoilState(mentoringRegistrationData);
+	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
+	const [replaceHeadCount, setReplaceHeadCount] = useState<string>("");
 
 	const onChangeHeadCountHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
+		const numericValue = parseFloat(value.replace(/,/g, ""));
 
-		setFormData({
-			title: formData.title,
-			content: formData.content,
-			startDate: formData.startDate,
-			endDate: formData.endDate,
-			numberOfPeople: Number(value),
-			amount: formData.amount,
-			category: formData.category,
+		if (!isNaN(numericValue)) {
+			setReplaceHeadCount(numericValue.toLocaleString());
+		} else {
+			setReplaceHeadCount("");
+		}
+
+		setForm({
+			...form,
+			numberOfPeople: numericValue,
 		});
 	};
 
@@ -29,9 +32,11 @@ const HeadCount = () => {
 			<div className="flex items-center grow">
 				<div className="flex items-center sm:ml-2 border border-black-200 rounded-sm focus:outline-main-color">
 					<input
-						type="number"
-						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-md outline-none"
+						type="text"
+						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-md outline-none text-right placeholder:text-sm"
 						onChange={onChangeHeadCountHandler}
+						placeholder="인원수를 입력하세요"
+						value={replaceHeadCount}
 					/>
 					<div className="pl-2 pr-4">명</div>
 				</div>

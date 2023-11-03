@@ -8,6 +8,7 @@ interface IMentoringRegistrationForm {
 	readonly numberOfPeople: number;
 	readonly amount: number;
 	readonly category: string;
+	readonly thumbNailImg: File | null;
 }
 
 const INITIAL_VALUE: IMentoringRegistrationForm = {
@@ -18,9 +19,10 @@ const INITIAL_VALUE: IMentoringRegistrationForm = {
 	numberOfPeople: 0,
 	amount: 0,
 	category: "",
+	thumbNailImg: null,
 };
 
-export const mentoringRegistrationData = atom<IMentoringRegistrationForm>({
-	key: "mentoringRegistrationData",
+export const mentoringRegistrationForm = atom<IMentoringRegistrationForm>({
+	key: "mentoringRegistrationForm",
 	default: INITIAL_VALUE,
 });
