@@ -1,10 +1,10 @@
-import { mentorRegistrationForm } from "@/data/mentorRegistrationData";
+import { mentorRegistrationData } from "@/data/mentorRegistrationData";
 import { ChangeEvent, useMemo } from "react";
 import ReactQuill from "react-quill";
 import { useRecoilState } from "recoil";
 
 const ThirdStep = () => {
-	const [form, setForm] = useRecoilState(mentorRegistrationForm);
+	const [form, setForm] = useRecoilState(mentorRegistrationData);
 
 	const onChangeHandler = (
 		type: string,

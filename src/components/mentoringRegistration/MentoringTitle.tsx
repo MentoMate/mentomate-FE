@@ -1,24 +1,17 @@
-import { mentoringRegistrationData } from "@/data/mentoringRegistrationData";
-import { useState, ChangeEvent } from "react";
+import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
+import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 
 const MentoringTitle = () => {
-	const [title, setTitle] = useState<number>(0);
-	const [formData, setFormData] = useRecoilState(mentoringRegistrationData);
+	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
 
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 
-		setFormData({
+		setForm({
+			...form,
 			title: value,
-			content: formData.content,
-			startDate: formData.startDate,
-			endDate: formData.endDate,
-			numberOfPeople: formData.numberOfPeople,
-			amount: formData.amount,
-			category: formData.category,
 		});
-		setTitle(value.length);
 	};
 
 	return (
@@ -30,7 +23,7 @@ const MentoringTitle = () => {
 				maxLength={50}
 				onChange={onChangeTitleHandler}
 			/>
-			<div className="w-[5rem] text-black-300">{title} / 50</div>
+			<div className="w-[5rem] text-black-300">{form.title.length} / 50</div>
 		</div>
 	);
 };
