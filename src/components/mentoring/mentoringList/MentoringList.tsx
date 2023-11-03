@@ -5,7 +5,7 @@ const MentoringList = () => {
 	return (
 		<>
 			<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
-				<Link to={"/mentoringDetail/3"}>
+				<Link to={"/mentoringDetail/4"}>
 					<MentoringItem />
 				</Link>
 				<Link to={"/mentoringDetail/2"}>

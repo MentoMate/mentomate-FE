@@ -1,11 +1,44 @@
 import Category from "@/components/common/search/Category";
-import { IMentoringEditProps } from "@/interface/mentoringInfo";
+import { categories } from "@/constants/categories";
+import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { ReactComponent as CategoryIcon } from "@assets/svg/category.svg";
-import { useSetRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 
-const EssentialCategory = ({ data }: IMentoringEditProps) => {
-	const setCategory = useSetRecoilState(selectedCategoryState);
+const EssentialCategory = () => {
+	const [form, setForm] = useRecoilState(mentoringEditForm);
+	const [category, setCategory] = useRecoilState(selectedCategoryState);
+
+	const findCategoryByKey = () => {
+		for (let categoryType in categories) {
+			const categoryList = categories[categoryType];
+			categoryList.forEach((category) => {
+				if (category.key === form.category) {
+					setCategory({
+						selectedCategoryType: categoryType,
+						selectedCategory: category.key,
+						selectedCategoryName: category.categoryName,
+					});
+					setForm({
+						...form,
+						category: category.key,
+					});
+				}
+			});
+		}
+	};
+
+	useEffect(() => {
+		findCategoryByKey();
+	}, []);
+
+	useEffect(() => {
+		setForm({
+			...form,
+			category: category.selectedCategory,
+		});
+	}, [category]);
 
 	return (
 		<div className="flex sm:flex-row flex-col mt-4 lg:text-lg md:text-base text-sm">

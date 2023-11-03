@@ -20,7 +20,13 @@ import NaverCallback from "@components/login/NaverCallback";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			suspense: true,
+		},
+	},
+});
 
 function Router() {
 	return (

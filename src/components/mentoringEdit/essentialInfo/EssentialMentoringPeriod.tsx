@@ -1,49 +1,29 @@
-import { IMentoringEditProps } from "@/interface/mentoringInfo";
+import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Tidle } from "@assets/svg/tidle.svg";
 import { ko } from "date-fns/esm/locale";
-import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useRecoilState } from "recoil";
 
-interface ISelectedDate {
-	startDate: Date;
-	endDate: Date;
-}
-
-const INITAL_VALUE = {
-	startDate: new Date(),
-	endDate: new Date(),
-};
-
-const MentoringPeriod = ({ data }: IMentoringEditProps) => {
-	const [selectedDate, setSelectedDate] = useState<ISelectedDate>(INITAL_VALUE);
+const MentoringPeriod = () => {
+	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const changeSelectedDateHandler = (type: string, date: Date) => {
 		if (type === "startDate") {
-			setSelectedDate({
+			setForm({
+				...form,
 				startDate: date,
-				endDate: selectedDate.endDate,
 			});
 		}
 
 		if (type === "endDate") {
-			setSelectedDate({
-				startDate: selectedDate.startDate,
+			setForm({
+				...form,
 				endDate: date,
 			});
 		}
 	};
-
-	useEffect(() => {
-		const mentoringStartDate = new Date(data.startDate);
-		const mentoringEndDate = new Date(data.endDate);
-
-		setSelectedDate({
-			startDate: mentoringStartDate,
-			endDate: mentoringEndDate,
-		});
-	}, []);
 
 	return (
 		<div className="flex sm:flex-row flex-col lg:text-lg md:text-base text-sm">
@@ -55,7 +35,7 @@ const MentoringPeriod = ({ data }: IMentoringEditProps) => {
 				<div>
 					<DatePicker
 						locale={ko}
-						selected={selectedDate.startDate}
+						selected={form.startDate}
 						onChange={(date) => {
 							if (date) {
 								changeSelectedDateHandler("startDate", date);
@@ -69,7 +49,7 @@ const MentoringPeriod = ({ data }: IMentoringEditProps) => {
 				<div>
 					<DatePicker
 						locale={ko}
-						selected={selectedDate.endDate}
+						selected={form.endDate}
 						onChange={(date) => {
 							if (date) {
 								changeSelectedDateHandler("endDate", date);

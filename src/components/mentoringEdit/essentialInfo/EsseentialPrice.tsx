@@ -1,8 +1,19 @@
-import { IMentoringEditProps } from "@/interface/mentoringInfo";
+import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { ReactComponent as PriceIcon } from "@assets/svg/cash.svg";
 import { ReactComponent as WonSign } from "@assets/svg/wonSign.svg";
+import { ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
 
-const EsseentialPrice = ({ data }: IMentoringEditProps) => {
+const EsseentialPrice = () => {
+	const [form, setForm] = useRecoilState(mentoringEditForm);
+
+	const onChangeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		setForm({
+			...form,
+			amount: Number(e.target.value),
+		});
+	};
+
 	return (
 		<div className="flex sm:flex-row flex-col mt-4 lg:text-lg md:text-base text-sm">
 			<div className="flex items-center sm:mb-0 mb-2 lg:w-[10rem] md:w-[8rem] sm:w-[6rem] w-[7rem] font-semibold">
@@ -14,7 +25,8 @@ const EsseentialPrice = ({ data }: IMentoringEditProps) => {
 					<input
 						type="number"
 						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-sm outline-none"
-						defaultValue={data.amount}
+						defaultValue={form.amount}
+						onChange={onChangeAmountHandler}
 					/>
 					<div className="pl-2 pr-4">
 						<WonSign width={15} height={15} />
