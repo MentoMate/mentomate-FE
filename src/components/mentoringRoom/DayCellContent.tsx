@@ -1,5 +1,5 @@
 import React from "react";
-import { IDayCellContentprop } from "@/types/DayCellContentprop";
+import { IDayCellContentprop } from "@/types/daycellcontentprop";
 const DayCellContent: React.FC<IDayCellContentprop> = ({
 	arg,
 	hoveredDate,
@@ -34,7 +34,7 @@ const DayCellContent: React.FC<IDayCellContentprop> = ({
 			{arg.dayNumberText}
 			{isHovered && !hasEvent && (
 				<button
-					className="hover-button absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 -mt-2 mr-2 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+					className="hover-button absolute top-10 right-0 transform translate-x-1/2 -translate-y-1/2 -mt-2 mr-2 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
 					onClick={(e) => onClickAddEventhandler(e, formatDate)}
 				>
 					+
