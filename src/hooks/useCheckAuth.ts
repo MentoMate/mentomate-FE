@@ -7,6 +7,7 @@ const URLS = [
 	"/mentoringRoom",
 	"/mentorRegistration",
 	"/mentoringRegistration",
+	"/payment",
 ];
 
 const useCheckAuth = (url: string) => {
