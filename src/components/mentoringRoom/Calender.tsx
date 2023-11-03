@@ -4,6 +4,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import DayCellContent from "./DayCellContent";
 import ScduleAddModal from "./ScduleAddModal";
 import ScduleReadModal from "./ScduleReadModal";
+import MentoringInfoModal from "./MentoringInfoModal";
+
 import { useState } from "react";
 
 const events = [
@@ -61,22 +63,36 @@ const MyCalendar = () => {
 		setIsScduleReadModalOpen(true); // 모달 열기
 	};
 
+	const eventMouseEnterHandler = (mouseEnterInfo: any) => {
+		const eventDom = mouseEnterInfo.el;
+		eventDom.classList.add("cursor-pointer");
+	};
+
+	const eventMouseLeaveHandler = (mouseLeaveInfo: any) => {
+		const eventDom = mouseLeaveInfo.el;
+		eventDom.classList.remove("cursor-pointer");
+	};
 	return (
 		<>
-			<FullCalendar
-				plugins={[interactionPlugin, dayGridPlugin]}
-				initialView="dayGridMonth"
-				height="100vh"
-				events={events}
-				headerToolbar={{
-					start: "title",
-					center: "",
-					end: "prev next",
-				}}
-				locale="ko"
-				dayCellContent={customDayCellContent} // 날짜 셀의 모양과 동작을 제어
-				eventClick={onClickReadEventhandler} // 이벤트 클릭 핸들러 연결
-			/>
+			<div className="relative mx-auto mt-10 mb-20 lg:w-[60rem] ">
+				<FullCalendar
+					plugins={[interactionPlugin, dayGridPlugin]}
+					initialView="dayGridMonth"
+					height="80vh"
+					events={events}
+					headerToolbar={{
+						start: "title",
+						center: "",
+						end: "prev next",
+					}}
+					locale="ko"
+					dayCellContent={customDayCellContent} // 날짜 셀의 모양과 동작을 제어
+					eventClick={onClickReadEventhandler} // 이벤트 클릭 핸들러 연결
+					eventMouseEnter={eventMouseEnterHandler} // 마우스가 이벤트에 진입할 때
+					eventMouseLeave={eventMouseLeaveHandler} // 마우스가 이벤트를 떠날 때
+				/>
+				<MentoringInfoModal />
+			</div>
 
 			{isScduleAddModalOpen && (
 				<ScduleAddModal //일정 추가 시 모달

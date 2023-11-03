@@ -17,7 +17,7 @@ const MentoringInfoModal = () => {
 		<>
 			<button
 				title="mentoring_info"
-				className="absolute top-0 right-32 bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded-full z-10 shadow-lg hidden lg:flex "
+				className="absolute top-0 right-40 bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded-full z-10 shadow-lg hidden lg:flex "
 				onClick={onClickOpenModal}
 			>
 				멘토링 정보

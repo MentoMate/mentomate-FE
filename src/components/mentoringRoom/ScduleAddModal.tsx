@@ -34,15 +34,17 @@ const ScduleAddModal: React.FC<IScduleAddModalProps> = ({
 							value={text}
 							onChange={setText}
 							modules={quillModules}
-							className="h-[10rem] lg:h-[30rem] mb-12"
+							className="h-[5rem] lg:h-[25rem] mb-12 sm:h-[10rem]"
 							placeholder="설명"
 						/>
-						<button
-							type="submit"
-							className=" px-3 py-4 bg-main-color rounded-md font-bold text-white text-lg"
-						>
-							추가하기
-						</button>
+						<div className="flex justify-between  mt-12 lg:mt-4">
+							<button
+								type="submit"
+								className="h-[3rem] lg:h-[5rem] w-[15rem] lg:w-[55rem] lg:px-3 lg:py-4 bg-main-color rounded-md font-bold text-white text-lg"
+							>
+								추가하기
+							</button>
+						</div>
 					</form>
 
 					{/* 모달 내용을 추가하세요 */}
