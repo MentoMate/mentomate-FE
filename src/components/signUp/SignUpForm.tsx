@@ -1,18 +1,14 @@
 import { SIGN_UP_SCHEMA } from "@/constants/schema";
-import { useFetch } from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
-import { alertHandler } from "@/utils/alert";
-import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 import { checkRegex } from "@/utils/regex";
 import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
-import Loading from "@components/common/spinner/Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import EmailAuthentication from "./EmailAuthentication";
 import SuccessAuthenticationMsg from "./SuccessAuthenticationMsg";
-import useAxios from "@/hooks/useAxios";
 
 interface IFormValues {
 	readonly email: string;
@@ -23,7 +19,6 @@ interface IFormValues {
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
-	const { fetchCall, isLoading, isError } = useFetch();
 	const { fetchDataUseAxios } = useAxios();
 	const [email, setEmail] = useInput("");
 	const [nickName, setNickName] = useInput("");
@@ -135,9 +130,9 @@ const SignUpForm = () => {
 		}
 	};
 
-	useEffect(() => {
-		isLoading ? lockScroll() : cancelLockScroll();
-	}, [isLoading]);
+	// useEffect(() => {
+	// 	isLoading ? lockScroll() : cancelLockScroll();
+	// }, [isLoading]);
 
 	useEffect(() => {
 		checkRegex("email", email);
@@ -162,15 +157,6 @@ const SignUpForm = () => {
 			setBtnNickNameDuplicateDisabled(false);
 		}
 	}, [nickName]);
-
-	useEffect(() => {
-		if (isError) {
-			alertHandler(
-				"warning",
-				"회원가입이 정상적으로 등록되지 않았습니다. 잠시후에 다시 시도해주세요.",
-			);
-		}
-	}, [isError]);
 
 	return (
 		<>
@@ -279,7 +265,6 @@ const SignUpForm = () => {
 					회원가입
 				</button>
 			</form>
-			{isLoading && <Loading />}
 		</>
 	);
 };
