@@ -21,7 +21,7 @@ const KaKaoCallback = () => {
 				method: "GET",
 			},
 		);
-
+		console.log(response);
 		if (response && response.status === 200) {
 			if (!response.headers.get("isSignUp")) {
 				setCookie("accessToken", response.headers.get("Authorization"));
