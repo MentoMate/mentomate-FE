@@ -111,9 +111,10 @@ const SignUpForm = () => {
 	};
 
 	const nickNameDuplicateHandler = async () => {
-		const response = await fetchDataUseAxios("default", {
+		console.log("asd");
+		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "POST",
-			url: `/user/join/email/nickname/verify?nickname=${nickName}`,
+			url: `/user/join/email/nickname/verify?nickName=${nickName}`,
 		});
 
 		if (response && response.status === 200) {
