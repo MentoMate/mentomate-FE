@@ -1,11 +1,16 @@
+import { Link } from "react-router-dom";
 import MentoringItem from "./MentoringItem";
 
 const MentoringList = () => {
 	return (
 		<>
 			<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
-				<MentoringItem />
-				<MentoringItem />
+				<Link to={"/mentoringDetail/4"}>
+					<MentoringItem />
+				</Link>
+				<Link to={"/mentoringDetail/2"}>
+					<MentoringItem />
+				</Link>
 				<MentoringItem />
 				<MentoringItem />
 				<MentoringItem />

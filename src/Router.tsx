@@ -1,25 +1,33 @@
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
-import MentoringPage from "@pages/MentoringPage";
-import MentoringDetailPage from "@pages/MentoringDetailPage";
-import MentorPage from "@pages/MentorPage";
-import MentoringRoom from "@pages/MentoringRoomPage";
-import MentorDetailPage from "@pages/MentorDetailPage";
-import CommunityPage from "@pages/CommunityPage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
+import CommunityPage from "@pages/CommunityPage";
 import LoginPage from "@pages/LoginPage";
 import MainPage from "@pages/MainPage";
+import MentorDetailPage from "@pages/MentorDetailPage";
+import MentorPage from "@pages/MentorPage";
 import MentorRegistrationPage from "@pages/MentorRegistrationPage";
-import SignUpPage from "@pages/SignUpPage";
+import MentoringDetailPage from "@pages/MentoringDetailPage";
+import MentoringEditPage from "@pages/MentoringEditPage";
+import MentoringPage from "@pages/MentoringPage";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
-import SuccessSignUpPage from "@pages/SuccessSignUpPage";
+import MentoringRoom from "@pages/MentoringRoomPage";
 import Mypage from "@pages/MyPage";
+import SignUpPage from "@pages/SignUpPage";
+import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 import PaymentPage from "./pages/PaymentPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
 import KaKaoCallback from "@components/login/KaKaoCallback";
 import NaverCallback from "@components/login/NaverCallback";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
-const queryClient = new QueryClient();
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			suspense: true,
+		},
+	},
+});
 
 function Router() {
 	return (
@@ -33,7 +41,14 @@ function Router() {
 				<Route path="/signUp" element={<SignUpPage />} />
 				<Route path="/successSignUp" element={<SuccessSignUpPage />} />
 				<Route path="/mentoring" element={<MentoringPage />} />
-				<Route path="/mentoringDetail" element={<MentoringDetailPage />} />
+				<Route
+					path="/mentoringDetail/:mentoringId"
+					element={<MentoringDetailPage />}
+				/>
+				<Route
+					path="/mentoringEdit/:mentoringId"
+					element={<MentoringEditPage />}
+				/>
 				<Route path="/mentor" element={<MentorPage />} />
 				<Route path="/mentoringRoom" element={<MentoringRoom />} />
 				<Route path="/mentorDetail" element={<MentorDetailPage />} />

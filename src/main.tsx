@@ -4,6 +4,7 @@ import Router from "./Router.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { CookiesProvider } from "react-cookie";
+import "react-quill/dist/quill.snow.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
