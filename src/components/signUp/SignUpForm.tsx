@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import EmailAuthentication from "./EmailAuthentication";
 import SuccessAuthenticationMsg from "./SuccessAuthenticationMsg";
+import useAxios from "@/hooks/useAxios";
 
 interface IFormValues {
 	readonly email: string;
@@ -23,6 +24,7 @@ interface IFormValues {
 const SignUpForm = () => {
 	const navigate = useNavigate();
 	const { fetchCall, isLoading, isError } = useFetch();
+	const { fetchDataUseAxios } = useAxios();
 	const [email, setEmail] = useInput("");
 	const [nickName, setNickName] = useInput("");
 	const [isBtnEmailDuplicateDisabled, setIsBtnEmailDuplicateDisabled] =
@@ -76,16 +78,14 @@ const SignUpForm = () => {
 			return;
 		}
 
-		const response = await fetchCall("/api/user/join/email", {
+		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
+			url: "/user/join/email",
+			data: {
 				email: data.email,
 				password: data.password,
 				nickName: data.nickName,
-			}),
+			},
 		});
 
 		if (response && response.status === 200) {
@@ -96,12 +96,10 @@ const SignUpForm = () => {
 	const emailDuplicateCheckHandler = async () => {
 		const email = getValues("email");
 
-		const response = await fetchCall(
-			`/api/user/join/email/auth?email=${email}`,
-			{
-				method: "POST",
-			},
-		);
+		const response = await fetchDataUseAxios("defaultAxios", {
+			method: "POST",
+			url: `/user/join/email/auth?email=${email}`,
+		});
 
 		if (response && response.status === 200) {
 			setIsEmailDuplicate(true);
@@ -113,12 +111,10 @@ const SignUpForm = () => {
 	};
 
 	const nickNameDuplicateHandler = async () => {
-		const response = await fetchCall(
-			`/api/user/join/email/nickname/verify?nickName=${nickName}`,
-			{
-				method: "POST",
-			},
-		);
+		const response = await fetchDataUseAxios("default", {
+			method: "POST",
+			url: `/user/join/email/nickname/verify?nickname=${nickName}`,
+		});
 
 		if (response && response.status === 200) {
 			setIsNickNameDuplicate(true);
