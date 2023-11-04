@@ -1,4 +1,5 @@
 import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
+
 const SecondSection = () => {
 	return (
 		<>

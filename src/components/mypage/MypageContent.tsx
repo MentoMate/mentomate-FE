@@ -7,6 +7,7 @@ import MypageFavoriteMentoring from "./mypagefavoritementoring/MypageFavoriteMen
 import MypageFollow from "./mypagefollow/MypageFollow";
 import MypagePayment from "./mypagepayment/MypagePayment";
 import MypageWriting from "./mypagewriting/MypageWriting";
+
 const MypageContent = ({ selectedItem }: any) => {
 	return (
 		<div className="md:mx-0 mx-4 lg:w-[45rem] md:w-[25rem] w-[17rem] h-full lg:h-[70rem] ">

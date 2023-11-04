@@ -1,5 +1,7 @@
-import Card from "../firstsection/MentoringCard";
+import { IMentoringCard } from "@/interface/mainPageMentoringCard";
+import MentoringCard from "../MentoringCard";
 import { useState } from "react";
+
 const cardData = [
 	{
 		key: 1,
@@ -40,12 +42,12 @@ const cardData = [
 ];
 
 const DeadlineMentoringList = () => {
-	const [mentoringData] = useState(cardData);
+	const [mentoringData] = useState<IMentoringCard[]>(cardData);
 
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mx-auto mb-32">
-			{mentoringData.map((card: any) => (
-				<Card
+			{mentoringData.map((card: IMentoringCard) => (
+				<MentoringCard
 					key={card.key}
 					src={card.src}
 					name={card.name}

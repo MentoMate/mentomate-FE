@@ -4,7 +4,8 @@ import ReactQuill from "react-quill";
 import { quillModules } from "@/modules/quillModules";
 import "react-quill/dist/quill.snow.css";
 import { IScduleAddModalProps } from "@/types/scduleaddmodalprop";
-const ScduleAddModal: React.FC<IScduleAddModalProps> = ({
+
+const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 	formattedDate,
 	closeModal,
 }) => {
@@ -53,4 +54,4 @@ const ScduleAddModal: React.FC<IScduleAddModalProps> = ({
 		</>
 	);
 };
-export default ScduleAddModal;
+export default ScheduleAddModal;

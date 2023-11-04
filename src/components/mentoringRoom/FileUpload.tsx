@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 const FileUpload = () => {
-	const [selectedFile, setSelectedFile] = useState(null);
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-	const handleFileChange = (e) => {
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		e.persist();
-		const file = e.target.files[0];
-		setSelectedFile(file);
+		if (e.target.files !== null) {
+			const file = e.target.files[0];
+			setSelectedFile(file);
+		}
 	};
-	console.log(selectedFile);
 
 	const handleUpload = () => {
 		if (selectedFile) {

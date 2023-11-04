@@ -1,17 +1,16 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
-import { useMemo } from "react";
+import { useMemo, ChangeEvent } from "react";
 import { IScduleReadModalProps } from "@/types/scdulereadmodalprop";
-const ScduleEdit: React.FC<IScduleReadModalProps> = ({
-	formattedDate,
-	closeModal,
+
+const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 	eventText,
 	eventDescription,
 }) => {
 	const [descriptionText, setDescriptionText] = useState(eventDescription);
 	const [titleText, setTitleText] = useState(eventText);
 	const [titleLength, setTitleLength] = useState(eventText.length);
-	const onChangeTitleHandler = (e) => {
+	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		// 제목 입력 필드 값 변경 시 호출되는 함수
 		const newValue = e.target.value;
 		setTitleText(newValue);
@@ -83,4 +82,4 @@ const ScduleEdit: React.FC<IScduleReadModalProps> = ({
 		</form>
 	);
 };
-export default ScduleEdit;
+export default ScheduleEdit;
