@@ -39,6 +39,21 @@ const SaveAndBackButton = () => {
 		});
 	};
 
+	const onClickBackBtnHandler = () => {
+		Swal.fire({
+			icon: "question",
+			title: "정말 돌아가시겠습니까?",
+			text: `확인을 누르시면 입력한 내용을 저장되지 않습니다.`,
+			showCancelButton: true,
+			confirmButtonText: "확인",
+			cancelButtonText: "취소",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				navigate(`/mentoringDetail/${mentoringId}`);
+			}
+		});
+	};
+
 	return (
 		<>
 			<div className="fixed bottom-0 mx-auto w-full bg-white">
@@ -49,7 +64,10 @@ const SaveAndBackButton = () => {
 					>
 						저장하기
 					</button>
-					<button className="mx-4 px-6 py-4 bg-white border border-black-200 rounded-md">
+					<button
+						className="mx-4 px-6 py-4 bg-white border border-black-200 rounded-md"
+						onClick={onClickBackBtnHandler}
+					>
 						돌아가기
 					</button>
 				</div>
