@@ -2,13 +2,39 @@ import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Star } from "@assets/svg/star.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
-import { IMentoringItem, IMentoringProps } from "@/interface/mentoringItem";
+import { IMentoringItem } from "@/interface/mentoringItem";
+import { useState, useEffect } from "react";
 
 interface IProps {
-	mentoringItem: IMentoringItem;
+	readonly mentoringItem: IMentoringItem;
+}
+
+interface IReplaceAmountAndHeadCount {
+	readonly replaceAmount: string;
+	readonly replaceHeadCount: string;
 }
 
 const MentoringItem = ({ mentoringItem }: IProps) => {
+	const [replaceAmountAndHeadCount, setReplaceAmountAndHeadCount] =
+		useState<IReplaceAmountAndHeadCount>({
+			replaceAmount: "",
+			replaceHeadCount: "",
+		});
+
+	const replaceHandler = () => {
+		const replaceAmount = mentoringItem.amount.toLocaleString();
+		const replaceHeadCount = mentoringItem.amount.toLocaleString();
+
+		setReplaceAmountAndHeadCount({
+			replaceAmount,
+			replaceHeadCount,
+		});
+	};
+
+	useEffect(() => {
+		replaceHandler();
+	}, []);
+
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
@@ -37,13 +63,13 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 			<div className="flex items-center mt-2 ml-3">
 				<Cash width={23} height={23} />
 				<div className="ml-2 font-semibold text-sm">
-					{mentoringItem.amount} ₩
+					{replaceAmountAndHeadCount.replaceAmount} ₩
 				</div>
 			</div>
-			<div className="flex items-center mt-2 mb-4 ml-3">
+			<div className="flex items-center mt-2 ml-3">
 				<Group width={23} height={23} />
 				<div className="ml-2 font-semibold text-sm">
-					{mentoringItem.numberOfPeople}명
+					{replaceAmountAndHeadCount.replaceHeadCount} 명
 				</div>
 			</div>
 		</div>

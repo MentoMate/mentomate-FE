@@ -11,7 +11,3 @@ export interface IMentoringItem {
 	title: string;
 	userId: number;
 }
-
-export interface IMentoringProps {
-	data: IMentoringItem[];
-}
