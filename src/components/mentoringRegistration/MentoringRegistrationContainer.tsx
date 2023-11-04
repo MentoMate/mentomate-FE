@@ -1,5 +1,5 @@
 import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRecoilState } from "recoil";
@@ -100,6 +100,19 @@ const MentoringRegistrationContainer = () => {
 			"align",
 			"color",
 		];
+	}, []);
+
+	useEffect(() => {
+		setForm({
+			title: "",
+			content: "",
+			startDate: new Date(),
+			endDate: new Date(),
+			numberOfPeople: 0,
+			amount: 0,
+			category: "",
+			thumbNailImg: null,
+		});
 	}, []);
 
 	return (
