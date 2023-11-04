@@ -5,16 +5,17 @@ import { alertHandler } from "@/utils/alert";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
+import Loading from "../common/spinner/Loading";
 
 const SaveAndBackButton = () => {
-	const { fetchDataUseAxios } = useAxios();
+	const { isLoading, fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 
 	const form = useRecoilValue(mentoringRegistrationForm);
 	const category = useRecoilValue(selectedCategoryState);
 
 	const submitHandler = async () => {
-		const data = JSON.stringify({
+		const data = {
 			title: form.title,
 			content: form.content,
 			startDate: form.startDate,
@@ -23,10 +24,13 @@ const SaveAndBackButton = () => {
 			amount: form.amount,
 			category: category.selectedCategory,
 			status: "PROGRESS",
-		});
+		};
 
 		const formData = new FormData();
-		formData.append("mentoringDto", data);
+		formData.append(
+			"mentoringDto",
+			new Blob([JSON.stringify(data)], { type: "application/json" }),
+		);
 		if (form.thumbNailImg) {
 			formData.append("thumbNailImg", form.thumbNailImg);
 		}
@@ -34,9 +38,6 @@ const SaveAndBackButton = () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: "/mentoring",
-			headers: {
-				"Content-Type": "multipart/form-data",
-			},
 			data: formData,
 		});
 
@@ -76,8 +77,6 @@ const SaveAndBackButton = () => {
 	};
 
 	const onClickRegisterHandler = () => {
-		console.log(form);
-		console.log(category.selectedCategory);
 		if (!checkFormHandler()) return;
 		Swal.fire({
 			icon: "question",
@@ -93,19 +92,22 @@ const SaveAndBackButton = () => {
 	};
 
 	return (
-		<div className="sticky bottom-0 mx-auto w-full bg-white">
-			<div className="flex justify-center py-8 border-t border-black-200">
-				<button
-					className="mx-4 px-6 py-4 bg-main-color rounded-md text-white font-bold"
-					onClick={onClickRegisterHandler}
-				>
-					저장하기
-				</button>
-				<button className="mx-4 px-6 py-4 bg-white border border-black-200 rounded-md">
-					돌아가기
-				</button>
+		<>
+			{isLoading && <Loading />}
+			<div className="sticky bottom-0 mx-auto w-full bg-white">
+				<div className="flex justify-center py-8 border-t border-black-200">
+					<button
+						className="mx-4 px-6 py-4 bg-main-color rounded-md text-white font-bold"
+						onClick={onClickRegisterHandler}
+					>
+						저장하기
+					</button>
+					<button className="mx-4 px-6 py-4 bg-white border border-black-200 rounded-md">
+						돌아가기
+					</button>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
