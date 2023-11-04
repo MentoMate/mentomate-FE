@@ -5,6 +5,7 @@ interface IMentorRegistrationForm {
 	readonly careerYear: number;
 	readonly careerMonth: number;
 	readonly introduceContent: string;
+	readonly img: null | File;
 }
 
 const INITIAL_VALUE: IMentorRegistrationForm = {
@@ -12,9 +13,10 @@ const INITIAL_VALUE: IMentorRegistrationForm = {
 	careerYear: 0,
 	careerMonth: 0,
 	introduceContent: "",
+	img: null,
 };
 
-export const mentorRegistrationData = atom<IMentorRegistrationForm>({
+export const mentorRegistrationForm = atom<IMentorRegistrationForm>({
 	key: "mentorRegistrationForm",
 	default: INITIAL_VALUE,
 });

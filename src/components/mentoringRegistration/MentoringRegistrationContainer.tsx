@@ -1,5 +1,5 @@
 import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRecoilState } from "recoil";
@@ -8,6 +8,7 @@ import SaveAndBackButton from "./SaveAndBackButton";
 import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
 import AWS from "aws-sdk";
 import Loading from "../common/spinner/Loading";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 
 const MentoringRegistrationContainer = () => {
 	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
@@ -24,6 +25,7 @@ const MentoringRegistrationContainer = () => {
 			const file = inputDOM.files?.[0];
 			try {
 				setIsImgUploading(true);
+				lockScroll();
 				//업로드할 파일의 이름으로 Date 사용
 				const name = Date.now();
 				//생성한 s3 관련 설정들
@@ -54,6 +56,7 @@ const MentoringRegistrationContainer = () => {
 				console.log(error);
 			} finally {
 				setIsImgUploading(false);
+				cancelLockScroll();
 			}
 		});
 	};
@@ -100,6 +103,19 @@ const MentoringRegistrationContainer = () => {
 			"align",
 			"color",
 		];
+	}, []);
+
+	useEffect(() => {
+		setForm({
+			title: "",
+			content: "",
+			startDate: new Date(),
+			endDate: new Date(),
+			numberOfPeople: 0,
+			amount: 0,
+			category: "",
+			thumbNailImg: null,
+		});
 	}, []);
 
 	return (

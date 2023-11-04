@@ -21,4 +21,6 @@ interface IMentoringInfo {
 	readonly countWatch: number;
 	readonly registerDate: Date;
 	readonly updateDate: Date;
+	readonly name: string;
+	readonly followers: number;
 }

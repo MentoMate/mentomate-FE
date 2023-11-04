@@ -65,8 +65,6 @@ const MentoringEditContainer = () => {
 		});
 	};
 
-	// if (isLoading) return <Loading />;
-
 	useEffect(() => {
 		if (data) {
 			setForm({
@@ -81,16 +79,12 @@ const MentoringEditContainer = () => {
 		}
 	}, [data]);
 
-	useEffect(() => {
-		console.log(form);
-	}, [form]);
-
 	return (
 		<Suspense fallback={<Loading />}>
 			<div className="min-h-screen bg-black-100">
 				<div className="mx-auto lg:w-[60rem] md:w-[40rem] sm:w-[35rem] w-[20rem] min-h-[55rem] bg-white">
 					<div className="sm:mx-16 mx-4 py-20">
-						<h1 className="font-bold md:text-xl text-lg">멘토링 등록</h1>
+						<h1 className="font-bold md:text-xl text-lg">멘토링 수정</h1>
 						<EssentialInfoContainer />
 						<MentoringTitle />
 						<ReactQuill

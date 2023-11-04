@@ -1,9 +1,8 @@
-import { mentorRegistrationData } from "@/data/mentorRegistrationData";
-import { useFetch } from "@/hooks/useFetch";
+import { mentorRegistrationForm } from "@/data/mentorRegistrationForm";
+import useAxios from "@/hooks/useAxios";
 import { registrationStep } from "@/state/mentorRegistrationStep";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { alertHandler } from "@/utils/alert";
-import { getCookie } from "@/utils/cookies";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
@@ -11,8 +10,8 @@ import Swal from "sweetalert2";
 const PrevAndNextButton = () => {
 	const selectedCategoryType = useRecoilValue(selectedCategoryState);
 	const [step, setStep] = useRecoilState(registrationStep);
-	const mentorRegistraionFormData = useRecoilValue(mentorRegistrationData);
-	const { fetchCall } = useFetch();
+	const form = useRecoilValue(mentorRegistrationForm);
+	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 
 	const onClickbuttonHandler = (type: string) => {
@@ -40,25 +39,32 @@ const PrevAndNextButton = () => {
 		}
 	};
 
-	const submit = async () => {
-		const token = getCookie("accessToken");
-		const sumCareer =
-			mentorRegistraionFormData.careerYear * 12 +
-			mentorRegistraionFormData.careerMonth;
+	const submitHandler = async () => {
+		const sumCareer = form.careerYear * 12 + form.careerMonth;
 
-		const response = await fetchCall("/api/user/profile", {
+		const data = {
+			name: form.name,
+			career: sumCareer,
+			introduce: form.introduceContent,
+			mainCategory: selectedCategoryType.selectedCategoryType,
+			middleCategory: selectedCategoryType.selectedCategory,
+		};
+
+		const formData = new FormData();
+
+		formData.append(
+			"userProfile",
+			new Blob([JSON.stringify(data)], { type: "application/json" }),
+		);
+
+		if (form.img) {
+			formData.append("img", form.img);
+		}
+
+		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
-			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-type": "application/json",
-			},
-			body: JSON.stringify({
-				name: mentorRegistraionFormData.name,
-				career: sumCareer,
-				introduce: mentorRegistraionFormData.introduceContent,
-				mainCategory: selectedCategoryType.selectedCategoryType,
-				middleCategory: selectedCategoryType.selectedCategory,
-			}),
+			url: "/user/profile",
+			data: formData,
 		});
 
 		if (response && response.status === 200) {
@@ -77,10 +83,10 @@ const PrevAndNextButton = () => {
 
 	const onClickRegisterHandler = async () => {
 		if (
-			mentorRegistraionFormData.name === "" ||
-			mentorRegistraionFormData.introduceContent === "" ||
-			(mentorRegistraionFormData.careerYear === 0 &&
-				mentorRegistraionFormData.careerMonth === 0)
+			form.name === "" ||
+			form.introduceContent === "" ||
+			form.img === null ||
+			(form.careerYear === 0 && form.careerMonth === 0)
 		) {
 			alertHandler("error", "필수정보를 입력해주세요.");
 			return;
@@ -94,7 +100,7 @@ const PrevAndNextButton = () => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				submit();
+				submitHandler();
 			}
 		});
 	};
