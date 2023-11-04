@@ -1,10 +1,8 @@
 import { mentorRegistrationForm } from "@/data/mentorRegistrationForm";
 import useAxios from "@/hooks/useAxios";
-import { useFetch } from "@/hooks/useFetch";
 import { registrationStep } from "@/state/mentorRegistrationStep";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { alertHandler } from "@/utils/alert";
-import { getCookie } from "@/utils/cookies";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
@@ -42,7 +40,6 @@ const PrevAndNextButton = () => {
 	};
 
 	const submitHandler = async () => {
-		const token = getCookie("accessToken");
 		const sumCareer = form.careerYear * 12 + form.careerMonth;
 
 		const data = {
