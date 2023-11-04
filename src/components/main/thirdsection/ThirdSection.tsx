@@ -1,5 +1,6 @@
 import MentorCardList from "./MentorCardList";
-import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
+import { ReactComponent as Arrow } from "@assets/svg/arrow.svg";
+
 const ThirdSection = () => {
 	return (
 		<>

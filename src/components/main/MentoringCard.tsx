@@ -1,13 +1,14 @@
-import { ReactComponent as Star } from "@/assets/svg/star.svg";
 import { ReactComponent as Calendar } from "@/assets/svg/blackCalendar.svg";
 import { ReactComponent as Cash } from "@/assets/svg/cash.svg";
 import { ReactComponent as Group } from "@/assets/svg/people.svg";
+import { ReactComponent as Star } from "@/assets/svg/star.svg";
+import { IMentoringCard } from "@/interface/mainPageMentoringCard";
 
-const MentoringCard = (props: any) => {
+const MentoringCard = (data: IMentoringCard) => {
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg">
 			<img
-				src={props.src}
+				src={data.src}
 				alt="asd"
 				className="w-full h-[15rem] rounded-t-lg object-cover"
 			/>
@@ -16,7 +17,7 @@ const MentoringCard = (props: any) => {
 					<Star width={20} height={20} className="mr-1" />
 					<div className="font-semibold text-sm">4.9</div>
 				</div>
-				<div className="ml-3 text-md font-semibold">{props.name}</div>
+				<div className="ml-3 text-md font-semibold">{data.name}</div>
 			</div>
 			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
 				치어리더가 되기 위한 준비과정 그리고 노하우

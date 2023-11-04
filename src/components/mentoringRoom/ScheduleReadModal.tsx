@@ -7,8 +7,9 @@ import "react-quill/dist/quill.snow.css";
 import { IScduleReadModalProps } from "@/types/scdulereadmodalprop";
 import FileUpload from "./FileUpload";
 import MentoringFileList from "./MentoringFileList";
-import ScduleEdit from "./ScduleEdit";
-const ScduleReadModal: React.FC<IScduleReadModalProps> = ({
+import ScduleEdit from "./ScheduleEdit";
+
+const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 	formattedDate,
 	closeModal,
 	eventText,
@@ -81,4 +82,4 @@ const ScduleReadModal: React.FC<IScduleReadModalProps> = ({
 		</>
 	);
 };
-export default ScduleReadModal;
+export default ScheduleReadModal;

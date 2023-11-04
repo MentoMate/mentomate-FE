@@ -1,14 +1,6 @@
-import { ReactComponent as GoogleLogo } from "@assets/svg/googleLogo.svg";
 import { ReactComponent as KakaoLogo } from "@assets/svg/kakaoTalkLogo.svg";
 import { ReactComponent as NaverLogo } from "@assets/svg/naverLogo.svg";
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-
-declare global {
-	interface Window {
-		naver: any;
-	}
-}
 
 const SocialLogin = () => {
 	return (

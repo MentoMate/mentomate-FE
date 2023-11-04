@@ -2,8 +2,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import DayCellContent from "./DayCellContent";
-import ScduleAddModal from "./ScduleAddModal";
-import ScduleReadModal from "./ScduleReadModal";
+import ScduleAddModal from "./ScheduleAddModal";
+import ScduleReadModal from "./ScheduleReadModal";
 import MentoringInfoModal from "./MentoringInfoModal";
 
 import { useState } from "react";

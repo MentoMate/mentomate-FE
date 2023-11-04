@@ -1,4 +1,5 @@
 import AllMentoringDataList from "./AllMentoringDataList";
+
 const SixSection = () => {
 	return (
 		<>

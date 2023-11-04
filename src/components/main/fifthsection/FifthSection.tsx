@@ -1,5 +1,6 @@
 import DeadlineMentoringList from "./DeadlineMentoringList";
 import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
+
 const FifthSection = () => {
 	return (
 		<>
