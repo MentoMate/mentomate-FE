@@ -51,7 +51,7 @@ function Router() {
 				/>
 				<Route path="/mentor" element={<MentorPage />} />
 				<Route path="/mentoringRoom" element={<MentoringRoom />} />
-				<Route path="/mentorDetail" element={<MentorDetailPage />} />
+				<Route path="/mentorDetail/:mentorId" element={<MentorDetailPage />} />
 				<Route path="/community" element={<CommunityPage />} />
 				<Route path="/communityDetail" element={<CommunityDetailPage />} />
 				<Route path="/mypage" element={<Mypage />} />
