@@ -4,7 +4,7 @@ import { ReactComponent as WonSign } from "@assets/svg/wonSign.svg";
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 
-const EsseentialPrice = () => {
+const EssentialPrice = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const onChangeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,4 +37,4 @@ const EsseentialPrice = () => {
 	);
 };
 
-export default EsseentialPrice;
+export default EssentialPrice;

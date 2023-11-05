@@ -1,11 +1,11 @@
 import { ReactComponent as CheckList } from "@assets/svg/checklist.svg";
 import "react-datepicker/dist/react-datepicker.css";
-import EsseentialPrice from "./EsseentialPrice";
+import EssentialPrice from "./EssentialPrice";
 import EssentialCategory from "./EssentialCategory";
 import EssentialHeadCount from "./EssentialHeadCount";
 import EssentialMentoringPeriod from "./EssentialMentoringPeriod";
 
-const EssentialInfo = () => {
+const EssentialInfoContainer = () => {
 	return (
 		<div className="mt-8 sm:px-8 px-6 py-10 border border-black-200 rounded-md">
 			<div className="flex items-center font-semibold text-lg">
@@ -15,11 +15,11 @@ const EssentialInfo = () => {
 			<div className="flex flex-col mt-8 lg:w-[45rem] md:w-[30rem] sm:w-[25rem] mx-auto">
 				<EssentialMentoringPeriod />
 				<EssentialHeadCount />
-				<EsseentialPrice />
+				<EssentialPrice />
 				<EssentialCategory />
 			</div>
 		</div>
 	);
 };
 
-export default EssentialInfo;
+export default EssentialInfoContainer;
