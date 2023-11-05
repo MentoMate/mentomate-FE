@@ -7,7 +7,7 @@ import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
 
 const MentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
-	const { data } = useQuery("useTokenAxios", async () => {
+	const { data } = useQuery("mentoringList", async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			url: `/mentoring?page=1&Size=12`,
 			method: "GET",

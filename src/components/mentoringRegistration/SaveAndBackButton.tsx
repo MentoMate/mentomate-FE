@@ -2,12 +2,14 @@ import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
 import useAxios from "@/hooks/useAxios";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { alertHandler } from "@/utils/alert";
+import { RefObject } from "react";
+import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
-const SaveAndBackButton = () => {
+const SaveAndBackButton = (reactQuillRef: any) => {
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 
@@ -15,6 +17,22 @@ const SaveAndBackButton = () => {
 	const category = useRecoilValue(selectedCategoryState);
 
 	const submitHandler = async () => {
+		const imageArr = new Array();
+		if (
+			reactQuillRef.current !== null &&
+			reactQuillRef.current.editor !== undefined
+		) {
+			const textEditorContent = reactQuillRef.current.editor.editor.delta.ops;
+
+			console.log(textEditorContent);
+
+			for (let element of textEditorContent) {
+				if (element.insert.image !== undefined) {
+					imageArr.push(element.insert.image);
+				}
+			}
+		}
+
 		const data = {
 			title: form.title,
 			content: form.content,
@@ -24,6 +42,8 @@ const SaveAndBackButton = () => {
 			amount: form.amount,
 			category: category.selectedCategory,
 			status: "PROGRESS",
+			images: imageArr,
+			key: form.key,
 		};
 
 		const formData = new FormData();

@@ -1,19 +1,45 @@
 import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
+import { alertHandler } from "@/utils/alert";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRecoilState } from "recoil";
+import Loading from "../common/spinner/Loading";
 import MentoringTitle from "./MentoringTitle";
 import SaveAndBackButton from "./SaveAndBackButton";
 import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
-import AWS from "aws-sdk";
-import Loading from "../common/spinner/Loading";
-import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
+
+//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
+const formats = [
+	"header",
+	"bold",
+	"italic",
+	"list",
+	"indent",
+	"image",
+	"align",
+	"color",
+];
 
 const MentoringRegistrationContainer = () => {
 	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
-	const quillRef = useRef(null);
+	const reactQuillRef = useRef<any>(null);
+	const divRef = useRef<HTMLDivElement>(null);
+
+	const uploadImageHandler = () => {
+		const characters =
+			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		let randomKey = "";
+
+		for (let i = 0; i < 12; i++) {
+			const randomIndex = Math.floor(Math.random() * characters.length);
+			randomKey += characters.charAt(randomIndex);
+		}
+
+		setForm({ ...form, key: randomKey });
+	};
 
 	const imageHandler = async () => {
 		const inputDOM = document.createElement("input");
@@ -21,42 +47,31 @@ const MentoringRegistrationContainer = () => {
 		inputDOM.setAttribute("accept", "image/*");
 		inputDOM.click();
 		inputDOM.addEventListener("change", async () => {
-			//이미지를 담아 전송할 file을 만든다
-			const file = inputDOM.files?.[0];
-			try {
-				setIsImgUploading(true);
-				lockScroll();
-				//업로드할 파일의 이름으로 Date 사용
-				const name = Date.now();
-				//생성한 s3 관련 설정들
-				AWS.config.update({
-					region: import.meta.env.VITE_REGION,
-					accessKeyId: import.meta.env.VITE_ACCESS_KEY,
-					secretAccessKey: import.meta.env.VITE_SECRET_KEY,
-				});
-				//앞서 생성한 file을 담아 s3에 업로드하는 객체를 만든다
-				const upload = new AWS.S3.ManagedUpload({
-					params: {
-						ACL: "public-read",
-						Bucket: "mentomate", //버킷 이름
-						Key: `upload/${name}`,
-						Body: file,
-					},
-				});
-				//이미지 업로드 후
-				//곧바로 업로드 된 이미지 url을 가져오기
-				const IMG_URL = await upload.promise().then((res) => res.Location);
-				//useRef를 사용해 에디터에 접근한 후
-				//에디터의 현재 커서 위치에 이미지 삽입
-				const editor = quillRef.current.getEditor();
-				const range = editor.getSelection();
-				// 가져온 위치에 이미지를 삽입한다
-				editor.insertEmbed(range.index, "image", IMG_URL);
-			} catch (error) {
-				console.log(error);
-			} finally {
-				setIsImgUploading(false);
-				cancelLockScroll();
+			if (inputDOM.files !== null) {
+				try {
+					setIsImgUploading(true);
+					lockScroll();
+
+					const file = inputDOM.files[0];
+
+					if (file.size >= 500000) {
+						alertHandler(
+							"error",
+							"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
+						);
+						return;
+					}
+
+					// TODO 이미지 업로드 API
+				} catch (error) {
+					alertHandler(
+						"error",
+						"이미지 업로드가 실패하였습니다. 다시 시도해주세요.",
+					);
+				} finally {
+					setIsImgUploading(false);
+					cancelLockScroll();
+				}
 			}
 		});
 	};
@@ -91,21 +106,8 @@ const MentoringRegistrationContainer = () => {
 		};
 	}, []);
 
-	//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-	const formats = useMemo(() => {
-		return [
-			"header",
-			"bold",
-			"italic",
-			"list",
-			"indent",
-			"image",
-			"align",
-			"color",
-		];
-	}, []);
-
 	useEffect(() => {
+		uploadImageHandler();
 		setForm({
 			title: "",
 			content: "",
@@ -115,8 +117,19 @@ const MentoringRegistrationContainer = () => {
 			amount: 0,
 			category: "",
 			thumbNailImg: null,
+			key: "",
 		});
 	}, []);
+
+	useEffect(() => {
+		if (divRef.current) {
+			divRef.current.scrollIntoView({
+				behavior: "instant",
+				block: "start",
+				inline: "end",
+			});
+		}
+	}, [form.content]);
 
 	return (
 		<>
@@ -126,17 +139,19 @@ const MentoringRegistrationContainer = () => {
 						<h1 className="font-bold md:text-xl text-lg">멘토링 등록</h1>
 						<EssentialInfoContainer />
 						<MentoringTitle />
-						<ReactQuill
-							ref={quillRef}
-							className="py-8 rounded-md"
-							theme="snow"
-							modules={modules}
-							formats={formats}
-							onChange={(prev) => onChangeContentHandler(prev)}
-						/>
+						<div ref={divRef}>
+							<ReactQuill
+								ref={reactQuillRef}
+								className="py-8 rounded-md"
+								theme="snow"
+								modules={modules}
+								formats={formats}
+								onChange={(prev) => onChangeContentHandler(prev)}
+							/>
+						</div>
 					</div>
 				</div>
-				<SaveAndBackButton />
+				<SaveAndBackButton reactQuillRef={reactQuillRef} />
 			</div>
 			{isImgUploading && <Loading />}
 		</>
