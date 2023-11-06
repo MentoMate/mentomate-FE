@@ -19,7 +19,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
 import KaKaoCallback from "@components/login/KaKaoCallback";
 import NaverCallback from "@components/login/NaverCallback";
-import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PaymentSuccessPage from "@pages/PaymentSuccessPage";
+import CommunityRegistrationPage from "@pages/CommunityRegistrationPage";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -53,7 +54,14 @@ function Router() {
 				<Route path="/mentoringRoom" element={<MentoringRoom />} />
 				<Route path="/mentorDetail/:mentorId" element={<MentorDetailPage />} />
 				<Route path="/community" element={<CommunityPage />} />
-				<Route path="/communityDetail" element={<CommunityDetailPage />} />
+				<Route
+					path="/communityDetail/:communityId"
+					element={<CommunityDetailPage />}
+				/>
+				<Route
+					path="/communityRegistration"
+					element={<CommunityRegistrationPage />}
+				/>
 				<Route path="/mypage" element={<Mypage />} />
 				<Route path="/payment" element={<PaymentPage />} />
 				<Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
