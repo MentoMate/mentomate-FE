@@ -13,6 +13,7 @@ const MentoringDetailContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 	const { mentoringId } = useParams();
+
 	const { data } = useQuery("mentoringInfo", async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			url: `/mentoring/${mentoringId}`,

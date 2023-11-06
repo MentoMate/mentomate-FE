@@ -12,6 +12,7 @@ const MentoringContainer = () => {
 			url: `/mentoring?page=1&Size=12`,
 			method: "GET",
 		});
+		console.log(response);
 		if (response) return response.data.content;
 	});
 

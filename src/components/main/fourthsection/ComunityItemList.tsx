@@ -2,7 +2,7 @@ import ComunituItem from "./ComunityItem";
 
 const ComunityItemList = () => {
 	return (
-		<div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 place-items-center mx-auto mb-32 ">
+		<div className="grid grid-cols-1 lg:grid-cols-3  place-items-center mx-auto mb-32 ">
 			<ComunituItem />
 			<ComunituItem />
 			<ComunituItem />
