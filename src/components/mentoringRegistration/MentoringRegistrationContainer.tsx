@@ -42,7 +42,7 @@ const MentoringRegistrationContainer = () => {
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: `/upload?key=mentoring/9DCDXzRekq7k`,
+			url: `/upload?key=mentoring/${randomKey}`,
 		});
 
 		if (response && response.status !== 200) {
