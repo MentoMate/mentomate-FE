@@ -9,6 +9,7 @@ import Loading from "../common/spinner/Loading";
 import MentoringTitle from "./MentoringTitle";
 import SaveAndBackButton from "./SaveAndBackButton";
 import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
+import useAxios from "@/hooks/useAxios";
 
 //옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
 const formats = [
@@ -25,10 +26,11 @@ const formats = [
 const MentoringRegistrationContainer = () => {
 	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
+	const { fetchDataUseAxios } = useAxios();
 	const reactQuillRef = useRef<any>(null);
 	const divRef = useRef<HTMLDivElement>(null);
 
-	const uploadImageHandler = () => {
+	const makeRandomKeyHandler = async () => {
 		const characters =
 			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		let randomKey = "";
@@ -38,7 +40,45 @@ const MentoringRegistrationContainer = () => {
 			randomKey += characters.charAt(randomIndex);
 		}
 
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: `/upload?key=mentoring/9DCDXzRekq7k`,
+		});
+
+		if (response && response.status !== 200) {
+			makeRandomKeyHandler();
+			return;
+		}
+
 		setForm({ ...form, key: randomKey });
+	};
+
+	const uploadImageHandler = async (file: File) => {
+		if (file.size >= 500000) {
+			alertHandler(
+				"error",
+				"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
+			);
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append("img", file);
+
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "POST",
+			url: `/upload?key=mentoring/${form.key}`,
+			data: formData,
+		});
+
+		if (response && response.status === 200) {
+			return response.data;
+		} else {
+			alertHandler(
+				"error",
+				"이미지 업로드에 실패하였습니다. 잠시 후에 다시 시도해주세요.",
+			);
+		}
 	};
 
 	const imageHandler = async () => {
@@ -53,16 +93,10 @@ const MentoringRegistrationContainer = () => {
 					lockScroll();
 
 					const file = inputDOM.files[0];
-
-					if (file.size >= 500000) {
-						alertHandler(
-							"error",
-							"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
-						);
-						return;
-					}
-
-					// TODO 이미지 업로드 API
+					const imageUrl = await uploadImageHandler(file);
+					const editor = reactQuillRef.current.getEditor();
+					const range = editor.getSelection();
+					editor.insertEmbed(range.index, "image", imageUrl);
 				} catch (error) {
 					alertHandler(
 						"error",
@@ -107,7 +141,6 @@ const MentoringRegistrationContainer = () => {
 	}, []);
 
 	useEffect(() => {
-		uploadImageHandler();
 		setForm({
 			title: "",
 			content: "",
@@ -119,6 +152,7 @@ const MentoringRegistrationContainer = () => {
 			thumbNailImg: null,
 			key: "",
 		});
+		makeRandomKeyHandler();
 	}, []);
 
 	useEffect(() => {
