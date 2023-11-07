@@ -9,7 +9,6 @@ interface IProps {
 }
 
 const MentoringCard = ({ mentoringcard }: IProps) => {
-	console.log(mentoringcard);
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
@@ -20,7 +19,10 @@ const MentoringCard = ({ mentoringcard }: IProps) => {
 			<div className="flex justify-center items-center mt-2">
 				<div className="flex justify-center items-center px-2 py-1 bg-white rounded-xl shadow-sm">
 					<Star width={20} height={20} className="mr-1" />
-					<div className="font-semibold text-sm">4.9</div>
+					<div className="font-semibold text-sm">
+						{" "}
+						{mentoringcard.rating ? mentoringcard.rating : "0"}
+					</div>
 				</div>
 				<div className="ml-3 text-md font-semibold">
 					{mentoringcard.name} 멘토

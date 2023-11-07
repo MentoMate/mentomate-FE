@@ -1,6 +1,6 @@
 import { IMentoringCard } from "@/interface/mainPageMentoringCard";
 import MentoringCard from "../MentoringCard";
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
 export interface IMentoringProps {
