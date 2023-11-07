@@ -6,4 +6,7 @@ export interface IMentoringCard {
 	readonly amount: string;
 	readonly numberOfPeople: string;
 	readonly category: string;
+	readonly name: string;
+	readonly rating: string | null;
+	readonly mentoringId: number;
 }

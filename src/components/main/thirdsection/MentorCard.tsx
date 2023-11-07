@@ -1,10 +1,16 @@
+import { IMentorItem } from "@/interface/mainPageMentor";
 import { ReactComponent as Star } from "@assets/svg/star.svg";
 
-const MentorCard = () => {
+interface Iprops {
+	mentorcard: IMentorItem;
+}
+
+const MentorCard = ({ mentorcard }: Iprops) => {
+	console.log(mentorcard);
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg">
 			<img
-				src="src/assets/image/sample.jpg"
+				src={mentorcard.uploadUrl}
 				alt="asd"
 				className="w-full h-[15rem] rounded-t-lg object-cover"
 			/>
@@ -16,13 +22,12 @@ const MentorCard = () => {
 					<Star width={20} height={20} className="mr-1" />
 					<div className="font-semibold text-sm">4.9</div>
 				</div>
-				<div className="ml-3 text-md font-semibold">김도아 멘토</div>
+				<div className="ml-3 text-md font-semibold">{mentorcard.name} 멘토</div>
 			</div>
 			<p className="w-[13rem] h-[3rem] mx-3 mt-2 mb-4 font-semibold title-overflow">
-				안녕하세여 치어리더 전문 김도아 멘토입니다. 안녕하세여 치어리더 전문
-				김도아 멘토입니다. 안녕하세여 치어리더 전문 김도아 멘토입니다.
-				안녕하세여 치어리더 전문 김도아 멘토입니다. 안녕하세여 치어리더 전문
-				김도아 멘토입니다.
+				{mentorcard.introduce
+					? mentorcard.introduce.replace(/<\/?[^>]+(>|$)/g, "")
+					: ""}
 			</p>
 		</div>
 	);

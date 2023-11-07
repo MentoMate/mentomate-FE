@@ -22,7 +22,9 @@ const MentoringCard = ({ mentoringcard }: IProps) => {
 					<Star width={20} height={20} className="mr-1" />
 					<div className="font-semibold text-sm">4.9</div>
 				</div>
-				<div className="ml-3 text-md font-semibold">이름 멘토</div>
+				<div className="ml-3 text-md font-semibold">
+					{mentoringcard.name} 멘토
+				</div>
 			</div>
 			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
 				{mentoringcard.title}

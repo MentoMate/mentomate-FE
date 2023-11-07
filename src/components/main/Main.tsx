@@ -13,21 +13,22 @@ const Main = () => {
 
 	const { data } = useQuery("mainInfo", async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
-			url: "/mentoring/main/",
+			url: "/mentoring/main",
 			method: "GET",
 		});
 		console.log(response);
 		if (response) return response.data;
 	});
+
 	return (
 		<>
 			<BannerSection />
 			<FirstSection data={data.MentoringByCountWatch} />
 			<SecondSection />
-			<ThirdSection />
-			<FourthSection />
+			<ThirdSection data={data.MentorByRating} />
+			<FourthSection data={data.MentorByRating} />
 			<FifthSection data={data.MentoringByEndDate} />
-			<SixSection />
+			<SixSection data={data.Count} />
 		</>
 	);
 };
