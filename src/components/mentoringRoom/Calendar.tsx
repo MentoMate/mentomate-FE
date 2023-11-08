@@ -5,8 +5,8 @@ import DayCellContent from "./DayCellContent";
 import ScduleAddModal from "./ScheduleAddModal";
 import ScduleReadModal from "./ScheduleReadModal";
 import MentoringInfoModal from "./MentoringInfoModal";
-
-import { useState } from "react";
+import * as CalendarUtils from "./CalendarUtils";
+import { useState, useEffect } from "react";
 
 const events = [
 	{
@@ -34,6 +34,55 @@ const MyCalendar = () => {
 	const [eventDescription, setEventDescription] = useState(""); // 선택된 이벤트 세부정보
 	const [isScduleReadModalOpen, setIsScduleReadModalOpen] = useState(false); //선택된 이벤트에 대한 모달 상태
 
+	const [calendarEvents, setCalendarEvents] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const mentoringPeriod = {
+		// 멘토링 기간
+		startdate: "2023-12-08",
+		enddate: "2025-05-03",
+	};
+
+	const [scheduleDate, setScheduleDate] = useState({
+		// 첫 시작 달력 화면
+		year: parseInt(mentoringPeriod.startdate.split("-")[0], 10), // 멘토링 기간중 시작기간의 년도,
+		month: parseInt(mentoringPeriod.startdate.split("-")[1], 10), // 멘토링 기간중 시작기간의 월
+	});
+
+	const [validRange, setValidRange] = useState({
+		// 풀캘린더 라이브러리 달력 범위 지정
+		start: mentoringPeriod.startdate,
+		end: `${
+			scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
+		}-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`,
+	});
+
+	useEffect(() => {
+		setIsLoading(true);
+		// API 호출로 해당 월의 스케줄 데이터를 가져오는 로직을 추가
+		// mentoring/schedule/month?month=${scheduleDate.year}-${scheduleDate.month}
+		// 데이터를 가져온 후 캘린더 이벤트 객체로 변환하여 setCalendarEvents로 설정
+		// 데이터를 가져온 후 isLoading을 false로 설정
+	}, [scheduleDate]);
+
+	const handlePrevMonth = () => {
+		CalendarUtils.handlePrevMonth(
+			scheduleDate,
+			mentoringPeriod,
+			setScheduleDate,
+			setValidRange,
+		);
+	};
+
+	const handleNextMonth = () => {
+		CalendarUtils.handleNextMonth(
+			scheduleDate,
+			mentoringPeriod,
+			setScheduleDate,
+			setValidRange,
+		);
+	};
+	console.log(validRange);
 	const customDayCellContent = (arg: any) => (
 		<DayCellContent
 			arg={arg}
@@ -72,9 +121,16 @@ const MyCalendar = () => {
 		const eventDom = mouseLeaveInfo.el;
 		eventDom.classList.remove("cursor-pointer");
 	};
+
 	return (
 		<>
 			<div className="relative mx-auto mt-10 mb-20 lg:w-[60rem] ">
+				<button className="bg-main-color" onClick={handlePrevMonth}>
+					이전 달
+				</button>
+				<button className="bg-main-color" onClick={handleNextMonth}>
+					다음 달
+				</button>
 				<FullCalendar
 					plugins={[interactionPlugin, dayGridPlugin]}
 					initialView="dayGridMonth"
@@ -85,6 +141,7 @@ const MyCalendar = () => {
 						center: "",
 						end: "prev next",
 					}}
+					validRange={validRange}
 					locale="ko"
 					dayCellContent={customDayCellContent} // 날짜 셀의 모양과 동작을 제어
 					eventClick={onClickReadEventhandler} // 이벤트 클릭 핸들러 연결
