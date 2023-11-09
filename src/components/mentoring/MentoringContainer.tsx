@@ -8,11 +8,11 @@ import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
 const MentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const { data } = useQuery("mentoringList", async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			url: `/mentoring?page=1&Size=12`,
+		const response = await fetchDataUseAxios("defaultAxios", {
+			url: `/mentoring/search?sortBy=latest&page=1&Size=12`,
 			method: "GET",
 		});
-		if (response) return response.data.content;
+		if (response) return response.data;
 	});
 
 	return (

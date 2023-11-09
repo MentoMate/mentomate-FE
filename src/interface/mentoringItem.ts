@@ -7,7 +7,7 @@ export interface IMentoringItem {
 	grade: number;
 	name: string;
 	numberOfPeople: number;
-	thumbNailImg: string;
+	uploadUrl: string;
 	title: string;
 	userId: number;
 }

@@ -55,6 +55,9 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 			formData.append("thumbNailImg", form.thumbNailImg);
 		}
 
+		console.log(formData.get("mentoringSave"));
+		console.log(formData.get("thumbNailImg"));
+
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: "/mentoring",

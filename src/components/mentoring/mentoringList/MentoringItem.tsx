@@ -38,7 +38,7 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
-				src={mentoringItem.thumbNailImg}
+				src={mentoringItem.uploadUrl}
 				alt="asd"
 				className="w-full h-[15rem] rounded-t-lg object-contain"
 			/>

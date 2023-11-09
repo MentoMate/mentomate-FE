@@ -20,6 +20,8 @@ const EssentialThumbNail = () => {
 
 	const changeThumbNailImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.currentTarget.files) {
+			if (!e.currentTarget.files[0]) return;
+
 			const thumbNailImgFile = e.currentTarget.files[0];
 			makePreviewImgHandler(thumbNailImgFile);
 
