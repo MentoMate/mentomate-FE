@@ -1,13 +1,13 @@
 export interface IMentoringItem {
 	id: number;
-	amount: number;
-	category: string;
+	writer: string;
+	title: string;
 	startDate: string;
 	endDate: string;
-	grade: number;
-	name: string;
+	amount: number;
 	numberOfPeople: number;
+	category: string;
+	grade: number;
 	uploadUrl: string;
-	title: string;
-	userId: number;
+	countWatch: number;
 }

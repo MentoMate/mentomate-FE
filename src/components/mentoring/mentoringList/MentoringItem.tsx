@@ -48,7 +48,7 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 					<div className="font-semibold text-sm">{mentoringItem.grade}</div>
 				</div>
 				<div className="ml-3 text-md font-semibold">
-					{mentoringItem.name} 멘토님
+					{mentoringItem.writer} 멘토님
 				</div>
 			</div>
 			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
