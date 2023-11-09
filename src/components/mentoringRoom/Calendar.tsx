@@ -39,7 +39,7 @@ const MyCalendar = () => {
 
 	const mentoringPeriod = {
 		// 멘토링 기간
-		startdate: "2023-12-08",
+		startdate: "2023-06-08",
 		enddate: "2025-05-03",
 	};
 
