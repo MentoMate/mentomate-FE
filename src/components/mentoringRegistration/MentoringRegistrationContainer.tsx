@@ -10,18 +10,7 @@ import MentoringTitle from "./MentoringTitle";
 import SaveAndBackButton from "./SaveAndBackButton";
 import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
 import useAxios from "@/hooks/useAxios";
-
-//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-const formats = [
-	"header",
-	"bold",
-	"italic",
-	"list",
-	"indent",
-	"image",
-	"align",
-	"color",
-];
+import { FORMATS } from "@/constants/reactQuill";
 
 const MentoringRegistrationContainer = () => {
 	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
@@ -179,7 +168,7 @@ const MentoringRegistrationContainer = () => {
 								className="py-8 rounded-md"
 								theme="snow"
 								modules={modules}
-								formats={formats}
+								formats={FORMATS}
 								onChange={(prev) => onChangeContentHandler(prev)}
 							/>
 						</div>

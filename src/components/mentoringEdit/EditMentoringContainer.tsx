@@ -9,22 +9,12 @@ import Loading from "../common/spinner/Loading";
 import EditMentoringTitle from "./EditMentoringTitle";
 import EditSaveAndBackButton from "./EditSaveAndBackButton";
 import EditEssentialInfoContainer from "./essentialInfo/EditEssentialInfoContainer";
+import { FORMATS } from "@/constants/reactQuill";
 
 const EditMentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 	const { mentoringId } = useParams();
-
-	const { data } = useQuery("mentoringInfo", async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			url: `/mentoring/${mentoringId}`,
-			method: "GET",
-		});
-
-		if (response) {
-			return response.data;
-		}
-	});
 
 	// 사용하고 싶은 옵션, 나열 되었으면 하는 순서대로 나열
 	const modules = useMemo(() => {
@@ -44,40 +34,12 @@ const EditMentoringContainer = () => {
 		};
 	}, []);
 
-	//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-	const formats = useMemo(() => {
-		return [
-			"header",
-			"bold",
-			"italic",
-			"list",
-			"indent",
-			"image",
-			"align",
-			"color",
-		];
-	}, []);
-
 	const onChangeContentHandler = (content: string) => {
 		setForm({
 			...form,
 			content,
 		});
 	};
-
-	useEffect(() => {
-		if (data) {
-			setForm({
-				startDate: new Date(data.startDate),
-				endDate: new Date(data.endDate),
-				numberOfPeople: data.numberOfPeople,
-				amount: data.amount,
-				category: data.category,
-				content: data.content,
-				title: data.title,
-			});
-		}
-	}, [data]);
 
 	return (
 		<Suspense fallback={<Loading />}>
@@ -91,7 +53,7 @@ const EditMentoringContainer = () => {
 							className="py-8 "
 							theme="snow"
 							modules={modules}
-							formats={formats}
+							formats={FORMATS}
 							value={form.content}
 							onChange={(prev) => onChangeContentHandler(prev)}
 						/>
