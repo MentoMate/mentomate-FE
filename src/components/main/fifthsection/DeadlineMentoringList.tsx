@@ -1,12 +1,8 @@
 import { IMentoringCard } from "@/interface/mainPageMentoringCard";
 import MentoringCard from "../MentoringCard";
-
 import { Link } from "react-router-dom";
 
-export interface IMentoringProps {
-	data: IMentoringCard[];
-}
-const DeadlineMentoringList = ({ data }: IMentoringProps) => {
+const DeadlineMentoringList = ({ data }: { data: IMentoringCard[] }) => {
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mx-auto mb-32">
 			{data.map((card: IMentoringCard) => (

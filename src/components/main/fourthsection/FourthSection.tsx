@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import ComunityItemList from "./ComunityItemList";
-import { ReactComponent as Arrow } from "@assets/svg/arrow.svg";
-const FourthSection = ({ data }: any) => {
+import CommunityItemList from "./CommunityItemList";
+import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
+import { ICommunityItem } from "@/interface/mainPageCommunity";
+
+const FourthSection = ({ data }: { data: ICommunityItem[] }) => {
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
@@ -19,7 +21,7 @@ const FourthSection = ({ data }: any) => {
 					</Link>
 				</div>
 
-				<ComunityItemList />
+				<CommunityItemList data={data} />
 			</div>
 		</>
 	);

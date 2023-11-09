@@ -12,11 +12,11 @@ const Main = () => {
 	const { fetchDataUseAxios } = useAxios();
 
 	const { data } = useQuery("mainInfo", async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
+		const response = await fetchDataUseAxios("defaultAxios", {
 			url: "/mentoring/main",
 			method: "GET",
 		});
-		console.log(response);
+
 		if (response) return response.data;
 	});
 
@@ -26,7 +26,7 @@ const Main = () => {
 			<FirstSection data={data.MentoringByCountWatch} />
 			<SecondSection />
 			<ThirdSection data={data.MentorByRating} />
-			<FourthSection data={data.MentorByRating} />
+			<FourthSection data={data.PostRegisterDateTime} />
 			<FifthSection data={data.MentoringByEndDate} />
 			<SixSection data={data.Count} />
 		</>

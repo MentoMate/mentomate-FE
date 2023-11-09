@@ -1,10 +1,10 @@
 import { IMentoringCount } from "@/interface/mainPageCount";
 
-interface IProps {
-	readonly dataCount: IMentoringCount;
-}
-
-const AllMentoringDataList = ({ dataCount }: IProps) => {
+const AllMentoringDataList = ({
+	dataCount,
+}: {
+	dataCount: IMentoringCount;
+}) => {
 	return (
 		<div className="flex flex-wrap justify-center  items-center mx-auto lg:w-[60rem] mt-10 mb-64 ">
 			<div className="flex  items-center  p-4 lg:w-[30rem]  ">

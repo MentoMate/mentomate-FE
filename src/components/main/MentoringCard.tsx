@@ -4,11 +4,11 @@ import { ReactComponent as Group } from "@/assets/svg/people.svg";
 import { ReactComponent as Star } from "@/assets/svg/star.svg";
 import { IMentoringCard } from "@/interface/mainPageMentoringCard";
 
-interface IProps {
-	readonly mentoringcard: IMentoringCard;
-}
-
-const MentoringCard = ({ mentoringcard }: IProps) => {
+const MentoringCard = ({
+	mentoringcard,
+}: {
+	mentoringcard: IMentoringCard;
+}) => {
 	return (
 		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img

@@ -2,15 +2,11 @@ import { categories } from "@/constants/categories";
 import { IMentorItem } from "@/interface/mainPageMentor";
 import { ReactComponent as Star } from "@assets/svg/star.svg";
 
-interface Iprops {
-	mentorcard: IMentorItem;
-}
+const MentorCard = ({ mentorcard }: { mentorcard: IMentorItem }) => {
+	const mainCategory = mentorcard.mainCategory;
+	const middleCategory = mentorcard.middleCategory;
 
-const MentorCard = ({ mentorcard }: Iprops) => {
-	const mainCategory = mentorcard.mainCategory; // 예시 mainCategory
-	const middleCategory = mentorcard.middleCategory; // 예시 middleCategory
-
-	function getCategoryName(
+	function getCategoryName( // 카테고리 키값이용해서 이름 가져오는 함수
 		mainCategory: string | null,
 		middleCategory: string | null,
 	) {
@@ -30,10 +26,10 @@ const MentorCard = ({ mentorcard }: Iprops) => {
 		}
 	}
 
-	const categoryName = getCategoryName(mainCategory, middleCategory);
+	const categoryName = getCategoryName(mainCategory, middleCategory); //카테고리 이름
 
 	return (
-		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg">
+		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
 				src={mentorcard.uploadUrl}
 				alt="asd"

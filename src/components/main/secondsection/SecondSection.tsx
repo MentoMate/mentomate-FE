@@ -1,4 +1,4 @@
-import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
+import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
 import { Link } from "react-router-dom";
 
 const SecondSection = () => {

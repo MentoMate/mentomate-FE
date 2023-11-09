@@ -1,11 +1,7 @@
 import { IMentoringCount } from "@/interface/mainPageCount";
 import AllMentoringDataList from "./AllMentoringDataList";
 
-interface Iprops {
-	data: IMentoringCount[];
-}
-
-const SixSection = ({ data }: Iprops) => {
+const SixSection = ({ data }: { data: IMentoringCount[] }) => {
 	return (
 		<>
 			<div className="flex justify-between items-center mx-auto lg:w-[60rem] sm:w-[40rem] mt-40">
