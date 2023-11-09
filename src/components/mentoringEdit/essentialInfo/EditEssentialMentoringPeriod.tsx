@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRecoilState } from "recoil";
 
-const EssentialMentoringPeriod = () => {
+const EditEssentialMentoringPeriod = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const changeSelectedDateHandler = (type: string, date: Date) => {
@@ -64,4 +64,4 @@ const EssentialMentoringPeriod = () => {
 	);
 };
 
-export default EssentialMentoringPeriod;
+export default EditEssentialMentoringPeriod;

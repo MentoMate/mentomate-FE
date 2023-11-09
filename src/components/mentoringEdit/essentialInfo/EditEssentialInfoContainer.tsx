@@ -1,11 +1,11 @@
 import { ReactComponent as CheckList } from "@assets/svg/checklist.svg";
 import "react-datepicker/dist/react-datepicker.css";
-import EssentialPrice from "./EssentialPrice";
-import EssentialCategory from "./EssentialCategory";
-import EssentialHeadCount from "./EssentialHeadCount";
-import EssentialMentoringPeriod from "./EssentialMentoringPeriod";
+import EditEssentialPrice from "./EditEssentialPrice";
+import EditEssentialCategory from "./EditEssentialCategory";
+import EditEssentialHeadCount from "./EditEssentialHeadCount";
+import EditEssentialMentoringPeriod from "./EditEssentialMentoringPeriod";
 
-const EssentialInfoContainer = () => {
+const EditEssentialInfoContainer = () => {
 	return (
 		<div className="mt-8 sm:px-8 px-6 py-10 border border-black-200 rounded-md">
 			<div className="flex items-center font-semibold text-lg">
@@ -13,13 +13,13 @@ const EssentialInfoContainer = () => {
 				필수 정보 입력란
 			</div>
 			<div className="flex flex-col mt-8 lg:w-[45rem] md:w-[30rem] sm:w-[25rem] mx-auto">
-				<EssentialMentoringPeriod />
-				<EssentialHeadCount />
-				<EssentialPrice />
-				<EssentialCategory />
+				<EditEssentialMentoringPeriod />
+				<EditEssentialHeadCount />
+				<EditEssentialPrice />
+				<EditEssentialCategory />
 			</div>
 		</div>
 	);
 };
 
-export default EssentialInfoContainer;
+export default EditEssentialInfoContainer;

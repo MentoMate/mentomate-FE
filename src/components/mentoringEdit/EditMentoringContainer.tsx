@@ -6,11 +6,11 @@ import ReactQuill from "react-quill";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Loading from "../common/spinner/Loading";
-import MentoringTitle from "./MentoringTitle";
-import SaveAndBackButton from "./SaveAndBackButton";
-import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
+import EditMentoringTitle from "./EditMentoringTitle";
+import EditSaveAndBackButton from "./EditSaveAndBackButton";
+import EditEssentialInfoContainer from "./essentialInfo/EditEssentialInfoContainer";
 
-const MentoringEditContainer = () => {
+const EditMentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 	const { mentoringId } = useParams();
@@ -85,8 +85,8 @@ const MentoringEditContainer = () => {
 				<div className="mx-auto lg:w-[60rem] md:w-[40rem] sm:w-[35rem] w-[20rem] min-h-[55rem] bg-white">
 					<div className="sm:mx-16 mx-4 py-20">
 						<h1 className="font-bold md:text-xl text-lg">멘토링 수정</h1>
-						<EssentialInfoContainer />
-						<MentoringTitle />
+						<EditEssentialInfoContainer />
+						<EditMentoringTitle />
 						<ReactQuill
 							className="py-8 "
 							theme="snow"
@@ -97,10 +97,10 @@ const MentoringEditContainer = () => {
 						/>
 					</div>
 				</div>
-				<SaveAndBackButton />
+				<EditSaveAndBackButton />
 			</div>
 		</Suspense>
 	);
 };
 
-export default MentoringEditContainer;
+export default EditMentoringContainer;

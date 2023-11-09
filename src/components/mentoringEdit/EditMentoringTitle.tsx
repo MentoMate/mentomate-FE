@@ -2,7 +2,7 @@ import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 
-const MentoringTitle = () => {
+const EditMentoringTitle = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,4 +24,4 @@ const MentoringTitle = () => {
 	);
 };
 
-export default MentoringTitle;
+export default EditMentoringTitle;

@@ -3,7 +3,7 @@ import { ReactComponent as People } from "@assets/svg/people.svg";
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 
-const EssentialHeadCount = () => {
+const EditEssentialHeadCount = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const onChangeNumberOfPeopleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,4 +34,4 @@ const EssentialHeadCount = () => {
 	);
 };
 
-export default EssentialHeadCount;
+export default EditEssentialHeadCount;

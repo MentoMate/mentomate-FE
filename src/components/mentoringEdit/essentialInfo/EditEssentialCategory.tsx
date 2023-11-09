@@ -6,7 +6,7 @@ import { ReactComponent as CategoryIcon } from "@assets/svg/category.svg";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
-const EssentialCategory = () => {
+const EditEssentialCategory = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 	const [category, setCategory] = useRecoilState(selectedCategoryState);
 
@@ -55,4 +55,4 @@ const EssentialCategory = () => {
 	);
 };
 
-export default EssentialCategory;
+export default EditEssentialCategory;

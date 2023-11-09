@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
-const SaveAndBackButton = () => {
+const EditSaveAndBackButton = () => {
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const { mentoringId } = useParams();
 	const navigate = useNavigate();
@@ -77,4 +77,4 @@ const SaveAndBackButton = () => {
 	);
 };
 
-export default SaveAndBackButton;
+export default EditSaveAndBackButton;
