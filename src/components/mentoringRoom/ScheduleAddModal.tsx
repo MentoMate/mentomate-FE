@@ -148,7 +148,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 			content: "",
 			startDate: "",
 			uploadFolder: "",
-			mentoringId: "",
+			mentoringId: 1,
 		});
 		makeRandomKeyHandler();
 	}, []);
@@ -176,8 +176,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 									title: "",
 									content: "",
 									startDate: "",
-									mentoringId: "",
-
+									mentoringId: 1,
 									uploadFolder: "",
 								});
 								closeModal(); // 모달 닫기
@@ -190,7 +189,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 					<div className="font-semibold mt-4 text-sm lg:text-lg ">
 						날짜: {formattedDate}
 					</div>
-					<form className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
+					<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
 						<input
 							type="text"
 							className="my-1 p-4 border border-black-200 rounded-md placeholder:text-sm focus:outline-main-color"
@@ -214,9 +213,9 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 							/>
 						</div>
 						<div className="flex justify-between  mt-12 lg:mt-4">
-							<ScheduleAddButton />
+							<ScheduleAddButton reactQuillRef={reactQuillRef} />
 						</div>
-					</form>
+					</div>
 
 					{/* 모달 내용을 추가하세요 */}
 				</div>

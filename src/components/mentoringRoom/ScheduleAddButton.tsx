@@ -10,6 +10,7 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 	const form = useRecoilValue(scheduleRegistrationForm);
 
 	const submitHandler = async () => {
+		console.log("submitHandler called");
 		const imageArr = new Array();
 
 		if (
@@ -26,27 +27,25 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 		}
 		console.log(form);
 		const data = {
+			mentoringId: 2,
 			title: form.title,
 			content: form.content,
 			startDate: form.startDate,
-			mentoringId: "1",
-			uploadImg: imageArr,
 			uploadFolder: form.uploadFolder,
+			uploadImg: imageArr,
 		};
 
-		const formData = new FormData();
-		formData.append(
-			"scheduleSave",
-			new Blob([JSON.stringify(data)], { type: "application/json" }),
-		);
-
-		console.log(formData.get("scheduleSave"));
+		console.log(data);
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: "/mentoring/schedule",
-			data: formData,
+			data: data,
+			headers: {
+				"Content-Type": "application/json",
+			},
 		});
+		console.log(data);
 
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 등록이 완료되었습니다.");
@@ -67,6 +66,7 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 	};
 
 	const onClickRegisterHandler = () => {
+		console.log("onClickRegisterHandler called");
 		if (!checkFormHandler()) return;
 		Swal.fire({
 			icon: "question",
@@ -80,6 +80,8 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 			}
 		});
 	};
+	console.log(form);
+
 	return (
 		<>
 			<button

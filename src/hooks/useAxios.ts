@@ -39,6 +39,7 @@ const useAxios = () => {
 	};
 
 	const onErrorResponse = (error: AxiosError | Error) => {
+		console.log(error);
 		if (axios.isAxiosError(error)) {
 			if (error && error.response) {
 				alertHandler(

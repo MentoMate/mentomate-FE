@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 interface IScheduleRegistrationForm {
-	readonly mentoringId: string;
+	readonly mentoringId: number;
 	readonly title: string;
 	readonly content: string;
 	readonly startDate: string;
@@ -9,7 +9,7 @@ interface IScheduleRegistrationForm {
 }
 
 const INITIAL_VALUE: IScheduleRegistrationForm = {
-	mentoringId: "",
+	mentoringId: 1,
 	title: "",
 	content: "",
 	startDate: "",
