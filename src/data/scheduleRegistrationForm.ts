@@ -6,7 +6,6 @@ interface IScheduleRegistrationForm {
 	readonly content: string;
 	readonly startDate: string;
 	readonly uploadFolder: string;
-	readonly uploadImg: string | null;
 }
 
 const INITIAL_VALUE: IScheduleRegistrationForm = {
@@ -15,7 +14,6 @@ const INITIAL_VALUE: IScheduleRegistrationForm = {
 	content: "",
 	startDate: "",
 	uploadFolder: "",
-	uploadImg: null,
 };
 
 export const scheduleRegistrationForm = atom<IScheduleRegistrationForm>({

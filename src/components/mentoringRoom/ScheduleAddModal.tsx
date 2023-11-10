@@ -8,6 +8,7 @@ import useAxios from "@/hooks/useAxios";
 import { useRecoilState } from "recoil";
 import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
 import { alertHandler } from "@/utils/alert";
+import ScheduleAddButton from "./ScheduleAddButton";
 
 const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 	formattedDate,
@@ -105,7 +106,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 			}
 		});
 	};
-
+	console.log(form);
 	const modules = useMemo(() => {
 		return {
 			toolbar: {
@@ -146,7 +147,6 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 			title: "",
 			content: "",
 			startDate: "",
-			uploadImg: null,
 			uploadFolder: "",
 			mentoringId: "",
 		});
@@ -177,7 +177,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 									content: "",
 									startDate: "",
 									mentoringId: "",
-									uploadImg: null,
+
 									uploadFolder: "",
 								});
 								closeModal(); // 모달 닫기
@@ -214,12 +214,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 							/>
 						</div>
 						<div className="flex justify-between  mt-12 lg:mt-4">
-							<button
-								type="submit"
-								className="h-[3rem] lg:h-[5rem] w-[15rem] lg:w-[55rem] lg:px-3 lg:py-4 bg-main-color rounded-md font-bold text-white text-lg"
-							>
-								추가하기
-							</button>
+							<ScheduleAddButton />
 						</div>
 					</form>
 
