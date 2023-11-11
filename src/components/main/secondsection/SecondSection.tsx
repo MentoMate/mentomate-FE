@@ -1,4 +1,5 @@
-import { ReactComponent as Arrow } from "@/assets/svg/arrow.svg";
+import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
+import { Link } from "react-router-dom";
 
 const SecondSection = () => {
 	return (
@@ -18,12 +19,14 @@ const SecondSection = () => {
 						<div className="flex justify-center text-center mx-auto text-xs lg:text-3xl font-bold lg:w-[25rem]  mb-16 ">
 							지금 멘토가 되어 경험을 나누고 수익을 창출해보세요.
 						</div>
-						<div className="text-center font-bold lg:text-3xl text-[#ABDEE6] ">
-							<div className="flex justify-center items-center ">
-								<div className="mr-2 ">멘토 등록하러 가기</div>
-								<Arrow width={20} height={20} />
+						<Link to={"/mentorRegistration"}>
+							<div className="text-center font-bold lg:text-3xl text-[#ABDEE6] ">
+								<div className="flex justify-center items-center ">
+									<div className="mr-2 ">멘토 등록하러 가기</div>
+									<Arrow width={20} height={20} />
+								</div>
 							</div>
-						</div>
+						</Link>
 					</div>
 				</div>
 			</div>

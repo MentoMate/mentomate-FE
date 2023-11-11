@@ -1,15 +1,27 @@
-import ComunityItemList from "./ComunityItemList";
+import { Link } from "react-router-dom";
+import CommunityItemList from "./CommunityItemList";
+import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
+import { ICommunityItem } from "@/interface/mainPageCommunity";
 
-const FourthSection = () => {
+const FourthSection = ({ data }: { data: ICommunityItem[] }) => {
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-				<div className="flex justify-between items-center mt-12">
+				<div className="flex justify-between items-center mt-12 mb-12">
 					<h1 className="mx-2 text-xl sm:text-2xl font-bold">
 						후기도 볼 수 있어요
 					</h1>
+					<Link to={"/community"}>
+						<div className="mx-2 text-xl sm:text-2xl font-bold text-main-color hidden lg:block ">
+							<div className="flex justify-center items-center ">
+								<div className="mr-2 ">전체보기</div>
+								<Arrow width={20} height={20} />
+							</div>
+						</div>
+					</Link>
 				</div>
-				<ComunityItemList />
+
+				<CommunityItemList data={data} />
 			</div>
 		</>
 	);
