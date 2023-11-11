@@ -146,7 +146,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 		setForm({
 			title: "",
 			content: "",
-			startDate: "",
+			start: "",
 			uploadFolder: "",
 			mentoringId: 1,
 		});
@@ -175,7 +175,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 								setForm({
 									title: "",
 									content: "",
-									startDate: "",
+									start: "",
 									mentoringId: 1,
 									uploadFolder: "",
 								});
@@ -197,7 +197,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 							onChange={(e) =>
 								setForm({
 									...form,
-									startDate: formattedDate,
+									start: formattedDate,
 									title: e.target.value,
 								})
 							}

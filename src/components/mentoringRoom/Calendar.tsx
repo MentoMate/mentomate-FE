@@ -7,23 +7,7 @@ import ScduleReadModal from "./ScheduleReadModal";
 import MentoringInfoModal from "./MentoringInfoModal";
 import * as CalendarUtils from "./CalendarUtils";
 import { useState, useEffect } from "react";
-
-const events = [
-	{
-		title: "치어리더가 되기 위한 준비 과정 그리고 노하우(1주차)",
-		start: "2023-10-09",
-		description: "오늘 주제는 ~~~~",
-		backgroundColor: "#ABDEE6",
-		borderColor: "#ABDEE6",
-	},
-	{
-		title: "이벤트 2",
-		start: "2023-11-05",
-		description: "이벤트 2 설명",
-		backgroundColor: "#ABDEE6",
-		borderColor: "#ABDEE6",
-	},
-];
+import useAxios from "@/hooks/useAxios";
 
 const MyCalendar = () => {
 	const [hoveredDate, setHoveredDate] = useState(""); //Hover된 일정 날짜
@@ -36,7 +20,8 @@ const MyCalendar = () => {
 
 	const [calendarEvents, setCalendarEvents] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
-
+	const [eventa, setEvent] = useState([]);
+	const { fetchDataUseAxios } = useAxios();
 	const mentoringPeriod = {
 		// 멘토링 기간
 		startdate: "2023-06-08",
@@ -57,12 +42,26 @@ const MyCalendar = () => {
 		}-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`,
 	});
 
+	const scduleReadHandler = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: `/mentoring/${3}/schedule?startDate=${validRange.start}&endDate=${
+				validRange.end
+			}`,
+		});
+		setEvent(response.data);
+		console.log(response.data);
+	};
+
+	console.log(eventa[0]);
 	useEffect(() => {
 		setIsLoading(true);
 		// API 호출로 해당 월의 스케줄 데이터를 가져오는 로직을 추가
 		// mentoring/schedule/month?month=${scheduleDate.year}-${scheduleDate.month}
 		// 데이터를 가져온 후 캘린더 이벤트 객체로 변환하여 setCalendarEvents로 설정
 		// 데이터를 가져온 후 isLoading을 false로 설정
+
+		scduleReadHandler();
 	}, [scheduleDate]);
 
 	const handlePrevMonth = () => {
@@ -88,7 +87,7 @@ const MyCalendar = () => {
 			arg={arg}
 			hoveredDate={hoveredDate}
 			setHoveredDate={setHoveredDate}
-			events={events}
+			events={eventa}
 			onClickAddEventhandler={onClickAddEventhandler}
 		/>
 	);
@@ -135,7 +134,7 @@ const MyCalendar = () => {
 					plugins={[interactionPlugin, dayGridPlugin]}
 					initialView="dayGridMonth"
 					height="80vh"
-					events={events}
+					events={eventa}
 					headerToolbar={{
 						start: "title",
 						center: "",

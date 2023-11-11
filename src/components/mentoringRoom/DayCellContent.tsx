@@ -7,6 +7,7 @@ const DayCellContent: React.FC<IDayCellContentprop> = ({
 	events,
 	onClickAddEventhandler,
 }) => {
+	console.log(events);
 	const formatDate = `${arg.date.getFullYear()}-${(arg.date.getMonth() + 1)
 		.toString()
 		.padStart(2, "0")}-${arg.date.getDate().toString().padStart(2, "0")}`;

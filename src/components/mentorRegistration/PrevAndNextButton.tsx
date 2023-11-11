@@ -53,7 +53,7 @@ const PrevAndNextButton = () => {
 		const formData = new FormData();
 
 		formData.append(
-			"userProfile",
+			"userProfileSave",
 			new Blob([JSON.stringify(data)], { type: "application/json" }),
 		);
 
