@@ -6,42 +6,25 @@ import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
-interface IProps {
-	readonly reactQuillRef: any;
-}
-
-const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
+const SaveAndBackButton = () => {
 	const { isLoading, fetchDataUseAxios } = useAxios();
-	const form = useRecoilValue(communityRegistrationForm);
 	const navigate = useNavigate();
 
+	const form = useRecoilValue(communityRegistrationForm);
+
+	// TODO: 게시글 등록 API 수정되면 코드 붙일 예정
 	const submitHandler = async () => {
-		const imageArr = new Array();
-
-		if (
-			reactQuillRef.current !== null &&
-			reactQuillRef.current.editor !== undefined
-		) {
-			const textEditorContent = reactQuillRef.current.editor.editor.delta.ops;
-
-			for (let element of textEditorContent) {
-				if (element.insert.image !== undefined) {
-					imageArr.push(element.insert.image);
-				}
-			}
-		}
-
 		const data = {
 			category: form.category,
 			title: form.title,
 			content: form.content,
-			uploadFolder: `community/${form.uploadFolder}`,
-			uploadImg: imageArr,
+			upload: `/post/`,
+			uploadImg: [],
 		};
 
 		const formData = new FormData();
 		formData.append(
-			"postRegisterRequest",
+			"mentoringDto",
 			new Blob([JSON.stringify(data)], { type: "application/json" }),
 		);
 		if (form.thumbNailImg) {
@@ -50,7 +33,7 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
-			url: "/posts",
+			url: "/mentoring",
 			data: formData,
 		});
 
@@ -60,32 +43,10 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 		}
 	};
 
-	const checkFormHandler = () => {
-		if (form.thumbNailImg === null) {
-			alertHandler("warning", "썸네일 이미지 등록은 필수입니다.");
-			return false;
-		}
-
-		if (form.category === "") {
-			alertHandler("warning", "커뮤니티 메뉴 선택은 필수 입니다.");
-			return false;
-		}
-
-		if (form.title.length < 8) {
-			alertHandler("warning", "게시글 제목은 8자 이상 필수 입력입니다.");
-			return false;
-		}
-
-		if (form.content.length < 20) {
-			alertHandler("warning", "게시글 내용은 20자 이상 필수 입력입니다.");
-			return false;
-		}
-
-		return true;
-	};
+	const checkFormHandler = () => {};
 
 	const onClickRegisterHandler = () => {
-		if (!checkFormHandler()) return;
+		// if (!checkFormHandler()) return;
 		Swal.fire({
 			icon: "question",
 			text: "게시글을 등록을 하시겠습니까?",

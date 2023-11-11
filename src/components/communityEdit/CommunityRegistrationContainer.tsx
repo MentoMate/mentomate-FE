@@ -8,16 +8,13 @@ import Loading from "../common/spinner/Loading";
 import CommunityTitle from "./CommunityTitle";
 import SaveAndBackButton from "./SaveAndBackButton";
 import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
-import { alertHandler } from "@/utils/alert";
-import useAxios from "@/hooks/useAxios";
 
 const CommunityRegistrationContainer = () => {
-	const reactQuillRef = useRef<any>(null);
+	const quillRef = useRef(null);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
 	const [form, setForm] = useRecoilState(communityRegistrationForm);
-	const { fetchDataUseAxios } = useAxios();
 
-	const makeRandomKeyHandler = async () => {
+	const uploadImageHandler = () => {
 		const characters =
 			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		let randomKey = "";
@@ -27,80 +24,27 @@ const CommunityRegistrationContainer = () => {
 			randomKey += characters.charAt(randomIndex);
 		}
 
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "GET",
-			url: `/upload?key=community/${randomKey}`,
-		});
-
-		if (response && response.status !== 200) {
-			makeRandomKeyHandler();
-			return;
-		}
-
-		setForm({ ...form, category: "communication", uploadFolder: randomKey });
+		setForm({ ...form, uploadFolder: randomKey });
 	};
 
-	const uploadImageHandler = async (file: File) => {
-		if (file.size >= 500000) {
-			alertHandler(
-				"error",
-				"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
-			);
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append("img", file);
-
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "POST",
-			url: `/upload?key=community/${form.uploadFolder}`,
-			data: formData,
-		});
-
-		if (response && response.status === 200) {
-			return response.data;
-		} else {
-			alertHandler(
-				"error",
-				"이미지 업로드에 실패하였습니다. 잠시 후에 다시 시도해주세요.",
-			);
-		}
-	};
-
-	const reactQuillImageHandler = async () => {
+	const imageHandler = async () => {
 		const inputDOM = document.createElement("input");
 		inputDOM.setAttribute("type", "file");
 		inputDOM.setAttribute("accept", "image/*");
 		inputDOM.click();
 		inputDOM.addEventListener("change", async () => {
-			if (inputDOM.files !== null) {
-				try {
-					setIsImgUploading(true);
-					lockScroll();
-
-					const file = inputDOM.files[0];
-					const imageUrl = await uploadImageHandler(file);
-					const editor = reactQuillRef.current.getEditor();
-					const range = editor.getSelection();
-					editor.insertEmbed(range.index, "image", imageUrl);
-				} catch (error) {
-					alertHandler(
-						"error",
-						"이미지 업로드가 실패하였습니다. 다시 시도해주세요.",
-					);
-				} finally {
-					setIsImgUploading(false);
-					cancelLockScroll();
-				}
+			//이미지를 담아 전송할 file을 만든다
+			const file = inputDOM.files?.[0];
+			try {
+				setIsImgUploading(true);
+				lockScroll();
+				//업로드할 파일의 이름으로 Date 사용
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsImgUploading(false);
+				cancelLockScroll();
 			}
-		});
-	};
-
-	const onChangeContentHandler = (content: string) => {
-		setForm({
-			...form,
-			content,
 		});
 	};
 
@@ -121,7 +65,7 @@ const CommunityRegistrationContainer = () => {
 					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
 				],
 				handlers: {
-					image: reactQuillImageHandler,
+					image: imageHandler,
 				},
 			},
 		};
@@ -142,10 +86,16 @@ const CommunityRegistrationContainer = () => {
 	}, []);
 
 	useEffect(() => {
-		makeRandomKeyHandler();
+		uploadImageHandler();
+		setForm({
+			category: "",
+			title: "",
+			content: "",
+			uploadFolder: "",
+			uploadImg: null,
+			thumbNailImg: null,
+		});
 	}, []);
-
-	useEffect(() => {});
 
 	return (
 		<>
@@ -158,17 +108,17 @@ const CommunityRegistrationContainer = () => {
 							<CommunityTitle />
 							<ReactQuill
 								style={{ minHeight: "500px" }}
-								ref={reactQuillRef}
+								ref={quillRef}
 								className="py-8 rounded-md"
 								theme="snow"
 								modules={modules}
 								formats={formats}
-								onChange={onChangeContentHandler}
+								// onChange={(prev) => onChangeContentHandler(prev)}
 							/>
 						</form>
 					</div>
 				</div>
-				<SaveAndBackButton reactQuillRef={reactQuillRef} />
+				<SaveAndBackButton />
 			</div>
 			{isImgUploading && <Loading />}
 		</>

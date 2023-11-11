@@ -11,11 +11,11 @@ const CommunityContainer = () => {
 	const getCommunityList = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: "/posts",
+			url: "/post/search?sortBy=latest&searchCategory=default",
 		});
 
 		if (response && response.status === 200) {
-			return response.data.content;
+			return response.data;
 		}
 	};
 

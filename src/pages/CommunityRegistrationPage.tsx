@@ -11,8 +11,9 @@ const CommunityRegistrationPage = () => {
 	return (
 		<>
 			<Header />
-			<Suspense fallback={<Spinner />} />
-			<CommunityRegistrationContainer />
+			<Suspense fallback={<Spinner />}>
+				<CommunityRegistrationContainer />
+			</Suspense>
 		</>
 	);
 };
