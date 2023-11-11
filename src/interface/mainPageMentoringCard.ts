@@ -1,9 +1,12 @@
 export interface IMentoringCard {
-	readonly key: number;
-	readonly src: string;
+	readonly uploadUrl: string;
+	readonly title: string;
+	readonly startDate: string;
+	readonly endDate: string;
+	readonly amount: string;
+	readonly numberOfPeople: string;
+	readonly category: string;
 	readonly name: string;
-	readonly detail: string;
-	readonly date: string;
-	readonly price: string;
-	readonly people: string;
+	readonly rating: string | null;
+	readonly mentoringId: number;
 }
