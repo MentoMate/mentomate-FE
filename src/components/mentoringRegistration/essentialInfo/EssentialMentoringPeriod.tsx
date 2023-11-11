@@ -1,7 +1,7 @@
 import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
-import { ReactComponent as Tidle } from "@assets/svg/tidle.svg";
+import { ReactComponent as Tilde } from "@assets/svg/tilde.svg";
 import { ko } from "date-fns/esm/locale";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -65,7 +65,7 @@ const MentoringPeriod = () => {
 						className="px-4 py-2 w-[15rem] border rounded-sm outline-main-color text-center"
 					/>
 				</div>
-				<Tidle width={20} height={20} className="mx-2 lg:my-0 my-2" />
+				<Tilde width={20} height={20} className="mx-2 lg:my-0 my-2" />
 				<div>
 					<DatePicker
 						locale={ko}

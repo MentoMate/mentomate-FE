@@ -1,16 +1,21 @@
 import { atom } from "recoil";
 
-interface IMentoringEditForm {
-	startDate: Date;
-	endDate: Date;
-	numberOfPeople: number;
-	amount: number;
-	category: string;
-	content: string;
-	title: string;
+export interface IMentoringEditForm {
+	readonly mentoringId: number;
+	readonly startDate: Date;
+	readonly endDate: Date;
+	readonly numberOfPeople: number;
+	readonly amount: number;
+	readonly category: string;
+	readonly content: string;
+	readonly title: string;
+	readonly uploadFolder: string;
+	readonly thumbNailImg: File | null;
+	readonly thumbNailImgUrl: string;
 }
 
 const INITIAL_VALUE: IMentoringEditForm = {
+	mentoringId: 0,
 	startDate: new Date(),
 	endDate: new Date(),
 	numberOfPeople: 0,
@@ -18,6 +23,9 @@ const INITIAL_VALUE: IMentoringEditForm = {
 	category: "all",
 	content: "",
 	title: "",
+	uploadFolder: "",
+	thumbNailImg: null,
+	thumbNailImgUrl: "",
 };
 
 export const mentoringEditForm = atom<IMentoringEditForm>({

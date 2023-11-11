@@ -1,12 +1,12 @@
 import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
-import { ReactComponent as Tidle } from "@assets/svg/tidle.svg";
+import { ReactComponent as Tilde } from "@assets/svg/tilde.svg";
 import { ko } from "date-fns/esm/locale";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRecoilState } from "recoil";
 
-const MentoringPeriod = () => {
+const EditEssentialMentoringPeriod = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const changeSelectedDateHandler = (type: string, date: Date) => {
@@ -36,6 +36,7 @@ const MentoringPeriod = () => {
 					<DatePicker
 						locale={ko}
 						selected={form.startDate}
+						dateFormat={"yyyy년 MM월 dd일"}
 						onChange={(date) => {
 							if (date) {
 								changeSelectedDateHandler("startDate", date);
@@ -45,11 +46,12 @@ const MentoringPeriod = () => {
 						className="px-4 py-2 w-[15rem] border rounded-sm outline-main-color"
 					/>
 				</div>
-				<Tidle width={20} height={20} className="mx-2 lg:my-0 my-2" />
+				<Tilde width={20} height={20} className="mx-2 lg:my-0 my-2" />
 				<div>
 					<DatePicker
 						locale={ko}
 						selected={form.endDate}
+						dateFormat={"yyyy년 MM월 dd일"}
 						onChange={(date) => {
 							if (date) {
 								changeSelectedDateHandler("endDate", date);
@@ -64,4 +66,4 @@ const MentoringPeriod = () => {
 	);
 };
 
-export default MentoringPeriod;
+export default EditEssentialMentoringPeriod;

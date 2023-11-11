@@ -2,7 +2,7 @@ import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 
-const MentoringTitle = () => {
+const EditMentoringTitle = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +16,7 @@ const MentoringTitle = () => {
 				className="grow px-4 py-4 rounded-md outline-none placeholder:text-black-300"
 				placeholder="멘토링 제목을 입력하세요."
 				maxLength={50}
-				defaultValue={form.title}
+				value={form.title}
 				onChange={onChangeTitleHandler}
 			/>
 			<div className="w-[5rem] text-black-300">{form.title.length} / 50</div>
@@ -24,4 +24,4 @@ const MentoringTitle = () => {
 	);
 };
 
-export default MentoringTitle;
+export default EditMentoringTitle;

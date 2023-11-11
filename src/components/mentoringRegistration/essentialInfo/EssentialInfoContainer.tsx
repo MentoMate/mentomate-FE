@@ -1,6 +1,6 @@
 import { ReactComponent as CheckList } from "@assets/svg/checklist.svg";
 import "react-datepicker/dist/react-datepicker.css";
-import EsseentialPrice from "./EsseentialPrice";
+import EssentialPrice from "./EssentialPrice";
 import EssentialCategory from "./EssentialCategory";
 import EssentialHeadCount from "./EssentialHeadCount";
 import EssentialMentoringPeriod from "./EssentialMentoringPeriod";
@@ -17,7 +17,7 @@ const EssentialInfo = () => {
 				<EssentialThumbNail />
 				<EssentialMentoringPeriod />
 				<EssentialHeadCount />
-				<EsseentialPrice />
+				<EssentialPrice />
 				<EssentialCategory />
 			</div>
 		</div>

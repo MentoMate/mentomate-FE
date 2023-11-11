@@ -1,10 +1,10 @@
-import { mentoringRegistrationForm } from "@/data/mentoringRegistrationForm";
-import { ChangeEvent, useState } from "react";
-import { useRecoilState } from "recoil";
+import { mentoringEditForm } from "@/data/mentoringEditForm";
 import { ReactComponent as Image } from "@assets/svg/image.svg";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
-const EssentialThumbNail = () => {
-	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
+const EditEssentialThumbNail = () => {
+	const [form, setForm] = useRecoilState(mentoringEditForm);
 	const [previewImg, setPreviewImg] = useState<string | undefined>(undefined);
 
 	const makePreviewImgHandler = (thumbNailImgFile: File) => {
@@ -33,6 +33,12 @@ const EssentialThumbNail = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (form.thumbNailImgUrl !== "") {
+			setPreviewImg(form.thumbNailImgUrl);
+		}
+	}, [form]);
 
 	return (
 		<div>
@@ -73,4 +79,4 @@ const EssentialThumbNail = () => {
 	);
 };
 
-export default EssentialThumbNail;
+export default EditEssentialThumbNail;

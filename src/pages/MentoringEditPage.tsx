@@ -5,8 +5,8 @@ import Spinner from "@components/common/spinner/Spinner";
 import { useEffect, Suspense, lazy } from "react";
 import { useRecoilState } from "recoil";
 
-const MentoringEditContainer = lazy(
-	() => import("@components/mentoringEdit/MentoringEditContainer"),
+const EditMentoringContainer = lazy(
+	() => import("@/components/mentoringEdit/EditMentoringContainer"),
 );
 
 const MentoringEditPage = () => {
@@ -22,7 +22,7 @@ const MentoringEditPage = () => {
 		<>
 			<Header />
 			<Suspense fallback={<Spinner />}>
-				<MentoringEditContainer />
+				<EditMentoringContainer />
 				{isOpenCategoryModal && <CategoryModal />}
 			</Suspense>
 		</>

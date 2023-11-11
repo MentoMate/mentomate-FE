@@ -7,7 +7,11 @@ import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
-const SaveAndBackButton = () => {
+interface IProps {
+	reactQuillRef: any;
+}
+
+const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 
@@ -15,25 +19,44 @@ const SaveAndBackButton = () => {
 	const category = useRecoilValue(selectedCategoryState);
 
 	const submitHandler = async () => {
+		const imageArr = new Array();
+
+		if (
+			reactQuillRef.current !== null &&
+			reactQuillRef.current.editor !== undefined
+		) {
+			const textEditorContent = reactQuillRef.current.editor.editor.delta.ops;
+
+			for (let element of textEditorContent) {
+				if (element.insert.image !== undefined) {
+					imageArr.push(element.insert.image);
+				}
+			}
+		}
+
 		const data = {
 			title: form.title,
 			content: form.content,
-			startDate: form.startDate,
-			endDate: form.endDate,
+			startDate: "2023-11-06",
+			endDate: "2023-11-07",
 			numberOfPeople: form.numberOfPeople,
 			amount: form.amount,
 			category: category.selectedCategory,
-			status: "PROGRESS",
+			uploadImg: imageArr,
+			uploadFolder: `mentoring/${form.key}`,
 		};
 
 		const formData = new FormData();
 		formData.append(
-			"mentoringDto",
+			"mentoringSave",
 			new Blob([JSON.stringify(data)], { type: "application/json" }),
 		);
 		if (form.thumbNailImg) {
 			formData.append("thumbNailImg", form.thumbNailImg);
 		}
+
+		console.log(formData.get("mentoringSave"));
+		console.log(formData.get("thumbNailImg"));
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
@@ -43,7 +66,7 @@ const SaveAndBackButton = () => {
 
 		if (response && response.status === 200) {
 			alertHandler("success", "멘토링 등록이 완료되었습니다.");
-			navigate(`/mentoringDetail/${response.data.mentoringId}`);
+			navigate(`/mentoringDetail/${response.data.id}`);
 		}
 	};
 
