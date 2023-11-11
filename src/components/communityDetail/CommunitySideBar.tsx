@@ -2,12 +2,29 @@ import { ReactComponent as EmptyHeart } from "@assets/svg/emptyHeart.svg";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ReactComponent as Share } from "@assets/svg/share.svg";
 import { RefObject } from "react";
+import { useParams } from "react-router-dom";
+import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
 
 interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
 }
 
 const CommunitySideBar = ({ commentRef }: IProps) => {
+	const { communityId } = useParams();
+	const { fetchDataUseAxios } = useAxios();
+
+	const onClickLikeHandler = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "POST",
+			url: `/posts/${communityId}/postLikes`,
+		});
+
+		if (response && response.status !== 200) {
+			alertHandler("error", "잠시 후에 다시 시도해주세요.");
+		}
+	};
+
 	const onClickMoveHandler = () => {
 		if (commentRef.current !== null) {
 			commentRef.current.scrollIntoView({
@@ -23,6 +40,7 @@ const CommunitySideBar = ({ commentRef }: IProps) => {
 			<button
 				type="button"
 				className="flex justify-center items-center my-2 lg:w-[5rem] md:w-[4rem] sm:w-[3rem] lg:h-[5rem] md:h-[4rem] sm:h-[3rem] border rounded-full"
+				onClick={onClickLikeHandler}
 			>
 				<EmptyHeart width={30} height={30} />
 			</button>

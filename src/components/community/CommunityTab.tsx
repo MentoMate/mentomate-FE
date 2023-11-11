@@ -27,16 +27,16 @@ const TABS: ITabs[] = [
 ];
 
 const CommunityTab = () => {
-	const setCommuniyLocation = useSetRecoilState(communityTabState);
+	const setCommunityLocation = useSetRecoilState(communityTabState);
 	const [selectedTab, setSelectedTab] = useState<string>(TABS[0].key);
 
 	const selectedTabHandler = (tab: ITabs) => {
 		setSelectedTab(tab.key);
-		setCommuniyLocation(tab);
+		setCommunityLocation(tab);
 	};
 
 	useEffect(() => {
-		setCommuniyLocation({ key: "all", tabName: "전체" });
+		setCommunityLocation({ key: "all", tabName: "전체" });
 	}, []);
 
 	return (
