@@ -4,6 +4,7 @@ import EditEssentialPrice from "./EditEssentialPrice";
 import EditEssentialCategory from "./EditEssentialCategory";
 import EditEssentialHeadCount from "./EditEssentialHeadCount";
 import EditEssentialMentoringPeriod from "./EditEssentialMentoringPeriod";
+import EditEssentialThumbNail from "./EditEssentialThumbNail";
 
 const EditEssentialInfoContainer = () => {
 	return (
@@ -13,6 +14,7 @@ const EditEssentialInfoContainer = () => {
 				필수 정보 입력란
 			</div>
 			<div className="flex flex-col mt-8 lg:w-[45rem] md:w-[30rem] sm:w-[25rem] mx-auto">
+				<EditEssentialThumbNail />
 				<EditEssentialMentoringPeriod />
 				<EditEssentialHeadCount />
 				<EditEssentialPrice />

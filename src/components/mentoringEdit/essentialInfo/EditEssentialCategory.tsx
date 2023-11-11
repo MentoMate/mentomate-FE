@@ -30,15 +30,15 @@ const EditEssentialCategory = () => {
 	};
 
 	useEffect(() => {
-		findCategoryByKey();
+		// findCategoryByKey();
 	}, []);
 
-	useEffect(() => {
-		setForm({
-			...form,
-			category: category.selectedCategory,
-		});
-	}, [category]);
+	// useEffect(() => {
+	// 	setForm({
+	// 		...form,
+	// 		category: category.selectedCategory,
+	// 	});
+	// }, [category]);
 
 	return (
 		<div className="flex sm:flex-row flex-col mt-4 lg:text-lg md:text-base text-sm">

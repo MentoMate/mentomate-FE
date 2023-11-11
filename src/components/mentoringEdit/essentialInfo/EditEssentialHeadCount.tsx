@@ -23,8 +23,8 @@ const EditEssentialHeadCount = () => {
 				<div className="flex items-center sm:ml-2 border border-black-200 rounded-sm focus:outline-main-color">
 					<input
 						type="number"
-						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-md outline-none"
-						defaultValue={form.numberOfPeople}
+						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-md outline-none text-right"
+						value={form.numberOfPeople}
 						onChange={onChangeNumberOfPeopleHandler}
 					/>
 					<div className="pl-2 pr-4">명</div>

@@ -36,6 +36,7 @@ const EditEssentialMentoringPeriod = () => {
 					<DatePicker
 						locale={ko}
 						selected={form.startDate}
+						dateFormat={"yyyy년 MM월 dd일"}
 						onChange={(date) => {
 							if (date) {
 								changeSelectedDateHandler("startDate", date);
@@ -50,6 +51,7 @@ const EditEssentialMentoringPeriod = () => {
 					<DatePicker
 						locale={ko}
 						selected={form.endDate}
+						dateFormat={"yyyy년 MM월 dd일"}
 						onChange={(date) => {
 							if (date) {
 								changeSelectedDateHandler("endDate", date);

@@ -6,21 +6,25 @@ export interface IMentoringEditProps {
 	data: IMentoringInfo;
 }
 
-interface IMentoringInfo {
-	readonly mentoringId: number;
-	readonly title: string;
+export interface IMentoringInfo {
+	readonly amount: number;
+	readonly category: string;
 	readonly content: string;
+	readonly countWatch: number;
 	readonly startDate: string;
 	readonly endDate: string;
+	readonly followers: number;
+	readonly leftPeople: number;
+	readonly mentoringId: number;
+	readonly title: string;
 	readonly numberOfPeople: number;
-	readonly amount: number;
 	readonly status: string;
-	readonly category: string;
 	readonly userId: number;
 	readonly nickName: string;
-	readonly countWatch: number;
 	readonly registerDate: Date;
 	readonly updateDate: Date;
 	readonly name: string;
-	readonly followers: number;
+	readonly thumbNailImg: string;
+	readonly uploadUrl: string;
+	readonly uploadFolder: string;
 }

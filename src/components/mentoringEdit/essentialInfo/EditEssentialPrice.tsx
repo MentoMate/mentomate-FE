@@ -24,8 +24,8 @@ const EditEssentialPrice = () => {
 				<div className="flex items-center sm:ml-2 border border-black-200 rounded-sm">
 					<input
 						type="number"
-						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-sm outline-none"
-						defaultValue={form.amount}
+						className="px-4 py-2 sm:w-[12.5rem] w-full rounded-sm outline-none text-right"
+						value={form.amount}
 						onChange={onChangeAmountHandler}
 					/>
 					<div className="pl-2 pr-4">
