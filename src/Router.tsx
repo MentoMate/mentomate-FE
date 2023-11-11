@@ -21,6 +21,7 @@ import KaKaoCallback from "@components/login/KaKaoCallback";
 import NaverCallback from "@components/login/NaverCallback";
 import PaymentSuccessPage from "@pages/PaymentSuccessPage";
 import CommunityRegistrationPage from "@pages/CommunityRegistrationPage";
+import EditCommunityPage from "./pages/EditCommunityPage";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -61,6 +62,10 @@ function Router() {
 				<Route
 					path="/communityRegistration"
 					element={<CommunityRegistrationPage />}
+				/>
+				<Route
+					path="/communityEdit/:communityId"
+					element={<EditCommunityPage />}
 				/>
 				<Route path="/mypage" element={<Mypage />} />
 				<Route path="/payment" element={<PaymentPage />} />

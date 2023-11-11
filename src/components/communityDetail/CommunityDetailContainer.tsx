@@ -9,8 +9,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 const CommunityDetailContainer = () => {
-	const commentRef = useRef<HTMLDivElement>(null);
 	const { communityId } = useParams();
+	const commentRef = useRef<HTMLDivElement>(null);
 	const { fetchDataUseAxios } = useAxios();
 
 	const getInfo = async () => {

@@ -1,30 +1,48 @@
 import { communityRegistrationForm } from "@/data/communityRegistrationForm";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
-const SaveAndBackButton = () => {
+interface IProps {
+	readonly reactQuillRef: any;
+}
+
+const EditCommunitySaveAndBackButton = ({ reactQuillRef }: IProps) => {
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
-
+	const { communityId } = useParams();
 	const form = useRecoilValue(communityRegistrationForm);
 
-	// TODO: 게시글 등록 API 수정되면 코드 붙일 예정
 	const submitHandler = async () => {
+		const imageArr = new Array();
+
+		if (
+			reactQuillRef.current !== null &&
+			reactQuillRef.current.editor !== undefined
+		) {
+			const textEditorContent = reactQuillRef.current.editor.editor.delta.ops;
+
+			for (let element of textEditorContent) {
+				if (element.insert.image !== undefined) {
+					imageArr.push(element.insert.image);
+				}
+			}
+		}
+
 		const data = {
 			category: form.category,
 			title: form.title,
 			content: form.content,
-			upload: `/post/`,
-			uploadImg: [],
+			uploadFolder: form.uploadFolder,
+			uploadImg: imageArr,
 		};
 
 		const formData = new FormData();
 		formData.append(
-			"mentoringDto",
+			"postUpdateRequest",
 			new Blob([JSON.stringify(data)], { type: "application/json" }),
 		);
 		if (form.thumbNailImg) {
@@ -32,24 +50,45 @@ const SaveAndBackButton = () => {
 		}
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "POST",
-			url: "/mentoring",
+			method: "PUT",
+			url: `/posts/${communityId}`,
 			data: formData,
 		});
 
 		if (response && response.status === 200) {
-			alertHandler("success", "게시글 등록이 완료되었습니다.");
+			alertHandler("success", "게시글 수정이 완료되었습니다.");
 			navigate(`/communityDetail/${response.data.id}`);
 		}
 	};
 
-	const checkFormHandler = () => {};
+	const checkFormHandler = () => {
+		if (form.thumbNailImg === null) {
+			alertHandler("warning", "썸네일 이미지 등록은 필수입니다.");
+			return false;
+		}
 
-	const onClickRegisterHandler = () => {
-		// if (!checkFormHandler()) return;
+		if (form.category === "") {
+			alertHandler("warning", "커뮤니티 메뉴 선택은 필수 입니다.");
+			return false;
+		}
+
+		if (form.title.length < 8) {
+			alertHandler("warning", "게시글 제목은 8자 이상 필수 입력입니다.");
+			return false;
+		}
+
+		if (form.content.length < 20) {
+			alertHandler("warning", "게시글 내용은 20자 이상 필수 입력입니다.");
+			return false;
+		}
+
+		return true;
+	};
+	const onClickEditHandler = () => {
+		if (!checkFormHandler()) return;
 		Swal.fire({
 			icon: "question",
-			text: "게시글을 등록을 하시겠습니까?",
+			text: "게시글 수정을 하시겠습니까?",
 			showCancelButton: true,
 			confirmButtonText: "확인",
 			cancelButtonText: "취소",
@@ -67,9 +106,9 @@ const SaveAndBackButton = () => {
 				<div className="flex justify-center py-8 border-t border-black-200">
 					<button
 						className="mx-4 px-6 py-4 bg-main-color rounded-md text-white font-bold"
-						onClick={onClickRegisterHandler}
+						onClick={onClickEditHandler}
 					>
-						저장하기
+						수정하기
 					</button>
 					<button className="mx-4 px-6 py-4 bg-white border border-black-200 rounded-md">
 						돌아가기
@@ -80,4 +119,4 @@ const SaveAndBackButton = () => {
 	);
 };
 
-export default SaveAndBackButton;
+export default EditCommunitySaveAndBackButton;

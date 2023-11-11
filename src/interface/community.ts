@@ -11,6 +11,7 @@ export interface ICommunityList {
 	readonly updateDatetime: string;
 	readonly uploadFolder: string;
 	readonly uploadUrl: string;
+	readonly nickName: string;
 }
 
 export interface ICommunityProps {

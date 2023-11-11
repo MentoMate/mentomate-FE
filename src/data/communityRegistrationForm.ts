@@ -5,7 +5,7 @@ interface ICommunityRegistrationForm {
 	readonly title: string;
 	readonly content: string;
 	readonly uploadFolder: string;
-	readonly uploadImg: null;
+	readonly thumbNailImgUrl: string;
 	readonly thumbNailImg: File | null;
 }
 
@@ -14,7 +14,7 @@ const INITIAL_VALUE: ICommunityRegistrationForm = {
 	title: "",
 	content: "",
 	uploadFolder: "",
-	uploadImg: null,
+	thumbNailImgUrl: "",
 	thumbNailImg: null,
 };
 

@@ -1,9 +1,9 @@
 import { communityRegistrationForm } from "@/data/communityRegistrationForm";
 import { ReactComponent as Image } from "@assets/svg/image.svg";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
-const ThumbNail = () => {
+const EditThumbNail = () => {
 	const [form, setForm] = useRecoilState(communityRegistrationForm);
 	const [previewImg, setPreviewImg] = useState<string | undefined>(undefined);
 
@@ -33,6 +33,12 @@ const ThumbNail = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (form.thumbNailImgUrl !== "") {
+			setPreviewImg(form.thumbNailImgUrl);
+		}
+	}, [form.uploadFolder]);
 
 	return (
 		<div>
@@ -73,4 +79,4 @@ const ThumbNail = () => {
 	);
 };
 
-export default ThumbNail;
+export default EditThumbNail;

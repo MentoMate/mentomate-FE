@@ -1,8 +1,8 @@
-import ChoiceCommunityType from "./ChoiceCommunityType";
+import EditChoiceCommunityType from "./EditChoiceCommunityType";
 import { ReactComponent as CheckList } from "@assets/svg/checklist.svg";
-import ThumbNail from "./ThumNail";
+import EditThumbNail from "./EditThumbNail";
 
-const EssentialInfoContainer = () => {
+const EditEssentialInfoContainer = () => {
 	return (
 		<>
 			<div className="mt-8 sm:px-8 px-6 py-10 border border-black-200 rounded-md">
@@ -11,12 +11,12 @@ const EssentialInfoContainer = () => {
 					필수 정보 입력란
 				</div>
 				<div className="flex flex-col mt-8 w-full mx-auto">
-					<ThumbNail />
-					<ChoiceCommunityType />
+					<EditThumbNail />
+					<EditChoiceCommunityType />
 				</div>
 			</div>
 		</>
 	);
 };
 
-export default EssentialInfoContainer;
+export default EditEssentialInfoContainer;

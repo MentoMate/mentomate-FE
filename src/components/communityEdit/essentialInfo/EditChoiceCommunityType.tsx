@@ -18,7 +18,7 @@ const COMMUNITY_TYPES = [
 	},
 ];
 
-const ChoiceCommunityType = () => {
+const EditChoiceCommunityType = () => {
 	const [form, setForm] = useRecoilState(communityRegistrationForm);
 
 	const onChangeCommunityType = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -36,13 +36,16 @@ const ChoiceCommunityType = () => {
 				id="categoryType"
 				className="sm:mt-0 mt-2 p-2 sm:w-[10rem] border outline-none rounded-md"
 				onChange={onChangeCommunityType}
+				value={form.category}
 			>
 				{COMMUNITY_TYPES.map((type) => (
-					<option value={type.value}>{type.name}</option>
+					<option key={type.value} value={type.value}>
+						{type.name}
+					</option>
 				))}
 			</select>
 		</div>
 	);
 };
 
-export default ChoiceCommunityType;
+export default EditChoiceCommunityType;
