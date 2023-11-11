@@ -2,7 +2,6 @@ import { categories } from "@/constants/categories";
 import { FORMATS } from "@/constants/reactQuill";
 import { mentoringEditForm } from "@/data/mentoringEditForm";
 import useAxios from "@/hooks/useAxios";
-import { IMentoringInfo } from "@/interface/mentoringInfo";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { alertHandler } from "@/utils/alert";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
@@ -21,10 +20,33 @@ const EditMentoringContainer = () => {
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 	const setCategory = useSetRecoilState(selectedCategoryState);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
-	const [isInit, setIsInit] = useState<boolean>(true);
 	const { mentoringId } = useParams();
 	const reactQuillRef = useRef<any>(null);
 	const divRef = useRef<HTMLDivElement>(null);
+
+	const findCategoryByKey = (formCategory: string) => {
+		for (let categoryType in categories) {
+			const categoryList = categories[categoryType];
+			categoryList.forEach((category) => {
+				if (category.key === formCategory) {
+					setCategory({
+						selectedCategoryType: categoryType,
+						selectedCategory: category.key,
+						selectedCategoryName: category.categoryName,
+					});
+				}
+			});
+		}
+	};
+
+	const convertURLtoFile = async (url: string) => {
+		const response = await fetch(url);
+		const data = await response.blob();
+		const ext = url.split(".").pop();
+		const filename = url.split("/").pop();
+		const metadata = { type: `image/${ext}` };
+		return new File([data], filename!, metadata);
+	};
 
 	const { data } = useQuery(
 		["mentoringInfo"],
@@ -56,62 +78,9 @@ const EditMentoringContainer = () => {
 					thumbNailImg: thumbNailImgFile,
 					uploadFolder: data.uploadFolder,
 				});
-				setIsInit(false);
 			},
 		},
 	);
-
-	const findCategoryByKey = (formCategory: string) => {
-		for (let categoryType in categories) {
-			const categoryList = categories[categoryType];
-			categoryList.forEach((category) => {
-				if (category.key === formCategory) {
-					setCategory({
-						selectedCategoryType: categoryType,
-						selectedCategory: category.key,
-						selectedCategoryName: category.categoryName,
-					});
-				}
-			});
-		}
-	};
-
-	const convertURLtoFile = async (url: string) => {
-		const response = await fetch(url);
-		const data = await response.blob();
-		const ext = url.split(".").pop();
-		const filename = url.split("/").pop();
-		const metadata = { type: `image/${ext}` };
-		return new File([data], filename!, metadata);
-	};
-
-	const getMentoringInfo = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "GET",
-			url: `/mentoring/${mentoringId}`,
-		});
-
-		if (response && response.status === 200) {
-			const mentoringInfo: IMentoringInfo = response.data;
-			const thumbNailImgFile = await convertURLtoFile(mentoringInfo.uploadUrl);
-			findCategoryByKey(mentoringInfo.category);
-
-			setForm({
-				mentoringId: mentoringInfo.mentoringId,
-				title: mentoringInfo.title,
-				content: mentoringInfo.content,
-				startDate: new Date(mentoringInfo.startDate),
-				endDate: new Date(mentoringInfo.endDate),
-				numberOfPeople: mentoringInfo.numberOfPeople,
-				amount: mentoringInfo.amount,
-				category: mentoringInfo.category,
-				thumbNailImgUrl: mentoringInfo.uploadUrl,
-				thumbNailImg: thumbNailImgFile,
-				uploadFolder: mentoringInfo.uploadFolder,
-			});
-			setIsInit(false);
-		}
-	};
 
 	const uploadImageHandler = async (file: File) => {
 		if (file.size >= 500000) {
@@ -193,8 +162,6 @@ const EditMentoringContainer = () => {
 	}, []);
 
 	const onChangeContentHandler = (content: string) => {
-		if (isInit) return;
-
 		setForm({
 			...form,
 			content,
@@ -221,7 +188,8 @@ const EditMentoringContainer = () => {
 						<EditMentoringTitle />
 						<div ref={divRef}>
 							<ReactQuill
-								className="py-8 "
+								ref={reactQuillRef}
+								className="py-8 rounded-md"
 								theme="snow"
 								modules={modules}
 								formats={FORMATS}
