@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import EmailAuthentication from "./EmailAuthentication";
 import SuccessAuthenticationMsg from "./SuccessAuthenticationMsg";
+import Loading from "../common/spinner/Loading";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 
 interface IFormValues {
 	readonly email: string;
@@ -19,7 +21,8 @@ interface IFormValues {
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
-	const { fetchDataUseAxios } = useAxios();
+	const { isLoading, fetchDataUseAxios } = useAxios();
+	const [isInit, setIsInit] = useState<boolean>(true);
 	const [email, setEmail] = useInput("");
 	const [nickName, setNickName] = useInput("");
 	const [isBtnEmailDuplicateDisabled, setIsBtnEmailDuplicateDisabled] =
@@ -27,7 +30,7 @@ const SignUpForm = () => {
 	const [isBtnNickNameDuplicateDisabled, setBtnNickNameDuplicateDisabled] =
 		useState<boolean>(true);
 	const [isEmailDuplicate, setIsEmailDuplicate] = useState<boolean>(false);
-	const [isEmailAuthenticataion, setIsEmailAuthentication] =
+	const [isEmailAuthentication, setIsEmailAuthentication] =
 		useState<boolean>(false);
 	const [isNickNameDuplicate, setIsNickNameDuplicate] =
 		useState<boolean>(false);
@@ -46,7 +49,7 @@ const SignUpForm = () => {
 	});
 
 	const submitHandler = async (data: IFormValues) => {
-		if (!isEmailDuplicate || !isEmailAuthenticataion || !isNickNameDuplicate) {
+		if (!isEmailDuplicate || !isEmailAuthentication || !isNickNameDuplicate) {
 			if (!isEmailDuplicate) {
 				setError("email", {
 					type: "custom",
@@ -55,7 +58,7 @@ const SignUpForm = () => {
 				setFocus("email");
 			}
 
-			if (!isEmailAuthenticataion) {
+			if (!isEmailAuthentication) {
 				setError("email", {
 					type: "custom",
 					message: "이메일 인증을 해주세요.",
@@ -96,43 +99,61 @@ const SignUpForm = () => {
 			url: `/user/join/email/auth?email=${email}`,
 		});
 
-		if (response && response.status === 200) {
-			setIsEmailDuplicate(true);
-			setIsBtnEmailDuplicateDisabled(true);
-			setIsEmailAuthentication(false);
-			setTimeLeft(3 * 60 * 1000);
-			clearErrors("email");
+		if (response) {
+			if (response.status === 200) {
+				setIsEmailDuplicate(true);
+				setIsBtnEmailDuplicateDisabled(true);
+				setIsEmailAuthentication(false);
+				setTimeLeft(3 * 60 * 1000);
+				clearErrors("email");
+			}
+
+			if (response.status === 400) {
+				setError("email", {
+					type: "custom",
+					message: "이미 사용중인 이메일입니다.",
+				});
+				setFocus("email");
+			}
 		}
 	};
 
 	const nickNameDuplicateHandler = async () => {
-		console.log("asd");
 		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "POST",
 			url: `/user/join/email/nickname/verify?nickName=${nickName}`,
 		});
 
-		if (response && response.status === 200) {
-			setIsNickNameDuplicate(true);
-			setBtnNickNameDuplicateDisabled(true);
-			clearErrors("nickName");
+		if (response) {
+			if (response.status === 200) {
+				setIsNickNameDuplicate(true);
+				setBtnNickNameDuplicateDisabled(true);
+				clearErrors("nickName");
+			}
+
+			if (response.status === 400) {
+				setError("nickName", {
+					type: "custom",
+					message: "이미 사용중인 닉네임입니다.",
+				});
+				setFocus("nickName");
+			}
 		}
 	};
 
 	const onKeyUpHandler = (type: string) => {
 		if (type === "email") {
+			setIsInit(false);
 			setIsEmailDuplicate(false);
 			setIsEmailAuthentication(false);
+			clearErrors("email");
 		}
 
 		if (type === "nickName") {
 			setIsNickNameDuplicate(false);
+			clearErrors("nickName");
 		}
 	};
-
-	// useEffect(() => {
-	// 	isLoading ? lockScroll() : cancelLockScroll();
-	// }, [isLoading]);
 
 	useEffect(() => {
 		checkRegex("email", email);
@@ -145,10 +166,14 @@ const SignUpForm = () => {
 	}, [email]);
 
 	useEffect(() => {
-		isEmailAuthenticataion
+		isEmailAuthentication
 			? setIsBtnEmailDuplicateDisabled(true)
 			: setIsBtnEmailDuplicateDisabled(false);
-	}, [isEmailAuthenticataion]);
+	}, [isEmailAuthentication]);
+
+	useEffect(() => {
+		if (isInit) setIsBtnEmailDuplicateDisabled(true);
+	}, []);
 
 	useEffect(() => {
 		if (nickName === "" && nickName.length === 0) {
@@ -157,6 +182,10 @@ const SignUpForm = () => {
 			setBtnNickNameDuplicateDisabled(false);
 		}
 	}, [nickName]);
+
+	useEffect(() => {
+		isLoading ? lockScroll() : cancelLockScroll();
+	}, [isLoading]);
 
 	return (
 		<>
@@ -168,14 +197,18 @@ const SignUpForm = () => {
 					<div className="flex items-center">
 						<input
 							type="text"
-							className="p-3 w-full border border-black-200 outline-main-color rounded-md placeholder:text-sm"
+							className={`p-3 w-full border border-black-200 ${
+								errors.email
+									? "border-red-100 focus:outline-red-100"
+									: "focus:outline-main-color"
+							}  rounded-md placeholder:text-sm`}
 							placeholder="이메일"
 							{...register("email")}
 							onChange={setEmail}
 							onKeyDown={() => onKeyUpHandler("email")}
 						/>
 					</div>
-					{isEmailAuthenticataion && (
+					{isEmailAuthentication && (
 						<SuccessAuthenticationMsg message="이메일 인증 완료" />
 					)}
 					{errors.email && <ErrorMsg message={errors.email?.message} />}
@@ -192,13 +225,13 @@ const SignUpForm = () => {
 						이메일 인증
 					</button>
 				</div>
-				{isEmailDuplicate && !isEmailAuthenticataion && (
+				{isEmailDuplicate && !isEmailAuthentication && (
 					<EmailAuthentication
 						email={email}
 						emailDuplicateCheckHandler={emailDuplicateCheckHandler}
 						timeLeft={timeLeft}
 						setTimeLeft={setTimeLeft}
-						isEmailAuthenticataion={isEmailAuthenticataion}
+						isEmailAuthentication={isEmailAuthentication}
 						setIsEmailAuthentication={setIsEmailAuthentication}
 					/>
 				)}
@@ -209,7 +242,11 @@ const SignUpForm = () => {
 					</p>
 					<input
 						type="password"
-						className="p-3 border border-black-200 outline-main-color rounded-md placeholder:text-sm"
+						className={`p-3 border border-black-200 ${
+							errors.password
+								? "border-red-100 focus:outline-red-100"
+								: "focus:outline-main-color"
+						}  rounded-md placeholder:text-sm`}
 						placeholder="비밀번호"
 						{...register("password")}
 					/>
@@ -221,7 +258,11 @@ const SignUpForm = () => {
 					</label>
 					<input
 						type="password"
-						className="p-3 border border-black-200 outline-main-color rounded-md placeholder:text-sm"
+						className={`p-3 border border-black-200 ${
+							errors.checkPassword
+								? "border-red-100 focus:outline-red-100"
+								: "focus:outline-main-color"
+						}  rounded-md placeholder:text-sm`}
 						placeholder="비밀번호 확인"
 						{...register("checkPassword")}
 					/>
@@ -235,7 +276,11 @@ const SignUpForm = () => {
 					</label>
 					<input
 						type="text"
-						className=" p-3 border border-black-200 outline-main-color rounded-md placeholder:text-sm"
+						className={`p-3 border border-black-200 ${
+							errors.nickName
+								? "border-red-100 focus:outline-red-100"
+								: "outline-main-color"
+						} rounded-md placeholder:text-sm`}
 						placeholder="닉네임"
 						{...register("nickName")}
 						onChange={setNickName}
@@ -265,6 +310,7 @@ const SignUpForm = () => {
 					회원가입
 				</button>
 			</form>
+			{isLoading && <Loading />}
 		</>
 	);
 };

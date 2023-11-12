@@ -21,6 +21,7 @@ const LoginForm = () => {
 	const {
 		register,
 		handleSubmit,
+		setError,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(LOGIN_SCHEMA),
@@ -37,11 +38,20 @@ const LoginForm = () => {
 			},
 		});
 
-		if (response && response.status === 200) {
-			setCookie("accessToken", response.headers.authorization);
-			setCookie("refreshToken", response.headers["authorization-refresh"]);
-			setLoginState(true);
-			navigate("/");
+		if (response) {
+			if (response.status === 200) {
+				setCookie("accessToken", response.headers.authorization);
+				setCookie("refreshToken", response.headers["authorization-refresh"]);
+				setLoginState(true);
+				navigate("/");
+			}
+
+			if (response.status === 400) {
+				setError("password", {
+					type: "custom",
+					message: "이메일 또는 비밀번호를 확인해주세요.",
+				});
+			}
 		}
 	};
 
@@ -54,7 +64,9 @@ const LoginForm = () => {
 				<input
 					type="text"
 					className={`my-1 p-4 border border-black-200 rounded-md placeholder:text-sm ${
-						errors.email ? "focus:outline-red-100" : "focus:outline-main-color"
+						errors.email
+							? "border-red-100 focus:outline-red-100"
+							: "focus:outline-main-color"
 					}`}
 					placeholder="이메일"
 					{...register("email")}
@@ -65,7 +77,7 @@ const LoginForm = () => {
 					type="password"
 					className={`my-1 p-4 border border-black-200 rounded-md placeholder:text-sm ${
 						errors.password
-							? "focus:outline-red-100"
+							? "border-red-100 focus:outline-red-100"
 							: "focus:outline-main-color"
 					}`}
 					placeholder="비밀번호"

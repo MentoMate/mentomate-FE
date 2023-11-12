@@ -73,7 +73,10 @@ const useAxios = () => {
 				return response;
 			}
 		} catch (error) {
-			console.log(error);
+			if (axios.isAxiosError(error)) {
+				const axiosError: AxiosError = error;
+				return axiosError.response;
+			}
 		} finally {
 			setIsLoading(false);
 		}
