@@ -6,7 +6,7 @@ import axios, {
 	AxiosRequestConfig,
 	AxiosResponse,
 } from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IErrorStatus {
 	[key: number]: string;
@@ -52,40 +52,36 @@ const useAxios = () => {
 		}
 	};
 
-	const setUpInterceptors = (axiostInstance: AxiosInstance) => {
-		axiostInstance.interceptors.response.use(onResponse, onErrorResponse);
-	};
+	// const setUpInterceptors = (axiostInstance: AxiosInstance) => {
+	// 	axiostInstance.interceptors.response.use(onResponse, onErrorResponse);
+	// };
 
 	const fetchDataUseAxios = async (
 		type: string,
 		configParams: AxiosRequestConfig,
 	) => {
-		if (type === "defaultAxios") {
-			setUpInterceptors(defaultAxios);
-			try {
-				setIsLoading(true);
-				const response = defaultAxios.request(configParams);
+		setIsLoading(true);
+		try {
+			if (type === "defaultAxios") {
+				// setUpInterceptors(defaultAxios);
+				const response = await defaultAxios.request(configParams);
 				return response;
-			} catch (error) {
-				console.log(error);
-			} finally {
-				setIsLoading(false);
 			}
-		}
-
-		if (type === "useTokenAxios") {
-			setUpInterceptors(useTokenAxios);
-			try {
-				setIsLoading(true);
-				const response = useTokenAxios.request(configParams);
+			if (type === "useTokenAxios") {
+				// setUpInterceptors(useTokenAxios);
+				const response = await useTokenAxios.request(configParams);
 				return response;
-			} catch (error) {
-				console.log(error);
-			} finally {
-				setIsLoading(false);
 			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		console.log(isLoading);
+	}, [isLoading]);
 
 	return { isLoading, fetchDataUseAxios };
 };

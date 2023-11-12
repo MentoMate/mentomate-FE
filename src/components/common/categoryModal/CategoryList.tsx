@@ -1,5 +1,6 @@
 import { categories } from "@/constants/categories";
 import { openCategoryModalState } from "@/state/openCategoryModal";
+import { searchCriteria } from "@/state/searchCriteria";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { IElement } from "@/types/categoty";
 import { cancelLockScroll } from "@/utils/controlBodyScroll";
@@ -9,6 +10,9 @@ const CategoryList = () => {
 	const [categoryState, setSelectedCategory] = useRecoilState(
 		selectedCategoryState,
 	);
+	const [selectedSearchCriteria, setSelectedSearchCriteria] =
+		useRecoilState(searchCriteria);
+
 	const setOpenCategoryModalState = useSetRecoilState(openCategoryModalState);
 
 	const onClickCategoryHandler = (category: IElement) => {
@@ -18,6 +22,10 @@ const CategoryList = () => {
 			selectedCategoryType: categoryState.selectedCategoryType,
 			selectedCategory: category.key,
 			selectedCategoryName: category.categoryName,
+		});
+		setSelectedSearchCriteria({
+			...selectedSearchCriteria,
+			category: category.key,
 		});
 	};
 	return (

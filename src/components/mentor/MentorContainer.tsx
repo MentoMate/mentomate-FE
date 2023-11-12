@@ -11,7 +11,7 @@ const MentorContainer = () => {
 	const [page, setPage] = useState<number>(1);
 	const { fetchDataUseAxios } = useAxios();
 	const getMentorList = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
+		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "GET",
 			url: "/user/profile",
 		});

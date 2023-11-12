@@ -7,7 +7,7 @@ import CategoryModal from "@components/common/categoryModal/CategoryModal";
 import { openCategoryModalState } from "@/state/openCategoryModal";
 
 const MentoringContainer = lazy(
-	() => import("@/components/mentoring/MentoringContainer"),
+	() => import("@components/mentoring/MentoringContainer"),
 );
 
 const MentoringPage = () => {
@@ -24,8 +24,8 @@ const MentoringPage = () => {
 			<Header />
 			<Suspense fallback={<Spinner />}>
 				<MentoringContainer />
+				<Footer />
 			</Suspense>
-			<Footer />
 			{isOpenCategoryModal && <CategoryModal />}
 		</div>
 	);
