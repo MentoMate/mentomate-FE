@@ -50,7 +50,7 @@ const MentorContainer = () => {
 
 	return (
 		<Suspense fallback={<Loading />}>
-			<div>
+			<div className="h-min-height">
 				<MentorRegister />
 				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
 					<SortAndSearch />

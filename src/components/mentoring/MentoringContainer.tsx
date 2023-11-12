@@ -50,7 +50,7 @@ const MentoringContainer = () => {
 
 	return (
 		<>
-			<div>
+			<div className="h-min-height">
 				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
 					<SortAndSearch />
 					<MentoringTitle />

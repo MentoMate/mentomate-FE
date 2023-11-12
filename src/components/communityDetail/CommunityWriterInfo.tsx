@@ -54,9 +54,9 @@ const CommunityWriterInfo = ({ communityInfo }: ICommunityProps) => {
 				<div className="w-[4rem] h-[4rem] border border-black-200 rounded-full">
 					<img
 						src={
-							communityInfo.uploadUrl === null
+							communityInfo.userUploadUrl === null
 								? "/src/assets/svg/user.svg"
-								: communityInfo.uploadUrl
+								: communityInfo.userUploadUrl
 						}
 						alt=""
 						className="w-full h-full rounded-full object-contain"

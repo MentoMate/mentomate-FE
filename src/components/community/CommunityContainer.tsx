@@ -50,7 +50,7 @@ const CommunityContainer = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className="h-min-height">
 			<CommunityTab />
 			<LocationWithCreate />
 			<CommunitySearch />

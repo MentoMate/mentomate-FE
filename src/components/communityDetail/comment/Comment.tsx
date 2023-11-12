@@ -2,7 +2,7 @@ import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
 import { ICommentProps } from "@/interface/comment";
 import { alertHandler } from "@/utils/alert";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -83,9 +83,9 @@ const Comment = ({ comment }: ICommentProps) => {
 					<div className="md:w-[2.5rem] md:h-[2.5rem] w-[2rem] h-[2rem] border border-black-200 rounded-full">
 						<img
 							src={
-								comment.post.user.uploadUrl === null
+								comment.userUploadUrl === null
 									? IMAGE_SRC
-									: comment.post.user.uploadUrl
+									: comment.userUploadUrl
 							}
 							alt=""
 							className="w-full h-full rounded-full object-contain"

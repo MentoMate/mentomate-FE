@@ -16,6 +16,9 @@ export default {
 				"yellow-200": "#F6EAC2",
 				"green-100": "#03C75A",
 			},
+			minHeight: {
+				"min-height": "calc(100vh - 4rem - 15rem)",
+			},
 		},
 	},
 	plugins: [],

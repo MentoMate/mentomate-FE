@@ -4,6 +4,8 @@ export interface IComments {
 	readonly nickName: string;
 	readonly uploadUrl: string;
 	readonly uploadFolder: string;
+	readonly userUploadFolder: string;
+	readonly userUploadUrl: string;
 	readonly post: {
 		readonly id: number;
 		readonly category: string;

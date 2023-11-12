@@ -13,8 +13,8 @@ const CommunityPage = () => {
 			<Header />
 			<Suspense fallback={<Spinner />}>
 				<CommunityContainer />
+				<Footer />
 			</Suspense>
-			<Footer />
 		</>
 	);
 };
