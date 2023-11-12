@@ -5,23 +5,38 @@ import SortAndSearch from "../common/search/SortAndSearch";
 import MentoringTitle from "./MentoringTitle";
 import MentoringList from "./mentoringList/MentoringList";
 import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+import { searchCriteria } from "@/state/searchCriteria";
 
 const MentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
-	const { finalUrl } = useUrl(
-		"/mentoring/search?sortBy=latest&page=1&pageSize=12",
-	);
+	const setSelectedCategory = useSetRecoilState(searchCriteria);
+	const { url } = useUrl("mentoring");
 
-	const { isLoading, data } = useQuery("mentoringList", async () => {
+	const getMentoringList = async () => {
 		const response = await fetchDataUseAxios("defaultAxios", {
-			url: finalUrl,
+			url,
 			method: "GET",
 		});
 
 		if (response && response.status === 200) {
 			return response.data.items;
 		}
-	});
+	};
+
+	const { data } = useQuery(["mentoringList", url], getMentoringList);
+
+	useEffect(() => {
+		return () => {
+			setSelectedCategory({
+				sortBy: "latest",
+				keyword: "",
+				category: "",
+				searchType: "title",
+			});
+		};
+	}, []);
 
 	return (
 		<>
@@ -36,7 +51,6 @@ const MentoringContainer = () => {
 					)}
 				</div>
 			</div>
-			{/* {isLoading && <Spinner />} */}
 		</>
 	);
 };

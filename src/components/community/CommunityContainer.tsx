@@ -5,13 +5,15 @@ import LocationWithCreate from "./LocationWithCreate";
 import CommunityList from "./communityList/CommunityList";
 import NonExistsCommunityList from "./communityList/NonExistsCommunityList";
 import CommunitySearch from "./communitySearch/CommunitySearch";
+import useUrl from "@/hooks/useUrl";
 
 const CommunityContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
+	const { url } = useUrl("community");
 	const getCommunityList = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: "/post/search?sortBy=latest&searchCategory=default",
+			url,
 		});
 
 		if (response && response.status === 200) {
@@ -19,7 +21,7 @@ const CommunityContainer = () => {
 		}
 	};
 
-	const { data } = useQuery(["communityList"], getCommunityList);
+	const { data } = useQuery(["communityList", url], getCommunityList);
 
 	return (
 		<div>

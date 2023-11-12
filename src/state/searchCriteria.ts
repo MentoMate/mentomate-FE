@@ -8,10 +8,10 @@ interface ISearchCriteria {
 }
 
 const INITIAL_VALUE = {
-	sortBy: "",
+	sortBy: "latest",
 	keyword: "",
 	category: "",
-	searchType: "",
+	searchType: "title",
 };
 
 export const searchCriteria = atom<ISearchCriteria>({

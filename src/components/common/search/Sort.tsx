@@ -20,6 +20,10 @@ const SORT_TYPES = {
 	],
 	mentor: [
 		{
+			key: "latest",
+			sortName: "최신순",
+		},
+		{
 			key: "hot",
 			sortName: "팔로워순",
 		},
