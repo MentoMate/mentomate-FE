@@ -45,7 +45,9 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 			<div className="flex justify-center items-center mt-2">
 				<div className="flex justify-center items-center px-2 py-1 bg-white rounded-xl shadow-sm">
 					<Star width={20} height={20} className="mr-1" />
-					<div className="font-semibold text-sm">{mentoringItem.grade}</div>
+					<div className="font-semibold text-sm">
+						{mentoringItem.rating === null ? "0.0" : mentoringItem.rating}
+					</div>
 				</div>
 				<div className="ml-3 text-md font-semibold">
 					{mentoringItem.writer} 멘토님

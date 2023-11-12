@@ -13,10 +13,7 @@ const MentorList = ({ mentorList }: IProps) => {
 			<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
 				{mentorList.map((mentorItem: IMentorItem) => (
 					<Link key={mentorItem.id} to={`/mentorDetail/${mentorItem.id}`}>
-						<MentorItem
-							key={mentorItem.name + mentorItem.imgUrl}
-							mentorItem={mentorItem}
-						/>
+						<MentorItem key={mentorItem.id} mentorItem={mentorItem} />
 					</Link>
 				))}
 			</div>
