@@ -15,7 +15,7 @@ const CommunityContainer = () => {
 		});
 
 		if (response && response.status === 200) {
-			return response.data;
+			return response.data.items;
 		}
 	};
 
