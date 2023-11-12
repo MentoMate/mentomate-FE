@@ -7,11 +7,12 @@ export interface ICommunityList {
 	readonly content: string;
 	readonly writer: string;
 	readonly postLikesCount: number;
-	readonly registerDatetime: string;
-	readonly updateDatetime: string;
+	readonly registerDatetime: Date;
+	readonly updateDatetime: Date;
 	readonly uploadFolder: string;
 	readonly uploadUrl: string;
 	readonly nickName: string;
+	readonly owner: string;
 }
 
 export interface ICommunityProps {

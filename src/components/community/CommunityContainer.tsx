@@ -6,10 +6,15 @@ import CommunityList from "./communityList/CommunityList";
 import NonExistsCommunityList from "./communityList/NonExistsCommunityList";
 import CommunitySearch from "./communitySearch/CommunitySearch";
 import useUrl from "@/hooks/useUrl";
+import { useEffect } from "react";
+import { searchCriteria } from "@/state/searchCriteria";
+import { useSetRecoilState } from "recoil";
 
 const CommunityContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const { url } = useUrl("community");
+	const setSelectedCategory = useSetRecoilState(searchCriteria);
+
 	const getCommunityList = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
@@ -22,6 +27,17 @@ const CommunityContainer = () => {
 	};
 
 	const { data } = useQuery(["communityList", url], getCommunityList);
+
+	useEffect(() => {
+		return () => {
+			setSelectedCategory({
+				sortBy: "latest",
+				keyword: "",
+				category: "",
+				searchType: "title",
+			});
+		};
+	}, []);
 
 	return (
 		<div>

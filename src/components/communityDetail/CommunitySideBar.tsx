@@ -5,12 +5,14 @@ import { RefObject } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
+import { ICommunityList } from "@/interface/community";
 
 interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
+	readonly communityInfo: ICommunityList;
 }
 
-const CommunitySideBar = ({ commentRef }: IProps) => {
+const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 	const { communityId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
 

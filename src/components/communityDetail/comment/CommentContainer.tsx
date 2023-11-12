@@ -25,7 +25,7 @@ const CommentContainer = ({ commentRef }: IProps) => {
 		}
 	};
 
-	const { data } = useQuery(["communityComment"], getComments);
+	const { data } = useQuery(["communityComment", communityId], getComments);
 
 	return (
 		<div ref={commentRef}>

@@ -24,7 +24,7 @@ const CommunityDetailContainer = () => {
 		}
 	};
 
-	const { data } = useQuery(["communityDetail"], getInfo);
+	const { data } = useQuery(["communityDetail", communityId], getInfo);
 
 	useEffect(() => {
 		getInfo();
@@ -41,7 +41,7 @@ const CommunityDetailContainer = () => {
 				<CommunityLikeAndComment communityInfo={data} />
 				<CommentContainer commentRef={commentRef} />
 			</div>
-			<CommunitySideBar commentRef={commentRef} />
+			<CommunitySideBar commentRef={commentRef} communityInfo={data} />
 		</div>
 	);
 };
