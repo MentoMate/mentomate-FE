@@ -13,8 +13,8 @@ const MentoringDetailPage = () => {
 			<Header />
 			<Suspense fallback={<Spinner />}>
 				<MentoringDetailContainer />
+				<Footer />
 			</Suspense>
-			<Footer />
 		</div>
 	);
 };
