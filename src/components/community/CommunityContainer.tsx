@@ -62,7 +62,7 @@ const CommunityContainer = () => {
 							type="button"
 							onClick={() => onClickNextOrPrevBtnHandler("prev")}
 							disabled={currentPage === 1 ? true : false}
-							className="mr-3 px-2 py-1.5 bg-black-300 hover:bg-black-400 disabled:bg-black-500 rounded-md text-white"
+							className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
 						>
 							이전
 						</button>
@@ -83,7 +83,7 @@ const CommunityContainer = () => {
 							type="button"
 							onClick={() => onClickNextOrPrevBtnHandler("next")}
 							disabled={currentPage === data.totalPages ? true : false}
-							className="ml-3 px-2 py-1.5 bg-black-300 hover:bg-black-400 disabled:bg-black-500 rounded-md text-white "
+							className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
 						>
 							다음
 						</button>
