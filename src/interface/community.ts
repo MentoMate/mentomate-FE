@@ -12,7 +12,8 @@ export interface ICommunityList {
 	readonly uploadFolder: string;
 	readonly uploadUrl: string;
 	readonly nickName: string;
-	readonly owner: string;
+	readonly owner: boolean;
+	readonly like: boolean;
 }
 
 export interface ICommunityProps {

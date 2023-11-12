@@ -1,15 +1,21 @@
 import { ReactComponent as EmptyHeart } from "@assets/svg/emptyHeart.svg";
+import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ICommunityProps } from "@/interface/community";
 import useAxios from "@/hooks/useAxios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { alertHandler } from "@/utils/alert";
+import Swal from "sweetalert2";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/state/loginState";
 
 const CommunityLikeAndComment = ({ communityInfo }: ICommunityProps) => {
 	const { communityId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
+	const isLogin = useRecoilValue(loginState);
+	const navigate = useNavigate();
 
-	const onClickLikeHandler = async () => {
+	const submitLikeHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: `/posts/${communityId}/postLikes`,
@@ -20,15 +26,41 @@ const CommunityLikeAndComment = ({ communityInfo }: ICommunityProps) => {
 		}
 	};
 
+	const onClickLikeHandler = async () => {
+		!isLogin
+			? Swal.fire({
+					icon: "question",
+					text: "로그인 이후 이용 가능합니다. 로그인 하시겠습니까?",
+					showCancelButton: true,
+					confirmButtonText: "확인",
+					cancelButtonText: "취소",
+			  }).then((result) => {
+					if (result.isConfirmed) {
+						navigate("/login");
+					}
+			  })
+			: submitLikeHandler();
+	};
+
 	return (
 		<div className="flex mt-12 mb-8 py-2 border-b border-black-200 text-black-400">
 			<div className="flex items-center">
-				<EmptyHeart
-					width={23}
-					height={23}
-					onClick={onClickLikeHandler}
-					className="cursor-pointer"
-				/>
+				{communityInfo.like ? (
+					<FillHeart
+						width={23}
+						height={23}
+						onClick={onClickLikeHandler}
+						className="cursor-pointer"
+					/>
+				) : (
+					<EmptyHeart
+						width={23}
+						height={23}
+						onClick={onClickLikeHandler}
+						className="cursor-pointer"
+					/>
+				)}
+
 				<div className="ml-1">좋아요</div>
 				<div className="mx-1.5 font-bold">{communityInfo.postLikesCount}</div>
 			</div>

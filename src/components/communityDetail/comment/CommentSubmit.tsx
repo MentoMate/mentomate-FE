@@ -55,7 +55,7 @@ const CommentSubmit = () => {
 			<input
 				type="text"
 				onChange={setComment}
-				className="mx-auto lg:w-[45rem] md:w-[35rem] sm:w-[25rem] w-[10rem] outline-none md:placeholder:text-base sm:placeholder:text-sm placeholder:text-[0.8rem] md:text-base text-sm"
+				className="mx-auto lg:w-[45rem] md:w-[35rem] sm:w-[25rem] w-[10rem] disabled:bg-white outline-none md:placeholder:text-base sm:placeholder:text-sm placeholder:text-[0.8rem] md:text-base text-sm"
 				disabled={isLogin ? false : true}
 				placeholder={
 					isLogin

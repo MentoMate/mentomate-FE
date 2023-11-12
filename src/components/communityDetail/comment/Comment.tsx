@@ -2,7 +2,7 @@ import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
 import { ICommentProps } from "@/interface/comment";
 import { alertHandler } from "@/utils/alert";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -95,7 +95,11 @@ const Comment = ({ comment }: ICommentProps) => {
 						{comment.nickName}
 					</div>
 				</div>
-				<div className="text-sm text-black-400">
+				<div
+					className={`${
+						comment.owner ? "block" : "hidden"
+					} text-sm text-black-400`}
+				>
 					{isEdit ? (
 						<>
 							<button className="mx-1" onClick={editCompleteBtnHandler}>
@@ -130,7 +134,6 @@ const Comment = ({ comment }: ICommentProps) => {
 				) : (
 					<p className="text-sm">{comment.comment}</p>
 				)}
-				<div className="mt-2 text-[0.75rem] text-black-400">1시간 전</div>
 			</div>
 		</div>
 	);
