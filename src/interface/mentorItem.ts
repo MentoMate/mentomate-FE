@@ -1,4 +1,5 @@
 export interface IMentorItem {
+	readonly id: number;
 	readonly career: number;
 	readonly imgUrl: string;
 	readonly introduce: string;

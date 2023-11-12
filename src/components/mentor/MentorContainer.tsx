@@ -13,10 +13,10 @@ const MentorContainer = () => {
 	const getMentorList = async () => {
 		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "GET",
-			url: "/user/profile",
+			url: "/mentor/search?sortBy=latest&page=1&pageSize=12",
 		});
 		if (response && response.status === 200) {
-			return response.data.content;
+			return response.data.items;
 		}
 	};
 	const { data } = useQuery(["mentorList", page], getMentorList, {
