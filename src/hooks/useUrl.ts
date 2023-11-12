@@ -1,9 +1,11 @@
+import { pagination } from "@/state/pagination";
 import { searchCriteria } from "@/state/searchCriteria";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
 const useUrl = (type: string) => {
 	const selectedSearchCriteria = useRecoilValue(searchCriteria);
+	const currentPage = useRecoilValue(pagination);
 	const [url, setUrl] = useState<string>(
 		"/mentoring/search?sortBy=latest&page=1&pageSize=16",
 	);
@@ -38,24 +40,26 @@ const useUrl = (type: string) => {
 				: selectedSearchCriteria.category;
 
 		if (sortBy !== "") {
-			setUrl(`/${pageLocation}/search?sortBy=${sortBy}&page=1&pageSize=16`);
+			setUrl(
+				`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
+			);
 		}
 
 		if (keyword !== "") {
 			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=1&pageSize=16`,
+				`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
 			);
 		}
 
 		if (category !== "") {
 			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=1&Size=16`,
+				`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
 			);
 		}
 
 		if (keyword !== "" && category !== "") {
 			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchCategory=${category}&searchText=${keyword}&page=1&pageSize=16`,
+				`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchCategory=${category}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
 			);
 		}
 	};
@@ -63,7 +67,7 @@ const useUrl = (type: string) => {
 	useEffect(() => {
 		transformationUrl();
 		console.log("asd");
-	}, [selectedSearchCriteria]);
+	}, [selectedSearchCriteria, currentPage]);
 
 	return { url };
 };
