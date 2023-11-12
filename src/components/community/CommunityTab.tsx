@@ -4,8 +4,9 @@ import { ReactComponent as Communication } from "@assets/svg/comment.svg";
 import { ReactComponent as Promotion } from "@assets/svg/invite.svg";
 import { ReactComponent as Review } from "@assets/svg/review.svg";
 import { ITabs } from "@/types/community";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { communityTabState } from "@/state/communityTabState";
+import { searchCriteria } from "@/state/searchCriteria";
 
 const TABS: ITabs[] = [
 	{
@@ -29,9 +30,18 @@ const TABS: ITabs[] = [
 const CommunityTab = () => {
 	const setCommunityLocation = useSetRecoilState(communityTabState);
 	const [selectedTab, setSelectedTab] = useState<string>(TABS[0].key);
+	const [selectedSearchCriteria, setSelectedSearchCriteria] =
+		useRecoilState(searchCriteria);
 
 	const selectedTabHandler = (tab: ITabs) => {
 		setSelectedTab(tab.key);
+
+		const selectedCategory = tab.key === "all" ? "default" : tab.key;
+
+		setSelectedSearchCriteria({
+			...selectedSearchCriteria,
+			category: selectedCategory,
+		});
 		setCommunityLocation(tab);
 	};
 

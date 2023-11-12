@@ -33,7 +33,9 @@ const useUrl = (type: string) => {
 		const searchType = selectedSearchCriteria.searchType;
 		const keyword = selectedSearchCriteria.keyword;
 		const category =
-			pageLocation === "post" ? "default" : selectedSearchCriteria.category;
+			pageLocation === "post" && selectedSearchCriteria.category === ""
+				? "default"
+				: selectedSearchCriteria.category;
 
 		if (sortBy !== "") {
 			setUrl(`/${pageLocation}/search?sortBy=${sortBy}&page=1&pageSize=16`);
@@ -60,6 +62,7 @@ const useUrl = (type: string) => {
 
 	useEffect(() => {
 		transformationUrl();
+		console.log("asd");
 	}, [selectedSearchCriteria]);
 
 	return { url };
