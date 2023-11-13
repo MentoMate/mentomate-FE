@@ -2,18 +2,17 @@ import { useState } from "react";
 import { ReactComponent as Close } from "@/assets/svg/close.svg";
 import { ReactComponent as FileList } from "@/assets/svg/filelist.svg";
 import { ReactComponent as EditIcon } from "@/assets/svg/edit.svg";
-
 import "react-quill/dist/quill.snow.css";
 import { IScduleReadModalProps } from "@/types/scdulereadmodalprop";
 import FileUpload from "./FileUpload";
 import MentoringFileList from "./MentoringFileList";
 import ScduleEdit from "./ScheduleEdit";
+import { cancelLockScroll } from "@/utils/controlBodyScroll";
 
 const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 	formattedDate,
 	closeModal,
-	eventText,
-	eventDescription,
+	eventInfo,
 }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOtherScreenVisible, setOtherScreenVisible] = useState(false);
@@ -30,8 +29,6 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 		setIsEditing(false); // 파일 리스트로 전환 시 수정 모드를 종료합니다.
 	};
 
-	// 나머지 코드는 동일하게 유지
-
 	return (
 		<>
 			<div className="fixed inset-0 flex items-center  justify-center z-20 ">
@@ -43,40 +40,58 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 					<div className="flex justify-between items-center font-semibold mt-4 text-sm lg:text-lg mb-4 ">
 						날짜: {formattedDate}{" "}
 						<div className="flex justify-between items-center w-[5rem]">
-							<EditIcon onClick={onClickEdithandler} width={20} height={20} />
+							<EditIcon
+								className="cursor-pointer"
+								onClick={onClickEdithandler}
+								width={20}
+								height={20}
+							/>
 							<FileList
+								className="cursor-pointer"
 								onClick={onClickFilelisthandler}
 								width={20}
 								height={20}
 							/>
-							<Close onClick={closeModal} width={20} height={20} />
+							<Close
+								className="cursor-pointer"
+								onClick={(e) => {
+									cancelLockScroll();
+									closeModal();
+									e.stopPropagation();
+								}}
+								width={20}
+								height={20}
+							/>
 						</div>
 					</div>
 
 					{isOtherScreenVisible ? (
-						<MentoringFileList />
+						<MentoringFileList
+							scheduleId={eventInfo.extendedProps.scheduleId}
+						/>
 					) : isEditing ? (
 						// 수정 모드
 						<ScduleEdit
 							formattedDate={formattedDate}
 							closeModal={closeModal}
-							eventText={eventText}
-							eventDescription={eventDescription}
+							eventInfo={eventInfo}
 						/>
 					) : (
 						// 수정 모드가 아닐 때
 						<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
-							<FileUpload />
+							<FileUpload scheduleId={eventInfo.extendedProps.scheduleId} />
 							<div className="flex items-center mt-2 border rounded-md sm:text-base text-sm mb-4">
-								<div className="px-4 py-4 rounded-md">{eventText}</div>
+								<div className="px-4 py-4 rounded-md">{eventInfo.title}</div>
 							</div>
 							<div className="px-4 py-4 border h-[5rem] lg:h-[100rem] md:h-[15rem] sm:h-[10rem] overflow-y-auto">
-								<span>{eventDescription}</span>
+								<div
+									dangerouslySetInnerHTML={{
+										__html: eventInfo.extendedProps.content,
+									}}
+								/>
 							</div>
 						</div>
 					)}
-
-					{/* 모달 내용을 추가하세요 */}
 				</div>
 			</div>
 		</>

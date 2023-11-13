@@ -1,4 +1,4 @@
-import Calendar from "@/components/mentoringRoom/Calender";
+import Calendar from "@/components/mentoringRoom/Calendar";
 import MentoringInfoModal from "./MentoringInfoModal";
 
 const MentoringRoom = () => {

@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { ReactComponent as Close } from "@/assets/svg/close.svg";
 import { ReactComponent as Search } from "@/assets/svg/search.svg";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 
 const MentoringInfoModal = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const onClickOpenModal = () => {
+		lockScroll();
 		setIsModalOpen(true);
 	};
 
 	const onClickCloseModal = () => {
+		cancelLockScroll();
 		setIsModalOpen(false);
 	};
 
@@ -38,7 +41,13 @@ const MentoringInfoModal = () => {
 							<h2 className="text-sm lg:text-lg font-semibold mb-2">
 								치어리더가 되기 위한 준비 과정 그리고 노하우
 							</h2>
-							<Close onClick={onClickCloseModal} width={20} height={20} />
+							<Close
+								onClick={() => {
+									onClickCloseModal();
+								}}
+								width={20}
+								height={20}
+							/>
 						</div>
 						<div className="flex items-center w-[15rem] lg:w-[30rem] border-b-2">
 							<h2 className="text-sm lg:text-lg mr-2 mb-2">멘토링 정보</h2>
@@ -56,7 +65,6 @@ const MentoringInfoModal = () => {
 							대화 주제
 						</div>
 						<div>디자인/예술</div>
-						{/* 모달 내용을 추가하세요 */}
 					</div>
 				</div>
 			)}
