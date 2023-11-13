@@ -24,8 +24,6 @@ export interface IMentoringInfo {
 	readonly registerDate: Date;
 	readonly updateDate: Date;
 	readonly name: string;
-	readonly thumbNailImg: string;
-	readonly uploadUrl: string;
-	readonly uploadFolder: string;
 	readonly owner: boolean;
+	readonly useProfileImg: string;
 }
