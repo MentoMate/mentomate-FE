@@ -3,6 +3,7 @@ import useInput from "@/hooks/useInput";
 import { ICommentProps } from "@/interface/comment";
 import { alertHandler } from "@/utils/alert";
 import { FormEvent, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -13,13 +14,9 @@ const Comment = ({ comment }: ICommentProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [editComment, setEditComment] = useInput(comment.comment);
-
-	const editCommentBtnHandler = () => {
-		setIsEdit(!isEdit);
-	};
+	const queryClient = useQueryClient();
 
 	const submitEditCommentHandler = async () => {
-		console.log(editComment);
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "PUT",
 			url: `/${communityId}/comments/${comment.id}`,
@@ -28,12 +25,52 @@ const Comment = ({ comment }: ICommentProps) => {
 			},
 		});
 
-		if (response && response.status === 200) {
-			alertHandler("success", "댓글 수정이 되었습니다.");
-			setIsEdit(false);
-		} else {
-			alertHandler("error", "잠시 후에 다시 시도해주세요.");
+		if (response) {
+			if (response.status === 200) {
+				queryClient.invalidateQueries("communityComment");
+				alertHandler("success", "댓글 수정이 되었습니다.");
+				setIsEdit(false);
+			}
+
+			if (response.status !== 200) {
+				alertHandler("error", "잠시 후에 다시 시도해주세요.");
+			}
 		}
+	};
+
+	const deleteCommentHandler = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "DELETE",
+			url: `/${communityId}/comments/${comment.id}`,
+		});
+
+		if (response) {
+			if (response.status === 200) {
+				queryClient.invalidateQueries("communityComment");
+				alertHandler("success", "댓글을 삭제하였습니다.");
+			}
+		}
+	};
+
+	const deleteComment = useMutation(() => deleteCommentHandler());
+	const updateComment = useMutation(() => submitEditCommentHandler());
+
+	const editCommentBtnHandler = () => {
+		setIsEdit(!isEdit);
+	};
+
+	const onClickDeleteBtnHandler = () => {
+		Swal.fire({
+			icon: "question",
+			text: "댓글을 삭제 하시겠습니까?",
+			showCancelButton: true,
+			confirmButtonText: "확인",
+			cancelButtonText: "취소",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				deleteComment.mutate();
+			}
+		});
 	};
 
 	const editCompleteBtnHandler = (e: FormEvent) => {
@@ -46,32 +83,7 @@ const Comment = ({ comment }: ICommentProps) => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				submitEditCommentHandler();
-			}
-		});
-	};
-
-	const deleteCommentHandler = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "DELETE",
-			url: `/${communityId}/comments/${comment.id}`,
-		});
-
-		if (response && response.status === 200) {
-			alertHandler("success", "댓글을 삭제하였습니다.");
-		}
-	};
-
-	const onClickDeleteBtnHandler = () => {
-		Swal.fire({
-			icon: "question",
-			text: "댓글을 삭제 하시겠습니까?",
-			showCancelButton: true,
-			confirmButtonText: "확인",
-			cancelButtonText: "취소",
-		}).then((result) => {
-			if (result.isConfirmed) {
-				deleteCommentHandler();
+				updateComment.mutate();
 			}
 		});
 	};
