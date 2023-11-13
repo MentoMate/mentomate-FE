@@ -18,7 +18,7 @@ const MentorProfile = ({ data }: IMentoringDetailProps) => {
 		<div className="flex items-center mt-8 border border-black-200 rounded-sm">
 			<div className="w-[5rem] h-[6rem]">
 				<img
-					src="/src/assets/image/sample.jpg"
+					src={`${data.useProfileImg}`}
 					alt="sample"
 					className="w-full h-full"
 				/>

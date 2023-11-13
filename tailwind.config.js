@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ["./src/**/*.{js,jsx,ts,tsx}"],
+	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
 			colors: {
@@ -15,6 +15,9 @@ export default {
 				"yellow-100": "#FEE500",
 				"yellow-200": "#F6EAC2",
 				"green-100": "#03C75A",
+			},
+			minHeight: {
+				"min-height": "calc(100vh - 4rem - 15rem)",
 			},
 		},
 	},

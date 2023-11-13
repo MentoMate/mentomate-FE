@@ -12,8 +12,8 @@ const MentoringList = ({ data }: IMentoringProps) => {
 			<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
 				{data.map((mentoringItem: IMentoringItem) => (
 					<Link
-						key={mentoringItem.mentoringId}
-						to={`/mentoringDetail/${mentoringItem.mentoringId}`}
+						key={mentoringItem.id}
+						to={`/mentoringDetail/${mentoringItem.id}`}
 					>
 						<MentoringItem mentoringItem={mentoringItem} />
 					</Link>

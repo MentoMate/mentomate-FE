@@ -13,6 +13,7 @@ const MentoringDetailContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 	const { mentoringId } = useParams();
+
 	const { data } = useQuery("mentoringInfo", async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			url: `/mentoring/${mentoringId}`,
@@ -51,7 +52,11 @@ const MentoringDetailContainer = () => {
 		<Suspense fallback={<Spinner />}>
 			<div className="flex md:flex-row flex-col mx-auto my-16 lg:w-[60rem] md:w-[40rem] w-[20rem]">
 				<div>
-					<div className="flex justify-end text-black-400 text-sm">
+					<div
+						className={`${
+							data.owner ? "flex" : "hidden"
+						} justify-end text-black-400 text-sm`}
+					>
 						<Link to={`/mentoringEdit/${mentoringId}`} className="mx-1">
 							수정
 						</Link>

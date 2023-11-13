@@ -3,8 +3,8 @@ import Footer from "@components/common/footer/Footer";
 import Header from "@components/common/header/Header";
 import { lazy, Suspense } from "react";
 
-const CommnunityContainer = lazy(
-	() => import("@components/community/CommnunityContainer"),
+const CommunityContainer = lazy(
+	() => import("@/components/community/CommunityContainer"),
 );
 
 const CommunityPage = () => {
@@ -12,9 +12,9 @@ const CommunityPage = () => {
 		<>
 			<Header />
 			<Suspense fallback={<Spinner />}>
-				<CommnunityContainer />
+				<CommunityContainer />
+				<Footer />
 			</Suspense>
-			<Footer />
 		</>
 	);
 };

@@ -1,18 +1,17 @@
+import { ICommunityList } from "@/interface/community";
 import CommunityItem from "./CommunityItem";
 
-const CommunityList = () => {
+interface IProps {
+	readonly communityList: ICommunityList[];
+}
+
+const CommunityList = ({ communityList }: IProps) => {
 	return (
 		<div className="mt-10 mb-20">
-			{/* <div>커뮤니티</div> */}
-			<div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center mx-auto lg:w-[60rem] md:w-[40rem] w-[20rem]">
-				<CommunityItem />
-				<CommunityItem />
-				<CommunityItem />
-				<CommunityItem />
-				<CommunityItem />
-				<CommunityItem />
-				<CommunityItem />
-				<CommunityItem />
+			<div className="grid lg:grid-cols-3 md:grid-cols-1 place-items-center mx-auto lg:w-[60rem] md:w-[40rem] w-[20rem]">
+				{communityList.map((communityItem: ICommunityList) => (
+					<CommunityItem key={communityItem.id} communityItem={communityItem} />
+				))}
 			</div>
 		</div>
 	);

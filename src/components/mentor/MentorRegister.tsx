@@ -7,13 +7,18 @@ const MentorRegister = () => {
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();
 
+	const isNotLogin = () => {
+		sessionStorage.setItem("previousLocation", "/mentorRegistration");
+		navigate("/login");
+	};
+
 	const clickRegisterMentorHandler = () => {
-		isLogin ? navigate("/mentorRegistration") : navigate("/login");
+		isLogin ? navigate("/mentorRegistration") : isNotLogin();
 	};
 
 	return (
 		<>
-			<div className="flex justify-center items-center w-full md:h-[18rem] bg-black-500">
+			<div className="flex justify-center items-center mb-12 w-full md:h-[18rem] bg-black-500">
 				<div className="flex md:flex-row flex-col items-center md:my-0 my-8">
 					<img
 						src="src/assets/image/mentoringImage.jpg"

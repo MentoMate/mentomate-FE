@@ -4,7 +4,7 @@ import { ReactComponent as WonSign } from "@assets/svg/wonSign.svg";
 import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 
-const EsseentialPrice = () => {
+const EssentialPrice = () => {
 	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
 	const [replaceAmount, setReplaceAmount] = useState<string>("");
 
@@ -48,4 +48,4 @@ const EsseentialPrice = () => {
 	);
 };
 
-export default EsseentialPrice;
+export default EssentialPrice;

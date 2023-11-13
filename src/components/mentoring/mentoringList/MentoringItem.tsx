@@ -36,39 +36,41 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 	}, []);
 
 	return (
-		<div className="mt-12 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
+		<div className="mt-12 pb-4 w-[14rem] border-b rounded-t-lg text-black-500 duration-100 hover:scale-105">
 			<img
-				src={mentoringItem.thumbNailImg}
+				src={mentoringItem.uploadUrl}
 				alt="asd"
-				className="w-full h-[15rem] rounded-t-lg object-contain"
+				className="w-full h-[15rem] rounded-lg object-cover"
 			/>
 			<div className="flex justify-center items-center mt-2">
 				<div className="flex justify-center items-center px-2 py-1 bg-white rounded-xl shadow-sm">
 					<Star width={20} height={20} className="mr-1" />
-					<div className="font-semibold text-sm">{mentoringItem.grade}</div>
+					<div className="font-semibold text-sm">
+						{mentoringItem.rating === null ? "0.0" : mentoringItem.rating}
+					</div>
 				</div>
-				<div className="ml-3 text-md font-semibold">
-					{mentoringItem.name} 멘토님
+				<div className="ml-3 text-md font-medium">
+					{mentoringItem.writer} 멘토님
 				</div>
 			</div>
-			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 text-lg font-bold title-overflow">
+			<p className="w-[13rem] h-[3.5rem] mx-3 mt-2 font-semibold title-overflow">
 				{mentoringItem.title}
 			</p>
-			<div className="flex items-center mt-4 ml-3">
+			<div className="flex items-center mt-2 ml-3">
 				<Calendar width={23} height={23} />
-				<div className="ml-2 font-semibold text-sm">
+				<div className="ml-2 font-medium text-[0.8rem]">
 					{mentoringItem.startDate} ~ {mentoringItem.endDate}
 				</div>
 			</div>
-			<div className="flex items-center mt-2 ml-3">
+			<div className="flex items-center mt-1 ml-3">
 				<Cash width={23} height={23} />
-				<div className="ml-2 font-semibold text-sm">
+				<div className="ml-2 font-medium text-[0.8rem]">
 					{replaceAmountAndHeadCount.replaceAmount} ₩
 				</div>
 			</div>
-			<div className="flex items-center mt-2 ml-3">
+			<div className="flex items-center mt-1 ml-3">
 				<Group width={23} height={23} />
-				<div className="ml-2 font-semibold text-sm">
+				<div className="ml-2 font-medium text-[0.8rem]">
 					{replaceAmountAndHeadCount.replaceHeadCount} 명
 				</div>
 			</div>

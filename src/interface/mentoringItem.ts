@@ -1,13 +1,13 @@
 export interface IMentoringItem {
-	amount: number;
-	category: string;
-	startDate: string;
-	endDate: string;
-	grade: number;
-	mentoringId: number;
-	name: string;
-	numberOfPeople: number;
-	thumbNailImg: string;
-	title: string;
-	userId: number;
+	readonly id: number;
+	readonly writer: string;
+	readonly title: string;
+	readonly startDate: string;
+	readonly endDate: string;
+	readonly amount: number;
+	readonly numberOfPeople: number;
+	readonly category: string;
+	readonly rating: number;
+	readonly uploadUrl: string;
+	readonly countWatch: number;
 }

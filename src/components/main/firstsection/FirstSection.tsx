@@ -1,7 +1,9 @@
+import { IMentoringCard } from "@/interface/mainPageMentoringCard";
 import MentoringCardList from "./MentoringCardList";
-import { ReactComponent as Arrow } from "@assets/svg/arrow.svg";
+import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
+import { Link } from "react-router-dom";
 
-const FirstSection = () => {
+const FirstSection = ({ data }: { data: IMentoringCard[] }) => {
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem] mt-20">
@@ -10,13 +12,15 @@ const FirstSection = () => {
 						핫한 멘토링을 확인해봐요
 					</h1>
 					<div className="mx-2 text-xl sm:text-2xl font-bold text-main-color hidden lg:block ">
-						<div className="flex justify-center items-center ">
-							<div className="mr-2 ">전체보기</div>
-							<Arrow width={20} height={20} />
-						</div>
+						<Link to={"/mentoring"}>
+							<div className="flex justify-center items-center ">
+								<div className="mr-2 ">전체보기</div>
+								<Arrow width={20} height={20} />
+							</div>
+						</Link>
 					</div>
 				</div>
-				<MentoringCardList />
+				<MentoringCardList data={data} />
 			</div>
 		</>
 	);

@@ -27,8 +27,8 @@ const SearchCriteriaWithKeyword = () => {
 	};
 
 	return (
-		<div className="flex sm:flex-row flex-col mt-4">
-			<div className="relative">
+		<div className="flex sm:flex-row flex-col items-center mt-4">
+			<div className="relative lg:mt-0 mt-2 sm:w-[11rem] w-full">
 				<div
 					className="flex justify-center items-center sm:mx-2 sm:w-[10rem] h-[3.1rem] border border-black-200 rounded-sm cursor-pointer"
 					onClick={onClickSearchCriterialHandler}
