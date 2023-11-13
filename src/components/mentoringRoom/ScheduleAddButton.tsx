@@ -1,16 +1,14 @@
 import { alertHandler } from "@/utils/alert";
-import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import useAxios from "@/hooks/useAxios";
 import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
 import Swal from "sweetalert2";
 const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
-	const { isLoading, fetchDataUseAxios } = useAxios();
-	const navigate = useNavigate();
+	const { fetchDataUseAxios } = useAxios();
+
 	const form = useRecoilValue(scheduleRegistrationForm);
 
 	const submitHandler = async () => {
-		console.log("submitHandler called");
 		const imageArr = new Array();
 
 		if (
@@ -25,8 +23,6 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 				}
 			}
 		}
-		console.log(imageArr);
-		console.log(form);
 		const data = {
 			mentoringId: 3,
 			title: form.title,
@@ -36,8 +32,6 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 			uploadImg: imageArr,
 		};
 
-		console.log(data);
-
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: "/mentoring/schedule",
@@ -46,11 +40,11 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 				"Content-Type": "application/json",
 			},
 		});
-		console.log(data);
 
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 등록이 완료되었습니다.");
 		}
+		window.location.reload();
 	};
 
 	const checkFormHandler = () => {

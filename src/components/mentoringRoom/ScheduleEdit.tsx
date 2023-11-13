@@ -7,6 +7,7 @@ import { alertHandler } from "@/utils/alert";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { scheduleEditForm } from "@/data/scheduleEditForm";
+import Loading from "../common/spinner/Loading";
 
 const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 	eventInfo,
@@ -17,8 +18,8 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 	const reactQuillRef = useRef<any>(null);
 	const divRef = useRef<HTMLDivElement>(null);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
-
-	console.log(form);
+	const [titleText, setTitleText] = useState(eventInfo.title);
+	const [titleLength, setTitleLength] = useState(eventInfo.title.length);
 
 	useEffect(() => {
 		setForm({
@@ -33,8 +34,7 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 	const [descriptionText, setDescriptionText] = useState(
 		eventInfo.extendedProps.content,
 	);
-	const [titleText, setTitleText] = useState(eventInfo.title);
-	const [titleLength, setTitleLength] = useState(eventInfo.title.length);
+
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		// 제목 입력 필드 값 변경 시 호출되는 함수
 		const newValue = e.target.value;
@@ -59,7 +59,7 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 			}
 		}
 	}
-	console.log(imageArr);
+
 	const onChangeContentHandler = (value: string) => {
 		setForm({
 			...form,
@@ -116,6 +116,7 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 수정이 완료되었습니다.");
 		}
+		window.location.reload();
 	};
 	const onDeleteScduleHandler = () => {
 		Swal.fire({
@@ -209,7 +210,7 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 						{ indent: "+1" },
 					],
 					["image"],
-					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
+					[{ align: [] }, { color: [] }],
 				],
 				handlers: {
 					image: reactQuillImageHandler, //handlers 속성은 특정한 이벤트(예: 이미지 삽입)에 대한 사용자 지정 핸들러 함수를 제공합니다.
@@ -267,6 +268,7 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 					삭제하기
 				</button>
 			</div>
+			{isImgUploading && <Loading />}
 		</div>
 	);
 };

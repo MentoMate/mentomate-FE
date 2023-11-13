@@ -1,24 +1,31 @@
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { useState, useEffect } from "react";
+import { ReactComponent as Download } from "@/assets/svg/download.svg";
+import { ReactComponent as Delete } from "@/assets/svg/delete.svg";
+import Swal from "sweetalert2";
+
+interface FileData {
+	fileId: number;
+	fileName: string;
+	uploadUrl: string;
+}
 
 const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
-	const [fileList, setFileList] = useState([]);
+	const [fileList, setFileList] = useState<FileData[]>([]);
 	const { fetchDataUseAxios } = useAxios();
 
 	const scheduleReadHandler = async () => {
-		try {
-			const response = await fetchDataUseAxios("useTokenAxios", {
-				method: "GET",
-				url: `mentoring/schedule/${scheduleId}`,
-			});
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: `mentoring/schedule/${scheduleId}`,
+		});
+		if (response && response.data && response.data.fileUploadList) {
 			setFileList(response.data.fileUploadList);
-		} catch (error) {
-			console.error("Error fetching schedule:", error);
 		}
 	};
 
-	const deleteFile = async (fileId) => {
+	const deleteFile = async (fileId: number) => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "DELETE",
 			url: `schedule/${scheduleId}/file/${fileId}`,
@@ -26,9 +33,10 @@ const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
 		if (response && response.status === 200) {
 			alertHandler("success", "파일 삭제가 완료되었습니다.");
 		}
+		window.location.reload();
 	};
 
-	const downloadFile = (url, filename) => {
+	const downloadFile = (url: string, filename: string) => {
 		fetch(url, { method: "GET" })
 			.then((res) => {
 				return res.blob();
@@ -40,7 +48,7 @@ const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
 				a.download = filename;
 				document.body.appendChild(a);
 				a.click();
-				setTimeout((_) => {
+				setTimeout(() => {
 					window.URL.revokeObjectURL(url);
 				}, 60000);
 				a.remove();
@@ -49,6 +57,19 @@ const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
 				console.error("err: ", err);
 			});
 	};
+	const onClickRegisterHandler = (fileId: number) => {
+		Swal.fire({
+			icon: "question",
+			text: "파일을 삭제하시겠습니까?",
+			showCancelButton: true,
+			confirmButtonText: "확인",
+			cancelButtonText: "취소",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				deleteFile(fileId);
+			}
+		});
+	};
 	useEffect(() => {
 		scheduleReadHandler();
 	}, []);
@@ -56,28 +77,27 @@ const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
 	return (
 		<>
 			<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
-				<p>파일 리스트</p>
-				<ul>
-					{fileList.map((file, index) => (
-						<>
-							<div key={file.fileId} className="flex w-[20rem] justify-between">
-								<div>{file.fileName}</div>
-								<a
-									onClick={() => downloadFile(file.uploadUrl, file.fileName)}
-									download={file.fileName}
-								>
-									다운로드
-								</a>
-								<div onClick={() => deleteFile(file.fileId)}>파일 삭제</div>
+				<p className="mb-6">파일 리스트</p>
+
+				{fileList.map((file) => (
+					<div
+						key={file.fileId}
+						className="flex w-[20rem] justify-between bg-main-color"
+					>
+						<div>{file.fileName}</div>
+						<div className="flex">
+							<a
+								onClick={() => downloadFile(file.uploadUrl, file.fileName)}
+								download={file.fileName}
+							>
+								<Download className="cursor-pointer" width={30} />
+							</a>
+							<div onClick={() => onClickRegisterHandler(file.fileId)}>
+								<Delete className="cursor-pointer" width={30} />
 							</div>
-						</>
-					))}
-				</ul>
-				<div className="flex w-[20rem] justify-between">
-					<div>텍스트.txt</div>
-					<a>다운로드</a>
-					<div>파일 삭제</div>
-				</div>
+						</div>
+					</div>
+				))}
 			</div>
 		</>
 	);

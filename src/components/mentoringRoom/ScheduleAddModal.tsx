@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
 import { alertHandler } from "@/utils/alert";
 import ScheduleAddButton from "./ScheduleAddButton";
+import Loading from "../common/spinner/Loading";
 
 const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 	formattedDate,
@@ -120,7 +121,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 						{ indent: "+1" },
 					],
 					["image"],
-					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
+					[{ align: [] }, { color: [] }],
 				],
 				handlers: {
 					image: imageHandler, //handlers 속성은 특정한 이벤트(예: 이미지 삽입)에 대한 사용자 지정 핸들러 함수를 제공합니다.
@@ -171,7 +172,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 					<div className="flex justify-between items-center  w-[15rem] lg:w-[40rem]">
 						<h2 className="text-sm lg:text-lg font-semibold mb-2">일정 추가</h2>
 						<Close
-							onClick={() => {
+							onClick={(e) => {
 								setForm({
 									title: "",
 									content: "",
@@ -179,7 +180,9 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 									mentoringId: 1,
 									uploadFolder: "",
 								});
-								closeModal(); // 모달 닫기
+								cancelLockScroll();
+								closeModal();
+								e.stopPropagation(); // 다른 부모 요소로의 이벤트 전파 중지
 							}}
 							width={20}
 							height={20}
@@ -215,9 +218,8 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 						<div className="flex justify-between  mt-12 lg:mt-4">
 							<ScheduleAddButton reactQuillRef={reactQuillRef} />
 						</div>
+						{isImgUploading && <Loading />}
 					</div>
-
-					{/* 모달 내용을 추가하세요 */}
 				</div>
 			</div>
 		</>

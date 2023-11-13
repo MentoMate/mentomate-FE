@@ -8,24 +8,31 @@ import MentoringInfoModal from "./MentoringInfoModal";
 import * as CalendarUtils from "./CalendarUtils";
 import { useState, useEffect } from "react";
 import useAxios from "@/hooks/useAxios";
+import {
+	CustomContentGenerator,
+	DayCellContentArg,
+	EventClickArg,
+	EventHoveringArg,
+} from "@fullcalendar/core/index.js"; //풀캘린더 라이브러리에서 내보낸 특정 타입
+import { EventImpl } from "@fullcalendar/core/internal";
+import Loading from "../common/spinner/Loading";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 
 const MyCalendar = () => {
 	const [hoveredDate, setHoveredDate] = useState(""); //Hover된 일정 날짜
 	const [isScduleAddModalOpen, setIsScduleAddModalOpen] = useState(false); //선택된 일정에 대한 모달 상태
 	const [scduleDate, setScduleDate] = useState(""); //선택된 일정 날짜
 	const [selectedEventDate, setSelectedEventDate] = useState(""); // 선택된 이벤트 날짜
-	const [eventInfo, setEventInfo] = useState(""); // 선택된 이벤트 제목
-	const [eventDescription, setEventDescription] = useState(""); // 선택된 이벤트 세부정보
+	const [eventInfo, setEventInfo] = useState<EventImpl | null>(null); // 선택된 이벤트 제목
 	const [isScduleReadModalOpen, setIsScduleReadModalOpen] = useState(false); //선택된 이벤트에 대한 모달 상태
 
-	const [calendarEvents, setCalendarEvents] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
 	const [eventa, setEvent] = useState([]);
-	const { fetchDataUseAxios } = useAxios();
+
+	const { isLoading, fetchDataUseAxios } = useAxios();
 	const mentoringPeriod = {
 		// 멘토링 기간
-		startdate: "2023-06-08",
-		enddate: "2024-01-03",
+		startdate: "2023-09-08",
+		enddate: "2024-03-15",
 	};
 
 	const today = new Date();
@@ -44,26 +51,25 @@ const MyCalendar = () => {
 	});
 
 	const scduleReadHandler = async () => {
+		//
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: `/mentoring/${3}/schedule?startDate=${validRange.start}&endDate=${
 				validRange.end
 			}`,
 		});
-		setEvent(response.data);
+		if (response) {
+			setEvent(response.data);
+		}
 	};
 
 	useEffect(() => {
-		setIsLoading(true);
-		// API 호출로 해당 월의 스케줄 데이터를 가져오는 로직을 추가
-		// mentoring/schedule/month?month=${scheduleDate.year}-${scheduleDate.month}
-		// 데이터를 가져온 후 캘린더 이벤트 객체로 변환하여 setCalendarEvents로 설정
-		// 데이터를 가져온 후 isLoading을 false로 설정
+		// API 호출로 해당 월의 스케줄 데이터를 가져오는 로직을 추가 validRange값이 변할떄마다 렌더링
 
 		scduleReadHandler();
 	}, [validRange]);
 
-	const handlePrevMonth = () => {
+	const prevMonthhandler = () => {
 		CalendarUtils.handlePrevMonth(
 			scheduleDate,
 			mentoringPeriod,
@@ -72,7 +78,7 @@ const MyCalendar = () => {
 		);
 	};
 
-	const handleNextMonth = () => {
+	const nextMonthhandler = () => {
 		CalendarUtils.handleNextMonth(
 			scheduleDate,
 			mentoringPeriod,
@@ -81,7 +87,9 @@ const MyCalendar = () => {
 		);
 	};
 
-	const customDayCellContent = (arg: any) => (
+	const customDayCellContent = (
+		arg: CustomContentGenerator<DayCellContentArg>,
+	) => (
 		<DayCellContent
 			arg={arg}
 			hoveredDate={hoveredDate}
@@ -92,40 +100,47 @@ const MyCalendar = () => {
 	);
 
 	const onClickAddEventhandler = (e: React.MouseEvent, date: string) => {
+		lockScroll();
 		e.stopPropagation();
 		setScduleDate(date);
 		setIsScduleAddModalOpen(true);
 	};
 
-	const onClickReadEventhandler = (clickInfo: any) => {
-		const { event } = clickInfo;
-		const date = new Date(event.start);
-		const formateventdate = `${date.getFullYear()}-${(date.getMonth() + 1)
-			.toString()
-			.padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+	const onClickReadEventhandler = (clickInfo: EventClickArg) => {
+		lockScroll();
 
-		setSelectedEventDate(formateventdate);
-		setEventInfo(event);
-		setIsScduleReadModalOpen(true); // 모달 열기
+		const { event } = clickInfo;
+		const date = event.start ? new Date(event.start) : null;
+
+		if (date) {
+			const formateventdate = `${date.getFullYear()}-${(date.getMonth() + 1)
+				.toString()
+				.padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+
+			setSelectedEventDate(formateventdate);
+			setEventInfo(event);
+			setIsScduleReadModalOpen(true); // 모달 열기
+		}
 	};
 
-	const eventMouseEnterHandler = (mouseEnterInfo: any) => {
+	const eventMouseEnterHandler = (mouseEnterInfo: EventHoveringArg) => {
 		const eventDom = mouseEnterInfo.el;
 		eventDom.classList.add("cursor-pointer");
 	};
 
-	const eventMouseLeaveHandler = (mouseLeaveInfo: any) => {
+	const eventMouseLeaveHandler = (mouseLeaveInfo: EventHoveringArg) => {
 		const eventDom = mouseLeaveInfo.el;
 		eventDom.classList.remove("cursor-pointer");
 	};
 
 	return (
 		<>
+			{isLoading && <Loading />}
 			<div className="relative mx-auto mt-10 mb-20 lg:w-[60rem] ">
-				<button className="bg-main-color" onClick={handlePrevMonth}>
+				<button className="bg-main-color" onClick={prevMonthhandler}>
 					이전 달
 				</button>
-				<button className="bg-main-color" onClick={handleNextMonth}>
+				<button className="bg-main-color" onClick={nextMonthhandler}>
 					다음 달
 				</button>
 				<FullCalendar

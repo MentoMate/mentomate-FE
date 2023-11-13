@@ -1,10 +1,9 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent } from "react";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 
 const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-	const [fileList, setFileList] = useState([]);
 	const { fetchDataUseAxios } = useAxios();
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +18,13 @@ const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 
 	const handleUpload = async () => {
 		if (selectedFile) {
+			if (selectedFile.size >= 500000) {
+				alertHandler(
+					"error",
+					"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
+				);
+				return;
+			}
 			console.log(selectedFile);
 			const formData = new FormData();
 			formData.append("file", selectedFile);
@@ -39,6 +45,7 @@ const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 			if (response && response.status === 200) {
 				alertHandler("success", "파일 등록이 완료되었습니다.");
 			}
+			window.location.reload();
 		}
 	};
 
