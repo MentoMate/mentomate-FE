@@ -7,10 +7,11 @@ import SortAndSearch from "@components/common/search/SortAndSearch";
 import { Suspense, useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
+import ScrollTopBtn from "../common/scrollTopBtn/ScrollTopBtn";
 import Loading from "../common/spinner/Loading";
-import NonExistMentoringList from "../mentoring/mentoringList/NonExistMentoringList";
 import MentorRegister from "./MentorRegister";
-import MentorList from "./mentoringList/MentorList";
+import MentorList from "./mentorList/MentorList";
+import NonExistMentorList from "./mentorList/NonExistMentorList";
 
 const MentorContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -90,9 +91,10 @@ const MentorContainer = () => {
 							</div>
 						</>
 					) : (
-						<NonExistMentoringList />
+						<NonExistMentorList />
 					)}
 				</div>
+				<ScrollTopBtn />
 			</div>
 		</Suspense>
 	);

@@ -31,7 +31,7 @@ const Keyword = () => {
 			</div>
 			<input
 				type="text"
-				className="grow p-3 w-full outline-none"
+				className="grow p-3 w-full outline-none placeholder:text-sm"
 				placeholder="키워드를 입력하세요."
 				onChange={onChangeKeywordHandler}
 			/>

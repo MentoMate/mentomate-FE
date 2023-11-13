@@ -5,9 +5,9 @@ import Sort from "./Sort";
 
 const SortAndSearch = () => {
 	return (
-		<div className="mt-12">
+		<div>
 			<Sort />
-			<div className="flex flex-col lg:flex-row lg:flex-row mt-4">
+			<div className="flex flex-col lg:flex-row mt-4">
 				<div className="flex sm:flex-row flex-col">
 					<Category />
 					<SearchType />

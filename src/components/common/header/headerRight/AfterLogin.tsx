@@ -29,9 +29,12 @@ const AfterLogin = () => {
 	return (
 		<div className="flex justify-center items-center font-semibold">
 			<Link to={"/mypage"}>
-				<div className="mx-2">마이페이지</div>
+				<div className="mx-2 text-black-500 hover:text-sky-300">마이페이지</div>
 			</Link>
-			<div className="mx-2 cursor-pointer" onClick={logout}>
+			<div
+				className="mx-2 cursor-pointer text-black-500 hover:text-sky-300"
+				onClick={logout}
+			>
 				로그아웃
 			</div>
 			<div className="relative px-2">

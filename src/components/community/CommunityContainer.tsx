@@ -1,16 +1,17 @@
 import useAxios from "@/hooks/useAxios";
+import usePagination from "@/hooks/usePagination";
+import useUrl from "@/hooks/useUrl";
+import { pagination } from "@/state/pagination";
+import { searchCriteria } from "@/state/searchCriteria";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useSetRecoilState } from "recoil";
+import ScrollTopBtn from "../common/scrollTopBtn/ScrollTopBtn";
 import CommunityTab from "./CommunityTab";
 import LocationWithCreate from "./LocationWithCreate";
 import CommunityList from "./communityList/CommunityList";
 import NonExistsCommunityList from "./communityList/NonExistsCommunityList";
 import CommunitySearch from "./communitySearch/CommunitySearch";
-import useUrl from "@/hooks/useUrl";
-import { useEffect } from "react";
-import { searchCriteria } from "@/state/searchCriteria";
-import { useSetRecoilState } from "recoil";
-import { pagination } from "@/state/pagination";
-import usePagination from "@/hooks/usePagination";
 
 const CommunityContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -92,6 +93,7 @@ const CommunityContainer = () => {
 			) : (
 				<NonExistsCommunityList />
 			)}
+			<ScrollTopBtn />
 		</div>
 	);
 };

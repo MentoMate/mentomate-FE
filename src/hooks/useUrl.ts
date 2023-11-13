@@ -80,6 +80,10 @@ const useUrl = (type: string) => {
 		transformationUrl();
 	}, [selectedSearchCriteria, currentPage]);
 
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: "instant" });
+	}, [currentPage]);
+
 	return { url };
 };
 

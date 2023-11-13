@@ -100,7 +100,7 @@ const Sort = () => {
 						className={`flex justify-center items-center mx-1 w-[5rem] h-[2.5rem] ${
 							selectedType === sort.key
 								? "bg-main-color text-white text-bold"
-								: "bg-white border border-black-200 text-black-500"
+								: "bg-white border border-black-200 text-black-500 hover:bg-sky-300 hover:text-white"
 						} rounded-3xl text-sm cursor-pointer`}
 					>
 						{sort.sortName}

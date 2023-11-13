@@ -50,7 +50,7 @@ const CommunityTab = () => {
 	}, []);
 
 	return (
-		<div className="sticky bg-white border-b border-black-200 z-[44]">
+		<div className="sticky bg-white border-b border-black-200 z-[44] text-black-500">
 			<div className="mx-auto lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[20rem]">
 				<div className="flex sm:mx-4">
 					{TABS.map((tab) => (
@@ -59,7 +59,7 @@ const CommunityTab = () => {
 							className={`flex justify-center items-center sm:px-3 sm:py-4 px-1 py-2 sm:font-semibold font-bold sm:text-base text-[0.8rem] cursor-pointer ${
 								selectedTab === tab.key
 									? "border-b-2 border-main-color text-main-color"
-									: "text-black-600"
+									: "text-black-500"
 							}`}
 							onClick={() => selectedTabHandler(tab)}
 						>
@@ -69,7 +69,7 @@ const CommunityTab = () => {
 							)}
 							{tab.key === "promotion" && <Promotion width={20} height={20} />}
 							{tab.key === "review" && <Review width={20} height={20} />}
-							<div className="ml-1">{tab.tabName}</div>
+							<div className="ml-1 hover:text-sky-300">{tab.tabName}</div>
 						</div>
 					))}
 				</div>

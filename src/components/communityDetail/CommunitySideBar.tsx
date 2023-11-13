@@ -3,7 +3,7 @@ import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ReactComponent as Share } from "@assets/svg/share.svg";
 import { RefObject } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { ICommunityList } from "@/interface/community";
@@ -59,6 +59,16 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 		}
 	};
 
+	const onClickLinkCopyHandler = async () => {
+		const LINK = window.location.href;
+		try {
+			await navigator.clipboard.writeText(LINK);
+			alertHandler("success", "링크 복사가 되었습니다.");
+		} catch (error) {
+			alertHandler("error", "링크 복사가 실패하였습니다.");
+		}
+	};
+
 	return (
 		<div className="hidden sm:flex flex-col items-center sticky top-24 lg:ml-12 md:ml-10 sm:ml-8 lg:py-6 md:py-3 lg:w-[9rem] md:w-[7rem] w-[5rem] lg:h-[24rem] md:h-[17rem] sm:h-[15rem] bg-white rounded-lg">
 			<button
@@ -81,6 +91,7 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 			</button>
 			<button
 				type="button"
+				onClick={onClickLinkCopyHandler}
 				className="flex justify-center items-center my-2 lg:w-[5rem] md:w-[4rem] sm:w-[3rem] lg:h-[5rem] md:h-[4rem] sm:h-[3rem] bg-white hover:bg-black-200 border rounded-full"
 			>
 				<Share width={25} height={25} fill="#8A8A8A" />
