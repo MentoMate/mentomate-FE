@@ -1,15 +1,16 @@
+import useAxios from "@/hooks/useAxios";
+import { ICommunityList } from "@/interface/community";
+import { loginState } from "@/state/loginState";
+import { alertHandler } from "@/utils/alert";
+import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ReactComponent as EmptyHeart } from "@assets/svg/emptyHeart.svg";
 import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
-import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ReactComponent as Share } from "@assets/svg/share.svg";
 import { RefObject } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import useAxios from "@/hooks/useAxios";
-import { alertHandler } from "@/utils/alert";
-import { ICommunityList } from "@/interface/community";
-import Swal from "sweetalert2";
+import { useMutation, useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { loginState } from "@/state/loginState";
+import Swal from "sweetalert2";
 
 interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
+	const queryClient = useQueryClient();
 	const { communityId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
 	const isLogin = useRecoilValue(loginState);
@@ -28,10 +30,18 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 			url: `/posts/${communityId}/postLikes`,
 		});
 
-		if (response && response.status !== 200) {
-			alertHandler("error", "잠시 후에 다시 시도해주세요.");
+		if (response) {
+			if (response.status === 200) {
+				queryClient.invalidateQueries("communityDetail");
+			}
+
+			if (response.status !== 200) {
+				alertHandler("error", "잠시 후에 다시 시도해주세요.");
+			}
 		}
 	};
+
+	const submitLike = useMutation(() => submitLikeHandler());
 
 	const onClickLikeHandler = async () => {
 		!isLogin
@@ -43,10 +53,14 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 					cancelButtonText: "취소",
 			  }).then((result) => {
 					if (result.isConfirmed) {
+						sessionStorage.setItem(
+							"previousLocation",
+							`/communityDetail/${communityId}`,
+						);
 						navigate("/login");
 					}
 			  })
-			: submitLikeHandler();
+			: submitLike.mutate();
 	};
 
 	const onClickMoveHandler = () => {

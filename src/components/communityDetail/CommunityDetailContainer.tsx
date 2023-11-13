@@ -1,12 +1,12 @@
 import useAxios from "@/hooks/useAxios";
-import CommentContainer from "./comment/CommentContainer";
+import { useRef } from "react";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import CommunityContent from "./CommunityContent";
 import CommunityLikeAndComment from "./CommunityLikeAndComment";
 import CommunitySideBar from "./CommunitySideBar";
 import CommunityWriterInfo from "./CommunityWriterInfo";
-import { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import CommentContainer from "./comment/CommentContainer";
 
 const CommunityDetailContainer = () => {
 	const { communityId } = useParams();
@@ -26,16 +26,10 @@ const CommunityDetailContainer = () => {
 
 	const { data } = useQuery(["communityDetail", communityId], getInfo);
 
-	useEffect(() => {
-		getInfo();
-	}, []);
-
 	return (
 		<div className="flex lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[15rem] mx-auto my-20">
 			<div className="lg:w-[50rem] md:w-[30rem] sm:w-[20rem] w-[17rem]">
-				<div className="md:text-3xl text-xl font-bold">
-					코딩 해볼려고 하는데 난이도 어떤가요 ?
-				</div>
+				<div className="md:text-3xl text-xl font-bold">{data.title}</div>
 				<CommunityWriterInfo communityInfo={data} />
 				<CommunityContent communityInfo={data} />
 				<CommunityLikeAndComment communityInfo={data} />
