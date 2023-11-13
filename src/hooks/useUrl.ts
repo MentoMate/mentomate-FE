@@ -51,28 +51,55 @@ const useUrl = (type: string) => {
 				? "default"
 				: selectedSearchCriteria.category;
 
-		if (sortBy !== "") {
-			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
-			);
+		if (pageLocation === "mentoring" || pageLocation === "community") {
+			if (sortBy !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
+				);
+			}
+
+			if (keyword !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+				);
+			}
+
+			if (category !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
+				);
+			}
+
+			if (keyword !== "" && category !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+				);
+			}
 		}
 
-		if (keyword !== "") {
-			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
-			);
-		}
+		if (pageLocation === "mentor") {
+			if (sortBy !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
+				);
+			}
+			if (keyword !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+				);
+			}
 
-		if (category !== "") {
-			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
-			);
-		}
+			if (category !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
+				);
+			}
 
-		if (keyword !== "" && category !== "") {
-			setUrl(
-				`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchCategory=${category}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
-			);
+			if (keyword !== "" && category !== "") {
+				setUrl(
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+				);
+			}
 		}
 	};
 
