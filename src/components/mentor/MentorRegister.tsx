@@ -7,8 +7,13 @@ const MentorRegister = () => {
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();
 
+	const isNotLogin = () => {
+		sessionStorage.setItem("previousLocation", "/mentorRegistration");
+		navigate("/login");
+	};
+
 	const clickRegisterMentorHandler = () => {
-		isLogin ? navigate("/mentorRegistration") : navigate("/login");
+		isLogin ? navigate("/mentorRegistration") : isNotLogin();
 	};
 
 	return (

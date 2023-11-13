@@ -1,13 +1,21 @@
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BeforeLogin = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const onClickLoginBtnHandler = () => {
+		sessionStorage.setItem("previousLocation", location.pathname);
+		navigate("/login");
+	};
+
 	return (
-		<Link
-			to={"/login"}
+		<button
 			className="flex justify-center items-center px-2 font-semibold"
+			onClick={onClickLoginBtnHandler}
 		>
 			가입/로그인
-		</Link>
+		</button>
 	);
 };
 

@@ -43,7 +43,11 @@ const LoginForm = () => {
 				setCookie("accessToken", response.headers.authorization);
 				setCookie("refreshToken", response.headers["authorization-refresh"]);
 				setLoginState(true);
-				navigate("/");
+
+				const previousLocation = sessionStorage.getItem("previousLocation");
+				if (previousLocation !== null) {
+					navigate(previousLocation);
+				}
 			}
 
 			if (response.status === 400) {

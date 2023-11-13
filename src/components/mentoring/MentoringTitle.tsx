@@ -6,8 +6,13 @@ const MentoringTitle = () => {
 	const navigate = useNavigate();
 	const isLogin = useRecoilValue(loginState);
 
+	const isNotLogin = () => {
+		sessionStorage.setItem("previousLocation", "/mentoringRegistration");
+		navigate("/login");
+	};
+
 	const registerClickHandler = () => {
-		isLogin ? navigate("/mentoringRegistration") : navigate("/login");
+		isLogin ? navigate("/mentoringRegistration") : isNotLogin();
 	};
 
 	return (

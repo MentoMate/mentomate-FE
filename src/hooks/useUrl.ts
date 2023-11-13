@@ -6,9 +6,21 @@ import { useRecoilValue } from "recoil";
 const useUrl = (type: string) => {
 	const selectedSearchCriteria = useRecoilValue(searchCriteria);
 	const currentPage = useRecoilValue(pagination);
-	const [url, setUrl] = useState<string>(
-		"/mentoring/search?sortBy=latest&page=1&pageSize=16",
-	);
+
+	let INITIAL_URL = "";
+
+	if (type === "mentoring") {
+		INITIAL_URL = "/mentoring/search?sortBy=latest&page=1&pageSize=16";
+	}
+	if (type === "mentor") {
+		INITIAL_URL = "/mentor/search?sortBy=latest&page=1&pageSize=16";
+	}
+	if (type === "community") {
+		INITIAL_URL =
+			"/post/search?sortBy=latest&searchCategory=default&page=1&pageSize=16";
+	}
+
+	const [url, setUrl] = useState<string>(INITIAL_URL);
 
 	const checkPageLocation = () => {
 		let pageLocation = "";
@@ -66,7 +78,6 @@ const useUrl = (type: string) => {
 
 	useEffect(() => {
 		transformationUrl();
-		console.log("asd");
 	}, [selectedSearchCriteria, currentPage]);
 
 	return { url };
