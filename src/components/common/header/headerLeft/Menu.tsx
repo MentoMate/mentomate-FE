@@ -40,7 +40,9 @@ const Menu = () => {
 					key={menu.menuName}
 					to={menu.path}
 					className={`${menu.menuName === "홈" && "ml-4"} ${
-						selectedMenu === menu.path && "text-main-color"
+						selectedMenu === menu.path
+							? "text-main-color"
+							: "text-black-500 hover:text-sky-300"
 					} px-2 font-semibold`}
 				>
 					{menu.menuName}

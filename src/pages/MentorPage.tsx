@@ -24,8 +24,8 @@ const MentorPage = () => {
 			<Header />
 			<Suspense fallback={<Spinner />}>
 				<MentorContainer />
+				<Footer />
 			</Suspense>
-			<Footer />
 			{isOpenCategoryModal && <CategoryModal />}
 		</div>
 	);

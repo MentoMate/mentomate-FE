@@ -21,23 +21,25 @@ const CommentContainer = ({ commentRef }: IProps) => {
 		});
 
 		if (response && response.status === 200) {
-			return response.data.content;
+			return response.data;
 		}
 	};
 
-	const { data } = useQuery(["communityComment"], getComments);
+	const { data } = useQuery(["communityComment", communityId], getComments);
 
 	return (
 		<div ref={commentRef}>
 			<div className="flex mb-4 md:text-xl text-lg">
 				<div className="font-bold">댓글</div>
-				<div className="ml-2 text-main-color font-extrabold">2</div>
+				<div className="ml-2 text-main-color font-extrabold">
+					{data.items.length}
+				</div>
 			</div>
 			<CommentSubmit />
-			{data.length === 0 ? (
+			{data.items.length === 0 ? (
 				<NonExistsComment />
 			) : (
-				<CommentList comments={data} />
+				<CommentList comments={data.items} />
 			)}
 		</div>
 	);

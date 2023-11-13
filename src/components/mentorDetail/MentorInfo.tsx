@@ -46,7 +46,7 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 			<div className="flex items-center">
 				<div className="lg:w-[7rem] md:w-[5rem] lg:h-[7rem] md:h-[5rem] w-[8rem] h-[8rem] rounded-full">
 					<img
-						src={mentorItem.imgUrl}
+						src={mentorItem.uploadUrl}
 						alt="sample"
 						className="w-full h-full rounded-full object-cover"
 					/>

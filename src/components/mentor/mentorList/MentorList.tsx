@@ -12,14 +12,8 @@ const MentorList = ({ mentorList }: IProps) => {
 			<h1 className="text-xl sm:text-2xl font-bold">멘토 목록</h1>
 			<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
 				{mentorList.map((mentorItem: IMentorItem) => (
-					<Link
-						key={mentorItem.imgUrl + mentorItem.name}
-						to={"/mentorDetail/2"}
-					>
-						<MentorItem
-							key={mentorItem.name + mentorItem.imgUrl}
-							mentorItem={mentorItem}
-						/>
+					<Link key={mentorItem.id} to={`/mentorDetail/${mentorItem.id}`}>
+						<MentorItem key={mentorItem.id} mentorItem={mentorItem} />
 					</Link>
 				))}
 			</div>

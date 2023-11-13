@@ -4,15 +4,17 @@ import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as CommentIcon } from "@assets/svg/comment.svg";
 import { FormEvent } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 
 const CommentSubmit = () => {
+	const queryClient = useQueryClient();
 	const isLogin = useRecoilValue(loginState);
+	const { fetchDataUseAxios } = useAxios();
 	const [comment, setComment] = useInput("");
 	const { communityId } = useParams();
-	const { fetchDataUseAxios } = useAxios();
 
 	const submitHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -23,10 +25,20 @@ const CommentSubmit = () => {
 			},
 		});
 
-		if (response && response.status === 200) {
-			alertHandler("success", "댓글 등록이 되었습니다.");
+		if (response) {
+			if (response.status === 200) {
+				queryClient.invalidateQueries("communityComment");
+				alertHandler("success", "댓글 등록이 되었습니다.");
+				setComment("");
+			}
+
+			if (response.status !== 200) {
+				alertHandler("error", "잠시 후에 다시 시도해주세요.");
+			}
 		}
 	};
+
+	const submitComment = useMutation(() => submitHandler());
 
 	const submitCommentHandler = async (e: FormEvent) => {
 		e.preventDefault();
@@ -41,7 +53,7 @@ const CommentSubmit = () => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				submitHandler();
+				submitComment.mutate();
 			}
 		});
 	};
@@ -55,7 +67,7 @@ const CommentSubmit = () => {
 			<input
 				type="text"
 				onChange={setComment}
-				className="mx-auto lg:w-[45rem] md:w-[35rem] sm:w-[25rem] w-[10rem] outline-none md:placeholder:text-base sm:placeholder:text-sm placeholder:text-[0.8rem] md:text-base text-sm"
+				className="mx-auto lg:w-[45rem] md:w-[35rem] sm:w-[25rem] w-[10rem] disabled:bg-white outline-none md:placeholder:text-base sm:placeholder:text-sm placeholder:text-[0.8rem] md:text-base text-sm"
 				disabled={isLogin ? false : true}
 				placeholder={
 					isLogin

@@ -6,7 +6,11 @@ import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import ThirdStep from "./ThirdStep";
 
-const RegistrationStepContainer = () => {
+interface IProps {
+	readonly reactQuillRef: any;
+}
+
+const RegistrationStepContainer = ({ reactQuillRef }: IProps) => {
 	const step = useRecoilValue(registrationStep);
 	const [progressState, setProgressState] = useState<number>(0);
 
@@ -46,7 +50,7 @@ const RegistrationStepContainer = () => {
 				</div>
 				{step === 1 && <FirstStep />}
 				{step === 2 && <SecondStep />}
-				{step === 3 && <ThirdStep />}
+				{step === 3 && <ThirdStep reactQuillRef={reactQuillRef} />}
 			</div>
 		</div>
 	);

@@ -7,14 +7,18 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 
-const PrevAndNextButton = () => {
+interface IProps {
+	readonly reactQuillRef: any;
+}
+
+const PrevAndNextButton = ({ reactQuillRef }: IProps) => {
 	const selectedCategoryType = useRecoilValue(selectedCategoryState);
 	const [step, setStep] = useRecoilState(registrationStep);
 	const form = useRecoilValue(mentorRegistrationForm);
 	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 
-	const onClickbuttonHandler = (type: string) => {
+	const onClickPrevNextBtnHandler = (type: string) => {
 		let iconType = "";
 		let msg = "";
 
@@ -40,6 +44,21 @@ const PrevAndNextButton = () => {
 	};
 
 	const submitHandler = async () => {
+		const imageArr = new Array();
+
+		if (
+			reactQuillRef.current !== null &&
+			reactQuillRef.current.editor !== undefined
+		) {
+			const textEditorContent = reactQuillRef.current.editor.editor.delta.ops;
+
+			for (let element of textEditorContent) {
+				if (element.insert.image !== undefined) {
+					imageArr.push(element.insert.image);
+				}
+			}
+		}
+
 		const sumCareer = form.careerYear * 12 + form.careerMonth;
 
 		const data = {
@@ -48,12 +67,15 @@ const PrevAndNextButton = () => {
 			introduce: form.introduceContent,
 			mainCategory: selectedCategoryType.selectedCategoryType,
 			middleCategory: selectedCategoryType.selectedCategory,
+			uploadFolder: form.uploadFolder,
+			uploadImg: imageArr,
 		};
+		console.log(data);
 
 		const formData = new FormData();
 
 		formData.append(
-			"userProfile",
+			"userProfileSave",
 			new Blob([JSON.stringify(data)], { type: "application/json" }),
 		);
 
@@ -110,7 +132,7 @@ const PrevAndNextButton = () => {
 			<button
 				type="button"
 				className="mx-2 px-8 py-4 bg-black-300 rounded-sm font-semibold text-lg text-white cursor-pointer"
-				onClick={() => onClickbuttonHandler("prev")}
+				onClick={() => onClickPrevNextBtnHandler("prev")}
 				disabled={step === 1 ? true : false}
 			>
 				이전
@@ -127,7 +149,7 @@ const PrevAndNextButton = () => {
 				<button
 					type="button"
 					className="mx-2 px-8 py-4 bg-main-color rounded-sm font-semibold text-lg text-white"
-					onClick={() => onClickbuttonHandler("next")}
+					onClick={() => onClickPrevNextBtnHandler("next")}
 				>
 					다음
 				</button>

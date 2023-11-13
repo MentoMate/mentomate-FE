@@ -27,4 +27,5 @@ export interface IMentoringInfo {
 	readonly thumbNailImg: string;
 	readonly uploadUrl: string;
 	readonly uploadFolder: string;
+	readonly owner: boolean;
 }

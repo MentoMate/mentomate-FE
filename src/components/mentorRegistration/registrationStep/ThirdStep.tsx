@@ -1,14 +1,24 @@
 import { mentorRegistrationForm } from "@/data/mentorRegistrationForm";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import { useRecoilState } from "recoil";
 import { ReactComponent as NoneProfile } from "@assets/svg/smileFolder.svg";
+import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
+import { FORMATS } from "@/constants/reactQuill";
 
-const ThirdStep = () => {
+interface IProps {
+	readonly reactQuillRef: any;
+}
+
+const ThirdStep = ({ reactQuillRef }: IProps) => {
+	const { fetchDataUseAxios } = useAxios();
 	const [form, setForm] = useRecoilState(mentorRegistrationForm);
 	const [careerYearValue, setCareerYearValue] = useState<string>("");
 	const [careerMonthValue, setCareerMonthValue] = useState<string>("");
 	const [previewImg, setPreviewImg] = useState<string | undefined>(undefined);
+	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
 
 	const makePreviewImgHandler = (thumbNailImgFile: File) => {
 		const reader = new FileReader();
@@ -89,36 +99,84 @@ const ThirdStep = () => {
 		}
 	};
 
+	const uploadImageHandler = async (file: File) => {
+		if (file.size >= 500000) {
+			alertHandler(
+				"error",
+				"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
+			);
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append("img", file);
+
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "POST",
+			url: `/upload?key=${form.uploadFolder}`,
+			data: formData,
+		});
+
+		if (response && response.status === 200) {
+			return response.data;
+		} else {
+			alertHandler(
+				"error",
+				"이미지 업로드에 실패하였습니다. 잠시 후에 다시 시도해주세요.",
+			);
+		}
+	};
+
+	const imageHandler = async () => {
+		const inputDOM = document.createElement("input");
+		inputDOM.setAttribute("type", "file");
+		inputDOM.setAttribute("accept", "image/*");
+		inputDOM.click();
+		inputDOM.addEventListener("change", async () => {
+			if (inputDOM.files !== null) {
+				try {
+					setIsImgUploading(true);
+					lockScroll();
+
+					const file = inputDOM.files[0];
+					const imageUrl = await uploadImageHandler(file);
+					const editor = reactQuillRef.current.getEditor();
+					const range = editor.getSelection();
+					editor.insertEmbed(range.index, "image", imageUrl);
+				} catch (error) {
+					alertHandler(
+						"error",
+						"이미지 업로드가 실패하였습니다. 다시 시도해주세요.",
+					);
+				} finally {
+					setIsImgUploading(false);
+					cancelLockScroll();
+				}
+			}
+		});
+	};
+
 	// 사용하고 싶은 옵션, 나열 되었으면 하는 순서대로 나열
 	const modules = useMemo(() => {
 		return {
-			toolbar: [
-				[{ header: [1, 2, false] }],
-				["bold", "italic", "underline"],
-				[
-					{ list: "ordered" },
-					{ list: "bullet" },
-					{ indent: "-1" },
-					{ indent: "+1" },
+			toolbar: {
+				container: [
+					[{ header: [1, 2, false] }],
+					["bold", "italic", "underline"],
+					[
+						{ list: "ordered" },
+						{ list: "bullet" },
+						{ indent: "-1" },
+						{ indent: "+1" },
+					],
+					["image"],
+					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
 				],
-				// ["image"],
-				[{ align: [] }, { color: [] }], // dropdown with defaults from theme
-			],
+				handlers: {
+					image: imageHandler,
+				},
+			},
 		};
-	}, []);
-
-	//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-	const formats = useMemo(() => {
-		return [
-			"header",
-			"bold",
-			"italic",
-			"list",
-			"indent",
-			// "image",
-			"align",
-			"color",
-		];
 	}, []);
 
 	return (
@@ -189,9 +247,10 @@ const ThirdStep = () => {
 				<div className="flex flex-col mt-8">
 					<label className="mb-2 font-semibold">멘토소개</label>
 					<ReactQuill
+						ref={reactQuillRef}
 						theme="snow"
 						modules={modules}
-						formats={formats}
+						formats={FORMATS}
 						value={form.introduceContent}
 						onChange={(prev) => onChangeHandler("introduceContent", prev)}
 					/>

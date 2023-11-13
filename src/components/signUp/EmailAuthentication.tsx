@@ -1,30 +1,32 @@
 import { useFetch } from "@/hooks/useFetch";
 import useInput from "@/hooks/useInput";
 import { useEffect, useState } from "react";
+import ErrorMsg from "../common/errorMsg/ErrorMsg";
 
 interface IProps {
 	email: string;
 	emailDuplicateCheckHandler: (email: string) => void;
 	timeLeft: number;
 	setTimeLeft: (time: number | ((time: number) => number)) => void;
-	isEmailAuthenticataion: boolean;
+	isEmailAuthentication: boolean;
 	setIsEmailAuthentication: (authenticate: boolean) => void;
 }
 
-const INTEVAL = 1000;
+const INTERVAL = 1000;
 
 const EmailAuthentication = ({
 	email,
 	emailDuplicateCheckHandler,
 	timeLeft,
 	setTimeLeft,
-	isEmailAuthenticataion,
+	isEmailAuthentication,
 	setIsEmailAuthentication,
 }: IProps) => {
 	const { fetchCall } = useFetch();
 	const [authenticationNumber, setAuthenticationNumber] = useInput("");
 	const [inputDisabled, setInputDisabled] = useState<boolean>(false);
-	const [btnDisabeld, setBtnDisabled] = useState<boolean>(true);
+	const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
+	const [errorMsg, setErrorMsg] = useState<string>("");
 	const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(
 		2,
 		"0",
@@ -39,10 +41,17 @@ const EmailAuthentication = ({
 			},
 		);
 
-		if (response && response.status === 200) {
-			setIsEmailAuthentication(true);
-			setInputDisabled(true);
-			setBtnDisabled(true);
+		if (response) {
+			if (response.status === 200) {
+				setIsEmailAuthentication(true);
+				setInputDisabled(true);
+				setBtnDisabled(true);
+				setErrorMsg("");
+			}
+
+			if (response.status === 400) {
+				setErrorMsg("인증번호가 일치하지 않습니다.");
+			}
 		}
 	};
 
@@ -52,8 +61,8 @@ const EmailAuthentication = ({
 
 	useEffect(() => {
 		const timer = setInterval(() => {
-			setTimeLeft((prev: number) => prev - INTEVAL);
-		}, INTEVAL);
+			setTimeLeft((prev: number) => prev - INTERVAL);
+		}, INTERVAL);
 
 		if (timeLeft <= 0) {
 			clearInterval(timer);
@@ -67,8 +76,8 @@ const EmailAuthentication = ({
 	}, [timeLeft]);
 
 	useEffect(() => {
-		isEmailAuthenticataion ? setInputDisabled(true) : setInputDisabled(false);
-	}, [isEmailAuthenticataion]);
+		isEmailAuthentication ? setInputDisabled(true) : setInputDisabled(false);
+	}, [isEmailAuthentication]);
 
 	useEffect(() => {
 		if (authenticationNumber.length !== 0 && authenticationNumber !== "") {
@@ -96,12 +105,13 @@ const EmailAuthentication = ({
 					{minutes}:{second}
 				</div>
 			</div>
+			{errorMsg.length !== 0 && <ErrorMsg message={errorMsg} />}
 			<button
 				type="button"
 				className={`mt-4 py-2 w-[15.5rem] ${
-					btnDisabeld ? "bg-black-200" : "bg-main-color"
-				} rounded-md text-white font-semiboild`}
-				disabled={btnDisabeld}
+					btnDisabled ? "bg-black-200" : "bg-main-color"
+				} rounded-md text-white font-semibold`}
+				disabled={btnDisabled}
 				onClick={emailAuthenticationHandler}
 			>
 				인증하기
