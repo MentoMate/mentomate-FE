@@ -106,7 +106,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 			}
 		});
 	};
-	console.log(form);
+
 	const modules = useMemo(() => {
 		return {
 			toolbar: {

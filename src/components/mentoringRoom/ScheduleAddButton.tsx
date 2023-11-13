@@ -25,6 +25,7 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 				}
 			}
 		}
+		console.log(imageArr);
 		console.log(form);
 		const data = {
 			mentoringId: 3,
@@ -50,7 +51,6 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 등록이 완료되었습니다.");
 		}
-		window.location.reload();
 	};
 
 	const checkFormHandler = () => {

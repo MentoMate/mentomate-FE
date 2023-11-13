@@ -7,7 +7,6 @@ const DayCellContent: React.FC<IDayCellContentprop> = ({
 	events,
 	onClickAddEventhandler,
 }) => {
-	console.log(events);
 	const formatDate = `${arg.date.getFullYear()}-${(arg.date.getMonth() + 1)
 		.toString()
 		.padStart(2, "0")}-${arg.date.getDate().toString().padStart(2, "0")}`;
@@ -35,7 +34,7 @@ const DayCellContent: React.FC<IDayCellContentprop> = ({
 			{arg.dayNumberText}
 			{isHovered && !hasEvent && (
 				<button
-					className="hover-button absolute top-10 right-0 transform translate-x-1/2 -translate-y-1/2 -mt-2 mr-2 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+					className="hover-button absolute top-0 right-0  bg-blue-500 text-white rounded-full w-6 h-6 "
 					onClick={(e) => onClickAddEventhandler(e, formatDate)}
 				>
 					+

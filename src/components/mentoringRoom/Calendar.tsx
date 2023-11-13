@@ -14,7 +14,7 @@ const MyCalendar = () => {
 	const [isScduleAddModalOpen, setIsScduleAddModalOpen] = useState(false); //선택된 일정에 대한 모달 상태
 	const [scduleDate, setScduleDate] = useState(""); //선택된 일정 날짜
 	const [selectedEventDate, setSelectedEventDate] = useState(""); // 선택된 이벤트 날짜
-	const [eventTitle, setEventTitle] = useState(""); // 선택된 이벤트 제목
+	const [eventInfo, setEventInfo] = useState(""); // 선택된 이벤트 제목
 	const [eventDescription, setEventDescription] = useState(""); // 선택된 이벤트 세부정보
 	const [isScduleReadModalOpen, setIsScduleReadModalOpen] = useState(false); //선택된 이벤트에 대한 모달 상태
 
@@ -24,14 +24,15 @@ const MyCalendar = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const mentoringPeriod = {
 		// 멘토링 기간
-		startdate: "2023-06-08",
-		enddate: "2025-05-03",
+		startdate: "2023-09-08",
+		enddate: "2024-01-03",
 	};
 
+	const today = new Date();
+
 	const [scheduleDate, setScheduleDate] = useState({
-		// 첫 시작 달력 화면
-		year: parseInt(mentoringPeriod.startdate.split("-")[0], 10), // 멘토링 기간중 시작기간의 년도,
-		month: parseInt(mentoringPeriod.startdate.split("-")[1], 10), // 멘토링 기간중 시작기간의 월
+		year: today.getFullYear(),
+		month: today.getMonth() + 1, // getMonth()는 0부터 시작하므로 1을 더합니다.
 	});
 
 	const [validRange, setValidRange] = useState({
@@ -50,10 +51,8 @@ const MyCalendar = () => {
 			}`,
 		});
 		setEvent(response.data);
-		console.log(response.data);
 	};
 
-	console.log(eventa[0]);
 	useEffect(() => {
 		setIsLoading(true);
 		// API 호출로 해당 월의 스케줄 데이터를 가져오는 로직을 추가
@@ -62,7 +61,7 @@ const MyCalendar = () => {
 		// 데이터를 가져온 후 isLoading을 false로 설정
 
 		scduleReadHandler();
-	}, [scheduleDate]);
+	}, [validRange]);
 
 	const handlePrevMonth = () => {
 		CalendarUtils.handlePrevMonth(
@@ -81,7 +80,7 @@ const MyCalendar = () => {
 			setValidRange,
 		);
 	};
-	console.log(validRange);
+
 	const customDayCellContent = (arg: any) => (
 		<DayCellContent
 			arg={arg}
@@ -106,8 +105,7 @@ const MyCalendar = () => {
 			.padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 
 		setSelectedEventDate(formateventdate);
-		setEventDescription(event.extendedProps.description);
-		setEventTitle(event.title);
+		setEventInfo(event);
 		setIsScduleReadModalOpen(true); // 모달 열기
 	};
 
@@ -138,7 +136,7 @@ const MyCalendar = () => {
 					headerToolbar={{
 						start: "title",
 						center: "",
-						end: "prev next",
+						end: "",
 					}}
 					validRange={validRange}
 					locale="ko"
@@ -160,8 +158,7 @@ const MyCalendar = () => {
 				<ScduleReadModal //일정 보기 시 모달
 					formattedDate={selectedEventDate}
 					closeModal={() => setIsScduleReadModalOpen(false)}
-					eventText={eventTitle}
-					eventDescription={eventDescription}
+					eventInfo={eventInfo}
 				/>
 			)}
 		</>

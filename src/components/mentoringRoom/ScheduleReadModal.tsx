@@ -12,9 +12,9 @@ import ScduleEdit from "./ScheduleEdit";
 const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 	formattedDate,
 	closeModal,
-	eventText,
-	eventDescription,
+	eventInfo,
 }) => {
+	console.log(eventInfo.extendedProps.scheduleId);
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOtherScreenVisible, setOtherScreenVisible] = useState(false);
 
@@ -60,18 +60,21 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 						<ScduleEdit
 							formattedDate={formattedDate}
 							closeModal={closeModal}
-							eventText={eventText}
-							eventDescription={eventDescription}
+							eventInfo={eventInfo}
 						/>
 					) : (
 						// 수정 모드가 아닐 때
 						<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
-							<FileUpload />
+							<FileUpload scheduleId={eventInfo.extendedProps.scheduleId} />
 							<div className="flex items-center mt-2 border rounded-md sm:text-base text-sm mb-4">
-								<div className="px-4 py-4 rounded-md">{eventText}</div>
+								<div className="px-4 py-4 rounded-md">{eventInfo.title}</div>
 							</div>
 							<div className="px-4 py-4 border h-[5rem] lg:h-[100rem] md:h-[15rem] sm:h-[10rem] overflow-y-auto">
-								<span>{eventDescription}</span>
+								<div
+									dangerouslySetInnerHTML={{
+										__html: eventInfo.extendedProps.content,
+									}}
+								/>
 							</div>
 						</div>
 					)}
