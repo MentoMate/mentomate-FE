@@ -24,7 +24,7 @@ const MyCalendar = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const mentoringPeriod = {
 		// 멘토링 기간
-		startdate: "2023-09-08",
+		startdate: "2023-06-08",
 		enddate: "2024-01-03",
 	};
 

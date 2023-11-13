@@ -1,9 +1,10 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 
 const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [fileList, setFileList] = useState([]);
 	const { fetchDataUseAxios } = useAxios();
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,29 +21,23 @@ const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 		if (selectedFile) {
 			console.log(selectedFile);
 			const formData = new FormData();
-			formData.append("fileData", selectedFile);
+			formData.append("file", selectedFile);
 
-			console.log(formData);
+			console.log(formData.get("file"));
 
-			try {
-				const response = await fetchDataUseAxios(
-					`/mentoring/schedule/${scheduleId}/file`,
-					{
-						data: formData,
-						headers: {
-							"Content-Type": "multipart/form-data",
-						},
-					},
-				);
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "POST",
+				url: `schedule/${scheduleId}/file`,
+				data: formData,
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
 
-				console.log(response);
+			console.log(response);
 
-				if (response && response.status === 200) {
-					alertHandler("success", "파일 등록이 완료되었습니다.");
-				}
-			} catch (error) {
-				console.error(error);
-				alertHandler("error", "파일 업로드에 실패했습니다.");
+			if (response && response.status === 200) {
+				alertHandler("success", "파일 등록이 완료되었습니다.");
 			}
 		}
 	};

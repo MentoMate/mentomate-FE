@@ -14,6 +14,7 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 	closeModal,
 	eventInfo,
 }) => {
+	console.log(eventInfo);
 	console.log(eventInfo.extendedProps.scheduleId);
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOtherScreenVisible, setOtherScreenVisible] = useState(false);
@@ -54,7 +55,9 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 					</div>
 
 					{isOtherScreenVisible ? (
-						<MentoringFileList />
+						<MentoringFileList
+							scheduleId={eventInfo.extendedProps.scheduleId}
+						/>
 					) : isEditing ? (
 						// 수정 모드
 						<ScduleEdit
