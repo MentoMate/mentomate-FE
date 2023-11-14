@@ -1,6 +1,9 @@
+import KaKaoCallback from "@components/login/KaKaoCallback";
+import NaverCallback from "@components/login/NaverCallback";
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
 import CommunityDetailPage from "@pages/CommunityDetailPage";
 import CommunityPage from "@pages/CommunityPage";
+import CommunityRegistrationPage from "@pages/CommunityRegistrationPage";
 import LoginPage from "@pages/LoginPage";
 import MainPage from "@pages/MainPage";
 import MentorDetailPage from "@pages/MentorDetailPage";
@@ -12,22 +15,20 @@ import MentoringPage from "@pages/MentoringPage";
 import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 import MentoringRoom from "@pages/MentoringRoomPage";
 import Mypage from "@pages/MyPage";
+import PaymentSuccessPage from "@pages/PaymentSuccessPage";
 import SignUpPage from "@pages/SignUpPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
-import PaymentPage from "./pages/PaymentPage";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { Route, Routes } from "react-router-dom";
-import KaKaoCallback from "@components/login/KaKaoCallback";
-import NaverCallback from "@components/login/NaverCallback";
-import PaymentSuccessPage from "@pages/PaymentSuccessPage";
-import CommunityRegistrationPage from "@pages/CommunityRegistrationPage";
-import EditCommunityPage from "./pages/EditCommunityPage";
-import { notification } from "./state/notification";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { getCookie } from "./utils/cookies";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Route, Routes } from "react-router-dom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import useAxios from "./hooks/useAxios";
+import EditCommunityPage from "./pages/EditCommunityPage";
+import PaymentPage from "./pages/PaymentPage";
 import { loginState } from "./state/loginState";
+import { notification, notificationEmitterId } from "./state/notification";
+import { getCookie } from "./utils/cookies";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -42,6 +43,8 @@ const queryClient = new QueryClient({
 function Router() {
 	const setReceiveNotificationState = useSetRecoilState(notification);
 	const isLogin = useRecoilValue(loginState);
+	const { fetchDataUseAxios } = useAxios();
+	const [emitterId, setEmitterId] = useRecoilState(notificationEmitterId);
 
 	const init = () => {
 		const ACCESS_TOKEN = getCookie("accessToken");
@@ -55,6 +58,10 @@ function Router() {
 
 		eventSource.onmessage = (event) => {
 			const message = JSON.parse(event.data);
+
+			if (message.type === "SUBSCRIBE") {
+				setEmitterId(message.data.emitterId);
+			}
 
 			if (message.type === "RECEIVE") {
 				setReceiveNotificationState((prev) => prev + 1);
@@ -72,12 +79,28 @@ function Router() {
 		return { close };
 	};
 
+	const deleteEmitter = async () => {
+		await fetchDataUseAxios("useTokenAxios", {
+			method: "DELETE",
+			url: `/emitter?emitterId=${emitterId}`,
+		});
+	};
+
 	useEffect(() => {
 		if (isLogin) {
 			const { close } = init();
 
+			const timer = setInterval(
+				() => {
+					init();
+				},
+				1000 * 60 * 60,
+			);
+
 			return () => {
+				clearInterval(timer);
 				close();
+				deleteEmitter();
 			};
 		}
 	}, [isLogin]);

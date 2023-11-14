@@ -1,15 +1,30 @@
 import { loginState } from "@/state/loginState";
 import { removeCookie } from "@/utils/cookies";
 import { Link, useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import Notification from "./Notification";
+import useAxios from "@/hooks/useAxios";
+import { notificationEmitterId } from "@/state/notification";
 
 const AfterLogin = () => {
 	const navigate = useNavigate();
 	const setLoginState = useSetRecoilState(loginState);
+	const { fetchDataUseAxios } = useAxios();
+	const emitterId = useRecoilValue(notificationEmitterId);
 
-	const logoutHandler = () => {
+	const logoutHandler = async () => {
+		await fetchDataUseAxios("useTokenAxios", {
+			method: "DELETE",
+			url: `/emitter?emitterId=${emitterId}`,
+		});
+
+		removeCookie();
+		setLoginState(false);
+		navigate("/");
+	};
+
+	const onClickLogoutBtnHandler = () => {
 		Swal.fire({
 			icon: "question",
 			text: "로그아웃 하시겠습니까?",
@@ -18,9 +33,7 @@ const AfterLogin = () => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				removeCookie();
-				setLoginState(false);
-				navigate("/");
+				logoutHandler();
 			}
 		});
 	};
@@ -35,7 +48,7 @@ const AfterLogin = () => {
 				</Link>
 				<div
 					className="mx-2 cursor-pointer text-black-500 hover:text-sky-300"
-					onClick={logoutHandler}
+					onClick={onClickLogoutBtnHandler}
 				>
 					로그아웃
 				</div>
