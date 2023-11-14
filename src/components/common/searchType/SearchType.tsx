@@ -1,5 +1,7 @@
+import { searchCriteria } from "@/state/searchCriteria";
 import { ReactComponent as BottomArrow } from "@assets/svg/bottom_arrow.svg";
 import { useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 
 interface ISearchTypes {
 	readonly key: string;
@@ -18,6 +20,8 @@ const SEARCH_TYPES = [
 ];
 
 const SearchType = () => {
+	const [selectedSearchCriteria, setSelectedSearchCriteria] =
+		useRecoilState(searchCriteria);
 	const [type, setType] = useState<ISearchTypes>(SEARCH_TYPES[0]);
 	const [openSearchTypeList, setOpenSearchTypeList] = useState<boolean>(false);
 	const searchTypeListRef = useRef<HTMLUListElement>(null);
@@ -29,6 +33,10 @@ const SearchType = () => {
 	const onClickSearchType = (searchType: ISearchTypes) => {
 		setType(searchType);
 		setOpenSearchTypeList(false);
+		setSelectedSearchCriteria({
+			...selectedSearchCriteria,
+			searchType: searchType.key,
+		});
 	};
 
 	return (
@@ -43,11 +51,11 @@ const SearchType = () => {
 			{openSearchTypeList && (
 				<ul
 					ref={searchTypeListRef}
-					className="absolute top-12 sm:w-[10rem] w-full bg-white border border-black-200 rounded-sm"
+					className="absolute top-12 sm:w-[10rem] w-full bg-white border border-black-200 rounded-sm z-[51]"
 				>
 					{SEARCH_TYPES.map((searchType) => (
 						<li
-							className="text-center py-2 shadow-sm hover:bg-main-color hover:text-white"
+							className="text-center py-2 bg-white shadow-sm hover:bg-main-color hover:text-white"
 							onClick={() => onClickSearchType(searchType)}
 						>
 							{searchType.keyName}
