@@ -1,9 +1,9 @@
 import { Suspense, lazy } from "react";
-import Header from "@/components/common/header/Header";
-import Footer from "@/components/common/footer/Footer";
-import Spinner from "@/components/common/spinner/Spinner";
+import Header from "@components/common/header/Header";
+import Footer from "@components/common/footer/Footer";
+import Spinner from "@components/common/spinner/Spinner";
 const MentoringRoom = lazy(
-	() => import("@/components/mentoringRoom/MentoringRoom"),
+	() => import("@components/mentoringRoom/MentoringRoom"),
 );
 
 const MentoringRoomPage = () => {

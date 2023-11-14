@@ -1,5 +1,5 @@
-import CategoryModal from "@/components/common/categoryModal/CategoryModal";
-import Spinner from "@/components/common/spinner/Spinner";
+import CategoryModal from "@components/common/categoryModal/CategoryModal";
+import Spinner from "@components/common/spinner/Spinner";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import { openCategoryModalState } from "@/state/openCategoryModal";
 import Header from "@components/common/header/Header";

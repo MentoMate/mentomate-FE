@@ -6,7 +6,7 @@ import { useEffect, Suspense, lazy } from "react";
 import { useRecoilState } from "recoil";
 
 const EditMentoringContainer = lazy(
-	() => import("@/components/mentoringEdit/EditMentoringContainer"),
+	() => import("@components/mentoringEdit/EditMentoringContainer"),
 );
 
 const MentoringEditPage = () => {

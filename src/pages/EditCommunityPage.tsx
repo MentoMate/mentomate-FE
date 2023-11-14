@@ -1,5 +1,5 @@
-import Header from "@/components/common/header/Header";
-import Loading from "@/components/common/spinner/Loading";
+import Header from "@components/common/header/Header";
+import Loading from "@components/common/spinner/Loading";
 import { lazy, Suspense } from "react";
 
 const EditCommunityContainer = lazy(
