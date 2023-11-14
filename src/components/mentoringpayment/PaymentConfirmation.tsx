@@ -45,7 +45,7 @@ const PaymentConfirmation = () => {
 				//);
 				if (res.success) {
 					//if (res.paid_amount === data.response.amount) { //결제 검증
-					navigate("/paymentsuccess");
+					navigate("/paymentSuccess");
 				} else {
 					alertHandler("warning", "결제 실패.");
 				}
@@ -59,22 +59,22 @@ const PaymentConfirmation = () => {
 	};
 
 	useEffect(() => {
-		const jquery = document.createElement("script");
-		jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
-		const iamport = document.createElement("script");
-		iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
-		document.head.appendChild(jquery);
-		document.head.appendChild(iamport);
+		const JQUERY = document.createElement("script");
+		JQUERY.src = "http://code.jquery.com/jquery-1.12.4.min.js";
+		const IAMPORT = document.createElement("script");
+		IAMPORT.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+		document.head.appendChild(JQUERY);
+		document.head.appendChild(IAMPORT);
 
 		return () => {
-			document.head.removeChild(jquery);
-			document.head.removeChild(iamport);
+			document.head.removeChild(JQUERY);
+			document.head.removeChild(IAMPORT);
 		};
 	}, []);
 
 	return (
 		<div className="flex items-center justify-center min-h-screen lg:h-[64.5rem] bg-gray-100">
-			<div className="flex flex-col items-center justify-center bg-white p-12 shadow-md rounded-md   h-[40rem] md:h-[39rem] w-[17rem] md:w-[30rem] lg:w-[40rem]">
+			<div className="flex flex-col items-center justify-center p-12 w-[17rem] md:w-[30rem] lg:w-[40rem] h-[40rem] md:h-[39rem] bg-white rounded-md shadow-md">
 				<h2 className="text-xl font-semibold mb-10 lg:mb-20">결제 내용</h2>
 				<div>
 					<div className="mb-8">

@@ -1,32 +1,30 @@
-import { useState } from "react";
 import { ReactComponent as Close } from "@/assets/svg/close.svg";
-import { ReactComponent as FileList } from "@/assets/svg/filelist.svg";
 import { ReactComponent as EditIcon } from "@/assets/svg/edit.svg";
+import { ReactComponent as FileList } from "@/assets/svg/fileList.svg";
+import { IScheduleReadModalProps } from "@/interface/scheduleReadModalProps";
+import { cancelLockScroll } from "@/utils/controlBodyScroll";
+import { useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { IScduleReadModalProps } from "@/types/scdulereadmodalprop";
 import FileUpload from "./FileUpload";
 import MentoringFileList from "./MentoringFileList";
-import ScduleEdit from "./ScheduleEdit";
-import { cancelLockScroll } from "@/utils/controlBodyScroll";
+import ScheduleEdit from "./ScheduleEdit";
 
-const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
+const ScheduleReadModal = ({
 	formattedDate,
 	closeModal,
 	eventInfo,
-}) => {
+}: IScheduleReadModalProps) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOtherScreenVisible, setOtherScreenVisible] = useState(false);
 
-	const onClickEdithandler = () => {
-		// 수정 아이콘 클릭 시
+	const onClickEditHandler = () => {
 		setIsEditing(!isEditing);
-		setOtherScreenVisible(false); // 수정 모드로 전환 시 파일 리스트를 숨깁니다.
+		setOtherScreenVisible(false);
 	};
 
-	const onClickFilelisthandler = () => {
-		// 파일 리스트 아이콘 클릭 시
+	const onClickFileListHandler = () => {
 		setOtherScreenVisible(!isOtherScreenVisible);
-		setIsEditing(false); // 파일 리스트로 전환 시 수정 모드를 종료합니다.
+		setIsEditing(false);
 	};
 
 	return (
@@ -35,20 +33,18 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 				<div className="absolute inset-0 bg-black opacity-50 "></div>
 
 				<div className="z-10 bg-white p-8 rounded-lg mt-20 ">
-					{/*모달 전체 박스*/}
-
 					<div className="flex justify-between items-center font-semibold mt-4 text-sm lg:text-lg mb-4 ">
-						날짜: {formattedDate}{" "}
+						날짜: {formattedDate}
 						<div className="flex justify-between items-center w-[5rem]">
 							<EditIcon
 								className="cursor-pointer"
-								onClick={onClickEdithandler}
+								onClick={onClickEditHandler}
 								width={20}
 								height={20}
 							/>
 							<FileList
 								className="cursor-pointer"
-								onClick={onClickFilelisthandler}
+								onClick={onClickFileListHandler}
 								width={20}
 								height={20}
 							/>
@@ -64,20 +60,17 @@ const ScheduleReadModal: React.FC<IScduleReadModalProps> = ({
 							/>
 						</div>
 					</div>
-
 					{isOtherScreenVisible ? (
 						<MentoringFileList
 							scheduleId={eventInfo.extendedProps.scheduleId}
 						/>
 					) : isEditing ? (
-						// 수정 모드
-						<ScduleEdit
+						<ScheduleEdit
 							formattedDate={formattedDate}
 							closeModal={closeModal}
 							eventInfo={eventInfo}
 						/>
 					) : (
-						// 수정 모드가 아닐 때
 						<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
 							<FileUpload scheduleId={eventInfo.extendedProps.scheduleId} />
 							<div className="flex items-center mt-2 border rounded-md sm:text-base text-sm mb-4">

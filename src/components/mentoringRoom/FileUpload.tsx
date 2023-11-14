@@ -2,15 +2,19 @@ import { useState, ChangeEvent } from "react";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 
-const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
+interface IProps {
+	readonly scheduleId: number;
+}
+
+const FileUpload = ({ scheduleId }: IProps) => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const { fetchDataUseAxios } = useAxios();
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		e.persist();
+
 		if (e.target.files !== null) {
-			console.log(e.target.files);
 			const file = e.target.files[0];
 			setSelectedFile(file);
 		}
@@ -25,11 +29,9 @@ const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 				);
 				return;
 			}
-			console.log(selectedFile);
+
 			const formData = new FormData();
 			formData.append("file", selectedFile);
-
-			console.log(formData.get("file"));
 
 			const response = await fetchDataUseAxios("useTokenAxios", {
 				method: "POST",
@@ -40,12 +42,9 @@ const FileUpload = ({ scheduleId }: { scheduleId: number }) => {
 				},
 			});
 
-			console.log(response);
-
 			if (response && response.status === 200) {
 				alertHandler("success", "파일 등록이 완료되었습니다.");
 			}
-			window.location.reload();
 		}
 	};
 

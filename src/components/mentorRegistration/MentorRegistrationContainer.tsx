@@ -1,16 +1,16 @@
-import { useEffect, useRef } from "react";
-import PrevAndNextButton from "./PrevAndNextButton";
-import RegistrationStepContainer from "./registrationStep/RegistartionStepContainer";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import { mentorRegistrationForm } from "@/data/mentorRegistrationForm";
-import { selectedCategoryState } from "@/state/selectedCategory";
-import { registrationStep } from "@/state/mentorRegistrationStep";
 import useAxios from "@/hooks/useAxios";
+import { registrationStep } from "@/state/mentorRegistrationStep";
+import { selectedCategoryState } from "@/state/selectedCategory";
+import { useEffect, useRef } from "react";
+import { useSetRecoilState } from "recoil";
+import PrevAndNextButton from "./PrevAndNextButton";
+import RegistrationStepContainer from "./registrationStep/RegistrationStepContainer";
 
 const MentorRegistrationContainer = () => {
 	const setCategory = useSetRecoilState(selectedCategoryState);
 	const setStep = useSetRecoilState(registrationStep);
-	const [form, setForm] = useRecoilState(mentorRegistrationForm);
+	const setForm = useSetRecoilState(mentorRegistrationForm);
 	const { fetchDataUseAxios } = useAxios();
 	const reactQuillRef = useRef<any>(null);
 

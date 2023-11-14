@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import { useMemo, ChangeEvent } from "react";
-import { IScduleReadModalProps } from "@/types/scdulereadmodalprop";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { scheduleEditForm } from "@/data/scheduleEditForm";
 import Loading from "../common/spinner/Loading";
+import { IScheduleReadModalProps } from "@/interface/scheduleReadModalProps";
 
-const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
+const ScheduleEdit = ({
 	eventInfo,
 	formattedDate,
-}) => {
+}: IScheduleReadModalProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const [form, setForm] = useRecoilState(scheduleEditForm);
 	const reactQuillRef = useRef<any>(null);
@@ -36,7 +36,6 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 	);
 
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-		// 제목 입력 필드 값 변경 시 호출되는 함수
 		const newValue = e.target.value;
 		setTitleText(newValue);
 		setTitleLength(newValue.length);
@@ -93,7 +92,7 @@ const ScheduleEdit: React.FC<IScduleReadModalProps> = ({
 				}
 			}
 		}
-		console.log(imageArr);
+
 		const data = {
 			scheduleId: form.scheduleId,
 			mentoringId: form.mentoringId,
