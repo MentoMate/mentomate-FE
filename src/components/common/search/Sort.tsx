@@ -38,12 +38,8 @@ const SORT_TYPES = {
 			sortName: "최신순",
 		},
 		{
-			key: "like",
+			key: "likes",
 			sortName: "좋아요수",
-		},
-		{
-			key: "comment",
-			sortName: "댓글수",
 		},
 	],
 };

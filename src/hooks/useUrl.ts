@@ -51,28 +51,28 @@ const useUrl = (type: string) => {
 				? "default"
 				: selectedSearchCriteria.category;
 
-		if (pageLocation === "mentoring" || pageLocation === "community") {
+		if (pageLocation === "mentoring" || pageLocation === "post") {
 			if (sortBy !== "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=15`,
 				);
 			}
 
 			if (keyword !== "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=15`,
 				);
 			}
 
 			if (category !== "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=15`,
 				);
 			}
 
 			if (keyword !== "" && category !== "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=15`,
 				);
 			}
 		}
