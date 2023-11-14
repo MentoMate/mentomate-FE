@@ -1,9 +1,9 @@
+import { IMentorItemInProps } from "@/interface/mainPageInterface";
+import { ReactComponent as Arrow } from "@assets/svg/mainArrow.svg";
 import { Link } from "react-router-dom";
-import MentorCardList from "./MentorCardList";
-import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
-import { IMentorItem } from "@/interface/mainPageMentor";
+import ThirdSectionMentorList from "./ThirdSectionMentorList";
 
-const ThirdSection = ({ data }: { data: IMentorItem[] }) => {
+const ThirdSection = ({ data }: IMentorItemInProps) => {
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
@@ -20,7 +20,7 @@ const ThirdSection = ({ data }: { data: IMentorItem[] }) => {
 						</div>
 					</Link>
 				</div>
-				<MentorCardList data={data} />
+				<ThirdSectionMentorList data={data} />
 			</div>
 		</>
 	);

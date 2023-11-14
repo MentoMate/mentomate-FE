@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import MentorInfo from "./MentorInfo";
 import MentorIntroduce from "./MentorIntroduce";
-import MentorReviewContainer from "./mentorReivew/MentorReviewContainer";
 import PastMentoringContainer from "./pastMentoring/PastMentoringContainer";
 import useAxios from "@/hooks/useAxios";
 import { useParams } from "react-router-dom";
+import MentorReviewContainer from "./mentorReview/MentorReviewContainer";
 
 const MentorDetailContainer = () => {
 	const { mentorId } = useParams();
