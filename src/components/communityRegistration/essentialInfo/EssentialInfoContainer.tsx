@@ -1,6 +1,6 @@
 import ChoiceCommunityType from "./ChoiceCommunityType";
 import { ReactComponent as CheckList } from "@assets/svg/checklist.svg";
-import ThumbNail from "./ThumNail";
+import ThumbNail from "./ThumbNail";
 
 const EssentialInfoContainer = () => {
 	return (

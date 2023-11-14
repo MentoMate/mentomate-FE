@@ -1,10 +1,10 @@
 import BannerSection from "./BannerSection";
-import FirstSection from "./firstsection/FirstSection";
-import SecondSection from "./secondsection/SecondSection";
-import ThirdSection from "./thirdsection/ThirdSection";
-import FourthSection from "./fourthsection/FourthSection";
-import FifthSection from "./fifthsection/FifthSection";
-import SixSection from "./sixsection/SixSection";
+import FirstSection from "./firstSection/FirstSection";
+import SecondSection from "./secondSection/SecondSection";
+import ThirdSection from "./thirdSection/ThirdSection";
+import FourthSection from "./fourthSection/FourthSection";
+import FifthSection from "./fifthSection/FifthSection";
+import SixSection from "./sixSection/SixSection";
 import useAxios from "@/hooks/useAxios";
 import { useQuery } from "react-query";
 
@@ -17,7 +17,11 @@ const Main = () => {
 			method: "GET",
 		});
 
-		if (response) return response.data;
+		if (response) {
+			if (response.status === 200) {
+				return response.data;
+			}
+		}
 	});
 
 	return (

@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
 interface ILoginFormValues {
-	email: string;
-	password: string;
+	readonly email: string;
+	readonly password: string;
 }
 
 const LoginForm = () => {

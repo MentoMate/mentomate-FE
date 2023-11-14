@@ -1,8 +1,9 @@
+import { IMentoringCardInProps } from "@/interface/mainPageInterface";
 import { IMentoringCard } from "@/interface/mainPageMentoringCard";
-import MentoringCard from "../MentoringCard";
 import { Link } from "react-router-dom";
+import MentoringCard from "../MentoringCard";
 
-const DeadlineMentoringList = ({ data }: { data: IMentoringCard[] }) => {
+const DeadlineMentoringList = ({ data }: IMentoringCardInProps) => {
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mx-auto mb-32">
 			{data.map((card: IMentoringCard) => (
@@ -10,7 +11,7 @@ const DeadlineMentoringList = ({ data }: { data: IMentoringCard[] }) => {
 					key={card.mentoringId}
 					to={`/mentoringDetail/${card.mentoringId}`}
 				>
-					<MentoringCard mentoringcard={card} />
+					<MentoringCard mentoringCard={card} />
 				</Link>
 			))}
 		</div>
