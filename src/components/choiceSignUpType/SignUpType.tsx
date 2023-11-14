@@ -47,7 +47,7 @@ const SignUpType = () => {
 				href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${
 					import.meta.env.VITE_NAVER_APP_KEY
 				}&redirect_uri=${import.meta.env.VITE_NAVER_REDIRECT_URI}`}
-				className="flex flex justify-between items-center my-3 py-4 rounded-md bg-green-100 text-white"
+				className="flex justify-between items-center my-3 py-4 rounded-md bg-green-100 text-white"
 			>
 				<div className="flex">
 					<div className="flex justify-center items-center px-2 w-[4rem]">

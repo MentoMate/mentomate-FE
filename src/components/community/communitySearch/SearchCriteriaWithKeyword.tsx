@@ -4,7 +4,7 @@ import { ReactComponent as Category } from "@assets/svg/category.svg";
 import { useState } from "react";
 
 interface ISearchCriterialType {
-	[key: string]: string;
+	readonly [key: string]: string;
 }
 
 const SEARCH_CRITERIAL_TYPE: ISearchCriterialType = {

@@ -55,12 +55,12 @@ const EditThumbNail = () => {
 				</p>
 			</div>
 			<label htmlFor="thumbNail">
-				<div className="flex justify-center items-center mb-4 w-full lg:h-[25rem] md:h-[15rem] sm:h-[12rem] h-[10rem] w-full bg-black-200 cursor-pointer">
+				<div className="flex justify-center items-center mb-4 w-full lg:h-[25rem] md:h-[15rem] sm:h-[12rem] h-[10rem] bg-black-200 cursor-pointer">
 					{previewImg ? (
 						<img
 							src={previewImg}
 							alt="미리보기"
-							className="w-full lg:h-[25rem] md:h-[15rem] sm:h-[12rem] h-[10rem] w-full object-fill"
+							className="w-full lg:h-[25rem] md:h-[15rem] sm:h-[12rem] h-[10rem] object-fill"
 						/>
 					) : (
 						<p className="md:p-4 sm:p-3 p-2 sm:text-sm text-[0.8rem] bg-black-500 font-bold text-white rounded-md">

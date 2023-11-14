@@ -1,4 +1,4 @@
-import { ICommunityList } from "@/interface/community";
+import { ICommunityItem } from "@/interface/community";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
 import { ReactComponent as User } from "@assets/svg/user.svg";
@@ -8,7 +8,7 @@ import { ReactComponent as Review } from "@assets/svg/review.svg";
 import { Link } from "react-router-dom";
 
 interface IProps {
-	readonly communityItem: ICommunityList;
+	readonly communityItem: ICommunityItem;
 }
 
 const CommunityItem = ({ communityItem }: IProps) => {

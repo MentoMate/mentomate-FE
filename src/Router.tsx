@@ -119,7 +119,7 @@ function Router() {
 				/>
 				<Route path="/mypage" element={<Mypage />} />
 				<Route path="/payment" element={<PaymentPage />} />
-				<Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
+				<Route path="/paymentSuccess" element={<PaymentSuccessPage />} />
 				<Route
 					path="/mentorRegistration"
 					element={<MentorRegistrationPage />}
