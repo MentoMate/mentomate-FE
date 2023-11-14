@@ -22,6 +22,12 @@ import NaverCallback from "@components/login/NaverCallback";
 import PaymentSuccessPage from "@pages/PaymentSuccessPage";
 import CommunityRegistrationPage from "@pages/CommunityRegistrationPage";
 import EditCommunityPage from "./pages/EditCommunityPage";
+import { notification } from "./state/notification";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { getCookie } from "./utils/cookies";
+import { EventSourcePolyfill } from "event-source-polyfill";
+import { useEffect } from "react";
+import { loginState } from "./state/loginState";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -34,6 +40,48 @@ const queryClient = new QueryClient({
 });
 
 function Router() {
+	const setReceiveNotificationState = useSetRecoilState(notification);
+	const isLogin = useRecoilValue(loginState);
+
+	const init = () => {
+		const ACCESS_TOKEN = getCookie("accessToken");
+
+		const eventSource = new EventSourcePolyfill(`/api/subscribe`, {
+			headers: {
+				Authorization: `Bearer ${ACCESS_TOKEN}`,
+			},
+			heartbeatTimeout: 1000 * 60 * 60,
+		});
+
+		eventSource.onmessage = (event) => {
+			const message = JSON.parse(event.data);
+
+			if (message.type === "RECEIVE") {
+				setReceiveNotificationState((prev) => prev + 1);
+			}
+		};
+
+		eventSource.onerror = () => {
+			eventSource.close();
+		};
+
+		const close = () => {
+			eventSource.close();
+		};
+
+		return { close };
+	};
+
+	useEffect(() => {
+		if (isLogin) {
+			const { close } = init();
+
+			return () => {
+				close();
+			};
+		}
+	}, [isLogin]);
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Routes>

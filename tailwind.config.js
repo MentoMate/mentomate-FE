@@ -19,6 +19,23 @@ export default {
 			minHeight: {
 				"min-height": "calc(100vh - 4rem - 15rem)",
 			},
+			animation: {
+				pulse: "pulse 4s 2",
+				sonar: "sonar 4s 2",
+			},
+			keyframes: {
+				sonar: {
+					"0%": { transform: "scale(0.9) opacity: 1" },
+					"100%": { transform: "scale(2) opacity: 0 " },
+				},
+				pulse: {
+					"0%": { transform: "scale(1)" },
+					"20%": { transform: "scale(1.4)" },
+					"50%": { transform: "scale(.9)" },
+					"80%": { transform: "scale(1.2)" },
+					"100%": { transform: "scale(1)" },
+				},
+			},
 		},
 	},
 	plugins: [],
