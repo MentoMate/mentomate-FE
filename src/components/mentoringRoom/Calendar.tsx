@@ -54,7 +54,9 @@ const MyCalendar = () => {
 		});
 
 		if (response) {
-			setEvent(response.data);
+			if (response.status === 200) {
+				setEvent(response.data);
+			}
 		}
 	};
 
@@ -157,6 +159,7 @@ const MyCalendar = () => {
 
 			{isScheduleAddModalOpen && (
 				<ScheduleAddModal
+					scheduleReadHandler={scheduleReadHandler}
 					formattedDate={selectedScheduleDate}
 					closeModal={() => setIsScheduleAddModalOpen(false)}
 				/>

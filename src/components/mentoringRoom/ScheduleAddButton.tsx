@@ -3,7 +3,13 @@ import { useRecoilValue } from "recoil";
 import useAxios from "@/hooks/useAxios";
 import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
 import Swal from "sweetalert2";
-const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
+
+interface IProps {
+	readonly reactQuillRef: any;
+	readonly scheduleReadHandler: () => void;
+}
+
+const ScheduleAddButton = ({ reactQuillRef, scheduleReadHandler }: IProps) => {
 	const { fetchDataUseAxios } = useAxios();
 
 	const form = useRecoilValue(scheduleRegistrationForm);
@@ -44,7 +50,8 @@ const ScheduleAddButton = ({ reactQuillRef }: { reactQuillRef: any }) => {
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 등록이 완료되었습니다.");
 		}
-		// window.location.reload();
+
+		scheduleReadHandler();
 	};
 
 	const checkFormHandler = () => {
