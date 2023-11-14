@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
+// TODO : reactQuill type 찾기
 interface IProps {
 	readonly reactQuillRef: any;
 }

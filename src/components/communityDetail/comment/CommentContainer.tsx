@@ -7,7 +7,7 @@ import CommentSubmit from "./CommentSubmit";
 import NonExistsComment from "./NonExistsComment";
 
 interface IProps {
-	commentRef: RefObject<HTMLDivElement>;
+	readonly commentRef: RefObject<HTMLDivElement>;
 }
 
 const CommentContainer = ({ commentRef }: IProps) => {

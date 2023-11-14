@@ -7,8 +7,9 @@ import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 
+// TODO: reactQuill type 찾기
 interface IProps {
-	reactQuillRef: any;
+	readonly reactQuillRef: any;
 }
 
 const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
@@ -54,9 +55,6 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 		if (form.thumbNailImg) {
 			formData.append("thumbNailImg", form.thumbNailImg);
 		}
-
-		console.log(formData.get("mentoringSave"));
-		console.log(formData.get("thumbNailImg"));
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",

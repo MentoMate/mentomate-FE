@@ -1,5 +1,6 @@
-export interface ICommunityList {
+export interface ICommunityItem {
 	readonly id: number;
+	readonly postId: number;
 	readonly commentCount: number;
 	readonly countWatch: number;
 	readonly category: string;
@@ -19,5 +20,10 @@ export interface ICommunityList {
 }
 
 export interface ICommunityProps {
-	readonly communityInfo: ICommunityList;
+	readonly communityInfo: ICommunityItem;
+}
+
+export interface ITabs {
+	readonly key: string;
+	readonly tabName: string;
 }

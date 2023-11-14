@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MentoringItem from "./MentoringItem";
 
 export interface IMentoringProps {
-	data: IMentoringItem[];
+	readonly data: IMentoringItem[];
 }
 
 const MentoringList = ({ data }: IMentoringProps) => {

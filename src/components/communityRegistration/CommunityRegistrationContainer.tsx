@@ -10,6 +10,7 @@ import SaveAndBackButton from "./SaveAndBackButton";
 import EssentialInfoContainer from "./essentialInfo/EssentialInfoContainer";
 import { alertHandler } from "@/utils/alert";
 import useAxios from "@/hooks/useAxios";
+import { FORMATS } from "@/constants/reactQuill";
 
 const CommunityRegistrationContainer = () => {
 	const reactQuillRef = useRef<any>(null);
@@ -104,7 +105,6 @@ const CommunityRegistrationContainer = () => {
 		});
 	};
 
-	// 사용하고 싶은 옵션, 나열 되었으면 하는 순서대로 나열
 	const modules = useMemo(() => {
 		return {
 			toolbar: {
@@ -118,27 +118,13 @@ const CommunityRegistrationContainer = () => {
 						{ indent: "+1" },
 					],
 					["image"],
-					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
+					[{ align: [] }, { color: [] }],
 				],
 				handlers: {
 					image: reactQuillImageHandler,
 				},
 			},
 		};
-	}, []);
-
-	//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-	const formats = useMemo(() => {
-		return [
-			"header",
-			"bold",
-			"italic",
-			"list",
-			"indent",
-			"image",
-			"align",
-			"color",
-		];
 	}, []);
 
 	useEffect(() => {
@@ -162,7 +148,7 @@ const CommunityRegistrationContainer = () => {
 								className="py-8 rounded-md"
 								theme="snow"
 								modules={modules}
-								formats={formats}
+								formats={FORMATS}
 								onChange={onChangeContentHandler}
 							/>
 						</form>

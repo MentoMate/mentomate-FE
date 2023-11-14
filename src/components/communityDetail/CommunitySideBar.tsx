@@ -1,5 +1,5 @@
 import useAxios from "@/hooks/useAxios";
-import { ICommunityList } from "@/interface/community";
+import { ICommunityItem } from "@/interface/community";
 import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 
 interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
-	readonly communityInfo: ICommunityList;
+	readonly communityInfo: ICommunityItem;
 }
 
 const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {

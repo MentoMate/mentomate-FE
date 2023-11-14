@@ -3,13 +3,13 @@ import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
 export const setCookie = (type: string, token: string | null) => {
-	const expireation = new Date(Date.now() + 3600 * 1000);
-	const refreshExpireation = new Date(Date.now() + 3600 * 24000 * 7);
+	const expiration = new Date(Date.now() + 3600 * 1000);
+	const refreshExpiration = new Date(Date.now() + 3600 * 24000 * 7);
 	if (type === "accessToken") {
 		cookies.set(type, token, {
 			path: "/",
 			secure: true,
-			expires: expireation,
+			expires: expiration,
 		});
 	}
 
@@ -17,7 +17,7 @@ export const setCookie = (type: string, token: string | null) => {
 		cookies.set(type, token, {
 			path: "/",
 			secure: true,
-			expires: refreshExpireation,
+			expires: refreshExpiration,
 		});
 	}
 };

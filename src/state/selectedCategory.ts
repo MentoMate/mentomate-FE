@@ -1,18 +1,18 @@
 import { atom } from "recoil";
 
-interface IinitialValue {
-	selectedCategoryType: string;
-	selectedCategory: string;
-	selectedCategoryName: string;
+interface IInitialValue {
+	readonly selectedCategoryType: string;
+	readonly selectedCategory: string;
+	readonly selectedCategoryName: string;
 }
 
-const initialValue: IinitialValue = {
+const initialValue: IInitialValue = {
 	selectedCategoryType: "all",
 	selectedCategory: "all",
 	selectedCategoryName: "카테고리 전체",
 };
 
-export const selectedCategoryState = atom<IinitialValue>({
+export const selectedCategoryState = atom<IInitialValue>({
 	key: "selectedCategory",
 	default: initialValue,
 });

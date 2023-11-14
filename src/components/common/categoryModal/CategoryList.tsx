@@ -1,8 +1,8 @@
 import { categories } from "@/constants/categories";
+import { IElement } from "@/interface/category";
 import { openCategoryModalState } from "@/state/openCategoryModal";
 import { searchCriteria } from "@/state/searchCriteria";
 import { selectedCategoryState } from "@/state/selectedCategory";
-import { IElement } from "@/types/categoty";
 import { cancelLockScroll } from "@/utils/controlBodyScroll";
 import { useRecoilState, useSetRecoilState } from "recoil";
 

@@ -4,7 +4,7 @@ import Header from "@components/common/header/Header";
 import { lazy, Suspense } from "react";
 
 const CommunityContainer = lazy(
-	() => import("@/components/community/CommunityContainer"),
+	() => import("@components/community/CommunityContainer"),
 );
 
 const CommunityPage = () => {

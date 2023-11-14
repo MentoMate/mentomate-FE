@@ -1,9 +1,9 @@
+import { ICommunityItemInProps } from "@/interface/mainPageInterface";
+import { ReactComponent as Arrow } from "@assets/svg/mainArrow.svg";
 import { Link } from "react-router-dom";
 import CommunityItemList from "./CommunityItemList";
-import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
-import { ICommunityItem } from "@/interface/mainPageCommunity";
 
-const FourthSection = ({ data }: { data: ICommunityItem[] }) => {
+const FourthSection = ({ data }: ICommunityItemInProps) => {
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">

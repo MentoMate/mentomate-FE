@@ -70,10 +70,8 @@ const PrevAndNextButton = ({ reactQuillRef }: IProps) => {
 			uploadFolder: form.uploadFolder,
 			uploadImg: imageArr,
 		};
-		console.log(data);
 
 		const formData = new FormData();
-
 		formData.append(
 			"userProfileSave",
 			new Blob([JSON.stringify(data)], { type: "application/json" }),

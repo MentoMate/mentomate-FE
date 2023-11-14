@@ -1,20 +1,25 @@
-import { useEffect, useMemo, useRef, useState } from "react";
 import { ReactComponent as Close } from "@/assets/svg/close.svg";
+import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
+import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { IScduleAddModalProps } from "@/types/scduleaddmodalprop";
-import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
-import useAxios from "@/hooks/useAxios";
 import { useRecoilState } from "recoil";
-import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
-import { alertHandler } from "@/utils/alert";
-import ScheduleAddButton from "./ScheduleAddButton";
 import Loading from "../common/spinner/Loading";
+import ScheduleAddButton from "./ScheduleAddButton";
+import { FORMATS } from "@/constants/reactQuill";
 
-const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
+interface IScheduleAddModalProps {
+	readonly formattedDate: string;
+	readonly closeModal: () => void;
+}
+
+const ScheduleAddModal = ({
 	formattedDate,
 	closeModal,
-}) => {
+}: IScheduleAddModalProps) => {
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
 	const { fetchDataUseAxios } = useAxios();
 	const reactQuillRef = useRef<any>(null);
@@ -124,25 +129,12 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 					[{ align: [] }, { color: [] }],
 				],
 				handlers: {
-					image: imageHandler, //handlers 속성은 특정한 이벤트(예: 이미지 삽입)에 대한 사용자 지정 핸들러 함수를 제공합니다.
+					image: imageHandler,
 				},
 			},
 		};
 	}, []);
 
-	//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-	const formats = useMemo(() => {
-		return [
-			"header",
-			"bold",
-			"italic",
-			"list",
-			"indent",
-			"image",
-			"align",
-			"color",
-		];
-	}, []);
 	useEffect(() => {
 		setForm({
 			title: "",
@@ -209,7 +201,7 @@ const ScheduleAddModal: React.FC<IScduleAddModalProps> = ({
 							<ReactQuill
 								ref={reactQuillRef}
 								modules={modules}
-								formats={formats}
+								formats={FORMATS}
 								onChange={(prev) => onChangeContentHandler(prev)}
 								className="h-[5rem] lg:h-[25rem] mb-12 sm:h-[10rem]"
 								placeholder="설명"

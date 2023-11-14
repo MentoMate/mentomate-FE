@@ -1,17 +1,18 @@
 import { communityRegistrationForm } from "@/data/communityRegistrationForm";
+import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useQuery } from "react-query";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Loading from "../common/spinner/Loading";
-import EditCommunityTitle from "./EditCommunityTitle";
 import EditCommunitySaveAndBackButton from "./EditCommunitySaveAndBackButton";
+import EditCommunityTitle from "./EditCommunityTitle";
 import EditEssentialInfoContainer from "./essentialInfo/EditEssentialInfoContainer";
-import { useQuery } from "react-query";
-import useAxios from "@/hooks/useAxios";
-import { useParams } from "react-router-dom";
-import { alertHandler } from "@/utils/alert";
+import { FORMATS } from "@/constants/reactQuill";
 
 const EditCommunityContainer = () => {
 	const reactQuillRef = useRef<any>(null);
@@ -51,7 +52,6 @@ const EditCommunityContainer = () => {
 				uploadFolder: data.uploadFolder,
 				thumbNailImgUrl: data.uploadUrl,
 				thumbNailImg: thumbNailImgFile,
-				// thumbNailImg: null,
 			});
 		},
 	});
@@ -111,7 +111,7 @@ const EditCommunityContainer = () => {
 			}
 		});
 	};
-	// 사용하고 싶은 옵션, 나열 되었으면 하는 순서대로 나열
+
 	const modules = useMemo(() => {
 		return {
 			toolbar: {
@@ -125,27 +125,13 @@ const EditCommunityContainer = () => {
 						{ indent: "+1" },
 					],
 					["image"],
-					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
+					[{ align: [] }, { color: [] }],
 				],
 				handlers: {
 					image: reactQuillImageHandler,
 				},
 			},
 		};
-	}, []);
-
-	//옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼 수 없음
-	const formats = useMemo(() => {
-		return [
-			"header",
-			"bold",
-			"italic",
-			"list",
-			"indent",
-			"image",
-			"align",
-			"color",
-		];
 	}, []);
 
 	const onChangeContentHandler = (content: string) => {
@@ -170,7 +156,7 @@ const EditCommunityContainer = () => {
 								className="py-8 rounded-md"
 								theme="snow"
 								modules={modules}
-								formats={formats}
+								formats={FORMATS}
 								value={form.content}
 								onChange={onChangeContentHandler}
 							/>

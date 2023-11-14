@@ -4,7 +4,7 @@ import Spinner from "@components/common/spinner/Spinner";
 import { lazy, Suspense } from "react";
 
 const MypageContainer = lazy(
-	() => import("@/components/mypage/MypageContainer"),
+	() => import("@components/mypage/MypageContainer"),
 );
 
 const Mypage = () => {

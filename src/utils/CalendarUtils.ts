@@ -8,18 +8,17 @@ export const handlePrevMonth = (
 		React.SetStateAction<{ start: string; end: string }>
 	>,
 ) => {
-	let prevMonth = scheduleDate.month - 1; //이전 달
-	let prevYear = scheduleDate.year; // 다음 달
+	let prevMonth = scheduleDate.month - 1;
+	let prevYear = scheduleDate.year;
 
 	if (prevMonth === 0) {
 		prevYear -= 1;
 		prevMonth = 12;
 	}
-	const fullDate = mentoringPeriod.startdate; //멘토링 시작기간
-	const dateArray = fullDate.split("-"); // [yyyy,mm,dd] 형식
+	const fullDate = mentoringPeriod.startdate;
+	const dateArray = fullDate.split("-");
 
 	const startDate = `${prevYear}-${String(prevMonth).padStart(2, "0")}-${
-		// 이전달의
 		dateArray[1] === String(prevMonth).padStart(2, "0") ? dateArray[2] : "01"
 	}`;
 	const endOfMonth = new Date(prevYear, prevMonth, 0);

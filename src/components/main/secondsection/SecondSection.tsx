@@ -1,11 +1,11 @@
-import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
+import { ReactComponent as Arrow } from "@assets/svg/mainArrow.svg";
 import { Link } from "react-router-dom";
 
 const SecondSection = () => {
 	return (
 		<>
 			<div className="flex flex-col justify-center items-center mx-auto lg:w-[60rem] mt-40 mb-32">
-				<div className="font-bold lg:ml-5 mx-auto text-xl sm:text-2xl font-bold">
+				<div className="lg:ml-5 mx-auto text-xl sm:text-2xl font-bold">
 					멘토를 등록해보세요
 				</div>
 

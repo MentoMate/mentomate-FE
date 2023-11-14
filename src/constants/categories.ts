@@ -1,4 +1,4 @@
-import { IElement } from "../types/categoty";
+import { IElement } from "@/interface/category";
 
 interface ICategories {
 	readonly [key: string]: IElement[];

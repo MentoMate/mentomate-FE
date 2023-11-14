@@ -138,7 +138,6 @@ const EditMentoringContainer = () => {
 		});
 	};
 
-	// 사용하고 싶은 옵션, 나열 되었으면 하는 순서대로 나열
 	const modules = useMemo(() => {
 		return {
 			toolbar: {
@@ -152,7 +151,7 @@ const EditMentoringContainer = () => {
 						{ indent: "+1" },
 					],
 					["image"],
-					[{ align: [] }, { color: [] }], // dropdown with defaults from theme
+					[{ align: [] }, { color: [] }],
 				],
 				handlers: {
 					image: reactQuillImageHandler,

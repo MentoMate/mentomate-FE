@@ -5,7 +5,7 @@ import { lazy, Suspense } from "react";
 import useCheckAuth from "@/hooks/useCheckAuth";
 
 const PaymentConfirmation = lazy(
-	() => import("@/components/mentoringpayment/PaymentConfirmation"),
+	() => import("@components/mentoringPayment/PaymentConfirmation"),
 );
 
 const PaymentPage = () => {
@@ -16,8 +16,8 @@ const PaymentPage = () => {
 			<Header />
 			<Suspense fallback={<Spinner />}>
 				<PaymentConfirmation />
+				<Footer />
 			</Suspense>
-			<Footer />
 		</div>
 	);
 };

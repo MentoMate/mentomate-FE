@@ -1,9 +1,9 @@
-import { IMentoringCard } from "@/interface/mainPageMentoringCard";
-import DeadlineMentoringList from "./DeadlineMentoringList";
-import { ReactComponent as Arrow } from "@assets/svg/mainarrow.svg";
+import { IMentoringCardInProps } from "@/interface/mainPageInterface";
+import { ReactComponent as Arrow } from "@assets/svg/mainArrow.svg";
 import { Link } from "react-router-dom";
+import DeadlineMentoringList from "./DeadlineMentoringList";
 
-const FifthSection = ({ data }: { data: IMentoringCard[] }) => {
+const FifthSection = ({ data }: IMentoringCardInProps) => {
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
