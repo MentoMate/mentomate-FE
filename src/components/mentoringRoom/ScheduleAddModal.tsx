@@ -14,11 +14,13 @@ import { FORMATS } from "@/constants/reactQuill";
 interface IScheduleAddModalProps {
 	readonly formattedDate: string;
 	readonly closeModal: () => void;
+	readonly scheduleReadHandler: () => void;
 }
 
 const ScheduleAddModal = ({
 	formattedDate,
 	closeModal,
+	scheduleReadHandler,
 }: IScheduleAddModalProps) => {
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
 	const { fetchDataUseAxios } = useAxios();
@@ -208,7 +210,10 @@ const ScheduleAddModal = ({
 							/>
 						</div>
 						<div className="flex justify-between  mt-12 lg:mt-4">
-							<ScheduleAddButton reactQuillRef={reactQuillRef} />
+							<ScheduleAddButton
+								reactQuillRef={reactQuillRef}
+								scheduleReadHandler={scheduleReadHandler}
+							/>
 						</div>
 						{isImgUploading && <Loading />}
 					</div>
