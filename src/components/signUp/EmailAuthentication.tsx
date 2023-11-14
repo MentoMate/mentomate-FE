@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import ErrorMsg from "../common/errorMsg/ErrorMsg";
 
 interface IProps {
-	email: string;
-	emailDuplicateCheckHandler: (email: string) => void;
-	timeLeft: number;
-	setTimeLeft: (time: number | ((time: number) => number)) => void;
-	isEmailAuthentication: boolean;
-	setIsEmailAuthentication: (authenticate: boolean) => void;
+	readonly email: string;
+	readonly emailDuplicateCheckHandler: (email: string) => void;
+	readonly timeLeft: number;
+	readonly setTimeLeft: (time: number | ((time: number) => number)) => void;
+	readonly isEmailAuthentication: boolean;
+	readonly setIsEmailAuthentication: (authenticate: boolean) => void;
 }
 
 const INTERVAL = 1000;

@@ -1,9 +1,9 @@
 export interface IMentoringDetailProps {
-	data: IMentoringInfo;
+	readonly data: IMentoringInfo;
 }
 
 export interface IMentoringEditProps {
-	data: IMentoringInfo;
+	readonly data: IMentoringInfo;
 }
 
 export interface IMentoringInfo {

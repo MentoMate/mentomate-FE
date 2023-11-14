@@ -1,12 +1,12 @@
+import { FORMATS } from "@/constants/reactQuill";
 import { mentorRegistrationForm } from "@/data/mentorRegistrationForm";
-import { ChangeEvent, useMemo, useState, useRef } from "react";
-import ReactQuill from "react-quill";
-import { useRecoilState } from "recoil";
-import { ReactComponent as NoneProfile } from "@assets/svg/smileFolder.svg";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
-import { FORMATS } from "@/constants/reactQuill";
+import { ReactComponent as NoneProfile } from "@assets/svg/smileFolder.svg";
+import { ChangeEvent, useMemo, useState } from "react";
+import ReactQuill from "react-quill";
+import { useRecoilState } from "recoil";
 
 interface IProps {
 	readonly reactQuillRef: any;
@@ -18,7 +18,7 @@ const ThirdStep = ({ reactQuillRef }: IProps) => {
 	const [careerYearValue, setCareerYearValue] = useState<string>("");
 	const [careerMonthValue, setCareerMonthValue] = useState<string>("");
 	const [previewImg, setPreviewImg] = useState<string | undefined>(undefined);
-	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
+	const [, setIsImgUploading] = useState<boolean>(false);
 
 	const makePreviewImgHandler = (thumbNailImgFile: File) => {
 		const reader = new FileReader();

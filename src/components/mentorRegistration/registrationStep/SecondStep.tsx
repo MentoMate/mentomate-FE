@@ -1,15 +1,15 @@
 import { categories } from "@/constants/categories";
 import { selectedCategoryState } from "@/state/selectedCategory";
-import { IElement } from "@/types/categoty";
 import { useRecoilState } from "recoil";
 import { ReactComponent as CheckMark } from "@assets/svg/checkmark.svg";
+import { IElement } from "@/interface/category";
 
 const SecondStep = () => {
 	const [selectedCategory, setSelectedCategory] = useRecoilState(
 		selectedCategoryState,
 	);
 
-	const selecteCategoryHandler = (category: IElement) => {
+	const selectCategoryHandler = (category: IElement) => {
 		setSelectedCategory({
 			selectedCategoryType: selectedCategory.selectedCategoryType,
 			selectedCategory: category.key,
@@ -33,7 +33,7 @@ const SecondStep = () => {
 										? "text-main-color font-semibold"
 										: "text-black-500"
 								}`}
-							onClick={() => selecteCategoryHandler(category)}
+							onClick={() => selectCategoryHandler(category)}
 						>
 							{category.categoryName}
 							{category.key === selectedCategory.selectedCategory && (

@@ -1,6 +1,6 @@
 import { getCookie } from "@/utils/cookies";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const useAxios = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export interface IMentoringEditForm {
+interface IMentoringEditForm {
 	readonly mentoringId: number;
 	readonly startDate: Date;
 	readonly endDate: Date;
