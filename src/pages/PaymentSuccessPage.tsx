@@ -4,7 +4,7 @@ import Spinner from "@components/common/spinner/Spinner";
 import { lazy, Suspense } from "react";
 
 const PaymentSuccess = lazy(
-	() => import("@/components/mentoringpayment/PaymentSuccess"),
+	() => import("@components/mentoringPayment/PaymentSuccess"),
 );
 
 const PaymentSuccessPage = () => {
@@ -13,8 +13,8 @@ const PaymentSuccessPage = () => {
 			<Header />
 			<Suspense fallback={<Spinner />}>
 				<PaymentSuccess />
+				<Footer />
 			</Suspense>
-			<Footer />
 		</div>
 	);
 };
