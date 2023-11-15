@@ -21,7 +21,7 @@ import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
 const today = new Date();
 
 const MENTORING_PERIOD = {
-	startdate: "2023-09-08",
+	startdate: "2023-11-15",
 	enddate: "2024-03-15",
 };
 
