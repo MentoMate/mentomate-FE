@@ -48,8 +48,11 @@ const PaymentConfirmation = () => {
 			});
 
 			if (response && response.status === 200) {
-				navigate("./paymentSuccess");
-				return response.data;
+				if (res.paid_amount === response.data.response.amount) {
+					console.log(response.data.response.amount);
+					navigate("/paymentSuccess");
+					return response.data;
+				}
 			}
 		});
 	};
