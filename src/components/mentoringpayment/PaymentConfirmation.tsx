@@ -44,10 +44,11 @@ const PaymentConfirmation = () => {
 
 			const response = await fetchDataUseAxios("useTokenAxios", {
 				method: "POST",
-				url: `/pay/complete?mentoring_id=${14}&imp_uid=${res.imp_uid}`,
+				url: `/pay/complete?mentoring_id=${paymentId}&imp_uid=${res.imp_uid}`,
 			});
 
 			if (response && response.status === 200) {
+				navigate("./paymentSuccess");
 				return response.data;
 			}
 		});

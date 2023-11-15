@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
-interface Iprops {
-	mentoringId: number;
-}
-const Button = ({ mentoringId }: Iprops) => {
-	console.log(mentoringId);
+import { Link, useParams } from "react-router-dom";
+
+const Button = () => {
+	const { mentoringId } = useParams();
 	return (
 		<div className="flex flex-col mt-2">
 			<Link
