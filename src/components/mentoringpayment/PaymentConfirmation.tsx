@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { alertHandler } from "@/utils/alert";
+import axios from "axios";
+import useAxios from "@/hooks/useAxios";
 
 const mentoringName = "대기업 프로젝트 개발자와 함께하는 면접 트레이닝";
 const mentorName = "조인성";
@@ -23,8 +25,11 @@ const payData = {
 };
 
 const PaymentConfirmation = () => {
+	const { paymentId } = useParams();
 	const navigate = useNavigate();
 	const [agreed, setAgreed] = useState(false);
+	const { isLoading, fetchDataUseAxios } = useAxios();
+	console.log(paymentId);
 
 	const toggleAgreement = () => {
 		setAgreed(!agreed);
@@ -32,30 +37,20 @@ const PaymentConfirmation = () => {
 
 	const requestPay = () => {
 		const { IMP }: any = window;
-		IMP.init("imp80622465");
+		IMP.init("imp24880013");
 
-		IMP.request_pay(
-			payData,
-			async (res: any) => {
-				console.log(res);
+		IMP.request_pay(payData, async (res: any) => {
+			console.log(res);
 
-				//try {
-				//const { data } = await axios.post(
-				//"{결제 검증 api 주소}/" + res.imp_uid,
-				//);
-				if (res.success) {
-					//if (res.paid_amount === data.response.amount) { //결제 검증
-					navigate("/paymentSuccess");
-				} else {
-					alertHandler("warning", "결제 실패.");
-				}
-			},
-			//catch (error) {
-			//console.error("결제 검증 실패:", error);
-			//alertHandler("warning", "결제 실패");
-			//}
-			//}
-		);
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "POST",
+				url: `/pay/complete?mentoring_id=${14}&imp_uid=${res.imp_uid}`,
+			});
+
+			if (response && response.status === 200) {
+				return response.data;
+			}
+		});
 	};
 
 	useEffect(() => {
