@@ -1,4 +1,6 @@
+import Pagination from "@/components/common/pagination/Pagination";
 import useAxios from "@/hooks/useAxios";
+import useUrl from "@/hooks/useUrl";
 import { RefObject } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -13,11 +15,12 @@ interface IProps {
 const CommentContainer = ({ commentRef }: IProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const { communityId } = useParams();
+	const { url } = useUrl("comment", communityId);
 
 	const getComments = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: `/${communityId}/comments`,
+			url,
 		});
 
 		if (response && response.status === 200) {
@@ -25,7 +28,7 @@ const CommentContainer = ({ commentRef }: IProps) => {
 		}
 	};
 
-	const { data } = useQuery(["communityComment", communityId], getComments);
+	const { data } = useQuery(["communityComment", url], getComments);
 
 	return (
 		<div ref={commentRef}>
@@ -39,7 +42,10 @@ const CommentContainer = ({ commentRef }: IProps) => {
 			{data.items.length === 0 ? (
 				<NonExistsComment />
 			) : (
-				<CommentList comments={data.items} />
+				<>
+					<CommentList comments={data} />
+					<Pagination totalPages={data.totalPages} />
+				</>
 			)}
 		</div>
 	);
