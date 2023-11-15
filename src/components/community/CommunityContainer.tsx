@@ -15,7 +15,7 @@ import NonExistsCommunityList from "./communityList/NonExistsCommunityList";
 
 const CommunityContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
-	const { url } = useUrl("community");
+	const { url } = useUrl("post");
 	const setSelectedCategory = useSetRecoilState(searchCriteria);
 	const setPagination = useSetRecoilState(pagination);
 
