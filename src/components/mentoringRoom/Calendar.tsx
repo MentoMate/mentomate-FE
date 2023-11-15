@@ -21,8 +21,8 @@ import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
 const today = new Date();
 
 const MENTORING_PERIOD = {
-	startdate: "2023-11-15",
-	enddate: "2024-03-15",
+	startdate: "2023-11-10",
+	enddate: "2023-12-18",
 };
 
 const MyCalendar = () => {
@@ -38,11 +38,24 @@ const MyCalendar = () => {
 		year: today.getFullYear(),
 		month: today.getMonth() + 1,
 	});
+	// 시작 기간과 종료 기간을 각각 년도와 달로 분리
+	const startYear = parseInt(MENTORING_PERIOD.startdate.split("-")[0]);
+	const startMonth = parseInt(MENTORING_PERIOD.startdate.split("-")[1]);
+	const endYear = parseInt(MENTORING_PERIOD.enddate.split("-")[0]);
+	const endMonth = parseInt(MENTORING_PERIOD.enddate.split("-")[1]);
+
+	// 시작 기간과 종료 기간의 년도와 달이 같은지 비교
+	const isValidRange = startYear === endYear && startMonth === endMonth;
+
+	const validEnd = isValidRange
+		? MENTORING_PERIOD.enddate
+		: `${
+				scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
+		  }-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`;
+
 	const [validRange, setValidRange] = useState({
 		start: MENTORING_PERIOD.startdate,
-		end: `${
-			scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
-		}-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`,
+		end: validEnd,
 	});
 
 	const scheduleReadHandler = async () => {
