@@ -3,7 +3,7 @@ import { searchCriteria } from "@/state/searchCriteria";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
-const useUrl = (type: string) => {
+const useUrl = (type: string, id: string | null = null) => {
 	const selectedSearchCriteria = useRecoilValue(searchCriteria);
 	const currentPage = useRecoilValue(pagination);
 
@@ -15,34 +15,18 @@ const useUrl = (type: string) => {
 	if (type === "mentor") {
 		INITIAL_URL = "/mentor/search?sortBy=latest&page=1&pageSize=16";
 	}
-	if (type === "community") {
+	if (type === "post") {
 		INITIAL_URL =
-			"/post/search?sortBy=latest&searchCategory=default&page=1&pageSize=16";
+			"/post/search?sortBy=latest&searchCategory=default&page=1&pageSize=15";
+	}
+	if (type === "comment") {
+		INITIAL_URL = `/${id}/comments?page=1`;
 	}
 
 	const [url, setUrl] = useState<string>(INITIAL_URL);
-
-	const checkPageLocation = () => {
-		let pageLocation = "";
-
-		if (type === "mentoring") {
-			pageLocation = "mentoring";
-		}
-
-		if (type === "mentor") {
-			pageLocation = "mentor";
-		}
-
-		if (type === "community") {
-			pageLocation = "post";
-		}
-
-		return pageLocation;
-	};
+	const [pageLocation] = useState<string>(type);
 
 	const transformationUrl = () => {
-		const pageLocation = checkPageLocation();
-
 		const sortBy = selectedSearchCriteria.sortBy;
 		const searchType = selectedSearchCriteria.searchType;
 		const keyword = selectedSearchCriteria.keyword;
@@ -51,55 +35,60 @@ const useUrl = (type: string) => {
 				? "default"
 				: selectedSearchCriteria.category;
 
-		if (pageLocation === "mentoring" || pageLocation === "community") {
-			if (sortBy !== "") {
+		if (pageLocation === "mentoring" || pageLocation === "post") {
+			const pageSize = pageLocation === "mentoring" ? 16 : 15;
+
+			if (sortBy !== "" && keyword === "" && category === "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=${pageSize}`,
 				);
 			}
 
-			if (keyword !== "") {
+			if (sortBy !== "" && keyword !== "" && category === "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=${pageSize}`,
 				);
 			}
 
-			if (category !== "") {
+			if (sortBy !== "" && category !== "" && keyword === "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&pageSize=${pageSize}`,
 				);
 			}
 
-			if (keyword !== "" && category !== "") {
+			if (sortBy !== "" && keyword !== "" && category !== "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchType=${searchType}&searchText=${keyword}&page=${currentPage}&pageSize=${pageSize}`,
 				);
 			}
 		}
-
 		if (pageLocation === "mentor") {
-			if (sortBy !== "") {
+			if (sortBy !== "" && keyword === "" && category === "") {
 				setUrl(
 					`/${pageLocation}/search?sortBy=${sortBy}&page=${currentPage}&pageSize=16`,
 				);
 			}
-			if (keyword !== "") {
+			if (sortBy !== "" && keyword !== "" && category === "") {
 				setUrl(
 					`/${pageLocation}/search?sortBy=${sortBy}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
 				);
 			}
 
-			if (category !== "") {
+			if (sortBy !== "" && category !== "" && keyword === "") {
 				setUrl(
-					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&Size=16`,
+					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&page=${currentPage}&pageSize=16`,
 				);
 			}
 
-			if (keyword !== "" && category !== "") {
+			if (sortBy !== "" && keyword !== "" && category !== "") {
 				setUrl(
 					`/${pageLocation}/search?sortBy=${sortBy}&searchCategory=${category}&searchText=${keyword}&page=${currentPage}&pageSize=16`,
 				);
 			}
+		}
+
+		if (pageLocation === "comment") {
+			setUrl(`/${id}/comments?page=${currentPage}`);
 		}
 	};
 
@@ -108,7 +97,9 @@ const useUrl = (type: string) => {
 	}, [selectedSearchCriteria, currentPage]);
 
 	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: "instant" });
+		if (pageLocation !== "comment") {
+			window.scrollTo({ top: 0, behavior: "instant" });
+		}
 	}, [currentPage]);
 
 	return { url };

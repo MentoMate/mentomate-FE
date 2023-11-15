@@ -1,15 +1,15 @@
-import { IComments, ICommentsProps } from "@/interface/comment";
+import { IComment, ICommentsProps } from "@/interface/comment";
 import Comment from "./Comment";
 
 const CommentList = ({ comments }: ICommentsProps) => {
 	return (
-		<>
-			{comments.map((comment: IComments) => (
+		<div>
+			{comments.items.map((comment: IComment) => (
 				<div key={comment.id}>
 					<Comment comment={comment} />
 				</div>
 			))}
-		</>
+		</div>
 	);
 };
 

@@ -25,7 +25,7 @@ const CommunityItem = ({ communityItem }: IProps) => {
 				/>
 			</div>
 			<div className="flex justify-center items-center mt-6 text-black-400 text-sm text-center">
-				{communityItem.category === "community" && (
+				{communityItem.category === "communication" && (
 					<>
 						<Communication width={20} height={20} className="mr-1" /> 소통해요
 					</>
@@ -36,7 +36,7 @@ const CommunityItem = ({ communityItem }: IProps) => {
 						홍보해요
 					</>
 				)}
-				{communityItem.category === "preview" && (
+				{communityItem.category === "review" && (
 					<>
 						<Review width={20} height={20} className="mr-1" />
 						후기남겨요
