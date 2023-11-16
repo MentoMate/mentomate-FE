@@ -1,9 +1,8 @@
-import CategoryModal from "@components/common/categoryModal/CategoryModal";
-import Spinner from "@components/common/spinner/Spinner";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import { openCategoryModalState } from "@/state/openCategoryModal";
-import Header from "@components/common/header/Header";
-import { useEffect, lazy, Suspense } from "react";
+import CategoryModal from "@components/common/categoryModal/CategoryModal";
+import Spinner from "@components/common/spinner/Spinner";
+import { Suspense, lazy, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 const MentoringRegistrationContainer = lazy(
@@ -24,7 +23,6 @@ const MentoringRegistrationPage = () => {
 
 	return (
 		<div className="relative">
-			<Header />
 			<Suspense fallback={<Spinner />}>
 				<MentoringRegistrationContainer />
 			</Suspense>
