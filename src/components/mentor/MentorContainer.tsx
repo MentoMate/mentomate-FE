@@ -2,7 +2,6 @@ import useAxios from "@/hooks/useAxios";
 import useUrl from "@/hooks/useUrl";
 import { pagination } from "@/state/pagination";
 import { searchCriteria } from "@/state/searchCriteria";
-import ScrollTopBtn from "@components/common/scrollTopBtn/ScrollTopBtn";
 import SortAndSearch from "@components/common/search/SortAndSearch";
 import Loading from "@components/common/spinner/Loading";
 import { Suspense, useEffect } from "react";
@@ -58,7 +57,6 @@ const MentorContainer = () => {
 						<NonExistMentorList />
 					)}
 				</div>
-				<ScrollTopBtn />
 			</div>
 		</Suspense>
 	);

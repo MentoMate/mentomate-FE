@@ -1,10 +1,8 @@
-import Spinner from "@components/common/spinner/Spinner";
-import Footer from "@components/common/footer/Footer";
-import Header from "@components/common/header/Header";
-import { lazy, Suspense, useEffect } from "react";
-import CategoryModal from "@components/common/categoryModal/CategoryModal";
-import { useRecoilState } from "recoil";
 import { openCategoryModalState } from "@/state/openCategoryModal";
+import CategoryModal from "@components/common/categoryModal/CategoryModal";
+import Spinner from "@components/common/spinner/Spinner";
+import { lazy, Suspense, useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 const CommunityContainer = lazy(
 	() => import("@components/community/CommunityContainer"),
@@ -21,10 +19,8 @@ const CommunityPage = () => {
 
 	return (
 		<>
-			<Header />
 			<Suspense fallback={<Spinner />}>
 				<CommunityContainer />
-				<Footer />
 			</Suspense>
 			{isOpenCategoryModal && <CategoryModal />}
 		</>
