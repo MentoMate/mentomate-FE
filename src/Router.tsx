@@ -21,14 +21,23 @@ import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import Footer from "./components/common/footer/Footer";
+import Header from "./components/common/header/Header";
+import {
+	NO_USE_CHAT_SCROLL_LOCATION,
+	NO_USE_FOOTER_LOCATION,
+	NO_USE_HEADER_LOCATION,
+} from "./constants/commonComponentLocation";
 import useAxios from "./hooks/useAxios";
 import EditCommunityPage from "./pages/EditCommunityPage";
 import PaymentPage from "./pages/PaymentPage";
 import { loginState } from "./state/loginState";
 import { notification, notificationEmitterId } from "./state/notification";
 import { getCookie } from "./utils/cookies";
+import { lazy, Suspense } from "react";
+import Spinner from "./components/common/spinner/Spinner";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -40,7 +49,12 @@ const queryClient = new QueryClient({
 	},
 });
 
+const ChatAndScrollContainer = lazy(
+	() => import("@components/common/chatAndScrollTop/ChatAndScrollContainer"),
+);
+
 function Router() {
+	const location = useLocation();
 	const setReceiveNotificationState = useSetRecoilState(notification);
 	const isLogin = useRecoilValue(loginState);
 	const { fetchDataUseAxios } = useAxios();
@@ -106,53 +120,74 @@ function Router() {
 	}, [isLogin]);
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<Routes>
-				<Route path="/" element={<MainPage />} />
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/choiceSignUpType" element={<ChoiceSignUpTypePage />} />
-				<Route path="/login/oauth2/code/kakao" element={<KaKaoCallback />} />
-				<Route path="/login/oauth2/code/naver" element={<NaverCallback />} />
-				<Route path="/signUp" element={<SignUpPage />} />
-				<Route path="/successSignUp" element={<SuccessSignUpPage />} />
-				<Route path="/mentoring" element={<MentoringPage />} />
-				<Route
-					path="/mentoringDetail/:mentoringId"
-					element={<MentoringDetailPage />}
-				/>
-				<Route
-					path="/mentoringEdit/:mentoringId"
-					element={<MentoringEditPage />}
-				/>
-				<Route path="/mentor" element={<MentorPage />} />
-				<Route path="/mentoringRoom" element={<MentoringRoom />} />
-				<Route path="/mentorDetail/:mentorId" element={<MentorDetailPage />} />
-				<Route path="/community" element={<CommunityPage />} />
-				<Route
-					path="/communityDetail/:communityId"
-					element={<CommunityDetailPage />}
-				/>
-				<Route
-					path="/communityRegistration"
-					element={<CommunityRegistrationPage />}
-				/>
-				<Route
-					path="/communityEdit/:communityId"
-					element={<EditCommunityPage />}
-				/>
-				<Route path="/mypage" element={<Mypage />} />
-				<Route path="/payment" element={<PaymentPage />} />
-				<Route path="/paymentSuccess" element={<PaymentSuccessPage />} />
-				<Route
-					path="/mentorRegistration"
-					element={<MentorRegistrationPage />}
-				/>
-				<Route
-					path="/mentoringRegistration"
-					element={<MentoringRegistrationPage />}
-				/>
-			</Routes>
-		</QueryClientProvider>
+		<>
+			<QueryClientProvider client={queryClient}>
+				<Suspense fallback={<Spinner />}>
+					{!NO_USE_HEADER_LOCATION.includes(location.pathname) && <Header />}
+					<Routes>
+						<Route path="/" element={<MainPage />} />
+						<Route path="/login" element={<LoginPage />} />
+						<Route
+							path="/choiceSignUpType"
+							element={<ChoiceSignUpTypePage />}
+						/>
+						<Route
+							path="/login/oauth2/code/kakao"
+							element={<KaKaoCallback />}
+						/>
+						<Route
+							path="/login/oauth2/code/naver"
+							element={<NaverCallback />}
+						/>
+						<Route path="/signUp" element={<SignUpPage />} />
+						<Route path="/successSignUp" element={<SuccessSignUpPage />} />
+						<Route path="/mentoring" element={<MentoringPage />} />
+						<Route
+							path="/mentoringDetail/:mentoringId"
+							element={<MentoringDetailPage />}
+						/>
+						<Route
+							path="/mentoringEdit/:mentoringId"
+							element={<MentoringEditPage />}
+						/>
+						<Route path="/mentor" element={<MentorPage />} />
+						<Route path="/mentoringRoom" element={<MentoringRoom />} />
+						<Route
+							path="/mentorDetail/:mentorId"
+							element={<MentorDetailPage />}
+						/>
+						<Route path="/community" element={<CommunityPage />} />
+						<Route
+							path="/communityDetail/:communityId"
+							element={<CommunityDetailPage />}
+						/>
+						<Route
+							path="/communityRegistration"
+							element={<CommunityRegistrationPage />}
+						/>
+						<Route
+							path="/communityEdit/:communityId"
+							element={<EditCommunityPage />}
+						/>
+						<Route path="/mypage" element={<Mypage />} />
+						<Route path="/payment" element={<PaymentPage />} />
+						<Route path="/paymentSuccess" element={<PaymentSuccessPage />} />
+						<Route
+							path="/mentorRegistration"
+							element={<MentorRegistrationPage />}
+						/>
+						<Route
+							path="/mentoringRegistration"
+							element={<MentoringRegistrationPage />}
+						/>
+					</Routes>
+					{!NO_USE_CHAT_SCROLL_LOCATION.includes(location.pathname) && (
+						<ChatAndScrollContainer />
+					)}
+					{!NO_USE_FOOTER_LOCATION.includes(location.pathname) && <Footer />}
+				</Suspense>
+			</QueryClientProvider>
+		</>
 	);
 }
 

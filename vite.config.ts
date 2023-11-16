@@ -26,6 +26,7 @@ export default defineConfig({
 				target: "http://43.202.208.73:8080",
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ""),
+				ws: true,
 			},
 		},
 	},
