@@ -1,18 +1,7 @@
 import KaKaoCallback from "@components/login/KaKaoCallback";
 import NaverCallback from "@components/login/NaverCallback";
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
-import CommunityDetailPage from "@pages/CommunityDetailPage";
-import CommunityPage from "@pages/CommunityPage";
-import CommunityRegistrationPage from "@pages/CommunityRegistrationPage";
 import LoginPage from "@pages/LoginPage";
-import MainPage from "@pages/MainPage";
-import MentorDetailPage from "@pages/MentorDetailPage";
-import MentorPage from "@pages/MentorPage";
-import MentorRegistrationPage from "@pages/MentorRegistrationPage";
-import MentoringDetailPage from "@pages/MentoringDetailPage";
-import MentoringEditPage from "@pages/MentoringEditPage";
-import MentoringPage from "@pages/MentoringPage";
-import MentoringRegistrationPage from "@pages/MentoringRegistrationPage";
 import MentoringRoom from "@pages/MentoringRoomPage";
 import Mypage from "@pages/MyPage";
 import PaymentSuccessPage from "@pages/PaymentSuccessPage";
@@ -31,7 +20,6 @@ import {
 	NO_USE_HEADER_LOCATION,
 } from "./constants/commonComponentLocation";
 import useAxios from "./hooks/useAxios";
-import EditCommunityPage from "./pages/EditCommunityPage";
 import PaymentPage from "./pages/PaymentPage";
 import { loginState } from "./state/loginState";
 import { notification, notificationEmitterId } from "./state/notification";
@@ -48,6 +36,25 @@ const queryClient = new QueryClient({
 		},
 	},
 });
+
+const MainPage = lazy(() => import("@pages/MainPage"));
+const MentoringPage = lazy(() => import("@pages/MentoringPage"));
+const MentoringRegistrationPage = lazy(
+	() => import("@pages/MentoringRegistrationPage"),
+);
+const MentoringEditPage = lazy(() => import("@pages/MentoringEditPage"));
+const MentoringDetailPage = lazy(() => import("@pages/MentoringDetailPage"));
+const MentorPage = lazy(() => import("@pages/MentorPage"));
+const MentorRegistrationPage = lazy(
+	() => import("@pages/MentorRegistrationPage"),
+);
+const MentorDetailPage = lazy(() => import("@pages/MentorDetailPage"));
+const CommunityPage = lazy(() => import("@pages/MainPage"));
+const CommunityRegistrationPage = lazy(
+	() => import("@pages/CommunityRegistrationPage"),
+);
+const CommunityDetailPage = lazy(() => import("@pages/CommunityDetailPage"));
+const EditCommunityPage = lazy(() => import("@pages/EditCommunityPage"));
 
 const ChatAndScrollContainer = lazy(
 	() => import("@components/common/chatAndScrollTop/ChatAndScrollContainer"),
