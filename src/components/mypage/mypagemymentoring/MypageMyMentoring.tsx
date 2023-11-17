@@ -1,5 +1,5 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "./MypageMentoringList";
+import MypageMentoringList from "@components/mypage/myPageMyMentoring/MypageMentoringList";
 import { useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";

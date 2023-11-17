@@ -1,4 +1,4 @@
-import MypagePaymentCard from "./MypagePaymentCard";
+import MypagePaymentCard from "@components/mypage/myPagePayment/MypagePaymentCard";
 
 const MypagePayment = () => {
 	return (

@@ -1,4 +1,4 @@
-import MypageMentoring from "./MypageMentoring";
+import MypageMentoring from "@components/mypage/myPageMain/MypageMentoring";
 
 const MentoringList = () => {
 	return (

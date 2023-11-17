@@ -1,18 +1,23 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "./MypageMentoringList";
+import MypageMentoringList from "@/components/mypage/myPageFavoriteMentoring/MypageMentoringList";
+import { useEffect } from "react";
 
 const MypageFavoriteMentoring = () => {
-	const scheduleReadHandler = async () => {
-		const { fetchDataUseAxios } = useAxios();
+	const { fetchDataUseAxios } = useAxios();
+	const getFavoriteMentoringData = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: "mentoring/follow",
 		});
 		if (response && response.status === 200) {
-			console.log(response.data);
-			return response.data;
+			console.log(response);
+			console.log("성공");
 		}
 	};
+
+	useEffect(() => {
+		getFavoriteMentoringData();
+	}, []);
 
 	return (
 		<div className="mb-12">

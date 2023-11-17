@@ -3,18 +3,18 @@ import { ReactComponent as Star } from "@assets/svg/star.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { useState } from "react";
-import StarRating from "./starRating";
+import StarRating from "@components/mypage/myPageReview/starRating";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 
 const MypageMentoring = () => {
 	const [showModal, setShowModal] = useState(false);
 
-	const handleRatingClick = () => {
+	const ratingClickHandler = () => {
 		setShowModal(true);
 		lockScroll();
 	};
 
-	const handleCloseModal = () => {
+	const closeModalHandler = () => {
 		setShowModal(false);
 		cancelLockScroll();
 	};
@@ -22,7 +22,7 @@ const MypageMentoring = () => {
 	return (
 		<>
 			{showModal && (
-				<StarRating show={showModal} onClose={handleCloseModal}></StarRating>
+				<StarRating show={showModal} onClose={closeModalHandler}></StarRating>
 			)}
 
 			<div className="mt-4 w-[14rem] bg-black-100 rounded-lg  ">
@@ -58,7 +58,7 @@ const MypageMentoring = () => {
 					</div>
 					<div className="ml-12">
 						<button
-							onClick={handleRatingClick}
+							onClick={ratingClickHandler}
 							type="submit"
 							className="w-[3rem] mt-2 mr-2 mb-4 py-1 bg-main-color rounded-md font-bold text-white text-xs"
 						>

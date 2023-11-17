@@ -1,12 +1,12 @@
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
-import React, { useState } from "react";
+import { useState } from "react";
 
-const starRating = ({ onClose, show }) => {
+const starRating = ({ onClose, show }: any) => {
 	const [selectedStars, setSelectedStars] = useState(0);
 	const { fetchDataUseAxios } = useAxios();
 
-	const handleStarClick = (selected) => {
+	const starClickHandler = (selected: any) => {
 		setSelectedStars(selected);
 	};
 
@@ -28,7 +28,7 @@ const starRating = ({ onClose, show }) => {
 		}
 	};
 
-	const Star = ({ selected, onSelect }) => (
+	const Star = ({ selected, onSelect }: any) => (
 		<span
 			onClick={onSelect}
 			className={
@@ -56,7 +56,7 @@ const starRating = ({ onClose, show }) => {
 						<Star
 							key={i}
 							selected={selectedStars > i}
-							onSelect={() => handleStarClick(i + 1)}
+							onSelect={() => starClickHandler(i + 1)}
 						/>
 					))}
 					<p>{selectedStars} / 5</p>

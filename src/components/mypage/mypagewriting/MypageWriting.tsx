@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CommunityList from "./CommunityList";
+import CommunityList from "@components/mypage/myPageWriting/CommunityList";
 import useAxios from "@/hooks/useAxios";
 import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
@@ -8,7 +8,7 @@ const MypageWriting = () => {
 
 	const [url, setUrl] = useState<string>("/posts/myPage?page=1&pageSize=6");
 
-	const scheduleReadHandler = async () => {
+	const getMyWritingData = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: url,
@@ -19,11 +19,11 @@ const MypageWriting = () => {
 		}
 	};
 
-	const { data } = useQuery(["mypageWritingList", url], scheduleReadHandler);
+	const { data } = useQuery(["mypageWritingList", url], getMyWritingData);
 	console.log(data.totalPages);
 
 	useEffect(() => {
-		scheduleReadHandler();
+		getMyWritingData();
 	}, []);
 	const {
 		pageArray,

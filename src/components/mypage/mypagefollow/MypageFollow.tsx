@@ -1,11 +1,11 @@
 import useAxios from "@/hooks/useAxios";
-import MentorItem from "./MentorItem";
+import MentorItem from "@components/mypage/myPageFollow/MentorItem";
 import { useEffect } from "react";
 
 const MypageFollow = () => {
 	const { fetchDataUseAxios } = useAxios();
 
-	const scheduleReadHandler = async () => {
+	const getMentorFollowData = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: "/mentoring/follow?page=1&pageSize=3",
@@ -17,7 +17,7 @@ const MypageFollow = () => {
 	};
 
 	useEffect(() => {
-		scheduleReadHandler();
+		getMentorFollowData();
 	}, []);
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 place-items-center mb-32">

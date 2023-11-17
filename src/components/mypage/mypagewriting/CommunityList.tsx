@@ -1,5 +1,4 @@
-import { AnyArn } from "aws-sdk/clients/groundstation";
-import CommunityItem from "./CommunityItem";
+import CommunityItem from "@components/mypage/myPageWriting/CommunityItem";
 
 const CommunityList = ({ data }: any) => {
 	console.log(data);

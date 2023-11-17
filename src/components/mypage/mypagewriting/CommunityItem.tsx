@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const CommunityItem = ({ item }: any) => {
 	if (!item) {
-		return null; // 또는 에러 메시지를 반환하거나 다른 처리를 수행할 수 있음
+		return null;
 	}
 	console.log(item.id);
 	return (

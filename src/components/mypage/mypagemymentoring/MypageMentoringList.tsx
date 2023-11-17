@@ -1,4 +1,4 @@
-import MypageMentoring from ".//MypageMentoring";
+import MypageMentoring from "@components/mypage/myPageMyMentoring/MypageMentoring";
 
 export interface IMentoringProps {
 	data: any;

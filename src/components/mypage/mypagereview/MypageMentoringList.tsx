@@ -1,4 +1,4 @@
-import MypageMentoring from "./MypageMentoring";
+import MypageMentoring from "@components/mypage/myPageReview/MypageMentoring";
 
 const MentoringList = ({ data }: any) => {
 	if (!data) {

@@ -1,12 +1,12 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "./MypageMentoringList";
+import MypageMentoringList from "@components/mypage/myPageReview/MypageMentoringList";
 import { useEffect, useState } from "react";
 
 const MypageReview = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const [data, setData] = useState();
 
-	const scheduleReadHandler = async () => {
+	const getMyReviewData = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: "/mentoring/end",
@@ -18,7 +18,7 @@ const MypageReview = () => {
 	};
 
 	useEffect(() => {
-		scheduleReadHandler();
+		getMyReviewData();
 	}, []);
 	return (
 		<>
