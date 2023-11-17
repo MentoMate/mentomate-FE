@@ -2,6 +2,7 @@ import ErrorMsg from "@/components/common/errorMsg/ErrorMsg";
 import SuccessAuthenticationMsg from "@/components/signUp/SuccessAuthenticationMsg";
 import { SIGN_UP_SCHEMA } from "@/constants/schema";
 import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -44,6 +45,16 @@ const Mypageinfo = () => {
 				});
 				setFocus("nickName");
 			}
+		}
+	};
+	const onClickNicknameChangeHandler = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "put",
+			url: `user/nickname/change?nickname=${text}`,
+		});
+		if (response && response.status === 200) {
+			console.log(response.data);
+			alertHandler("success", "닉네임 변경 완료 했습니다");
 		}
 	};
 	console.log(text);
@@ -112,6 +123,7 @@ const Mypageinfo = () => {
 							<button
 								type="submit"
 								className="w-[7rem] mt-4 px-3 py-2 bg-main-color rounded-md font-bold text-white text-sm mr-2"
+								onClick={() => onClickNicknameChangeHandler()}
 							>
 								저장
 							</button>

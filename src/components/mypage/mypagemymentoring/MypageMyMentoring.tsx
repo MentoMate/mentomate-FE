@@ -11,10 +11,11 @@ const MypageMyMentoring = () => {
 	const setPagination = useSetRecoilState(pagination);
 
 	const [url, setUrl] = useState<string>(
-		"/mentoring/history?page=1&pageSize=6",
+		`/mentoring/${2}/history?page=1&pageSize=6`,
 	);
 
 	const scheduleReadHandler = async () => {
+		console.log(url);
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: url,
@@ -39,7 +40,7 @@ const MypageMyMentoring = () => {
 		transformationUrl();
 	}, [currentPage]);
 	const transformationUrl = () => {
-		setUrl(`/mentoring/history?page=${currentPage}&pageSize=6`);
+		setUrl(`/mentoring/${2}/history?page=${currentPage}&pageSize=6`);
 	};
 
 	return (
