@@ -13,6 +13,8 @@ const CommunityDetailContainer = () => {
 	const commentRef = useRef<HTMLDivElement>(null);
 	const { fetchDataUseAxios } = useAxios();
 
+	console.log(communityId);
+
 	const getInfo = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",

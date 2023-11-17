@@ -1,10 +1,10 @@
 import BannerSection from "./BannerSection";
-import FirstSection from "./firstSection/FirstSection";
-import SecondSection from "./secondSection/SecondSection";
-import ThirdSection from "./thirdSection/ThirdSection";
-import FourthSection from "./fourthSection/FourthSection";
-import FifthSection from "./fifthSection/FifthSection";
-import SixSection from "./sixSection/SixSection";
+import FirstSection from "@components/main/firstsection/FirstSection";
+import SecondSection from "@components/main/secondsection/SecondSection";
+import ThirdSection from "@components/main/thirdsection/ThirdSection";
+import FourthSection from "@components/main/fourthsection/FourthSection";
+import FifthSection from "@components/main/fifthsection/FifthSection";
+import SixSection from "@components/main/sixsection/SixSection";
 import useAxios from "@/hooks/useAxios";
 import { useQuery } from "react-query";
 

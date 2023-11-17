@@ -5,7 +5,7 @@ import { lazy, Suspense } from "react";
 import useCheckAuth from "@/hooks/useCheckAuth";
 
 const PaymentConfirmation = lazy(
-	() => import("@components/mentoringPayment/PaymentConfirmation"),
+	() => import("@/components/mentoringPayment/PaymentConfirmation"),
 );
 
 const PaymentPage = () => {

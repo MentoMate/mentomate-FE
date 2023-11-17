@@ -1,18 +1,15 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "@components/mypage/myPageMyMentoring/MypageMentoringList";
+import MypageApplyMentoringList from "@components/mypage/myPageApplyMentoring/MyPageApplyMentoringList";
 import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
 import { useEffect, useState } from "react";
 
-const MypageMyMentoring = () => {
+const MypageApplyMentoring = () => {
 	const { fetchDataUseAxios } = useAxios();
 
-	const [url, setUrl] = useState<string>(
-		`/mentoring/${2}/history?page=1&pageSize=6`,
-	);
+	const [url, setUrl] = useState<string>(`/mentoring/history`);
 
 	const getMyMentoringData = async () => {
-		console.log(url);
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: url,
@@ -22,8 +19,10 @@ const MypageMyMentoring = () => {
 		}
 	};
 
-	const { data } = useQuery(["mypageMentoringList", url], getMyMentoringData);
-	console.log(data.totalPages);
+	const { data } = useQuery(
+		["mypageApplyMentoringList", url],
+		getMyMentoringData,
+	);
 
 	useEffect(() => {
 		getMyMentoringData();
@@ -39,12 +38,12 @@ const MypageMyMentoring = () => {
 		transformationUrl();
 	}, [currentPage]);
 	const transformationUrl = () => {
-		setUrl(`/mentoring/${2}/history?page=${currentPage}&pageSize=6`);
+		setUrl(`/mentoring/history`);
 	};
 
 	return (
 		<div className="mb-12">
-			<MypageMentoringList data={data.content} />
+			<MypageApplyMentoringList data={data.content} />
 			<div className="my-12 h-20 flex justify-center items-center">
 				<button
 					type="button"
@@ -79,4 +78,4 @@ const MypageMyMentoring = () => {
 		</div>
 	);
 };
-export default MypageMyMentoring;
+export default MypageApplyMentoring;
