@@ -1,44 +1,24 @@
+import { chatHistory } from "@/data/chatHistory";
+import useAxios from "@/hooks/useAxios";
+import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
 import { loginState } from "@/state/loginState";
-import { openChatState } from "@/state/openChat";
+import { getCookie } from "@/utils/cookies";
 import { ReactComponent as ChatEmotion } from "@assets/svg/chatEmotion.svg";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import { useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import SockJS from "sockjs-client";
 import ChatModalContainer from "./ChatModalContainer";
-import { getCookie } from "@/utils/cookies";
-import useAxios from "@/hooks/useAxios";
 import { useQuery } from "react-query";
 
 const ChatBtn = () => {
 	const isLogin = useRecoilValue(loginState);
-	const [isOpenChatList, setIsOpenChatList] = useRecoilState(openChatState);
+	const [isOpenChatList, setIsOpenChatList] =
+		useRecoilState(openChatModalState);
+	const setChats = useSetRecoilState(chatHistory);
 	const client = useRef<CompatClient>();
 	const { fetchDataUseAxios } = useAxios();
-
-	const onClickChatEmotionHandler = () => {
-		setIsOpenChatList(!isOpenChatList);
-	};
-
-	const onConnected = (payload: any) => {
-		console.log(payload.body);
-	};
-
-	const connect = () => {
-		const socket = new SockJS("http://43.202.208.73:8080/ws/chat");
-		const stompClient = Stomp.over(socket);
-		client.current = stompClient;
-		const TOKEN = getCookie("accessToken");
-
-		stompClient.connect(
-			{
-				Authorization: `Bearer ${TOKEN}`,
-			},
-			() => {
-				stompClient.subscribe("/subscribe/chat/room/3", onConnected);
-			},
-		);
-	};
+	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);
 
 	const getChatList = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -55,11 +35,43 @@ const ChatBtn = () => {
 
 	const { data } = useQuery(["chatList"], getChatList);
 
+	const onClickChatEmotionHandler = () => {
+		setIsOpenChatList(!isOpenChatList);
+	};
+
+	const setChatsHandler = (message: any) => {
+		setChats((prev) => [...prev, message]);
+	};
+
+	const onConnected = (payload: any) => {
+		const receiveMessage = JSON.parse(payload.body);
+		setChatsHandler(receiveMessage);
+	};
+
+	const connect = () => {
+		const socket = new SockJS("http://43.202.208.73:8080/ws/chat");
+		const stompClient = Stomp.over(socket);
+		client.current = stompClient;
+		const TOKEN = getCookie("accessToken");
+
+		stompClient.connect(
+			{
+				Authorization: `Bearer ${TOKEN}`,
+			},
+			() => {
+				stompClient.subscribe(
+					`/subscribe/chat/room/${privateChatRoomId}`,
+					onConnected,
+				);
+			},
+		);
+	};
+
 	useEffect(() => {
-		if (isLogin) {
+		if (isLogin && privateChatRoomId !== null) {
 			connect();
 		}
-	}, [isLogin]);
+	}, [isLogin, privateChatRoomId]);
 
 	return (
 		<div className="relative my-1.5">
@@ -70,7 +82,7 @@ const ChatBtn = () => {
 			>
 				<ChatEmotion className="w-full h-full" />
 			</button>
-			<ChatModalContainer client={client} data={data} />
+			<ChatModalContainer client={client} chatList={data} />
 		</div>
 	);
 };

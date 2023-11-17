@@ -1,19 +1,20 @@
 import useAxios from "@/hooks/useAxios";
-import { openChatState } from "@/state/openChat";
+import { IMentoringDetailProps } from "@/interface/mentoringInfo";
+import { openChatModalState } from "@/state/chatState";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
-const Button = () => {
+const Button = ({ data }: IMentoringDetailProps) => {
 	const { fetchDataUseAxios } = useAxios();
-	const setIsOpenChatList = useSetRecoilState(openChatState);
+	const setIsOpenChatList = useSetRecoilState(openChatModalState);
 
 	const createChat1On1Handler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: "/chat/room/private",
 			data: {
-				mentorId: 2,
-				mentoringId: 15,
+				mentorId: data.userId,
+				mentoringId: data.mentoringId,
 			},
 		});
 
@@ -24,6 +25,7 @@ const Button = () => {
 
 			if (response.status === 400) {
 				setIsOpenChatList(true);
+				console.log(response);
 			}
 		}
 	};

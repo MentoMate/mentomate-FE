@@ -1,5 +1,5 @@
-import { IChatAndClientProps } from "@/interface/chat";
-import { openChatState } from "@/state/openChat";
+import { IChatListClientProps } from "@/interface/chat";
+import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
 import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
 import { ReactComponent as ChatComment } from "@assets/svg/chatComment.svg";
 import { ReactComponent as Close } from "@assets/svg/close.svg";
@@ -9,14 +9,22 @@ import { useRecoilState } from "recoil";
 import Chat1On1 from "./Chat1On1";
 import ChatListContainer from "./chatList/ChatListContainer";
 
-const ChatModalContainer = ({ client, data }: IChatAndClientProps) => {
+const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
+	const [privateChatRoomId, setPrivateChatId] = useRecoilState(
+		selectedPrivateChatId,
+	);
+	const [isOpenChat, setIsOpenChat] = useRecoilState(openChatModalState);
 	const [selectedChatMenu, setSelectedChatMenu] = useState<string>("list");
-	const [isOpenChat, setIsOpenChat] = useRecoilState(openChatState);
 
-	const onClickChatMenuHandler = (type: string) => {
-		// if (data.length === 0) {
-		// 	return;
-		// }
+	const onClickChatHandler = (type: string, id: number) => {
+		setSelectedChatMenu(type);
+		setPrivateChatId(id);
+	};
+
+	const onClickMenuHandler = (type: string) => {
+		if (privateChatRoomId === null) {
+			return;
+		}
 		setSelectedChatMenu(type);
 	};
 
@@ -40,14 +48,17 @@ const ChatModalContainer = ({ client, data }: IChatAndClientProps) => {
 				/>
 			</div>
 			{selectedChatMenu === "list" ? (
-				<ChatListContainer data={data} />
+				<ChatListContainer
+					onClickChatHandler={onClickChatHandler}
+					chatList={chatList}
+				/>
 			) : (
 				<Chat1On1 client={client} />
 			)}
 			<div className="flex justify-center py-4">
 				<button
 					type="button"
-					onClick={() => onClickChatMenuHandler("list")}
+					onClick={() => onClickMenuHandler("list")}
 					className={`flex flex-col justify-center items-center mx-6 ${
 						selectedChatMenu === "list" && "text-blue-700"
 					}`}
@@ -63,7 +74,7 @@ const ChatModalContainer = ({ client, data }: IChatAndClientProps) => {
 				</button>
 				<button
 					type="button"
-					onClick={() => onClickChatMenuHandler("chat")}
+					onClick={() => onClickMenuHandler("chat")}
 					className={`flex flex-col justify-center items-center mx-6 ${
 						selectedChatMenu === "chat" && "text-blue-700"
 					}`}
