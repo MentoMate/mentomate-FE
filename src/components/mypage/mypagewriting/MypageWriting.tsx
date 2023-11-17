@@ -36,7 +36,7 @@ const MypageWriting = () => {
 		transformationUrl();
 	}, [currentPage]);
 	const transformationUrl = () => {
-		setUrl(`/posts/myPage?page=${currentPage}&pageSize=6`);
+		setUrl(`/posts/myPage?page=${currentPage}&pageSize=1`);
 	};
 
 	return (

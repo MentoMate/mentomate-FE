@@ -11,7 +11,7 @@ const MypageMyMentoring = () => {
 	const setPagination = useSetRecoilState(pagination);
 
 	const [url, setUrl] = useState<string>(
-		`/mentoring/${2}/history?page=1&pageSize=6`,
+		`/mentoring/history?page=1&pageSize=6`,
 	);
 
 	const scheduleReadHandler = async () => {
@@ -40,7 +40,7 @@ const MypageMyMentoring = () => {
 		transformationUrl();
 	}, [currentPage]);
 	const transformationUrl = () => {
-		setUrl(`/mentoring/${2}/history?page=${currentPage}&pageSize=6`);
+		setUrl(`/mentoring/history?page=${currentPage}&pageSize=6`);
 	};
 
 	return (
