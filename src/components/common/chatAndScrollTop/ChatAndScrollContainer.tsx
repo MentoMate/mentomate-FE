@@ -7,7 +7,7 @@ const ChatAndScrollContainer = () => {
 	const isLogin = useRecoilValue(loginState);
 
 	return (
-		<div className="flex flex-col items-end sticky bottom-10 right-0 mb-12 xl:mr-40 mr-10">
+		<div className="flex flex-col items-end fixed bottom-5 right-0 mb-4 xl:mr-40 mr-10 z-[45]">
 			{isLogin && <ChatBtn />}
 			<ScrollTopBtn />
 		</div>
