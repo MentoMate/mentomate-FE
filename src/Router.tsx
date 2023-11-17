@@ -26,6 +26,7 @@ import { notification, notificationEmitterId } from "./state/notification";
 import { getCookie } from "./utils/cookies";
 import { lazy, Suspense } from "react";
 import Spinner from "./components/common/spinner/Spinner";
+import NotFound404Page from "./pages/NotFound404Page";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -49,7 +50,7 @@ const MentorRegistrationPage = lazy(
 	() => import("@pages/MentorRegistrationPage"),
 );
 const MentorDetailPage = lazy(() => import("@pages/MentorDetailPage"));
-const CommunityPage = lazy(() => import("@pages/MainPage"));
+const CommunityPage = lazy(() => import("@pages/CommunityPage"));
 const CommunityRegistrationPage = lazy(
 	() => import("@pages/CommunityRegistrationPage"),
 );
@@ -129,8 +130,8 @@ function Router() {
 	return (
 		<>
 			<QueryClientProvider client={queryClient}>
+				{!NO_USE_HEADER_LOCATION.includes(location.pathname) && <Header />}
 				<Suspense fallback={<Spinner />}>
-					{!NO_USE_HEADER_LOCATION.includes(location.pathname) && <Header />}
 					<Routes>
 						<Route path="/" element={<MainPage />} />
 						<Route path="/login" element={<LoginPage />} />
@@ -187,12 +188,13 @@ function Router() {
 							path="/mentoringRegistration"
 							element={<MentoringRegistrationPage />}
 						/>
+						<Route path="/*" element={<NotFound404Page />} />
 					</Routes>
 					{!NO_USE_CHAT_SCROLL_LOCATION.includes(location.pathname) && (
 						<ChatAndScrollContainer />
 					)}
-					{!NO_USE_FOOTER_LOCATION.includes(location.pathname) && <Footer />}
 				</Suspense>
+				{!NO_USE_FOOTER_LOCATION.includes(location.pathname) && <Footer />}
 			</QueryClientProvider>
 		</>
 	);
