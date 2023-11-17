@@ -42,6 +42,10 @@ const LoginForm = () => {
 			if (response.status === 200) {
 				setCookie("accessToken", response.headers.authorization);
 				setCookie("refreshToken", response.headers["authorization-refresh"]);
+
+				localStorage.setItem("userId", response.data.userId);
+				localStorage.setItem("nickName", response.data.nickname);
+
 				setLoginState(true);
 
 				const previousLocation = sessionStorage.getItem("previousLocation");
