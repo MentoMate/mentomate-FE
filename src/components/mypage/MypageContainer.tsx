@@ -15,10 +15,10 @@ const MypageContainer = () => {
 	const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
 	const myPageItems = [
-		// 동일한 목록 항목을 사용하여 선택된 항목을 관리합니다.
 		{ label: "마이페이지", icon: <User width={20} height={20} /> },
 		{ label: "회원 정보", icon: <Home width={20} height={20} /> },
 		{ label: "나의 멘토링", icon: <Group width={20} height={20} /> },
+		{ label: "내가 신청한 멘토링", icon: <Comment width={20} height={20} /> },
 		{ label: "평점 & 후기", icon: <Review width={20} height={20} /> },
 		{ label: "알림", icon: <Alarm width={20} height={20} /> },
 		{

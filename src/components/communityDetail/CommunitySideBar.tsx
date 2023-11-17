@@ -68,7 +68,7 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 			commentRef.current.scrollIntoView({
 				behavior: "smooth",
 				block: "start",
-				inline: "nearest",
+				inline: "start",
 			});
 		}
 	};

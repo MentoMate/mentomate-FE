@@ -3,7 +3,7 @@ import useInput from "@/hooks/useInput";
 import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as CommentIcon } from "@assets/svg/comment.svg";
-import { FormEvent } from "react";
+import { FormEvent, useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -15,6 +15,7 @@ const CommentSubmit = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const [comment, setComment] = useInput("");
 	const { communityId } = useParams();
+	const inputCommentRef = useRef<HTMLInputElement>(null);
 
 	const submitHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -28,8 +29,10 @@ const CommentSubmit = () => {
 		if (response) {
 			if (response.status === 200) {
 				queryClient.invalidateQueries("communityComment");
-				alertHandler("success", "댓글 등록이 되었습니다.");
 				setComment("");
+				if (inputCommentRef.current) {
+					inputCommentRef.current.value = "";
+				}
 			}
 
 			if (response.status !== 200) {
@@ -65,6 +68,7 @@ const CommentSubmit = () => {
 		>
 			<CommentIcon className="ml-4 md:mr-2 md:w-[2rem] sm:w-[1.5rem] md:h-[2rem] sm:h-[1.5rem] w-[1.3rem] h-[1.3rem] fill-black-300" />
 			<input
+				ref={inputCommentRef}
 				type="text"
 				onChange={setComment}
 				className="mx-auto lg:w-[45rem] md:w-[35rem] sm:w-[25rem] w-[10rem] disabled:bg-white outline-none md:placeholder:text-base sm:placeholder:text-sm placeholder:text-[0.8rem] md:text-base text-sm"

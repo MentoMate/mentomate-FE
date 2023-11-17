@@ -1,7 +1,7 @@
 import { IMentorItemInProps } from "@/interface/mainPageInterface";
 import { ReactComponent as Arrow } from "@assets/svg/mainArrow.svg";
 import { Link } from "react-router-dom";
-import ThirdSectionMentorList from "./ThirdSectionMentorList";
+import ThirdSectionMentorList from "@components/main/thirdsection/ThirdSectionMentorList";
 
 const ThirdSection = ({ data }: IMentorItemInProps) => {
 	return (
