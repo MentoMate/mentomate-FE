@@ -11,6 +11,7 @@ export interface IChatList {
 
 export interface IChatInProps {
 	readonly data: IChatList[];
+	readonly onClickChatHandler: (type: string, privateRoomId: number) => void;
 }
 
 export interface IClientProps {
