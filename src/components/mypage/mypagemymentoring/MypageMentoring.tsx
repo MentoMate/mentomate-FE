@@ -2,14 +2,18 @@ import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Star } from "@assets/svg/star.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
+import { IMyMentoringItem } from "@/interface/myPageMyMentoring";
 
-const MypageMentoring = ({ mentoringItem }: any) => {
-	console.log(mentoringItem.name);
+interface Iprops {
+	readonly mentoringItem: IMyMentoringItem;
+}
+
+const MypageMentoring = ({ mentoringItem }: Iprops) => {
 	return (
 		<div className="mt-4 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
 				src={mentoringItem.uploadUrl}
-				alt="asd"
+				alt="mentoring_img"
 				className="w-full h-[15rem] rounded-t-lg object-cover"
 			/>
 			<div className="flex justify-center items-center mt-2">

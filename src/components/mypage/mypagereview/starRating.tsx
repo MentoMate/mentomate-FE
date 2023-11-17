@@ -2,17 +2,22 @@ import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { useState } from "react";
 
-const starRating = ({ onClose, show }: any) => {
-	const [selectedStars, setSelectedStars] = useState(0);
+interface StarRatingProps {
+	onClose: () => void;
+	show: boolean;
+}
+
+const StarRating = ({ onClose, show }: StarRatingProps) => {
+	const [selectedStars, setSelectedStars] = useState<number>(0);
 	const { fetchDataUseAxios } = useAxios();
 
-	const starClickHandler = (selected: any) => {
+	const starClickHandler = (selected: number) => {
 		setSelectedStars(selected);
 	};
 
 	const submitHandler = async () => {
 		const data = {
-			mentoringId: 9,
+			mentoringId: 2,
 			comment: "test",
 			rating: selectedStars,
 		};
@@ -28,7 +33,13 @@ const starRating = ({ onClose, show }: any) => {
 		}
 	};
 
-	const Star = ({ selected, onSelect }: any) => (
+	const Star = ({
+		selected,
+		onSelect,
+	}: {
+		selected: boolean;
+		onSelect: () => void;
+	}) => (
 		<span
 			onClick={onSelect}
 			className={
@@ -52,7 +63,7 @@ const starRating = ({ onClose, show }: any) => {
 					Close
 				</button>
 				<div>
-					{[...Array(5)].map((n, i) => (
+					{[...Array(5)].map((_, i) => (
 						<Star
 							key={i}
 							selected={selectedStars > i}
@@ -67,4 +78,4 @@ const starRating = ({ onClose, show }: any) => {
 	);
 };
 
-export default starRating;
+export default StarRating;

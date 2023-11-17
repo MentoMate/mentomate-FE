@@ -1,5 +1,6 @@
 import useAxios from "@/hooks/useAxios";
 import usePagination from "@/hooks/usePagination";
+import { IMyPaymentItem } from "@/interface/myPagePayment";
 import MypagePaymentCard from "@components/mypage/myPagePayment/MypagePaymentCard";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -7,7 +8,7 @@ import { useQuery } from "react-query";
 const MypagePayment = () => {
 	const { fetchDataUseAxios } = useAxios();
 
-	const [url, setUrl] = useState<string>(`/pay/list?page=1&size=6`);
+	const [url, setUrl] = useState<string>(`/pay/list?page=0&size=3`);
 
 	const getMyPayData = async () => {
 		console.log(url);
@@ -38,13 +39,15 @@ const MypagePayment = () => {
 		transformationUrl();
 	}, [currentPage]);
 	const transformationUrl = () => {
-		setUrl(`/pay/list?page=${currentPage}&size=6`);
+		setUrl(`/pay/list?page=${currentPage - 1}&size=3`);
 	};
+	// key 수정
 	return (
 		<>
-			<MypagePaymentCard />
-			<MypagePaymentCard />
-			<MypagePaymentCard />
+			{data.content.map((payItem: IMyPaymentItem, index: any) => (
+				<MypagePaymentCard key={index} payItem={payItem} />
+			))}
+
 			<div className="my-12 h-20 flex justify-center items-center">
 				<button
 					type="button"

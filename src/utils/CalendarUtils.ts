@@ -1,6 +1,6 @@
 export const handlePrevMonth = (
 	scheduleDate: { year: number; month: number },
-	mentoringPeriod: { startdate: string; enddate: string },
+	mentoringPeriod: { startDate: string; endDate: string },
 	setScheduleDate: React.Dispatch<
 		React.SetStateAction<{ year: number; month: number }>
 	>,
@@ -15,7 +15,7 @@ export const handlePrevMonth = (
 		prevYear -= 1;
 		prevMonth = 12;
 	}
-	const fullDate = mentoringPeriod.startdate;
+	const fullDate = mentoringPeriod.startDate;
 	const dateArray = fullDate.split("-");
 
 	const startDate = `${prevYear}-${String(prevMonth).padStart(2, "0")}-${
@@ -29,8 +29,8 @@ export const handlePrevMonth = (
 	)}-${endOfMonth.getDate()}`;
 
 	if (
-		startDate >= mentoringPeriod.startdate &&
-		endDate <= mentoringPeriod.enddate
+		startDate >= mentoringPeriod.startDate &&
+		endDate <= mentoringPeriod.endDate
 	) {
 		setScheduleDate({ year: prevYear, month: prevMonth });
 		setValidRange({ start: startDate, end: endDate });
@@ -39,7 +39,7 @@ export const handlePrevMonth = (
 
 export const handleNextMonth = (
 	scheduleDate: { year: number; month: number },
-	mentoringPeriod: { startdate: string; enddate: string },
+	mentoringPeriod: { startDate: string; endDate: string },
 	setScheduleDate: React.Dispatch<
 		React.SetStateAction<{ year: number; month: number }>
 	>,
@@ -54,22 +54,22 @@ export const handleNextMonth = (
 		nextYear += 1;
 		nextMonth = 1;
 	}
-	const fullDate = mentoringPeriod.enddate;
+	const fullDate = mentoringPeriod.endDate;
 	const dateArray = fullDate.split("-");
 
 	const startDate = `${nextYear}-${String(nextMonth).padStart(2, "0")}-01`;
 	const endOfMonth = new Date(nextYear, nextMonth, 0);
 
 	const endDate = `${nextYear}-${String(nextMonth).padStart(2, "0")}-${
-		mentoringPeriod.enddate ===
+		mentoringPeriod.endDate ===
 		`${nextYear}-${String(nextMonth).padStart(2, "0")}-${dateArray[2]}`
 			? dateArray[2]
 			: endOfMonth.getDate()
 	}`;
 
 	if (
-		startDate >= mentoringPeriod.startdate &&
-		endDate <= mentoringPeriod.enddate
+		startDate >= mentoringPeriod.startDate &&
+		endDate <= mentoringPeriod.endDate
 	) {
 		setScheduleDate({ year: nextYear, month: nextMonth });
 		setValidRange({ start: startDate, end: endDate });

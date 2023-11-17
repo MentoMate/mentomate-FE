@@ -14,13 +14,11 @@ const MypageWriting = () => {
 			url: url,
 		});
 		if (response && response.status === 200) {
-			console.log(response.data);
 			return response.data;
 		}
 	};
 
 	const { data } = useQuery(["mypageWritingList", url], getMyWritingData);
-	console.log(data.totalPages);
 
 	useEffect(() => {
 		getMyWritingData();
@@ -38,7 +36,7 @@ const MypageWriting = () => {
 	const transformationUrl = () => {
 		setUrl(`/posts/myPage?page=${currentPage}&pageSize=1`);
 	};
-
+	console.log(data);
 	return (
 		<>
 			<CommunityList data={data.items} />

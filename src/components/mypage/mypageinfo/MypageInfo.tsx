@@ -7,12 +7,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+interface INickname {
+	readonly email: string;
+	readonly name: string;
+	readonly nickname: string;
+}
+
 const Mypageinfo = () => {
 	const [isEditMode, setIsEditMode] = useState(false);
 	const { fetchDataUseAxios } = useAxios();
-	const [userInfo, setUserInfo] = useState();
+	const [userInfo, setUserInfo] = useState<INickname>();
 	const [isNickNameDuplicate, setIsNickNameDuplicate] = useState(false);
-	const [text, setText] = useState();
+	const [text, setText] = useState<string>();
 
 	const {
 		setError,
@@ -55,21 +61,21 @@ const Mypageinfo = () => {
 		if (response && response.status === 200) {
 			console.log(response.data);
 			alertHandler("success", "닉네임 변경 완료 했습니다");
+			getUserInfoData();
 		}
 	};
 	console.log(text);
-
+	const getUserInfoData = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: "/user/info",
+		});
+		if (response && response.status === 200) {
+			console.log(response.data);
+			setUserInfo(response.data);
+		}
+	};
 	useEffect(() => {
-		// 유저 정보를 불러오는 API 호출 (예: GET /user/info)
-		const getUserInfoData = async () => {
-			const response = await fetchDataUseAxios("useTokenAxios", {
-				method: "GET",
-				url: "/user/info",
-			});
-			if (response && response.status === 200) {
-				setUserInfo(response.data);
-			}
-		};
 		getUserInfoData();
 	}, []);
 	if (!userInfo) {
@@ -122,8 +128,13 @@ const Mypageinfo = () => {
 						<div className="flex justify-between w-[15rem]">
 							<button
 								type="submit"
-								className="w-[7rem] mt-4 px-3 py-2 bg-main-color rounded-md font-bold text-white text-sm mr-2"
+								className={`w-[7rem] mt-4 px-3 py-2 font-bold text-white text-sm mr-2 rounded-md ${
+									isNickNameDuplicate
+										? "bg-main-color"
+										: "bg-gray-300 cursor-not-allowed"
+								}`}
 								onClick={() => onClickNicknameChangeHandler()}
+								disabled={!isNickNameDuplicate}
 							>
 								저장
 							</button>
