@@ -27,7 +27,8 @@
 			"@assets/*": ["assets/*"],
 			"@components/*": ["components/*"],
 			"@pages/*": ["pages/*"]
-		}
+		},
+		"forceConsistentCasingInFileNames": false
 	},
 	"include": ["src", "svg.d.ts", "src/Router.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
