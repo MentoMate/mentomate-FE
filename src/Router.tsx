@@ -159,7 +159,10 @@ function Router() {
 							element={<MentoringEditPage />}
 						/>
 						<Route path="/mentor" element={<MentorPage />} />
-						<Route path="/mentoringRoom" element={<MentoringRoom />} />
+						<Route
+							path="/mentoringRoom/:id/:startDate/:endDate"
+							element={<MentoringRoom />}
+						/>
 						<Route
 							path="/mentorDetail/:mentorId"
 							element={<MentorDetailPage />}
@@ -190,9 +193,9 @@ function Router() {
 						/>
 						<Route path="/*" element={<NotFound404Page />} />
 					</Routes>
-					{!NO_USE_CHAT_SCROLL_LOCATION.includes(location.pathname) && (
-						<ChatAndScrollContainer />
-					)}
+					{NO_USE_CHAT_SCROLL_LOCATION.some((item) =>
+						item.includes(location.pathname),
+					) && <ChatAndScrollContainer />}
 				</Suspense>
 				{!NO_USE_FOOTER_LOCATION.includes(location.pathname) && <Footer />}
 			</QueryClientProvider>

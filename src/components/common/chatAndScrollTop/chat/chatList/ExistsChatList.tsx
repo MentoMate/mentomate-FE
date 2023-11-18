@@ -12,7 +12,7 @@ const ExistChatList = ({
 					className="my-4 px-4 py-2 w-[19rem] bg-white hover:bg-black-200 rounded-lg transition-all duration-200 cursor-pointer"
 					onClick={() => onClickChatHandler("chat", chat.privateChatRoomId)}
 				>
-					<div className="w-[19rem] font-semibold">{chat.senderNickName}</div>
+					<div className="w-[19rem] font-semibold">{chat.chatPartner}</div>
 					<div className="w-[19rem] text-black-300 font-light truncate">
 						{chat.message}
 					</div>

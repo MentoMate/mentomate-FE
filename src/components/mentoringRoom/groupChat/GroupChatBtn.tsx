@@ -1,49 +1,33 @@
-import { chatHistory } from "@/data/chatHistory";
+import { groupChatHistory } from "@/data/groupChatHistory";
 import useAxios from "@/hooks/useAxios";
-import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
-import { loginState } from "@/state/loginState";
+import { openGroupChatModalState } from "@/state/chatState";
 import { getCookie } from "@/utils/cookies";
 import { ReactComponent as ChatEmotion } from "@assets/svg/chatEmotion.svg";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import { useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import SockJS from "sockjs-client";
-import ChatModalContainer from "./ChatModalContainer";
-import { useQuery } from "react-query";
+import GroupChatContainer from "./GroupChatContainer";
 
-const ChatBtn = () => {
-	const isLogin = useRecoilValue(loginState);
-	const [isOpenChatList, setIsOpenChatList] =
-		useRecoilState(openChatModalState);
-	const setChats = useSetRecoilState(chatHistory);
+const GroupChatBtn = () => {
+	const { id } = useParams();
 	const client = useRef<CompatClient>();
 	const { fetchDataUseAxios } = useAxios();
-	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);
-
-	const getChatList = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "GET",
-			url: "/chat/room/private/chatList",
-		});
-
-		if (response) {
-			if (response.status === 200) {
-				return response.data;
-			}
-		}
-	};
-
-	const { data } = useQuery(["chatList"], getChatList);
+	const setChats = useSetRecoilState(groupChatHistory);
+	const [isOpenGroupChat, setIsOpenGroupChat] = useRecoilState(
+		openGroupChatModalState,
+	);
 
 	const onClickChatEmotionHandler = () => {
-		setIsOpenChatList(!isOpenChatList);
+		setIsOpenGroupChat(!isOpenGroupChat);
 	};
 
 	const setChatsHandler = (message: any) => {
 		setChats((prev) => [
 			...prev,
 			{
-				privateChatRoomId: message.groupMentoringId,
+				groupMentoringId: message.groupMentoringId,
 				message: message.message,
 				registerDatetime: message.registerDatetime,
 				senderNickName: message.senderNickName,
@@ -58,7 +42,7 @@ const ChatBtn = () => {
 		setChatsHandler(receiveMessage);
 	};
 
-	const connect = () => {
+	const connect = async () => {
 		const socket = new SockJS("http://43.202.208.73:8080/ws/chat");
 		const stompClient = Stomp.over(socket);
 		client.current = stompClient;
@@ -69,22 +53,28 @@ const ChatBtn = () => {
 				Authorization: `Bearer ${TOKEN}`,
 			},
 			() => {
-				stompClient.subscribe(
-					`/subscribe/chat/room/${privateChatRoomId}`,
-					onConnected,
-				);
+				stompClient.subscribe(`/topic/chat/room/${id}`, onConnected);
 			},
 		);
+
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: `/chat/room/${id}`,
+		});
+
+		if (response) {
+			if (response.status === 200) {
+				setChats(response.data);
+			}
+		}
 	};
 
 	useEffect(() => {
-		if (isLogin && privateChatRoomId !== null) {
-			connect();
-		}
-	}, [isLogin, privateChatRoomId]);
+		connect();
+	}, []);
 
 	return (
-		<div className="relative my-1.5">
+		<div>
 			<button
 				type="button"
 				className="flex justify-center items-center w-20 h-20"
@@ -92,9 +82,9 @@ const ChatBtn = () => {
 			>
 				<ChatEmotion className="w-full h-full" />
 			</button>
-			<ChatModalContainer client={client} chatList={data} />
+			<GroupChatContainer client={client} />
 		</div>
 	);
 };
 
-export default ChatBtn;
+export default GroupChatBtn;
