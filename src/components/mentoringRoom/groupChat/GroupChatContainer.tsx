@@ -70,7 +70,7 @@ const GroupChatContainer = ({ client }: IProps) => {
 		<div
 			className={`${
 				isOpenGroupChat ? "flex flex-col" : "hidden"
-			} absolute top-[-39rem] left-[-20rem] w-[23rem] h-[38rem] bg-black-100 border border-gray-100 rounded-3xl shadow-xl z-[102]`}
+			} absolute top-[-39rem] left-[-20rem] w-[23rem] h-[38rem] bg-black-100 border border-gray-100 rounded-3xl shadow-xl z-[99]`}
 		>
 			<div className="mt-2 flex justify-between items-center">
 				<Logo width={130} height={70} className="ml-8" />

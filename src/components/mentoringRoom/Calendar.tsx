@@ -149,7 +149,7 @@ const MyCalendar = () => {
 	}, [validRange]);
 
 	return (
-		<div className="relative">
+		<>
 			{isLoading && <Loading />}
 			<div className="relative mx-auto mt-10 mb-20 lg:w-[60rem] ">
 				<button className="bg-main-color" onClick={prevMonthHandler}>
@@ -193,10 +193,10 @@ const MyCalendar = () => {
 					eventInfo={eventInfo}
 				/>
 			)}
-			<div className="fixed my-1.5 bottom-20 right-40">
+			<div className="fixed my-1.5 bottom-20 right-40 z-[98]">
 				<GroupChatBtn />
 			</div>
-		</div>
+		</>
 	);
 };
 

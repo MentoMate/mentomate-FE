@@ -43,7 +43,7 @@ const Button = ({ data }: IMentoringDetailProps) => {
 	return (
 		<div className="flex flex-col mt-2">
 			<Link
-				className="my-1 py-2 w-full bg-main-color rounded-sm text-white text-lg font-bold"
+				className="my-1 py-2 w-full bg-main-color rounded-sm text-white text-lg font-bold text-center"
 				to={`/payment/${params.mentoringId}`}
 			>
 				멘토링 신청

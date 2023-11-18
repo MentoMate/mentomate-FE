@@ -16,7 +16,6 @@ const CommunityPage = () => {
 	return (
 		<>
 			<CommunityContainer />
-
 			{isOpenCategoryModal && <CategoryModal />}
 		</>
 	);

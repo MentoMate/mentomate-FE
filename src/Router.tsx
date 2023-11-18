@@ -193,9 +193,9 @@ function Router() {
 						/>
 						<Route path="/*" element={<NotFound404Page />} />
 					</Routes>
-					{!NO_USE_CHAT_SCROLL_LOCATION.includes(location.pathname) && (
-						<ChatAndScrollContainer />
-					)}
+					{NO_USE_CHAT_SCROLL_LOCATION.some((item) =>
+						item.includes(location.pathname),
+					) && <ChatAndScrollContainer />}
 				</Suspense>
 				{!NO_USE_FOOTER_LOCATION.includes(location.pathname) && <Footer />}
 			</QueryClientProvider>

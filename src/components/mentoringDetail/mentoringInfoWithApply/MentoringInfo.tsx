@@ -32,7 +32,9 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 
 	return (
 		<>
-			<div className="lg:text-xl text-base font-bold">{data.title}</div>
+			<div className="lg:text-xl text-base font-bold break-words">
+				{data.title}
+			</div>
 			<div className="mt-4 lg:text-sm md:text-[0.7rem]">
 				<div className="flex items-center mb-2">
 					<Calendar width={20} height={20} className="mr-2" />
