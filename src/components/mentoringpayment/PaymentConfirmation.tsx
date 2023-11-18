@@ -1,11 +1,8 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { ReactComponent as Cash } from "@assets/svg/cash.svg";
-import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
-import { alertHandler } from "@/utils/alert";
-import axios from "axios";
 import useAxios from "@/hooks/useAxios";
+import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
+import { ReactComponent as Cash } from "@assets/svg/cash.svg";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const mentoringName = "대기업 프로젝트 개발자와 함께하는 면접 트레이닝";
 const mentorName = "조인성";
@@ -28,7 +25,7 @@ const PaymentConfirmation = () => {
 	const { paymentId } = useParams();
 	const navigate = useNavigate();
 	const [agreed, setAgreed] = useState(false);
-	const { isLoading, fetchDataUseAxios } = useAxios();
+	const { fetchDataUseAxios } = useAxios();
 	console.log(paymentId);
 
 	const toggleAgreement = () => {
