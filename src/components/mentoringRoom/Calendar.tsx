@@ -19,6 +19,7 @@ import ScheduleReadModal from "./ScheduleReadModal";
 import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
 import { useParams } from "react-router-dom";
 import MentoringEndButton from "./MentoringEndButton";
+import GroupChatBtn from "./groupChat/GroupChatBtn";
 
 interface IMentoringPeriod {
 	startDate: string | "";
@@ -142,13 +143,13 @@ const MyCalendar = () => {
 		const eventDom = mouseLeaveInfo.el;
 		eventDom.classList.remove("cursor-pointer");
 	};
-	console.log(params.id, params.startDate, params.endDate);
+
 	useEffect(() => {
 		scheduleReadHandler();
 	}, [validRange]);
 
 	return (
-		<>
+		<div className="relative">
 			{isLoading && <Loading />}
 			<div className="relative mx-auto mt-10 mb-20 lg:w-[60rem] ">
 				<button className="bg-main-color" onClick={prevMonthHandler}>
@@ -192,7 +193,10 @@ const MyCalendar = () => {
 					eventInfo={eventInfo}
 				/>
 			)}
-		</>
+			<div className="fixed my-1.5 bottom-20 right-40">
+				<GroupChatBtn />
+			</div>
+		</div>
 	);
 };
 

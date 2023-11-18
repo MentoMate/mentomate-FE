@@ -3,27 +3,23 @@ import useAxios from "@/hooks/useAxios";
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
 import { openChatModalState } from "@/state/chatState";
 import { useSetRecoilState } from "recoil";
-    
+
 const Button = ({ data }: IMentoringDetailProps) => {
 	const params = useParams();
 	const { fetchDataUseAxios } = useAxios();
-  const { fetchDataUseAxios } = useAxios();
 	const setIsOpenChatList = useSetRecoilState(openChatModalState);
-  
+
 	const onClickFavoriteMentoringHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: `mentoring/${params.mentoringId}`,
 		});
 		if (response && response.status === 200) {
-			console.log(response);
 			return response.data;
-		} else {
-			console.log(response);
 		}
 	};
-  
-  	const createChat1On1Handler = async () => {
+
+	const createChat1On1Handler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
 			url: "/chat/room/private",
@@ -40,11 +36,10 @@ const Button = ({ data }: IMentoringDetailProps) => {
 
 			if (response.status === 400) {
 				setIsOpenChatList(true);
-				console.log(response);
 			}
 		}
 	};
-  
+
 	return (
 		<div className="flex flex-col mt-2">
 			<Link
