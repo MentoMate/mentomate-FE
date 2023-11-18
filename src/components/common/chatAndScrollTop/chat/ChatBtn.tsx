@@ -40,11 +40,21 @@ const ChatBtn = () => {
 	};
 
 	const setChatsHandler = (message: any) => {
-		setChats((prev) => [...prev, message]);
+		setChats((prev) => [
+			...prev,
+			{
+				privateChatRoomId: message.groupMentoringId,
+				message: message.message,
+				registerDatetime: message.registerDatetime,
+				senderNickName: message.senderNickName,
+				senderUserId: message.userId,
+			},
+		]);
 	};
 
 	const onConnected = (payload: any) => {
 		const receiveMessage = JSON.parse(payload.body);
+		console.log(receiveMessage);
 		setChatsHandler(receiveMessage);
 	};
 

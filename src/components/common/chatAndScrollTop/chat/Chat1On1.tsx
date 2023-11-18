@@ -81,14 +81,14 @@ const Chat1On1 = ({ client }: IClientProps) => {
 						<div
 							key={chat.registerDatetime}
 							className={`flex ${
-								String(chat.userId) === loginUserId
+								String(chat.senderUserId) === loginUserId
 									? "justify-end"
 									: "justify-start"
 							}`}
 						>
 							<p
 								className={`my-2 px-2 py-1 w-[15rem] ${
-									String(chat.userId) === loginUserId
+									String(chat.senderUserId) === loginUserId
 										? "bg-main-color"
 										: "bg-green-200"
 								} rounded-lg break-words`}

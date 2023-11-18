@@ -5,7 +5,7 @@ interface IChatHistory {
 	readonly senderNickName: string;
 	readonly message: string;
 	readonly registerDatetime: string;
-	readonly userId: number;
+	readonly senderUserId: number;
 }
 
 export const chatHistory = atom<IChatHistory[]>({
