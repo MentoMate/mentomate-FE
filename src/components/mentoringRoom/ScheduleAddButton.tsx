@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import useAxios from "@/hooks/useAxios";
 import { scheduleRegistrationForm } from "@/data/scheduleRegistrationForm";
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
 
 interface IProps {
 	readonly reactQuillRef: any;
@@ -10,6 +11,7 @@ interface IProps {
 }
 
 const ScheduleAddButton = ({ reactQuillRef, scheduleReadHandler }: IProps) => {
+	const params = useParams();
 	const { fetchDataUseAxios } = useAxios();
 
 	const form = useRecoilValue(scheduleRegistrationForm);
@@ -30,7 +32,7 @@ const ScheduleAddButton = ({ reactQuillRef, scheduleReadHandler }: IProps) => {
 			}
 		}
 		const data = {
-			mentoringId: 3,
+			mentoringId: params.id,
 			title: form.title,
 			content: form.content,
 			start: form.start,

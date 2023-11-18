@@ -1,6 +1,6 @@
 import { IMentorItemInProps } from "@/interface/mainPageInterface";
 import { IMentorItem } from "@/interface/mainPageMentor";
-import MentorItem from "./ThirdSectionMentorItem";
+import MentorItem from "@components/main/thirdsection/ThirdSectionMentorItem";
 
 const ThirdSectionMentorList = ({ data }: IMentorItemInProps) => {
 	return (

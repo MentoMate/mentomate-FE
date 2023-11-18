@@ -17,15 +17,24 @@ import MentoringInfoModal from "./MentoringInfoModal";
 import ScheduleAddModal from "./ScheduleAddModal";
 import ScheduleReadModal from "./ScheduleReadModal";
 import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
+import { useParams } from "react-router-dom";
+import MentoringEndButton from "./MentoringEndButton";
+
+interface IMentoringPeriod {
+	startDate: string | "";
+	endDate: string | "";
+}
 
 const today = new Date();
 
-const MENTORING_PERIOD = {
-	startdate: "2023-09-08",
-	enddate: "2024-03-15",
-};
-
 const MyCalendar = () => {
+	const params = useParams();
+
+	const MENTORING_PERIOD: IMentoringPeriod = {
+		startDate: params.startDate || "",
+		endDate: params.endDate || "",
+	};
+
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const [hoveredDate, setHoveredDate] = useState(""); //Hover된 일정 날짜
 	const [isScheduleAddModalOpen, setIsScheduleAddModalOpen] = useState(false); //선택된 일정에 대한 모달 상태
@@ -38,19 +47,30 @@ const MyCalendar = () => {
 		year: today.getFullYear(),
 		month: today.getMonth() + 1,
 	});
+	// 시작 기간과 종료 기간을 각각 년도와 달로 분리
+	const startYear = parseInt(MENTORING_PERIOD.startDate.split("-")[0]);
+	const startMonth = parseInt(MENTORING_PERIOD.startDate.split("-")[1]);
+	const endYear = parseInt(MENTORING_PERIOD.endDate.split("-")[0]);
+	const endMonth = parseInt(MENTORING_PERIOD.endDate.split("-")[1]);
+
+	// 시작 기간과 종료 기간의 년도와 달이 같은지 비교
+	const isValidRange = startYear === endYear && startMonth === endMonth;
+
+	const validEnd = isValidRange
+		? MENTORING_PERIOD.endDate
+		: `${
+				scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
+		  }-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`;
+
 	const [validRange, setValidRange] = useState({
-		start: MENTORING_PERIOD.startdate,
-		end: `${
-			scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
-		}-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`,
+		start: MENTORING_PERIOD.startDate,
+		end: validEnd,
 	});
 
 	const scheduleReadHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: `/mentoring/${3}/schedule?startDate=${validRange.start}&endDate=${
-				validRange.end
-			}`,
+			url: `/mentoring/${params.id}/schedule?startDate=${validRange.start}&endDate=${validRange.end}`,
 		});
 
 		if (response) {
@@ -122,7 +142,7 @@ const MyCalendar = () => {
 		const eventDom = mouseLeaveInfo.el;
 		eventDom.classList.remove("cursor-pointer");
 	};
-
+	console.log(params.id, params.startDate, params.endDate);
 	useEffect(() => {
 		scheduleReadHandler();
 	}, [validRange]);
@@ -155,6 +175,7 @@ const MyCalendar = () => {
 					eventMouseLeave={eventMouseLeaveHandler} // 마우스가 이벤트를 떠날 때
 				/>
 				<MentoringInfoModal />
+				<MentoringEndButton />
 			</div>
 
 			{isScheduleAddModalOpen && (

@@ -1,6 +1,8 @@
 import { categories } from "@/constants/categories";
+import useAxios from "@/hooks/useAxios";
 import { IMentorItemProps } from "@/interface/mentorItem";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface ICareer {
 	readonly careerYear: number;
@@ -13,7 +15,21 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 		careerYear: 0,
 		careerMonth: 0,
 	});
-
+	const params = useParams();
+	console.log(params);
+	const { fetchDataUseAxios } = useAxios();
+	const onClickFavoriteMentorHandler = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "POST",
+			url: `user/${params.mentorId}`,
+		});
+		if (response && response.status === 200) {
+			console.log(response);
+			return response.data;
+		} else {
+			console.log(response);
+		}
+	};
 	const calculateCareer = () => {
 		console.log(mentorItem.career);
 		const careerYear = Math.floor(mentorItem.career / 12);
@@ -72,7 +88,10 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 					</div>
 				</div>
 			</div>
-			<button className="mt-6 bg-main-color lg:px-20 md:px-14 px-20 py-2 text-white text-lg font-bold rounded-sm">
+			<button
+				onClick={() => onClickFavoriteMentorHandler()}
+				className="mt-6 bg-main-color lg:px-20 md:px-14 px-20 py-2 text-white text-lg font-bold rounded-sm"
+			>
 				팔로우
 			</button>
 		</div>
