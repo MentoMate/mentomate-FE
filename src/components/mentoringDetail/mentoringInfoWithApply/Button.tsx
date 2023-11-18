@@ -1,10 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import useAxios from "@/hooks/useAxios";
-
-const Button = () => {
+import { IMentoringDetailProps } from "@/interface/mentoringInfo";
+import { openChatModalState } from "@/state/chatState";
+import { useSetRecoilState } from "recoil";
+    
+const Button = ({ data }: IMentoringDetailProps) => {
 	const params = useParams();
-	console.log(params);
 	const { fetchDataUseAxios } = useAxios();
+  const { fetchDataUseAxios } = useAxios();
+	const setIsOpenChatList = useSetRecoilState(openChatModalState);
+  
 	const onClickFavoriteMentoringHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
@@ -17,6 +22,29 @@ const Button = () => {
 			console.log(response);
 		}
 	};
+  
+  	const createChat1On1Handler = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "POST",
+			url: "/chat/room/private",
+			data: {
+				mentorId: data.userId,
+				mentoringId: data.mentoringId,
+			},
+		});
+
+		if (response) {
+			if (response.status === 200) {
+				setIsOpenChatList(true);
+			}
+
+			if (response.status === 400) {
+				setIsOpenChatList(true);
+				console.log(response);
+			}
+		}
+	};
+  
 	return (
 		<div className="flex flex-col mt-2">
 			<Link
@@ -25,7 +53,11 @@ const Button = () => {
 			>
 				멘토링 신청
 			</Link>
-			<button className="my-1 py-2 w-full bg-yellow-200 rounded-sm text-white text-lg font-bold">
+			<button
+				type="button"
+				className="my-1 py-2 w-full bg-yellow-200 rounded-sm text-white text-lg font-bold"
+				onClick={createChat1On1Handler}
+			>
 				1:1 문의
 			</button>
 			<button

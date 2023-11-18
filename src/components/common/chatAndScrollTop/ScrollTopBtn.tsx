@@ -6,7 +6,7 @@ const ScrollTopBtn = () => {
 	};
 
 	return (
-		<div className="flex justify-end sticky bottom-20 lg:mr-40 mr-10 mb-20">
+		<div className="my-1.5">
 			<button
 				type="button"
 				onClick={onClickScrollTopBtn}

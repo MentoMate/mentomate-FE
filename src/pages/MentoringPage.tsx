@@ -1,14 +1,8 @@
+import MentoringContainer from "@/components/mentoring/MentoringContainer";
 import { openCategoryModalState } from "@/state/openCategoryModal";
 import CategoryModal from "@components/common/categoryModal/CategoryModal";
-import Footer from "@components/common/footer/Footer";
-import Header from "@components/common/header/Header";
-import Spinner from "@components/common/spinner/Spinner";
-import { lazy, Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-
-const MentoringContainer = lazy(
-	() => import("@components/mentoring/MentoringContainer"),
-);
 
 const MentoringPage = () => {
 	const [isOpenCategoryModal, setIsOpenCategoryModal] = useRecoilState(
@@ -21,11 +15,7 @@ const MentoringPage = () => {
 
 	return (
 		<div className="relative">
-			<Header />
-			<Suspense fallback={<Spinner />}>
-				<MentoringContainer />
-				<Footer />
-			</Suspense>
+			<MentoringContainer />
 			{isOpenCategoryModal && <CategoryModal />}
 		</div>
 	);

@@ -6,6 +6,20 @@
 	html {
 		font-family: "Noto Sans KR";
 	}
+
+	::-webkit-scrollbar {
+		width: 0.5rem;
+	}
+
+	::-webkit-scrollbar-thumb {
+		height: 20%;
+		background: #5e53c7;
+		border-radius: 1rem;
+	}
+
+	::-webkit-scrollbar-track {
+		background: rgba(33, 122, 244, 0.1);
+	}
 }
 
 @layer components {

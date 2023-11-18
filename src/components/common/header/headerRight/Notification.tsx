@@ -106,10 +106,10 @@ const Notification = () => {
 						data.map((notification: INotification) => (
 							<div
 								key={notification.notificationId}
-								className="flex items-center pl-4 py-2 hover:bg-main-color text-sm hover:text-white truncate"
+								className="flex items-center pl-4 py-2 hover:bg-main-color text-sm hover:text-white"
 							>
 								<p
-									className="grow"
+									className="grow truncate"
 									onClick={() => setIsOpenNotification(!isOpenNotification)}
 								>
 									{notification.content}

@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import Pagination from "../common/pagination/Pagination";
-import ScrollTopBtn from "../common/scrollTopBtn/ScrollTopBtn";
 import SortAndSearch from "../common/search/SortAndSearch";
 import MentoringTitle from "./MentoringTitle";
 import MentoringList from "./mentoringList/MentoringList";
@@ -58,7 +57,6 @@ const MentoringContainer = () => {
 						</>
 					)}
 				</div>
-				<ScrollTopBtn />
 			</div>
 		</>
 	);

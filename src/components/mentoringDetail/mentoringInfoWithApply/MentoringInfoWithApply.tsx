@@ -11,7 +11,7 @@ const MentoringInfoWithApply = ({ data }: IMentoringDetailProps) => {
 				<MentoringInfo data={data} />
 				<MentorProfile data={data} />
 			</div>
-			<Button />
+			<Button data={data} />
 		</div>
 	);
 };

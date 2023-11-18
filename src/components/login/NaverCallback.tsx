@@ -25,6 +25,9 @@ const NaverCallback = () => {
 
 		if (response && response.status === 200) {
 			if (!response.headers.get("isSignUp")) {
+				const data = await response.json();
+				localStorage.setItem("userId", data.userId);
+				localStorage.setItem("nickName", data.nickname);
 				setCookie("accessToken", response.headers.get("Authorization"));
 				setCookie(
 					"refreshToken",
