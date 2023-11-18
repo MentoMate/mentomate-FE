@@ -30,7 +30,7 @@ const MentorDetailContainer = () => {
 				</div>
 				<MentorIntroduce mentorItem={data} />
 				<MentorReviewContainer />
-				<PastMentoringContainer />
+				<PastMentoringContainer userId={data.userId} />
 			</div>
 			<div className="md:block hidden">
 				<MentorInfo mentorItem={data} />
