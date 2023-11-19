@@ -41,21 +41,23 @@ const MentoringContainer = () => {
 			setPagination(1);
 		};
 	}, []);
-
+	//lg:w-[60rem] sm:w-[30rem] w-[15rem]
 	return (
 		<>
-			<div className="mt-12 h-min-height">
-				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+			<div className="h-min-height bg-black-100">
+				<div className="flex flex-col items-center mx-auto">
 					<SortAndSearch />
-					<MentoringTitle />
-					{data.items.length === 0 ? (
-						<NonExistMentoringList />
-					) : (
-						<>
-							<MentoringList data={data.items} />
-							<Pagination totalPages={data.totalPages} />
-						</>
-					)}
+					<div className="mt-8 lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+						<MentoringTitle />
+						{data.items.length === 0 ? (
+							<NonExistMentoringList />
+						) : (
+							<>
+								<MentoringList data={data.items} />
+								<Pagination totalPages={data.totalPages} />
+							</>
+						)}
+					</div>
 				</div>
 			</div>
 		</>

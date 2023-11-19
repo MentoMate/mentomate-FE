@@ -10,7 +10,7 @@ const MentoringList = ({ data }: IMentoringProps) => {
 	console.log(data);
 	return (
 		<>
-			<div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
+			<div className="pt-4 grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">
 				{data.map((mentoringItem: IMentoringItem) => (
 					<Link
 						key={mentoringItem.id}

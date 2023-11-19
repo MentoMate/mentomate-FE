@@ -16,13 +16,13 @@ const MentoringTitle = () => {
 	};
 
 	return (
-		<div className="flex justify-between items-center mt-6">
-			<h1 className="mx-2 text-xl sm:text-2xl font-bold text-black-500">
+		<div className="pt-20 flex justify-between items-center mt-6">
+			<h1 className="mx-2 text-xl sm:text-lg font-bold text-black-500">
 				멘토링 목록
 			</h1>
 			<button
 				onClick={registerClickHandler}
-				className="px-3 py-2 sm:px-4 sm:py-2.5 bg-main-color hover:bg-sky-300 rounded-lg text-md sm:text-lg font-bold text-white"
+				className="p-3 bg-main-color hover:bg-sky-300 rounded-lg font-semibold text-sm text-white"
 			>
 				멘토링 등록
 			</button>
