@@ -3,8 +3,7 @@ import useUrl from "@/hooks/useUrl";
 import { pagination } from "@/state/pagination";
 import { searchCriteria } from "@/state/searchCriteria";
 import SortAndSearch from "@components/common/search/SortAndSearch";
-import Loading from "@components/common/spinner/Loading";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import Pagination from "../common/pagination/Pagination";
@@ -43,22 +42,20 @@ const MentorContainer = () => {
 	}, []);
 
 	return (
-		<Suspense fallback={<Loading />}>
-			<div className="h-min-height bg-black-100">
-				<MentorRegister />
-				<SortAndSearch />
-				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-					{data.length !== 0 ? (
-						<>
-							<MentorList mentorList={data.items} />
-							<Pagination totalPages={data.totalPages} />
-						</>
-					) : (
-						<NonExistMentorList />
-					)}
-				</div>
+		<div className="h-min-height bg-black-100">
+			<MentorRegister />
+			<SortAndSearch />
+			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+				{data.length !== 0 ? (
+					<>
+						<MentorList mentorList={data.items} />
+						<Pagination totalPages={data.totalPages} />
+					</>
+				) : (
+					<NonExistMentorList />
+				)}
 			</div>
-		</Suspense>
+		</div>
 	);
 };
 
