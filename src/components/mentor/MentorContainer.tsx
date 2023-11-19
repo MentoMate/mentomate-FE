@@ -44,10 +44,10 @@ const MentorContainer = () => {
 
 	return (
 		<Suspense fallback={<Loading />}>
-			<div className="h-min-height">
+			<div className="h-min-height bg-black-100">
 				<MentorRegister />
+				<SortAndSearch />
 				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-					<SortAndSearch />
 					{data.length !== 0 ? (
 						<>
 							<MentorList mentorList={data.items} />
