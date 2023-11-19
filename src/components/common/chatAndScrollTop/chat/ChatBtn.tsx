@@ -77,10 +77,20 @@ const ChatBtn = () => {
 		);
 	};
 
+	const disconnect = () => {
+		if (client.current) {
+			client.current.deactivate();
+		}
+	};
+
 	useEffect(() => {
 		if (isLogin && privateChatRoomId !== null) {
 			connect();
 		}
+
+		return () => {
+			disconnect();
+		};
 	}, [isLogin, privateChatRoomId]);
 
 	return (

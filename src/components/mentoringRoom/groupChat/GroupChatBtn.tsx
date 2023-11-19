@@ -38,7 +38,6 @@ const GroupChatBtn = () => {
 
 	const onConnected = (payload: any) => {
 		const receiveMessage = JSON.parse(payload.body);
-		console.log(receiveMessage);
 		setChatsHandler(receiveMessage);
 	};
 
@@ -69,8 +68,18 @@ const GroupChatBtn = () => {
 		}
 	};
 
+	const disconnect = () => {
+		if (client.current) {
+			client.current.deactivate();
+		}
+	};
+
 	useEffect(() => {
 		connect();
+
+		return () => {
+			disconnect();
+		};
 	}, []);
 
 	return (

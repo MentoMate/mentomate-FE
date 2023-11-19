@@ -108,8 +108,9 @@ const GroupChatContainer = ({ client }: IProps) => {
 					{chats.length === 0 ? (
 						<p>아직 진행중인 채팅이 없습니다. </p>
 					) : (
-						chats.map((chat) => (
+						chats.map((chat, index) => (
 							<div
+								key={index}
 								className={`flex flex-col mt-2 ${
 									String(chat.senderUserId) === loginUserId
 										? "items-end mr-4"
