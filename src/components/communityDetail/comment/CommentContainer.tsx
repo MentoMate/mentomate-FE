@@ -32,9 +32,9 @@ const CommentContainer = ({ commentRef }: IProps) => {
 
 	return (
 		<div ref={commentRef}>
-			<div className="flex mb-4 md:text-xl text-lg">
+			<div className="flex mb-4">
 				<div className="font-bold">댓글</div>
-				<div className="ml-2 text-main-color font-extrabold">
+				<div className="ml-1.5 text-main-color font-extrabold">
 					{data.items.length}
 				</div>
 			</div>

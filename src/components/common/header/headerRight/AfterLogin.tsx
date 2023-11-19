@@ -42,12 +42,10 @@ const AfterLogin = () => {
 		<>
 			<div className="flex justify-center items-center font-semibold">
 				<Link to={"/mypage"}>
-					<div className="mx-2 text-black-500 hover:text-black-200">
-						마이페이지
-					</div>
+					<div className="mx-2 text-white hover:text-black-200">마이페이지</div>
 				</Link>
 				<div
-					className="mx-2 cursor-pointer text-black-500 hover:text-black-200"
+					className="mx-2 cursor-pointer text-white hover:text-black-200"
 					onClick={onClickLogoutBtnHandler}
 				>
 					로그아웃

@@ -13,8 +13,6 @@ const CommunityDetailContainer = () => {
 	const commentRef = useRef<HTMLDivElement>(null);
 	const { fetchDataUseAxios } = useAxios();
 
-	console.log(communityId);
-
 	const getInfo = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
@@ -31,7 +29,7 @@ const CommunityDetailContainer = () => {
 	return (
 		<div className="flex lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[15rem] mx-auto my-20">
 			<div className="lg:w-[50rem] md:w-[30rem] sm:w-[20rem] w-[17rem]">
-				<div className="md:text-3xl text-xl font-bold">{data.title}</div>
+				<div className="text-xl font-bold">{data.title}</div>
 				<CommunityWriterInfo communityInfo={data} />
 				<CommunityContent communityInfo={data} />
 				<CommunityLikeAndComment communityInfo={data} />
