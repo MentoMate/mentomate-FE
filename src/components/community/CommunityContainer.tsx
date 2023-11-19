@@ -44,12 +44,12 @@ const CommunityContainer = () => {
 	}, []);
 
 	return (
-		<div className="h-min-height">
-			<CommunityTab />
+		<div className="h-min-height bg-black-100">
+			<div className="sticky top-20 z-50">
+				<CommunityTab />
+				<SortAndSearch />
+			</div>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-				<div className="mt-12">
-					<SortAndSearch />
-				</div>
 				<LocationWithCreate />
 				{data.items.length !== 0 ? (
 					<>
