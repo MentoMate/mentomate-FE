@@ -41,21 +41,30 @@ const SearchType = () => {
 
 	return (
 		<div
-			className="flex justify-center items-center relative sm:mt-0 mt-2 py-2 px-4 sm:w-[10rem] w-full border border-black-200 rounded-sm cursor-pointer"
+			className="flex justify-center items-center relative sm:mt-0 mt-2 py-1 px-4 sm:w-[6rem] w-full border border-black-200 rounded-[0.3rem] text-[0.8rem] cursor-pointer"
 			onClick={onClickSearchTypeList}
 		>
-			<div className="grow flex justify-center items-center text-black-600 w-[5rem] text-center">
+			<div className="grow flex justify-center items-center text-main-color text-center">
 				{type.keyName}
 			</div>
-			<BottomArrow width={30} height={30} fill="#3C3C3C" />
+			<BottomArrow
+				width={20}
+				height={20}
+				fill="#3C3C3C"
+				className={`${
+					!openSearchTypeList ? "rotate-0" : "rotate-180"
+				} transition-transform duration-500`}
+			/>
 			{openSearchTypeList && (
 				<ul
 					ref={searchTypeListRef}
-					className="absolute top-12 sm:w-[10rem] w-full bg-white border border-black-200 rounded-sm z-[51]"
+					className="absolute top-[2.7rem] sm:w-[6rem] w-full bg-white border border-black-200 rounded-[0.3rem] z-[51] shadow-md"
 				>
-					{SEARCH_TYPES.map((searchType) => (
+					{SEARCH_TYPES.map((searchType, index) => (
 						<li
-							className="text-center py-2 bg-white shadow-sm hover:bg-main-color hover:text-white"
+							className={`py-2 bg-white shadow-sm hover:bg-main-color text-center  hover:text-white ${
+								index === 0 ? "rounded-t-[0.3rem]" : "rounded-b-[0.3rem]"
+							}`}
 							onClick={() => onClickSearchType(searchType)}
 						>
 							{searchType.keyName}

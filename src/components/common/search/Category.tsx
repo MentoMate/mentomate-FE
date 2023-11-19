@@ -1,7 +1,6 @@
 import { openCategoryModalState } from "@/state/openCategoryModal";
 import { selectedCategoryState } from "@/state/selectedCategory";
 import { lockScroll } from "@/utils/controlBodyScroll";
-import { ReactComponent as BottomArrow } from "@assets/svg/bottom_arrow.svg";
 import { ReactComponent as CategoryIcon } from "@assets/svg/category.svg";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -17,13 +16,17 @@ const Category = () => {
 	return (
 		<>
 			<div
-				className="grow flex items-center lg:mx-2 sm:mr-1 px-4 py-2 w-[15rem] border rounded-sm"
+				className="grow flex items-center lg:mx-2 sm:mr-1 px-4 py-1 border rounded-[0.3rem] bg-white"
 				onClick={onClickCategoryHandler}
 				role="button"
 			>
-				<CategoryIcon width={35} height={35} />
-				<div className="grow ml-2">{categoryState.selectedCategoryName}</div>
-				<BottomArrow width={30} height={30} fill="#3C3C3C" />
+				<CategoryIcon width={20} height={20} />
+				<div className="flex text-[0.75rem]">
+					<div className="ml-1.5 mr-3 text-black-600">카테고리</div>
+					<div className="text-main-color font-medium">
+						{categoryState.selectedCategoryName}
+					</div>
+				</div>
 			</div>
 		</>
 	);
