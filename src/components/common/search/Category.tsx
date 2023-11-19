@@ -16,14 +16,14 @@ const Category = () => {
 	return (
 		<>
 			<div
-				className="grow flex items-center lg:mx-2 sm:mr-1 px-4 py-1 border rounded-[0.3rem] bg-white"
+				className="grow flex items-center lg:mx-2 sm:mr-1 px-4 py-1 border rounded-[0.3rem] bg-white hover:bg-black-100 transition duration-150"
 				onClick={onClickCategoryHandler}
 				role="button"
 			>
 				<CategoryIcon width={20} height={20} />
 				<div className="flex text-[0.75rem]">
 					<div className="ml-1.5 mr-3 text-black-600">카테고리</div>
-					<div className="text-main-color font-medium">
+					<div className="text-main-color font-semibold">
 						{categoryState.selectedCategoryName}
 					</div>
 				</div>
