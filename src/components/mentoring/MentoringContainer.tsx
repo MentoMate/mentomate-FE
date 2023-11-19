@@ -41,7 +41,7 @@ const MentoringContainer = () => {
 			setPagination(1);
 		};
 	}, []);
-	//lg:w-[60rem] sm:w-[30rem] w-[15rem]
+
 	return (
 		<>
 			<div className="h-min-height bg-black-100">

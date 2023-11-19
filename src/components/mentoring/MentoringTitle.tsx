@@ -22,7 +22,7 @@ const MentoringTitle = () => {
 			</h1>
 			<button
 				onClick={registerClickHandler}
-				className="p-3 bg-main-color hover:bg-sky-300 rounded-lg font-semibold text-sm text-white"
+				className="p-3 bg-main-color hover:bg-purple-100 rounded-lg font-semibold text-sm text-white"
 			>
 				멘토링 등록
 			</button>

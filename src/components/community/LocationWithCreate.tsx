@@ -45,7 +45,7 @@ const LocationWithCreate = () => {
 			</div>
 			<button
 				onClick={registerClickHandler}
-				className="mx-2 p-3 bg-main-color rounded-md font-semibold text-white hover:bg-sky-300"
+				className="p-3 bg-main-color hover:bg-purple-100 rounded-lg font-semibold text-sm text-white"
 			>
 				게시글쓰기
 			</button>

@@ -26,7 +26,7 @@ const MentorRegister = () => {
 						className="w-[20rem] h-[16rem]"
 					/>
 					<div className="md:ml-8 md:my-0 my-8">
-						<div className="md:text-xl text-lg text-white font-bold">
+						<div className="md:text-lg text-white font-semibold">
 							<p className="w-[17rem]">
 								지금 멘토가 되어 경험을 나누고 수익을 창출해보세요.
 							</p>
@@ -36,10 +36,10 @@ const MentorRegister = () => {
 							<button
 								type="button"
 								onClick={clickRegisterMentorHandler}
-								className="flex items-center md:mt-3 mt-8 px-4 py-3 bg-main-color rounded-lg md:text-xl text-lg text-white font-bold"
+								className="flex items-center md:mt-3 mt-8 px-4 py-3 bg-main-color hover:bg-purple-100 rounded-lg text-white font-bold transition-all duration-200"
 							>
 								멘토 등록
-								<RightArrow width={20} height={20} className="ml-2" />
+								<RightArrow width={15} height={15} className="ml-2" />
 							</button>
 						</div>
 					</div>
