@@ -41,7 +41,7 @@ const Menu = () => {
 					to={menu.path}
 					className={`${
 						menu.menuName === "홈" && "ml-4"
-					} px-2 text-white font-semibold`}
+					} px-2 text-white hover:text-black-200 font-semibold`}
 				>
 					{menu.menuName}
 				</Link>

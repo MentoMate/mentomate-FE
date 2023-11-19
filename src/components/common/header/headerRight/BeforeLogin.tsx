@@ -11,7 +11,7 @@ const BeforeLogin = () => {
 
 	return (
 		<button
-			className="flex justify-center items-center px-2 font-semibold text-white"
+			className="flex justify-center items-center px-2 font-semibold text-white hover:text-black-200"
 			onClick={onClickLoginBtnHandler}
 		>
 			가입/로그인
