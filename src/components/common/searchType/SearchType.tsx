@@ -26,10 +26,6 @@ const SearchType = () => {
 	const [openSearchTypeList, setOpenSearchTypeList] = useState<boolean>(false);
 	const searchTypeListRef = useRef<HTMLUListElement>(null);
 
-	const onClickSearchTypeList = () => {
-		setOpenSearchTypeList(!openSearchTypeList);
-	};
-
 	const onClickSearchType = (searchType: ISearchTypes) => {
 		setType(searchType);
 		setOpenSearchTypeList(false);
@@ -58,8 +54,8 @@ const SearchType = () => {
 
 	return (
 		<div
-			className="flex justify-center items-center relative sm:mt-0 mt-2 py-1 px-4 sm:w-[6rem] w-full bg-white hover:bg-black-100 border border-black-200 rounded-[0.3rem] text-[0.8rem] cursor-pointer transition duration-150"
-			onClick={onClickSearchTypeList}
+			className="flex justify-center items-center relative md:mt-0 mt-2 sm:mr-1 md:py-1 py-2 px-4 md:w-[6rem] w-full bg-white hover:bg-black-100 border border-black-200 rounded-[0.3rem] text-[0.8rem] cursor-pointer transition duration-150"
+			onClick={() => setOpenSearchTypeList(!openSearchTypeList)}
 		>
 			<div className="grow flex justify-center items-center text-main-color text-center font-semibold">
 				{type.keyName}

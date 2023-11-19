@@ -9,8 +9,8 @@ const SortAndSearch = () => {
 
 	return (
 		<div className="fixed py-8 mx-auto w-full bg-white border-b border-main-color z-[47]">
-			<div className="flex flex-col lg:flex-row justify-between mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem] h-10">
-				<div className="flex sm:flex-row flex-col">
+			<div className="flex md:flex-row flex-col justify-between mx-auto lg:w-[60rem] md:w-[45rem] w-[15rem] md:h-10 h-full">
+				<div className="flex md:flex-row flex-col">
 					<Category />
 					{location.pathname !== "/mentor" && <SearchType />}
 					<Keyword />

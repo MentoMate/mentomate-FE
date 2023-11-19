@@ -16,7 +16,7 @@ const Category = () => {
 	return (
 		<>
 			<div
-				className="grow flex items-center lg:mx-2 sm:mr-1 px-4 py-1 border rounded-[0.3rem] bg-white hover:bg-black-100 transition duration-150"
+				className="grow flex items-center lg:mx-2 sm:mr-1 px-4 md:py-1 py-2 border rounded-[0.3rem] bg-white hover:bg-black-100 transition duration-150"
 				onClick={onClickCategoryHandler}
 				role="button"
 			>
