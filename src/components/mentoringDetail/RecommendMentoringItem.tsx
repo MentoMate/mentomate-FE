@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface IRecommendMentoring {
 	readonly mentoringId: number;
 	readonly title: string;
@@ -24,7 +26,10 @@ interface IProps {
 
 const RecommendMentoringItem = ({ recommendMentoring }: IProps) => {
 	return (
-		<div className="my-4 w-[13rem] lg:w-[13rem] md:w-[10rem]">
+		<Link
+			to={`/mentoringDetail/${recommendMentoring.mentoringId}`}
+			className="my-4 w-[13rem] lg:w-[13rem] md:w-[10rem]"
+		>
 			<div className="w-[13rem] lg:w-[13rem] md:w-[10rem] lg:h-[15rem] md:h-[12rem]">
 				<img
 					src={recommendMentoring.uploadUrl}
@@ -33,7 +38,7 @@ const RecommendMentoringItem = ({ recommendMentoring }: IProps) => {
 				/>
 			</div>
 			<div className="my-2 title-overflow">{recommendMentoring.title}</div>
-		</div>
+		</Link>
 	);
 };
 

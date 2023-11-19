@@ -48,7 +48,7 @@ const RecommendMentoring = () => {
 
 	return (
 		<div className="mt-20 sm:mx-0 mx-4">
-			<h2 className="text-lg font-bold">이런 멘토링은 어때요?</h2>
+			<h2 className="mb-6 text-lg font-bold">이런 멘토링은 어때요?</h2>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 place-items-center">
 				{data &&
 					data.map((recommendMentoring: IRecommendMentoring, index: number) => (

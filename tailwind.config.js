@@ -15,7 +15,7 @@ export default {
 				"yellow-100": "#FEE500",
 				"yellow-200": "#F6EAC2",
 				"green-100": "#03C75A",
-				"purple-100": "rgba(138, 170, 229, 0.4)",
+				"purple-100": "rgba(138, 170, 229, 0.6)",
 			},
 			minHeight: {
 				"min-height": "calc(100vh - 4rem - 15rem)",

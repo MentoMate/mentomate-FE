@@ -55,7 +55,7 @@ const MentoringDetailContainer = () => {
 					<div
 						className={`${
 							data.owner ? "flex" : "hidden"
-						} justify-end text-black-400 text-sm`}
+						} lg:w-[40rem] md:w-[25rem] sm:w-[20rem] justify-end text-black-400 text-sm`}
 					>
 						<Link to={`/mentoringEdit/${mentoringId}`} className="mx-1">
 							수정
