@@ -47,7 +47,7 @@ const MentoringContainer = () => {
 			<div className="h-min-height bg-black-100">
 				<div className="flex flex-col items-center mx-auto">
 					<SortAndSearch />
-					<div className="md:mt-8 mt-40 lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+					<div className="md:mt-8 lg:w-[60rem] sm:w-[30rem] w-[15rem]">
 						<MentoringTitle />
 						{data.items.length === 0 ? (
 							<NonExistMentoringList />

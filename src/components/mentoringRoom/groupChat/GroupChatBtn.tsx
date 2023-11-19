@@ -77,7 +77,7 @@ const GroupChatBtn = () => {
 		<div>
 			<button
 				type="button"
-				className="flex justify-center items-center w-20 h-20"
+				className="flex justify-center items-center w-16 h-16"
 				onClick={onClickChatEmotionHandler}
 			>
 				<ChatEmotion className="w-full h-full" />

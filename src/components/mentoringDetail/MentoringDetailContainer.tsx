@@ -50,7 +50,7 @@ const MentoringDetailContainer = () => {
 
 	return (
 		<Suspense fallback={<Spinner />}>
-			<div className="flex md:flex-row flex-col mx-auto my-16 lg:w-[60rem] md:w-[40rem] w-[20rem]">
+			<div className="flex md:flex-row flex-col mx-auto my-16 lg:w-[60rem] md:w-[40rem] w-[20rem] min-h-min-height">
 				<div>
 					<div
 						className={`${

@@ -16,7 +16,7 @@ const MentoringTitle = () => {
 	};
 
 	return (
-		<div className="pt-20 flex justify-between items-center mt-6">
+		<div className="flex justify-between items-center mt-6">
 			<h1 className="mx-2 text-xl sm:text-lg font-bold text-black-500">
 				멘토링 목록
 			</h1>
