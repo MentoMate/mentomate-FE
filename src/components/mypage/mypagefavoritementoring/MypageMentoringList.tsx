@@ -1,4 +1,4 @@
-import MypageMentoring from "@/components/mypage/myPageFavoriteMentoring/MypageMentoring";
+import MypageMentoring from "@/components/mypage/myPageFavoriteMentoring/MyPageMentoring";
 import {
 	IMyMentoringItem,
 	IMyMentoringItemProps,
@@ -11,7 +11,7 @@ const MentoringList = ({ data }: IMyMentoringItemProps) => {
 		<>
 			<div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 place-items-center mb-2">
 				{data.map((mentorItem: IMyMentoringItem, index) => (
-					<Link key={index} to={`/mentorDetail/${mentorItem.userId}`}>
+					<Link key={index} to={`/mentoringDetail/${mentorItem.mentoringId}`}>
 						<MypageMentoring mentorItem={mentorItem} />
 					</Link>
 				))}
