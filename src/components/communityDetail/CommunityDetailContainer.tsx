@@ -1,19 +1,19 @@
 import useAxios from "@/hooks/useAxios";
 import { useRef } from "react";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CommunityContent from "./CommunityContent";
 import CommunityLikeAndComment from "./CommunityLikeAndComment";
 import CommunitySideBar from "./CommunitySideBar";
 import CommunityWriterInfo from "./CommunityWriterInfo";
 import CommentContainer from "./comment/CommentContainer";
+import { alertHandler } from "@/utils/alert";
 
 const CommunityDetailContainer = () => {
 	const { communityId } = useParams();
 	const commentRef = useRef<HTMLDivElement>(null);
 	const { fetchDataUseAxios } = useAxios();
-
-	console.log(communityId);
+	const navigate = useNavigate();
 
 	const getInfo = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -21,8 +21,25 @@ const CommunityDetailContainer = () => {
 			url: `/posts/${communityId}/info`,
 		});
 
-		if (response && response.status === 200) {
-			return response.data;
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 400) {
+				alertHandler("error", "존재하지 않는 게시글입니다.");
+				navigate("/community");
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+				navigate("/community");
+			}
 		}
 	};
 
@@ -31,11 +48,14 @@ const CommunityDetailContainer = () => {
 	return (
 		<div className="flex lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[15rem] mx-auto my-20">
 			<div className="lg:w-[50rem] md:w-[30rem] sm:w-[20rem] w-[17rem]">
-				<div className="md:text-3xl text-xl font-bold">{data.title}</div>
+				<div className="text-xl font-bold">{data.title}</div>
 				<CommunityWriterInfo communityInfo={data} />
 				<CommunityContent communityInfo={data} />
 				<CommunityLikeAndComment communityInfo={data} />
-				<CommentContainer commentRef={commentRef} />
+				<CommentContainer
+					commentRef={commentRef}
+					commentCount={data.commentCount}
+				/>
 			</div>
 			<CommunitySideBar commentRef={commentRef} communityInfo={data} />
 		</div>

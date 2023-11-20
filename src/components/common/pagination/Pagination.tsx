@@ -13,7 +13,15 @@ const Pagination = ({ totalPages }: IProps) => {
 	} = usePagination(totalPages);
 
 	return (
-		<div className="my-12 h-20 flex justify-center items-center">
+		<div className="py-20 h-20 flex justify-center items-center">
+			<button
+				type="button"
+				onClick={() => onClickNextOrPrevBtnHandler("start")}
+				disabled={currentPage === 1 ? true : false}
+				className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
+			>
+				맨처음
+			</button>
 			<button
 				type="button"
 				onClick={() => onClickNextOrPrevBtnHandler("prev")}
@@ -42,6 +50,14 @@ const Pagination = ({ totalPages }: IProps) => {
 				className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
 			>
 				다음
+			</button>
+			<button
+				type="button"
+				onClick={() => onClickNextOrPrevBtnHandler("end")}
+				disabled={currentPage === totalPages ? true : false}
+				className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
+			>
+				맨 끝
 			</button>
 		</div>
 	);

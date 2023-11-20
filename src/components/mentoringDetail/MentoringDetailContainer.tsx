@@ -13,14 +13,32 @@ const MentoringDetailContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 	const { mentoringId } = useParams();
-	console.log(mentoringId);
 
-	const { data } = useQuery("mentoringInfo", async () => {
+	const { data } = useQuery(["mentoringInfo", mentoringId], async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			url: `/mentoring/${mentoringId}`,
 			method: "GET",
 		});
-		if (response) return response.data;
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 400) {
+				alertHandler("error", "존재하지 않는 멘토링입니다.");
+				navigate("/mentoring");
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+				navigate("/mentoring");
+			}
+		}
 	});
 
 	const deleteHandler = async () => {
@@ -51,12 +69,12 @@ const MentoringDetailContainer = () => {
 
 	return (
 		<Suspense fallback={<Spinner />}>
-			<div className="flex md:flex-row flex-col mx-auto my-16 lg:w-[60rem] md:w-[40rem] w-[20rem]">
+			<div className="flex md:flex-row flex-col mx-auto my-16 lg:w-[60rem] md:w-[40rem] w-[20rem] min-h-min-height">
 				<div>
 					<div
 						className={`${
 							data.owner ? "flex" : "hidden"
-						} justify-end text-black-400 text-sm`}
+						} lg:w-[40rem] md:w-[25rem] sm:w-[20rem] justify-end text-black-400 text-sm`}
 					>
 						<Link to={`/mentoringEdit/${mentoringId}`} className="mx-1">
 							수정

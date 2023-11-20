@@ -1,4 +1,4 @@
-import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
+import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
 import { ReactComponent as CheckMark } from "@assets/svg/checkmark.svg";
 import { Link } from "react-router-dom";
 import { lazy, Suspense } from "react";

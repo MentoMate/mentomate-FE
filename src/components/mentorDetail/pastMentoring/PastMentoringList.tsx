@@ -1,11 +1,16 @@
+import { IPastMentoring } from "@/interface/MentoringDetail";
 import PastMentoringItem from "./PastMentoringItem";
 
-const PastMentoringList = () => {
+interface IProps {
+	readonly pastMentoringList: IPastMentoring[];
+}
+
+const PastMentoringList = ({ pastMentoringList }: IProps) => {
 	return (
 		<div className="grid lg:grid-cols-3 grid-cols-1 place-items-center md:mt-6 mb-[10rem]">
-			<PastMentoringItem />
-			<PastMentoringItem />
-			<PastMentoringItem />
+			{pastMentoringList.map((pastMentoring: IPastMentoring) => (
+				<PastMentoringItem pastMentoring={pastMentoring} />
+			))}
 		</div>
 	);
 };

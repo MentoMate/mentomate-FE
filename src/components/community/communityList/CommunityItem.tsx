@@ -15,48 +15,47 @@ const CommunityItem = ({ communityItem }: IProps) => {
 	return (
 		<Link
 			to={`/communityDetail/${communityItem.id}`}
-			className="my-4 px-3 py-6 md:w-[18rem] sm:w-[20rem] w-[18rem] border border-black-200 rounded-md duration-100 hover:scale-110 cursor-pointer"
+			className="my-4 py-6 w-[18.5rem] bg-white border-b border-black-200 rounded-md shadow-sm hover:shadow-lg duration-100 hover:scale-105 cursor-pointer"
 		>
-			<div className="object-cover h-[14rem]">
-				<img
-					src={communityItem.uploadUrl}
-					alt="썸네일"
-					className="md:w-[18rem] sm:w-[20rem] w-[18rem] h-[14rem]"
-				/>
-			</div>
-			<div className="flex justify-center items-center mt-6 text-black-400 text-sm text-center">
+			<img
+				src={communityItem.uploadUrl}
+				alt="썸네일"
+				className="w-[18.5rem] h-[10rem] object-cover rounded-lg"
+			/>
+
+			<div className="flex justify-center items-center mt-6 text-black-400 text-[0.7rem] text-center">
 				{communityItem.category === "communication" && (
 					<>
-						<Communication width={20} height={20} className="mr-1" /> 소통해요
+						<Communication width={15} height={15} className="mr-1" /> 소통해요
 					</>
 				)}
 				{communityItem.category === "promotion" && (
 					<>
-						<Promotion width={20} height={20} className="mr-1" />
+						<Promotion width={15} height={15} className="mr-1" />
 						홍보해요
 					</>
 				)}
 				{communityItem.category === "review" && (
 					<>
-						<Review width={20} height={20} className="mr-1" />
+						<Review width={15} height={15} className="mr-1" />
 						후기남겨요
 					</>
 				)}
 			</div>
-			<p className="mt-2 mb-4 text-lg font-bold community-overflow text-center">
+			<p className="mt-2 mx-3 mb-2 font-bold break-word text-sm text-center">
 				{communityItem.title}
 			</p>
-			<div className="flex justify-center text-sm text-black-400 font-semibold">
-				<div className="flex justify-center items-center">
-					<User width={18} height={18} className="mr-1" />
-					{communityItem.writer}
-				</div>
-				<div className="flex justify-center items-center">
-					<FillHeart width={20} height={20} className="mx-1" />
+			<div className="flex justify-center items-center text-[0.8rem]">
+				<User width={15} height={15} className="mr-1 rounded-full" />
+				{communityItem.writer}
+			</div>
+			<div className="flex justify-center mt-4 text-black-400 font-semibold">
+				<div className="flex justify-center items-center mx-1 text-[0.8rem]">
+					<FillHeart width={15} height={15} className="mx-1" />
 					{communityItem.postLikesCount}
 				</div>
-				<div className="flex justify-center items-center">
-					<Comment width={18} height={18} className="mx-2" />
+				<div className="flex justify-center items-center mx-1 text-[0.8rem]">
+					<Comment width={15} height={15} className="mx-1" />
 					{communityItem.commentCount}
 				</div>
 			</div>

@@ -62,30 +62,39 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 
 	return (
 		<div className="flex mt-12 mb-8 py-2 border-b border-black-200 text-black-400">
-			<div className="flex items-center">
+			<div className="flex items-center ml-2">
+				<div className="text-sm">조회</div>
+				<div className="mx-1 text-sm font-bold">{communityInfo.countWatch}</div>
+			</div>
+			<div className="flex items-center mx-2">
 				{communityInfo.like ? (
 					<FillHeart
-						width={23}
-						height={23}
+						width={16}
+						height={16}
 						onClick={onClickLikeHandler}
 						className="cursor-pointer"
 					/>
 				) : (
 					<EmptyHeart
-						width={23}
-						height={23}
+						width={16}
+						height={16}
 						onClick={onClickLikeHandler}
+						fill="#8A8A8A"
 						className="cursor-pointer"
 					/>
 				)}
 
-				<div className="ml-1">좋아요</div>
-				<div className="mx-1.5 font-bold">{communityInfo.postLikesCount}</div>
+				<div className="ml-1 text-sm">좋아요</div>
+				<div className="mx-1.5 text-sm font-bold">
+					{communityInfo.postLikesCount}
+				</div>
 			</div>
-			<div className="flex items-center ml-4">
-				<Comment width={25} height={25} fill="#8A8A8A" className="mx-1" />
-				<div>댓글</div>
-				<div className="mx-1.5 font-bold">{communityInfo.commentCount}</div>
+			<div className="flex items-center">
+				<Comment width={16} height={16} fill="#8A8A8A" className="mx-1" />
+				<div className="text-sm">댓글</div>
+				<div className="mx-1.5 text-sm font-bold">
+					{communityInfo.commentCount}
+				</div>
 			</div>
 		</div>
 	);
