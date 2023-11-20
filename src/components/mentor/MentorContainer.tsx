@@ -3,14 +3,14 @@ import useUrl from "@/hooks/useUrl";
 import { pagination } from "@/state/pagination";
 import { searchCriteria } from "@/state/searchCriteria";
 import SortAndSearch from "@components/common/search/SortAndSearch";
-import Loading from "@components/common/spinner/Loading";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import Pagination from "../common/pagination/Pagination";
 import MentorRegister from "./MentorRegister";
 import MentorList from "./mentorList/MentorList";
 import NonExistMentorList from "./mentorList/NonExistMentorList";
+import { alertHandler } from "@/utils/alert";
 
 const MentorContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -23,8 +23,22 @@ const MentorContainer = () => {
 			method: "GET",
 			url,
 		});
-		if (response && response.status === 200) {
-			return response.data;
+		if (response) {
+			const status = response.status;
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 조회해주세요.",
+				);
+				return {
+					items: [],
+					totalPages: 1,
+				};
+			}
 		}
 	};
 
@@ -43,22 +57,20 @@ const MentorContainer = () => {
 	}, []);
 
 	return (
-		<Suspense fallback={<Loading />}>
-			<div className="h-min-height">
-				<MentorRegister />
-				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-					<SortAndSearch />
-					{data.length !== 0 ? (
-						<>
-							<MentorList mentorList={data.items} />
-							<Pagination totalPages={data.totalPages} />
-						</>
-					) : (
-						<NonExistMentorList />
-					)}
-				</div>
+		<div className="h-min-height bg-black-100">
+			<MentorRegister />
+			<SortAndSearch />
+			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+				{data.items.length !== 0 ? (
+					<>
+						<MentorList mentorList={data.items} />
+						<Pagination totalPages={data.totalPages} />
+					</>
+				) : (
+					<NonExistMentorList />
+				)}
 			</div>
-		</Suspense>
+		</div>
 	);
 };
 

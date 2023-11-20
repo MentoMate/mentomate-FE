@@ -4,6 +4,7 @@ import { useState } from "react";
 console.log("asd");
 const useAxios = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [config, setConfig] = useState<AxiosRequestConfig | null>(null);
 
 	const defaultAxios: AxiosInstance = axios.create({
 		baseURL: "/api",
@@ -16,12 +17,34 @@ const useAxios = () => {
 		},
 	});
 
+	useTokenAxios.interceptors.response.use(
+		(response) => {
+			return response;
+		},
+		async (err) => {
+			if (err.response && err.response.status === 403) {
+				const refreshToken = getCookie("refreshToken");
+				const newConfig = {
+					...config,
+					headers: {
+						Authorization: `Bearer ${refreshToken}`,
+					},
+				};
+				if (config) {
+					const response = await defaultAxios.request(newConfig);
+					return response;
+				}
+			}
+		},
+	);
+
 	const fetchDataUseAxios = async (
 		type: string,
 		configParams: AxiosRequestConfig,
 	) => {
 		setIsLoading(true);
 		try {
+			setConfig(configParams);
 			if (type === "defaultAxios") {
 				const response = await defaultAxios.request(configParams);
 				return response;

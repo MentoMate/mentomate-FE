@@ -1,7 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-console.log("asd");
-
 const BeforeLogin = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -13,7 +11,7 @@ const BeforeLogin = () => {
 
 	return (
 		<button
-			className="flex justify-center items-center px-2 font-semibold text-black-500 hover:text-sky-300"
+			className="flex justify-center items-center px-2 font-semibold text-white hover:text-black-200"
 			onClick={onClickLoginBtnHandler}
 		>
 			가입/로그인

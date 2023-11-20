@@ -21,20 +21,18 @@ const Keyword = () => {
 		});
 	};
 
-	console.log("asd");
-
 	return (
 		<form
 			onSubmit={onSubmitHandler}
-			className="flex items-center mt-2 lg:mt-0 lg:mx-2 w-full lg:w-[25rem] border border-black-200 rounded-sm"
+			className="flex items-center mt-2 md:mt-0 lg:mx-2 lg:w-[20rem] md:w-[15rem] border border-black-200 rounded-[0.3rem]"
 		>
 			<div className="ml-4">
-				<SearchIcon width={25} height={25} fill="#8A8A8A" />
+				<SearchIcon width={17} height={17} fill="#8A8A8A" />
 			</div>
 			<input
 				type="text"
-				className="grow p-3 w-full outline-none placeholder:text-sm"
-				placeholder="키워드를 입력하세요."
+				className="grow px-3 md:py-1 py-2 w-full outline-none rounded-[0.3rem] placeholder:text-[0.75rem] text-[0.75rem] text-black-600"
+				placeholder="키워드로 검색"
 				onChange={onChangeKeywordHandler}
 			/>
 		</form>

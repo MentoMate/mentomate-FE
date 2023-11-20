@@ -1,5 +1,5 @@
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const MentorProfile = ({ data }: IMentoringDetailProps) => {
 	const [replaceFollowerCount, setReplaceFollowerCount] = useState<string>("");
@@ -15,23 +15,24 @@ const MentorProfile = ({ data }: IMentoringDetailProps) => {
 	}, []);
 	console.log("asd");
 	return (
-		<div className="flex items-center mt-8 border border-black-200 rounded-sm">
-			<div className="w-[5rem] h-[6rem]">
+		<div className="flex justify-center items-center mt-4 py-3 bg-white border border-black-200 rounded-md">
+			<div className="mx-3 w-[6rem] h-[6rem]">
 				<img
-					src={`${data.useProfileImg}`}
+					src={data.useProfileImg}
 					alt="sample"
-					className="w-full h-full"
+					className="w-full h-full rounded-full"
 				/>
 			</div>
 			<div className="lg:ml-3 md:ml-2 ml-3">
-				<div className="mb-1 lg:text-base md:text-[0.7rem] text-base">
-					<span className="lg:text-xl md:text-sm text-xl font-bold">
-						{data.name}
-					</span>
-					멘토
+				<div className="mb-1 text-lg font-semibold">
+					{data.name}
+					<span className="ml-1 text-[0.8rem] font-normal">멘토</span>
 				</div>
 				<div className="lg:text-sm md:text-[0.7rem] text-sm">
-					팔로워 {replaceFollowerCount} 명
+					팔로워
+					<span className="ml-2 font-semibold text-main-color">
+						{replaceFollowerCount}명
+					</span>
 				</div>
 			</div>
 		</div>

@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
-import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
+import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
 import { Link } from "react-router-dom";
 import Spinner from "@components/common/spinner/Spinner";
 
 const LoginForm = lazy(() => import("./LoginForm"));
 const SocialLogin = lazy(() => import("./SocialLogin"));
-console.log("asd");
+
 const LoginContainer = () => {
 	return (
 		<div className="flex flex-col justify-center items-center w-screen min-h-screen">

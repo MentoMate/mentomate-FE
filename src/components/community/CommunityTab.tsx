@@ -3,12 +3,11 @@ import { ReactComponent as All } from "@assets/svg/all.svg";
 import { ReactComponent as Communication } from "@assets/svg/comment.svg";
 import { ReactComponent as Promotion } from "@assets/svg/invite.svg";
 import { ReactComponent as Review } from "@assets/svg/review.svg";
-
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { communityTabState } from "@/state/communityTabState";
 import { searchCriteria } from "@/state/searchCriteria";
 import { ITabs } from "@/interface/community";
-console.log("asd");
+
 const TABS: ITabs[] = [
 	{
 		key: "all",
@@ -51,26 +50,28 @@ const CommunityTab = () => {
 	}, []);
 
 	return (
-		<div className="sticky bg-white border-b border-black-200 z-[44] text-black-500">
+		<div className="bg-white border-b border-black-200 z-[44] text-black-500">
 			<div className="mx-auto lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[20rem]">
 				<div className="flex sm:mx-4">
 					{TABS.map((tab) => (
 						<div
 							key={tab.key}
-							className={`flex justify-center items-center sm:px-3 sm:py-4 px-1 py-2 sm:font-semibold font-bold sm:text-base text-[0.8rem] cursor-pointer ${
+							className={`flex justify-center items-center sm:px-3 sm:py-4 px-1 py-2 sm:font-semibold font-bold sm:text-base cursor-pointer ${
 								selectedTab === tab.key
 									? "border-b-2 border-main-color text-main-color"
 									: "text-black-500"
 							}`}
 							onClick={() => selectedTabHandler(tab)}
 						>
-							{tab.key === "all" && <All width={20} height={20} />}
+							{tab.key === "all" && <All width={15} height={15} />}
 							{tab.key === "communication" && (
-								<Communication width={20} height={20} />
+								<Communication width={15} height={15} />
 							)}
-							{tab.key === "promotion" && <Promotion width={20} height={20} />}
-							{tab.key === "review" && <Review width={20} height={20} />}
-							<div className="ml-1 hover:text-sky-300">{tab.tabName}</div>
+							{tab.key === "promotion" && <Promotion width={15} height={15} />}
+							{tab.key === "review" && <Review width={15} height={15} />}
+							<div className="ml-1 hover:text-black-300 text-[0.9rem]">
+								{tab.tabName}
+							</div>
 						</div>
 					))}
 				</div>

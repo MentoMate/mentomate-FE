@@ -10,15 +10,15 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import SockJS from "sockjs-client";
 import ChatModalContainer from "./ChatModalContainer";
 import { useQuery } from "react-query";
-console.log("asd");
+
 const ChatBtn = () => {
 	const isLogin = useRecoilValue(loginState);
+	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);
 	const [isOpenChatList, setIsOpenChatList] =
 		useRecoilState(openChatModalState);
 	const setChats = useSetRecoilState(chatHistory);
 	const client = useRef<CompatClient>();
 	const { fetchDataUseAxios } = useAxios();
-	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);
 
 	const getChatList = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -76,17 +76,27 @@ const ChatBtn = () => {
 		);
 	};
 
+	const disconnect = () => {
+		if (client.current) {
+			client.current.deactivate();
+		}
+	};
+
 	useEffect(() => {
 		if (isLogin && privateChatRoomId !== null) {
 			connect();
 		}
+
+		return () => {
+			disconnect();
+		};
 	}, [isLogin, privateChatRoomId]);
 
 	return (
 		<div className="relative my-1.5">
 			<button
 				type="button"
-				className="flex justify-center items-center w-20 h-20"
+				className="flex justify-center items-center w-16 h-16"
 				onClick={onClickChatEmotionHandler}
 			>
 				<ChatEmotion className="w-full h-full" />

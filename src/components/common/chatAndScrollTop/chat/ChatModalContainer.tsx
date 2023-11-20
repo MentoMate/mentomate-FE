@@ -1,10 +1,10 @@
 import { IChatListClientProps } from "@/interface/chat";
 import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
-import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
+import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
 import { ReactComponent as ChatComment } from "@assets/svg/chatComment.svg";
 import { ReactComponent as Close } from "@assets/svg/close.svg";
 import { ReactComponent as List } from "@assets/svg/list.svg";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import Chat1On1 from "./Chat1On1";
 import ChatListContainer from "./chatList/ChatListContainer";
@@ -15,6 +15,7 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 	);
 	const [isOpenChat, setIsOpenChat] = useRecoilState(openChatModalState);
 	const [selectedChatMenu, setSelectedChatMenu] = useState<string>("list");
+	const chatContainerRef = useRef<HTMLDivElement>(null);
 
 	const onClickChatHandler = (type: string, id: number) => {
 		setSelectedChatMenu(type);
@@ -32,11 +33,29 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 		setIsOpenChat(false);
 	};
 
+	useEffect(() => {
+		const outSideClickHandler = (e: Event) => {
+			if (
+				chatContainerRef.current &&
+				!chatContainerRef.current.contains(e.target as Node)
+			) {
+				setIsOpenChat(false);
+			}
+		};
+
+		document.addEventListener("mousedown", outSideClickHandler);
+
+		return () => {
+			document.removeEventListener("mousedown", outSideClickHandler);
+		};
+	}, [chatContainerRef]);
+
 	return (
 		<div
+			ref={chatContainerRef}
 			className={`${
 				isOpenChat ? "flex flex-col" : "hidden"
-			} absolute top-[-39rem] left-[-20rem] w-[23rem] h-[38rem] bg-black-100 border border-gray-100 rounded-3xl shadow-xl z-[102]`}
+			} absolute top-[-30.5rem] sm:left-[-20rem] left-[-11.5rem] sm:w-[23rem] w-[17rem] h-[30rem] bg-black-100 border border-gray-100 rounded-3xl shadow-xl z-[102]`}
 		>
 			<div className="mt-2 flex justify-between items-center">
 				<Logo width={130} height={70} className="ml-8" />

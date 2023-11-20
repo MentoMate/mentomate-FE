@@ -5,7 +5,7 @@ import { ReactComponent as Close } from "@assets/svg/close.svg";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useRecoilValue } from "recoil";
-console.log("asd");
+
 interface INotification {
 	readonly notificationId: number;
 	readonly receiverEmail: string;
@@ -77,6 +77,23 @@ const Notification = () => {
 			setIsInit(false);
 		}
 	}, [receiveNotificationCnt]);
+
+	useEffect(() => {
+		const outSideClickHandler = (e: Event) => {
+			if (
+				notificationContainerRef.current &&
+				!notificationContainerRef.current.contains(e.target as Node)
+			) {
+				setIsOpenNotification(false);
+			}
+		};
+
+		document.addEventListener("mousedown", outSideClickHandler);
+
+		return () => {
+			document.removeEventListener("mousedown", outSideClickHandler);
+		};
+	}, [notificationContainerRef]);
 
 	return (
 		<>

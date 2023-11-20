@@ -6,7 +6,7 @@ import { selectedPrivateChatId } from "@/state/chatState";
 import { getCookie } from "@/utils/cookies";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-console.log("asd");
+
 const Chat1On1 = ({ client }: IClientProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);
@@ -72,10 +72,10 @@ const Chat1On1 = ({ client }: IClientProps) => {
 
 	return (
 		<div className="grow">
-			<div className="mt-4 mx-auto w-[21rem] h-[27rem] bg-white rounded-3xl shadow-sm">
+			<div className="mt-4 mx-auto w-[21rem] h-[18rem] bg-white rounded-3xl shadow-sm">
 				<div
 					ref={chatRef}
-					className="px-4 py-4 w-[21rem] h-[23rem] overflow-auto"
+					className="px-4 py-4 w-[21rem] h-[14.5rem] overflow-auto"
 				>
 					{chats.map((chat) => (
 						<div

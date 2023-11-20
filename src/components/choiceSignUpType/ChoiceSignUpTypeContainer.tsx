@@ -1,11 +1,11 @@
-import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
+import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
 import { ReactComponent as CheckMark } from "@assets/svg/checkmark.svg";
 import { Link } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Spinner from "@components/common/spinner/Spinner";
 
 const SignUpType = lazy(() => import("./SignUpType"));
-console.log("asd");
+
 const ChoiceSignUpTypeContainer = () => {
 	return (
 		<div className="flex flex-col items-center md:mt-20 sm:mt-12 min-h-screen">

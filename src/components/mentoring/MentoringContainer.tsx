@@ -10,7 +10,8 @@ import SortAndSearch from "../common/search/SortAndSearch";
 import MentoringTitle from "./MentoringTitle";
 import MentoringList from "./mentoringList/MentoringList";
 import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
-
+import { alertHandler } from "@/utils/alert";
+console.log("asd");
 const MentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const { url } = useUrl("mentoring");
@@ -23,8 +24,24 @@ const MentoringContainer = () => {
 			method: "GET",
 		});
 
-		if (response && response.status === 200) {
-			return response.data;
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+
+				return {
+					totalPages: 1,
+					items: [],
+				};
+			}
 		}
 	};
 
@@ -44,18 +61,20 @@ const MentoringContainer = () => {
 
 	return (
 		<>
-			<div className="mt-12 h-min-height">
-				<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+			<div className="h-min-height bg-black-100">
+				<div className="flex flex-col items-center mx-auto">
 					<SortAndSearch />
-					<MentoringTitle />
-					{data.items.length === 0 ? (
-						<NonExistMentoringList />
-					) : (
-						<>
-							<MentoringList data={data.items} />
-							<Pagination totalPages={data.totalPages} />
-						</>
-					)}
+					<div className="md:mt-8 lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+						<MentoringTitle />
+						{data.items.length === 0 ? (
+							<NonExistMentoringList />
+						) : (
+							<>
+								<MentoringList data={data.items} />
+								<Pagination totalPages={data.totalPages} />
+							</>
+						)}
+					</div>
 				</div>
 			</div>
 		</>
