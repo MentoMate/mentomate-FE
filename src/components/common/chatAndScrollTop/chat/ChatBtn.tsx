@@ -54,7 +54,6 @@ const ChatBtn = () => {
 
 	const onConnected = (payload: any) => {
 		const receiveMessage = JSON.parse(payload.body);
-		console.log(receiveMessage);
 		setChatsHandler(receiveMessage);
 	};
 
