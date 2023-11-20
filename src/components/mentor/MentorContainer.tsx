@@ -46,7 +46,7 @@ const MentorContainer = () => {
 			<MentorRegister />
 			<SortAndSearch />
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
-				{data.length !== 0 ? (
+				{data.items.length !== 0 ? (
 					<>
 						<MentorList mentorList={data.items} />
 						<Pagination totalPages={data.totalPages} />

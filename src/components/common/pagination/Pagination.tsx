@@ -13,7 +13,7 @@ const Pagination = ({ totalPages }: IProps) => {
 	} = usePagination(totalPages);
 
 	return (
-		<div className="h-20 flex justify-center items-center">
+		<div className="py-20 h-20 flex justify-center items-center">
 			<button
 				type="button"
 				onClick={() => onClickNextOrPrevBtnHandler("start")}
