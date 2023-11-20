@@ -9,16 +9,8 @@ const usePagination = (pageCnt: number) => {
 	const initMakePagination = () => {
 		const pageArr = new Array();
 
-		if (pageCnt <= 5) {
-			for (let i = 1; i <= pageCnt; i++) {
-				pageArr.push(i);
-			}
-		}
-
-		if (pageCnt > 5) {
-			for (let i = currentPage; i <= currentPage + 4; i++) {
-				pageArr.push(i);
-			}
+		for (let i = 1; i <= pageCnt; i++) {
+			pageArr.push(i);
 		}
 
 		setPageArray(pageArr);
@@ -35,23 +27,11 @@ const usePagination = (pageCnt: number) => {
 		if (type === "next") {
 			setCurrentPage(currentPage + 1);
 		}
-
-		if (type === "start") {
-			setCurrentPage(1);
-		}
-
-		if (type === "end") {
-			setCurrentPage(pageCnt);
-		}
 	};
 
 	useEffect(() => {
 		initMakePagination();
 	}, [pageCnt]);
-
-	useEffect(() => {
-		initMakePagination();
-	}, [currentPage]);
 
 	return {
 		pageArray,

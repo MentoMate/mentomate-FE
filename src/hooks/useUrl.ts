@@ -30,18 +30,10 @@ const useUrl = (type: string, id: string | null = null) => {
 		const sortBy = selectedSearchCriteria.sortBy;
 		const searchType = selectedSearchCriteria.searchType;
 		const keyword = selectedSearchCriteria.keyword;
-		let category =
+		const category =
 			pageLocation === "post" && selectedSearchCriteria.category === ""
 				? "default"
 				: selectedSearchCriteria.category;
-
-		if (pageLocation === "post" && category === "all") {
-			category = "default";
-		}
-
-		if (pageLocation === "mentoring" && category === "all") {
-			category = "";
-		}
 
 		if (pageLocation === "mentoring" || pageLocation === "post") {
 			const pageSize = pageLocation === "mentoring" ? 16 : 15;

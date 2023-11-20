@@ -31,27 +31,29 @@ const MypageList = ({
 		});
 	};
 	return (
-		<div className="flex flex-col items-center sticky top-[8rem] md:mx-0 mx-auto md:ml-8 w-[18rem] h-[53rem] border border-black-200 bg-black-100 rounded-md">
+		<div className="flex flex-col items-center sticky top-[8rem] md:mx-0 mx-auto md:ml-8 w-[15rem] h-[53rem] border border-black-200 bg-black-100 rounded-md">
 			{myPageItems.map((item, index) => (
 				<div
 					key={index}
-					className={`flex justify-between items-center w-[18rem] px-4 block hover:bg-blue-100  rounded-md text-center mt-4 cursor-pointer ${
+					className={`flex justify-between items-center w-[15rem] px-4 block hover:bg-blue-100  rounded-md text-center mt-4 cursor-pointer ${
 						selectedItemIndex === index ? "text-blue-500" : "text-black"
 					}`}
 					onClick={() => setSelectedItemIndex(index)}
 				>
-					{item.icon}
-					<a
-						className={`block p-4 rounded-md  ${
-							selectedItemIndex === index ? "text-blue-500" : "text-black"
-						}`}
-					>
-						{item.label}
-					</a>
+					<div className="flex items-center">
+						{item.icon}
+						<div
+							className={`block p-4 rounded-md ${
+								selectedItemIndex === index ? "text-blue-500" : "text-black"
+							}`}
+						>
+							{item.label}
+						</div>
+					</div>
 					<RightArrow className="black" width={10} height={10} />
 				</div>
 			))}
-			<div className="flex border-t-2 border-black-200 items-center w-[18rem] px-4 block text-center hover:bg-blue-100 mt-12 ">
+			<div className="flex border-t-2 border-black-200 items-center w-[15rem] px-4 block text-center hover:bg-blue-100 mt-12 ">
 				<Logout width={20} height={20} />
 				<div
 					onClick={logoutHandler}

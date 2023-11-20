@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const IMAGE_SRC = "/src/assets/svg/user.svg";
-
 const CommunityWriterInfo = ({ communityInfo }: ICommunityProps) => {
 	const { communityId } = useParams();
 	const navigate = useNavigate();
@@ -51,24 +49,27 @@ const CommunityWriterInfo = ({ communityInfo }: ICommunityProps) => {
 	}, []);
 
 	return (
-		<div className="flex justify-between mt-16 border-b border-black-200 pt-2 pb-3 mb-12">
+		<div className="flex justify-between mt-16 border-b border-black-200 py-2 mb-12">
 			<div className="flex">
 				<div className="w-[4rem] h-[4rem] border border-black-200 rounded-full">
 					<img
 						src={
 							communityInfo.userUploadUrl === null
-								? IMAGE_SRC
+								? "/src/assets/svg/user.svg"
 								: communityInfo.userUploadUrl
 						}
-						alt="userProfile"
-						className="w-full h-full rounded-full object-cover"
+						alt=""
+						className="w-full h-full rounded-full object-contain"
 					/>
 				</div>
 				<div className="flex flex-col justify-center ml-4">
-					<div className="mb-1 text-sm font-bold">{communityInfo.nickName}</div>
+					<div className="md:text-base text-sm font-bold">
+						{communityInfo.nickName}
+					</div>
 					<div className="flex md:flex-row flex-col md:mt-0 mt-1 text-black-400">
-						<div className="text-[0.8rem]">
-							작성일 : <span className="font-semibold ">{registerDate}</span>
+						<div className="md:text-base text-sm">작성일 : {registerDate}</div>
+						<div className="md:ml-3 md:text-base text-sm">
+							조회 {communityInfo.countWatch}
 						</div>
 					</div>
 				</div>

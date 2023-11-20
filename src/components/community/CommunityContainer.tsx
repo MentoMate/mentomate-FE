@@ -11,7 +11,6 @@ import CommunityTab from "./CommunityTab";
 import LocationWithCreate from "./LocationWithCreate";
 import CommunityList from "./communityList/CommunityList";
 import NonExistsCommunityList from "./communityList/NonExistsCommunityList";
-import { alertHandler } from "@/utils/alert";
 
 const CommunityContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -25,23 +24,8 @@ const CommunityContainer = () => {
 			url,
 		});
 
-		if (response) {
-			const status = response.status;
-
-			if (status === 200) {
-				return response.data;
-			}
-
-			if (status === 500) {
-				alertHandler(
-					"error",
-					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-				);
-				return {
-					items: [],
-					totalPages: 1,
-				};
-			}
+		if (response && response.status === 200) {
+			return response.data;
 		}
 	};
 
@@ -60,12 +44,12 @@ const CommunityContainer = () => {
 	}, []);
 
 	return (
-		<div className="h-min-height bg-black-100">
-			<div className="sticky top-20 z-50">
-				<CommunityTab />
-				<SortAndSearch />
-			</div>
+		<div className="h-min-height">
+			<CommunityTab />
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem]">
+				<div className="mt-12">
+					<SortAndSearch />
+				</div>
 				<LocationWithCreate />
 				{data.items.length !== 0 ? (
 					<>

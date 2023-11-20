@@ -4,13 +4,15 @@ import { SIGN_UP_SCHEMA } from "@/constants/schema";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { ReactComponent as MyEdit } from "@assets/svg/myEdit.svg";
 
 interface INickname {
 	readonly email: string;
 	readonly name: string;
 	readonly nickname: string;
+	readonly uploadUrl: string;
 }
 
 const Mypageinfo = () => {
@@ -19,7 +21,8 @@ const Mypageinfo = () => {
 	const [userInfo, setUserInfo] = useState<INickname>();
 	const [isNickNameDuplicate, setIsNickNameDuplicate] = useState(false);
 	const [text, setText] = useState<string>();
-
+	const [previewImg, setPreviewImg] = useState<string | undefined>(undefined);
+	const [userImg, setUserImg] = useState<null | File>();
 	const {
 		setError,
 		setFocus,
@@ -75,6 +78,50 @@ const Mypageinfo = () => {
 			setUserInfo(response.data);
 		}
 	};
+
+	const makePreviewImgHandler = (thumbNailImgFile: File) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(thumbNailImgFile);
+
+		reader.onload = (e) => {
+			if (e.target !== null) {
+				setPreviewImg(e.target.result as string);
+			}
+		};
+	};
+
+	const onChangeImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.currentTarget.files) {
+			if (e.currentTarget.files.length === 0) return;
+
+			const profileImgFile = e.currentTarget.files[0];
+			makePreviewImgHandler(profileImgFile);
+			console.log(profileImgFile);
+			if (profileImgFile) {
+				setUserImg(profileImgFile);
+			}
+		}
+	};
+	const onClickEditProfile = async () => {
+		if (userImg) {
+			const formData = new FormData();
+			formData.append("img", userImg);
+			console.log(userImg);
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "PUT",
+				url: "/user/img",
+				data: formData,
+			});
+
+			if (response && response.status === 200) {
+				console.log(response);
+				alertHandler("success", "프로필이 변경되었습니다.");
+			} else {
+				console.log(response);
+			}
+		}
+	};
+
 	useEffect(() => {
 		getUserInfoData();
 	}, []);
@@ -83,12 +130,37 @@ const Mypageinfo = () => {
 	}
 	return (
 		<div className="flex flex-col items-center mb-24">
-			<div className="lg:w-[7rem] md:w-[5rem] lg:h-[7rem] md:h-[5rem] w-[8rem] h-[8rem] rounded-full mb-12">
+			<div className="lg:w-[7rem] md:w-[5rem] lg:h-[7rem] md:h-[5rem] w-[8rem] h-[8rem] rounded-full mb-20 relative">
 				<img
-					src="src/assets/image/sample.jpg"
+					src={previewImg ? previewImg : userInfo.uploadUrl}
 					alt="sample"
 					className="w-full h-full rounded-full object-cover"
 				/>
+				<label
+					htmlFor="profile"
+					className="absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 bg-black bg-opacity-50 rounded-full"
+				>
+					<div className="flex flex-col justify-center items-center text-[0.8rem] font-bold text-white">
+						<MyEdit className="w-20 h-20 rounded-full" />
+					</div>
+
+					<input
+						type="file"
+						id="profile"
+						className="hidden"
+						onChange={onChangeImgHandler}
+					/>
+				</label>
+
+				<button
+					className={`text-center mt-4 px-3 py-2 rounded-md font-bold text-white ml-3 text-sm  ${
+						!previewImg ? "bg-gray-300 cursor-not-allowed" : "bg-main-color"
+					}`}
+					disabled={!previewImg}
+					onClick={() => onClickEditProfile()}
+				>
+					이미지변경
+				</button>
 			</div>
 			<div className="flex flex-col ">
 				<div className="lg:text-base md:text-sm text-black-400">이름</div>

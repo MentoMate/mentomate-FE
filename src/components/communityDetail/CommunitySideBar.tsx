@@ -93,7 +93,7 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 				{communityInfo.like ? (
 					<FillHeart width={30} height={30} />
 				) : (
-					<EmptyHeart width={30} height={30} fill="#8A8A8A" />
+					<EmptyHeart width={30} height={30} />
 				)}
 			</button>
 			<button

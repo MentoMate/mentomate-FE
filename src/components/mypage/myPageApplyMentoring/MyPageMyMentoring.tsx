@@ -40,7 +40,7 @@ const MypageMyMentoring = ({ mentoringItem }: Iprops) => {
 			<div className="flex items-center mt-2 ml-3">
 				<Cash width={23} height={23} />
 				<div className="ml-2 font-semibold text-sm">
-					{mentoringItem.amount} $
+					{mentoringItem.amount} ₩
 				</div>
 			</div>
 			<div className="flex items-center mt-2 mb-4 ml-3">

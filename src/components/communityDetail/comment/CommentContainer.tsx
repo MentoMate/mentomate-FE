@@ -1,7 +1,6 @@
 import Pagination from "@/components/common/pagination/Pagination";
 import useAxios from "@/hooks/useAxios";
 import useUrl from "@/hooks/useUrl";
-import { alertHandler } from "@/utils/alert";
 import { RefObject } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -11,10 +10,9 @@ import NonExistsComment from "./NonExistsComment";
 
 interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
-	readonly commentCount: number;
 }
 
-const CommentContainer = ({ commentRef, commentCount }: IProps) => {
+const CommentContainer = ({ commentRef }: IProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const { communityId } = useParams();
 	const { url } = useUrl("comment", communityId);
@@ -25,18 +23,8 @@ const CommentContainer = ({ commentRef, commentCount }: IProps) => {
 			url,
 		});
 
-		if (response) {
-			const status = response.status;
-
-			if (status === 200) {
-				return response.data;
-			} else {
-				alertHandler("error", "잠시 후에 다시 조회해주세요.");
-				return {
-					items: [],
-					totalPages: 1,
-				};
-			}
+		if (response && response.status === 200) {
+			return response.data;
 		}
 	};
 
@@ -44,10 +32,10 @@ const CommentContainer = ({ commentRef, commentCount }: IProps) => {
 
 	return (
 		<div ref={commentRef}>
-			<div className="flex mb-4">
+			<div className="flex mb-4 md:text-xl text-lg">
 				<div className="font-bold">댓글</div>
-				<div className="ml-1.5 text-main-color font-extrabold">
-					{commentCount}
+				<div className="ml-2 text-main-color font-extrabold">
+					{data.items.length}
 				</div>
 			</div>
 			<CommentSubmit />

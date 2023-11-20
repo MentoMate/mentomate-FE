@@ -1,6 +1,6 @@
 import { useState } from "react";
-import MypageList from "./MypageList";
-import MypageContent from "./MypageContent";
+import MypageList from "./MyPageList";
+import MypageContent from "./MyPageContent";
 import { ReactComponent as User } from "@assets/svg/user.svg";
 import { ReactComponent as Home } from "@assets/svg/Home.svg";
 import { ReactComponent as Group } from "@assets/svg/group.svg";
@@ -15,9 +15,9 @@ const MypageContainer = () => {
 	const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
 	const myPageItems = [
-		{ label: "마이페이지", icon: <User width={20} height={20} /> },
-		{ label: "회원 정보", icon: <Home width={20} height={20} /> },
-		{ label: "나의 멘토링", icon: <Group width={20} height={20} /> },
+		{ label: "마이페이지", icon: <Home width={20} height={20} /> },
+		{ label: "회원 정보", icon: <User width={20} height={20} /> },
+		{ label: "내가 등록한 멘토링", icon: <Group width={20} height={20} /> },
 		{ label: "내가 신청한 멘토링", icon: <Comment width={20} height={20} /> },
 		{ label: "평점 & 후기", icon: <Review width={20} height={20} /> },
 		{ label: "알림", icon: <Alarm width={20} height={20} /> },
@@ -32,8 +32,8 @@ const MypageContainer = () => {
 
 	return (
 		<>
-			<div className="relative flex md:flex-row flex-col mt-16 mx-auto lg:w-[60rem] md:w-[40rem] w-[20rem]">
-				<div className="md:flex hidden mr-10">
+			<div className="relative flex md:flex-row flex-col mt-16 mx-auto lg:w-[65rem] md:w-[40rem] w-[20rem]">
+				<div className="md:flex hidden mr-12">
 					<MypageList
 						myPageItems={myPageItems}
 						selectedItemIndex={selectedItemIndex}

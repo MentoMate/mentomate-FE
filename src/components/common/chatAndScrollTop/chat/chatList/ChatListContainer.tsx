@@ -11,7 +11,7 @@ const ChatListContainer = ({
 			<div
 				className={`${
 					chatList.length === 0 && "flex justify-center items-center"
-				} mx-auto my-4 sm:w-[21rem] w-[15rem] min-h-[17rem] max-h-[27rem] bg-white rounded-3xl shadow-sm`}
+				} mx-auto my-4 w-[21rem] min-h-[17rem] max-h-[27rem] bg-white rounded-3xl shadow-sm`}
 			>
 				{chatList.length === 0 ? (
 					<NonExistsChatList />

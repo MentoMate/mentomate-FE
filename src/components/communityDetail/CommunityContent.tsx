@@ -2,10 +2,12 @@ import { ICommunityProps } from "@/interface/community";
 
 const CommunityContent = ({ communityInfo }: ICommunityProps) => {
 	return (
-		<div
-			className="leading-5 text-[0.95rem] text-black-600"
-			dangerouslySetInnerHTML={{ __html: communityInfo.content }}
-		/>
+		<div>
+			<div
+				className="md:text-lg text-base text-black-600"
+				dangerouslySetInnerHTML={{ __html: communityInfo.content }}
+			></div>
+		</div>
 	);
 };
 

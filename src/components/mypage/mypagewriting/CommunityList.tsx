@@ -9,8 +9,7 @@ const CommunityList = ({ data }: IMyCommunityItemProps) => {
 	console.log(data);
 	return (
 		<div className="mt-10 mb-20">
-			{/* <div>커뮤니티</div> */}
-			<div className="grid lg:grid-cols-2 md:grid-cols-1  mx-auto lg:w-[60rem] md:w-[40rem] w-[20rem]">
+			<div className="grid lg:grid-cols-2 md:grid-cols-1 lg:w-[45rem] md:w-[40rem] w-[20rem]">
 				{data.map((communityItem: IMyCommunityItem) => (
 					<Link
 						key={communityItem.id}

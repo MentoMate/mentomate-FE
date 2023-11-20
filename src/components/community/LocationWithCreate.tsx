@@ -23,8 +23,8 @@ const LocationWithCreate = () => {
 	};
 
 	return (
-		<div className="flex justify-between items-center mt-10 mb-4 mx-auto lg:w-[60rem] md:w-[30rem] w-[15rem] text-black-500">
-			<div className="flex items-center font-bold">
+		<div className="flex justify-between items-center mt-16 mb-8 mx-auto lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[20rem] text-black-500">
+			<div className="flex items-center font-bold sm:text-lg text-base">
 				<div className="mx-1">커뮤니티</div>
 				<Right width={12} height={12} className="mt-0.5 mx-1" />
 				<div className="flex items-center mx-1 ">
@@ -45,7 +45,7 @@ const LocationWithCreate = () => {
 			</div>
 			<button
 				onClick={registerClickHandler}
-				className="p-3 bg-main-color hover:bg-purple-100 rounded-lg font-semibold text-sm text-white"
+				className="mx-2 px-4 py-3 bg-main-color rounded-md font-semibold text-white hover:bg-sky-300"
 			>
 				게시글쓰기
 			</button>

@@ -78,23 +78,6 @@ const Notification = () => {
 		}
 	}, [receiveNotificationCnt]);
 
-	useEffect(() => {
-		const outSideClickHandler = (e: Event) => {
-			if (
-				notificationContainerRef.current &&
-				!notificationContainerRef.current.contains(e.target as Node)
-			) {
-				setIsOpenNotification(false);
-			}
-		};
-
-		document.addEventListener("mousedown", outSideClickHandler);
-
-		return () => {
-			document.removeEventListener("mousedown", outSideClickHandler);
-		};
-	}, [notificationContainerRef]);
-
 	return (
 		<>
 			<div className="relative px-2 cursor-pointer">
