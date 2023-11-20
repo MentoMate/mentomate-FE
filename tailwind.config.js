@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				"main-color": "#ABDEE6",
+				"main-color": "#8AAAE5",
 				"black-100": "#FAFAFA",
 				"black-200": "#E5E5E5",
 				"black-300": "#B9B9B9",
@@ -15,6 +15,7 @@ export default {
 				"yellow-100": "#FEE500",
 				"yellow-200": "#F6EAC2",
 				"green-100": "#03C75A",
+				"purple-100": "rgba(138, 170, 229, 0.6)",
 			},
 			minHeight: {
 				"min-height": "calc(100vh - 4rem - 15rem)",
