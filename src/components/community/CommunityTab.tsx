@@ -8,7 +8,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { communityTabState } from "@/state/communityTabState";
 import { searchCriteria } from "@/state/searchCriteria";
 import { ITabs } from "@/interface/community";
-
+console.log("asd");
 const TABS: ITabs[] = [
 	{
 		key: "all",

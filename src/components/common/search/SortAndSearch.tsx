@@ -4,6 +4,8 @@ import Category from "./Category";
 import Keyword from "./Keyword";
 import Sort from "./Sort";
 
+console.log("asd");
+
 const SortAndSearch = () => {
 	const location = useLocation();
 

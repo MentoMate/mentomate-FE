@@ -13,7 +13,7 @@ interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
 	readonly commentCount: number;
 }
-
+console.log("asd");
 const CommentContainer = ({ commentRef, commentCount }: IProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const { communityId } = useParams();

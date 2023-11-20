@@ -21,6 +21,8 @@ const Keyword = () => {
 		});
 	};
 
+	console.log("asd");
+
 	return (
 		<form
 			onSubmit={onSubmitHandler}

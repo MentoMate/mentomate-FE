@@ -3,6 +3,8 @@ import { ReactComponent as BottomArrow } from "@assets/svg/bottom_arrow.svg";
 import { useRef, useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
+console.log("asd");
+
 interface ISearchTypes {
 	readonly key: string;
 	readonly keyName: string;

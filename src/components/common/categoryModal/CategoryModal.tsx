@@ -5,7 +5,7 @@ import TitleBarWithClose from "./TitleBarWithClose";
 import { useRef, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { cancelLockScroll } from "@/utils/controlBodyScroll";
-
+console.log("asd");
 const CategoryModal = () => {
 	const categoryModalRef = useRef<HTMLDivElement>(null);
 	const setOpenCategoryModalState = useSetRecoilState(openCategoryModalState);

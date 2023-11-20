@@ -2,7 +2,7 @@ import { pagination } from "@/state/pagination";
 import { searchCriteria } from "@/state/searchCriteria";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-
+console.log("asd");
 const useUrl = (type: string, id: string | null = null) => {
 	const selectedSearchCriteria = useRecoilValue(searchCriteria);
 	const currentPage = useRecoilValue(pagination);

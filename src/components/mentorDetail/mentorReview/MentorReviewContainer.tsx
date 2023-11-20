@@ -18,6 +18,7 @@ const MentorReviewContainer = () => {
 
 		if (response) {
 			if (response.status === 200) {
+				console.log("asd");
 				setReviews(response.data.content);
 			}
 		}

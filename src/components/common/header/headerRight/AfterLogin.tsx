@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import Notification from "./Notification";
 import useAxios from "@/hooks/useAxios";
 import { notificationEmitterId } from "@/state/notification";
-
+console.log("asd");
 const AfterLogin = () => {
 	const navigate = useNavigate();
 	const setLoginState = useSetRecoilState(loginState);

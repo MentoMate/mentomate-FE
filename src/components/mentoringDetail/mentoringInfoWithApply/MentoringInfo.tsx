@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
-
+console.log("asd");
 interface IReplaceAmountAndHeadCount {
 	readonly replaceAmount: string;
 	readonly replaceHeadCount: string;

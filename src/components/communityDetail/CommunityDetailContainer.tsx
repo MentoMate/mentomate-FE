@@ -8,7 +8,7 @@ import CommunitySideBar from "./CommunitySideBar";
 import CommunityWriterInfo from "./CommunityWriterInfo";
 import CommentContainer from "./comment/CommentContainer";
 import { alertHandler } from "@/utils/alert";
-
+console.log("asd");
 const CommunityDetailContainer = () => {
 	const { communityId } = useParams();
 	const commentRef = useRef<HTMLDivElement>(null);

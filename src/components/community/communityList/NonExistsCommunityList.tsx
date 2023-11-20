@@ -5,5 +5,5 @@ const NonExistsCommunityList = () => {
 		</div>
 	);
 };
-
+console.log("asd");
 export default NonExistsCommunityList;

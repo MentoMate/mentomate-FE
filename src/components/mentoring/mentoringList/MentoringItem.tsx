@@ -5,7 +5,7 @@ import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { IMentoringItem } from "@/interface/mentoringItem";
 import { useState, useEffect } from "react";
 import { categories } from "@/constants/categories";
-
+console.log("asd");
 interface IProps {
 	readonly mentoringItem: IMentoringItem;
 }

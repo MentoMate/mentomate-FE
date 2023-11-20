@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
+console.log("asd");
+
 const SORT_TYPES = {
 	mentoring: [
 		{

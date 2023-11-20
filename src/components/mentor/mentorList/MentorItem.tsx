@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const MentorItem = ({ mentorItem }: IMentorItemProps) => {
 	const [categoryName, setCategoryName] = useState<string>("");
-
+	console.log("asd");
 	const getCategoryNameHandler = () => {
 		for (let key in categories) {
 			categories[key].find((category) => {

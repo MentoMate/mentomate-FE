@@ -16,7 +16,7 @@ interface IProps {
 	readonly commentRef: RefObject<HTMLDivElement>;
 	readonly communityInfo: ICommunityItem;
 }
-
+console.log("asd");
 const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 	const queryClient = useQueryClient();
 	const { communityId } = useParams();

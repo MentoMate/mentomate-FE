@@ -1,7 +1,7 @@
 import { IChatListHandlerProps } from "@/interface/chat";
 import ExistChatList from "./ExistsChatList";
 import NonExistsChatList from "./NonExistsChatList";
-
+console.log("asd");
 const ChatListContainer = ({
 	chatList,
 	onClickChatHandler,

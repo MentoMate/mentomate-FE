@@ -1,5 +1,5 @@
 import { ReactComponent as NotFoundIcon } from "@assets/svg/notFound.svg";
-
+console.log("asd");
 const NotFound404 = () => {
 	return (
 		<div className="flex flex-col justify-center items-center min-h-min-height">

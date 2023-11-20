@@ -5,5 +5,5 @@ const NonExistsComment = () => {
 		</div>
 	);
 };
-
+console.log("asd");
 export default NonExistsComment;

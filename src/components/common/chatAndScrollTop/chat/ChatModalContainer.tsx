@@ -8,7 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import Chat1On1 from "./Chat1On1";
 import ChatListContainer from "./chatList/ChatListContainer";
-
+console.log("asd");
 const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 	const [privateChatRoomId, setPrivateChatId] = useRecoilState(
 		selectedPrivateChatId,

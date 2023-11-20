@@ -5,5 +5,5 @@ const NonExistsChatList = () => {
 		</div>
 	);
 };
-
+console.log("asd");
 export default NonExistsChatList;

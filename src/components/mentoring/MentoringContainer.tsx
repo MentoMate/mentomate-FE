@@ -11,7 +11,7 @@ import MentoringTitle from "./MentoringTitle";
 import MentoringList from "./mentoringList/MentoringList";
 import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
 import { alertHandler } from "@/utils/alert";
-
+console.log("asd");
 const MentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const { url } = useUrl("mentoring");

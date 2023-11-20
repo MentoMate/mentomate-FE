@@ -7,7 +7,7 @@ import { ReactComponent as Review } from "@assets/svg/review.svg";
 import { ReactComponent as Right } from "@assets/svg/right.svg";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-
+console.log("asd");
 const LocationWithCreate = () => {
 	const selectedTab = useRecoilValue(communityTabState);
 	const isLogin = useRecoilValue(loginState);

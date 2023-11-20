@@ -1,5 +1,5 @@
 import { HashLoader } from "react-spinners";
-
+console.log("asd");
 const LazyLoading = () => {
 	return (
 		<div className="flex justify-center items-center w-full min-h-min-height z-[100]">

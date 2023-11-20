@@ -5,7 +5,7 @@ import { ReactComponent as RightArrow } from "@assets/svg/rightArrow.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-
+console.log("asd");
 const MentorRegister = () => {
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();

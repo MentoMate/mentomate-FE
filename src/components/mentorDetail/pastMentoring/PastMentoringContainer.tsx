@@ -22,6 +22,7 @@ const PastMentoringContainer = ({ userId }: IProps) => {
 
 		if (response) {
 			if (response.status === 200) {
+				console.log("asd");
 				setPastMentoringList(response.data.content);
 			}
 		}

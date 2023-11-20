@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
-
+console.log("asd");
 const SuccessSignUp = () => {
 	return (
 		<div className="w-full h-screen flex flex-col justify-center items-center">

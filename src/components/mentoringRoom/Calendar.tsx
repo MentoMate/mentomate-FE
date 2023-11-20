@@ -20,7 +20,7 @@ import MentoringInfoModal from "./MentoringInfoModal";
 import ScheduleAddModal from "./ScheduleAddModal";
 import ScheduleReadModal from "./ScheduleReadModal";
 import GroupChatBtn from "./groupChat/GroupChatBtn";
-
+console.log("asd");
 interface IMentoringPeriod {
 	startDate: string | "";
 	endDate: string | "";

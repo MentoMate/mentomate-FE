@@ -13,7 +13,7 @@ const MentorProfile = ({ data }: IMentoringDetailProps) => {
 	useEffect(() => {
 		replaceHandler();
 	}, []);
-
+	console.log("asd");
 	return (
 		<div className="flex justify-center items-center mt-4 py-3 bg-white border border-black-200 rounded-md">
 			<div className="mx-3 w-[6rem] h-[6rem]">

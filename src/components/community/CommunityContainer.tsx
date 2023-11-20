@@ -12,7 +12,7 @@ import LocationWithCreate from "./LocationWithCreate";
 import CommunityList from "./communityList/CommunityList";
 import NonExistsCommunityList from "./communityList/NonExistsCommunityList";
 import { alertHandler } from "@/utils/alert";
-
+console.log("asd");
 const CommunityContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const { url } = useUrl("post");

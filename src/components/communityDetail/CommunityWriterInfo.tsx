@@ -6,7 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const IMAGE_SRC = "/src/assets/svg/user.svg";
-
+console.log("asd");
 const CommunityWriterInfo = ({ communityInfo }: ICommunityProps) => {
 	const { communityId } = useParams();
 	const navigate = useNavigate();

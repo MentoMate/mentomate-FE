@@ -2,7 +2,7 @@ import { loginState } from "@/state/loginState";
 import ChatBtn from "./chat/ChatBtn";
 import ScrollTopBtn from "./ScrollTopBtn";
 import { useRecoilValue } from "recoil";
-
+console.log("asd");
 const ChatAndScrollContainer = () => {
 	const isLogin = useRecoilValue(loginState);
 

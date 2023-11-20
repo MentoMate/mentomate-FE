@@ -59,7 +59,7 @@ const EditCommunityPage = lazy(() => import("@pages/EditCommunityPage"));
 const ChatAndScrollContainer = lazy(
 	() => import("@components/common/chatAndScrollTop/ChatAndScrollContainer"),
 );
-
+console.log("asd");
 function Router() {
 	const location = useLocation();
 	const setReceiveNotificationState = useSetRecoilState(notification);

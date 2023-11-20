@@ -11,7 +11,7 @@ import MentorRegister from "./MentorRegister";
 import MentorList from "./mentorList/MentorList";
 import NonExistMentorList from "./mentorList/NonExistMentorList";
 import { alertHandler } from "@/utils/alert";
-
+console.log("asd");
 const MentorContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const { url } = useUrl("mentor");

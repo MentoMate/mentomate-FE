@@ -6,7 +6,7 @@ import { selectedPrivateChatId } from "@/state/chatState";
 import { getCookie } from "@/utils/cookies";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-
+console.log("asd");
 const Chat1On1 = ({ client }: IClientProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);

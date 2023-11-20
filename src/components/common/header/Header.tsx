@@ -15,6 +15,8 @@ const HeaderRightContainer = lazy(
 );
 const Toggle = lazy(() => import("./toggle/Toggle"));
 
+console.log("asd");
+
 const Header = () => {
 	const [isUseToggle, setIsUseToggle] = useState<boolean>(false);
 	const headerRef = useRef<HTMLDivElement>(null);

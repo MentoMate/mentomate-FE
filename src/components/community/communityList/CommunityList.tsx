@@ -4,7 +4,7 @@ import CommunityItem from "./CommunityItem";
 interface IProps {
 	readonly communityList: ICommunityItem[];
 }
-
+console.log("asd");
 const CommunityList = ({ communityList }: IProps) => {
 	return (
 		<div className="mb-20">

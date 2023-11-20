@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
+console.log("asd");
+
 const BeforeLogin = () => {
 	const navigate = useNavigate();
 	const location = useLocation();

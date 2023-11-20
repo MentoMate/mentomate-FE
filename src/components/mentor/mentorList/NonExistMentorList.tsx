@@ -1,3 +1,4 @@
+console.log("asd");
 const NonExistMentorList = () => {
 	return (
 		<div className="flex justify-center items-center min-h-[25rem]">

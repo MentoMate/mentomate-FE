@@ -25,6 +25,7 @@ interface IProps {
 }
 
 const RecommendMentoringItem = ({ recommendMentoring }: IProps) => {
+	console.log("asd");
 	return (
 		<Link
 			to={`/mentoringDetail/${recommendMentoring.mentoringId}`}
