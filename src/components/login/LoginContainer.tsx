@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
+import { ReactComponent as Logo } from "@assets/svg/Logo.svg";
 import { Link } from "react-router-dom";
 import Spinner from "@components/common/spinner/Spinner";
 

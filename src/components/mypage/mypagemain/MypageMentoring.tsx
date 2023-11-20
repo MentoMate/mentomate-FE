@@ -12,8 +12,8 @@ const MypageMentoring = ({ mentoringItem }: Iprops) => {
 	return (
 		<div className="mt-4 w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105">
 			<img
-				src="src/assets/image/sample.jpg"
-				alt="asd"
+				src={mentoringItem.uploadUrl}
+				alt="mentoringItem_img"
 				className="w-full h-[15rem] rounded-t-lg object-cover"
 			/>
 			<div className="flex justify-center items-center mt-2">

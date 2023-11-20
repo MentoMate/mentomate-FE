@@ -1,6 +1,7 @@
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { useState } from "react";
+import { ReactComponent as Close } from "@assets/svg/close.svg";
 
 interface StarRatingProps {
 	onClose: () => void;
@@ -28,8 +29,12 @@ const StarRating = ({ onClose, show }: StarRatingProps) => {
 			data: data,
 		});
 		console.log(response);
-		if (response && response.status === 200) {
-			alertHandler("success", "평점 등록이 완료되었습니다.");
+		if (response) {
+			if (response && response.status === 200) {
+				alertHandler("success", "평점 등록이 완료되었습니다.");
+			} else {
+				alertHandler("error", response.data);
+			}
 		}
 	};
 
@@ -43,7 +48,9 @@ const StarRating = ({ onClose, show }: StarRatingProps) => {
 		<span
 			onClick={onSelect}
 			className={
-				selected ? "text-yellow-500 text-5xl" : "text-gray-400 text-5xl"
+				selected
+					? "text-yellow-500 text-5xl cursor-pointer"
+					: "text-gray-400 text-5xl cursor-pointer"
 			}
 		>
 			★
@@ -58,11 +65,14 @@ const StarRating = ({ onClose, show }: StarRatingProps) => {
 					: "hidden"
 			}
 		>
-			<div className="bg-white p-4 rounded-lg shadow-md">
-				<button className="" onClick={onClose}>
-					Close
-				</button>
+			<div className="flex items-center flex-col bg-white p-4 rounded-lg shadow-md w-[20rem] ">
 				<div>
+					<div className="flex items-center font-bold mb-4 text-2xl ml-8">
+						평점을 남겨주세요.
+						<Close className="ml-4" width={15} height={15} onClick={onClose} />
+					</div>
+				</div>
+				<div className="ml-6">
 					{[...Array(5)].map((_, i) => (
 						<Star
 							key={i}
@@ -70,8 +80,13 @@ const StarRating = ({ onClose, show }: StarRatingProps) => {
 							onSelect={() => starClickHandler(i + 1)}
 						/>
 					))}
-					<p>{selectedStars} / 5</p>
-					<button onClick={() => submitHandler()}>제출하기</button>
+
+					<button
+						className="mt-4 px-3 py-2 ml-20 bg-main-color rounded-md font-bold text-white text-sm"
+						onClick={() => submitHandler()}
+					>
+						제출하기
+					</button>
 				</div>
 			</div>
 		</div>

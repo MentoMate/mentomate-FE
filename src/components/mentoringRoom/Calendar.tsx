@@ -1,5 +1,4 @@
 import useAxios from "@/hooks/useAxios";
-import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
 import { lockScroll } from "@/utils/controlBodyScroll";
 import {
 	CustomContentGenerator,
@@ -12,13 +11,14 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import Loading from "../common/spinner/Loading";
 import DayCellContent from "./DayCellContent";
-import MentoringEndButton from "./MentoringEndButton";
 import MentoringInfoModal from "./MentoringInfoModal";
 import ScheduleAddModal from "./ScheduleAddModal";
 import ScheduleReadModal from "./ScheduleReadModal";
+import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
+import { useParams } from "react-router-dom";
+import MentoringEndButton from "./MentoringEndButton";
 import GroupChatBtn from "./groupChat/GroupChatBtn";
 
 interface IMentoringPeriod {
@@ -193,7 +193,7 @@ const MyCalendar = () => {
 					eventInfo={eventInfo}
 				/>
 			)}
-			<div className="fixed my-1.5 bottom-20 lg:right-40 md:right-20 right-10 z-[98]">
+			<div className="fixed my-1.5 bottom-20 right-40 z-[98]">
 				<GroupChatBtn />
 			</div>
 		</>

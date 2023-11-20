@@ -22,7 +22,7 @@ const menus = [
 
 const Menu = () => {
 	const location = useLocation();
-	const [, setSelectedMenu] = useState<string>(location.pathname);
+	const [selectedMenu, setSelectedMenu] = useState<string>(location.pathname);
 
 	const selectedMenuHandler = () => {
 		const path = location.pathname;
@@ -39,9 +39,11 @@ const Menu = () => {
 				<Link
 					key={menu.menuName}
 					to={menu.path}
-					className={`${
-						menu.menuName === "홈" && "ml-4"
-					} px-2 text-white hover:text-black-200 font-semibold`}
+					className={`${menu.menuName === "홈" && "ml-4"} ${
+						selectedMenu === menu.path
+							? "text-main-color"
+							: "text-black-500 hover:text-sky-300"
+					} px-2 font-semibold`}
 				>
 					{menu.menuName}
 				</Link>

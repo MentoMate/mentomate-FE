@@ -1,21 +1,15 @@
-import { IPastMentoring } from "@/interface/MentoringDetail";
-
-interface IProps {
-	readonly pastMentoring: IPastMentoring;
-}
-
-const PastMentoringItem = ({ pastMentoring }: IProps) => {
+const PastMentoringItem = () => {
 	return (
-		<div className="md:mt-4 mt-8 w-[12rem]">
+		<div className="lg:mt-0 md:mt-4 mt-8 w-[12rem]">
 			<div className="w-full h-[15rem] object-cover">
 				<img
-					src={pastMentoring.uploadUrl}
+					src="/src/assets/image/sample.jpg"
 					alt="sample"
 					className="w-full h-full"
 				/>
 			</div>
 			<p className="lg:mt-3 mt-1 title-overflow font-semibold">
-				{pastMentoring.title}
+				치어리더가 되기 위한 준비과정 멘토링
 			</p>
 		</div>
 	);

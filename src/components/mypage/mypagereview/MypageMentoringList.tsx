@@ -2,7 +2,7 @@ import {
 	IEndMentoringItem,
 	IEndMentoringItemProps,
 } from "@/interface/myPageEndMentoring";
-import MypageMentoring from "@components/mypage/myPageReview/MypageMentoring";
+import MypageMentoring from "@/components/mypage/myPageReview/MyPageMentoring";
 
 const MypageMentoringList = ({ data }: IEndMentoringItemProps) => {
 	return (

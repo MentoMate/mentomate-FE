@@ -1,5 +1,5 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "@components/mypage/myPageMain/MypageMentoringList";
+import MypageMentoringList from "@/components/mypage/myPageMain/MyPageMentoringList";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
@@ -7,6 +7,7 @@ interface INickname {
 	readonly email: string;
 	readonly name: string;
 	readonly nickname: string;
+	readonly uploadUrl: string;
 }
 interface Iprops {
 	readonly content: string;
@@ -18,7 +19,7 @@ interface Iprops {
 
 const MypageMain = () => {
 	const [userInfo, setUserInfo] = useState<INickname>();
-	const [notification, setNotification] = useState<Iprops>();
+	const [notification, setNotification] = useState<Iprops | null>();
 
 	const { fetchDataUseAxios } = useAxios();
 	const getUserInfoData = async () => {
@@ -57,18 +58,22 @@ const MypageMain = () => {
 		["mypageMentoringList", "/mentoring/history"],
 		getMyMentoringData,
 	);
-
 	useEffect(() => {
 		getMyMentoringData();
-		getUserInfoData();
+	}, [data]);
+	useEffect(() => {
 		getMyNotificationData();
+	}, [notification]);
+	useEffect(() => {
+		getUserInfoData();
 	}, []);
+
 	return (
 		<>
 			<div className="flex items-center mb-12">
 				<div className="lg:w-[7rem] md:w-[5rem] lg:h-[7rem] md:h-[5rem] w-[8rem] h-[8rem] rounded-full">
 					<img
-						src="src/assets/image/sample.jpg"
+						src={userInfo && userInfo.uploadUrl}
 						alt="sample"
 						className="w-full h-full rounded-full object-cover"
 					/>
@@ -88,16 +93,31 @@ const MypageMain = () => {
 				<div className=" flex justify-between items-center mb-6 md:text-2xl text-xl font-bold">
 					최근 알림
 				</div>
-				{notification && (
-					<div dangerouslySetInnerHTML={{ __html: notification.content }} />
+				{notification !== undefined ? (
+					<>
+						{notification && (
+							<div dangerouslySetInnerHTML={{ __html: notification.content }} />
+						)}
+					</>
+				) : (
+					<div className="flex flex-col items-center justify-center items-center mb-6 min-h-[2rem] text-xl">
+						알림 내역이 없습니다
+					</div>
 				)}
 			</div>
 			<div>
 				<div className=" flex justify-between items-center mb-6 md:text-2xl text-xl font-bold mt-16">
 					진행중인 멘토링
 				</div>
-
-				<MypageMentoringList data={data.content} />
+				{data.content.length !== 0 ? (
+					<>
+						<MypageMentoringList data={data.content} />
+					</>
+				) : (
+					<div className="flex flex-col items-center justify-center items-center mb-6 min-h-[20rem] text-xl">
+						진행중인 멘토링이 없습니다
+					</div>
+				)}
 			</div>
 		</>
 	);

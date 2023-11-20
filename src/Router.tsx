@@ -8,24 +8,25 @@ import PaymentSuccessPage from "@pages/PaymentSuccessPage";
 import SignUpPage from "@pages/SignUpPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
 import { EventSourcePolyfill } from "event-source-polyfill";
-import { Suspense, lazy, useEffect } from "react";
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Footer from "./components/common/footer/Footer";
 import Header from "./components/common/header/Header";
-import LazyLoading from "./components/common/spinner/lazyLoading";
 import {
 	NO_USE_CHAT_SCROLL_LOCATION,
 	NO_USE_FOOTER_LOCATION,
 	NO_USE_HEADER_LOCATION,
 } from "./constants/commonComponentLocation";
 import useAxios from "./hooks/useAxios";
-import NotFound404Page from "./pages/NotFound404Page";
 import PaymentPage from "./pages/PaymentPage";
 import { loginState } from "./state/loginState";
 import { notification, notificationEmitterId } from "./state/notification";
 import { getCookie } from "./utils/cookies";
+import { lazy, Suspense } from "react";
+import Spinner from "./components/common/spinner/Spinner";
+import NotFound404Page from "./pages/NotFound404Page";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -113,7 +114,6 @@ function Router() {
 
 			const timer = setInterval(
 				() => {
-					close();
 					init();
 				},
 				1000 * 60 * 60,
@@ -131,7 +131,7 @@ function Router() {
 		<>
 			<QueryClientProvider client={queryClient}>
 				{!NO_USE_HEADER_LOCATION.includes(location.pathname) && <Header />}
-				<Suspense fallback={<LazyLoading />}>
+				<Suspense fallback={<Spinner />}>
 					<Routes>
 						<Route path="/" element={<MainPage />} />
 						<Route path="/login" element={<LoginPage />} />
@@ -193,10 +193,9 @@ function Router() {
 						/>
 						<Route path="/*" element={<NotFound404Page />} />
 					</Routes>
-					{!NO_USE_CHAT_SCROLL_LOCATION.includes(location.pathname) &&
-						!location.pathname.includes("/mentoringRoom") && (
-							<ChatAndScrollContainer />
-						)}
+					{NO_USE_CHAT_SCROLL_LOCATION.some((item) =>
+						item.includes(location.pathname),
+					) && <ChatAndScrollContainer />}
 				</Suspense>
 				{!NO_USE_FOOTER_LOCATION.includes(location.pathname) && <Footer />}
 			</QueryClientProvider>
