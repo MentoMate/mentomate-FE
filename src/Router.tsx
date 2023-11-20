@@ -113,6 +113,7 @@ function Router() {
 
 			const timer = setInterval(
 				() => {
+					close();
 					init();
 				},
 				1000 * 60 * 60,
