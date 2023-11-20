@@ -3,7 +3,7 @@ import MypageMentoringList from "@/components/mypage/myPageFavoriteMentoring/Myp
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
-
+import MypageNoneFavoriteMentoring from "@components/mypage/myPageFavoriteMentoring/MyPageNoneFavoriteMentoring";
 const MypageFavoriteMentoring = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const [url, setUrl] = useState<string>(`/mentoring/follow?page=1&pageSize=2`);
@@ -41,38 +41,44 @@ const MypageFavoriteMentoring = () => {
 
 	return (
 		<div className="mb-12">
-			<MypageMentoringList data={data.content} />
-			<div className="my-12 h-20 flex justify-center items-center">
-				<button
-					type="button"
-					onClick={() => onClickNextOrPrevBtnHandler("prev")}
-					disabled={currentPage === 1 ? true : false}
-					className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
-				>
-					이전
-				</button>
-				{pageArray.map((page: number) => (
-					<div
-						key={page}
-						className={`mx-1 text-lg ${
-							currentPage === page
-								? "text-main-color font-semibold"
-								: "text-black"
-						} cursor-pointer`}
-						onClick={() => onClickPageHandler(page)}
-					>
-						{page}
+			{data.content.length !== 0 ? (
+				<>
+					<MypageMentoringList data={data.content} />
+					<div className="my-12 h-20 flex justify-center items-center">
+						<button
+							type="button"
+							onClick={() => onClickNextOrPrevBtnHandler("prev")}
+							disabled={currentPage === 1 ? true : false}
+							className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
+						>
+							이전
+						</button>
+						{pageArray.map((page: number) => (
+							<div
+								key={page}
+								className={`mx-1 text-lg ${
+									currentPage === page
+										? "text-main-color font-semibold"
+										: "text-black"
+								} cursor-pointer`}
+								onClick={() => onClickPageHandler(page)}
+							>
+								{page}
+							</div>
+						))}
+						<button
+							type="button"
+							onClick={() => onClickNextOrPrevBtnHandler("next")}
+							disabled={currentPage === data.totalPages ? true : false}
+							className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
+						>
+							다음
+						</button>
 					</div>
-				))}
-				<button
-					type="button"
-					onClick={() => onClickNextOrPrevBtnHandler("next")}
-					disabled={currentPage === data.totalPages ? true : false}
-					className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
-				>
-					다음
-				</button>
-			</div>
+				</>
+			) : (
+				<MypageNoneFavoriteMentoring />
+			)}
 		</div>
 	);
 };

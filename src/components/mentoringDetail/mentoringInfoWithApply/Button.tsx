@@ -15,7 +15,10 @@ const Button = ({ data }: IMentoringDetailProps) => {
 			url: `mentoring/${params.mentoringId}`,
 		});
 		if (response && response.status === 200) {
+			console.log(response);
 			return response.data;
+		} else {
+			console.log(response);
 		}
 	};
 

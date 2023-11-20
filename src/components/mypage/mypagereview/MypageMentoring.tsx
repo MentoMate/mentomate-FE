@@ -6,6 +6,7 @@ import { useState } from "react";
 import StarRating from "@components/mypage/myPageReview/starRating";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 import { IEndMentoringItem } from "@/interface/myPageEndMentoring";
+import { Link } from "react-router-dom";
 
 interface Iprops {
 	readonly mentoringItem: IEndMentoringItem;
@@ -59,27 +60,26 @@ const MypageMentoring = ({ mentoringItem }: Iprops) => {
 					</div>
 				</div>
 				<div className="flex ">
-					<div className="flex items-center mt-2 mb-4 ml-3">
+					<div className="flex items-center mt-2 ml-3">
 						<Group width={23} height={23} />
 						<div className="ml-2 font-semibold text-sm">
 							{mentoringItem.numberOfPeople}명
 						</div>
 					</div>
-					<div className="ml-12">
-						<button
-							onClick={ratingClickHandler}
-							type="submit"
-							className="w-[3rem] mt-2 mr-2 mb-4 py-1 bg-main-color rounded-md font-bold text-white text-xs"
-						>
-							평점
-						</button>
-						<button
-							type="submit"
-							className="w-[3rem] mt-2 mb-4 py-1 bg-red-500 rounded-md font-bold text-white text-xs"
-						>
-							후기
-						</button>
-					</div>
+				</div>
+				<div className="flex justify-between mx-2">
+					<button
+						onClick={ratingClickHandler}
+						className="w-[7rem] h-[2rem] mt-2 mr-2 mb-4 py-1 bg-main-color rounded-md font-bold text-white text-xs  "
+					>
+						평점
+					</button>
+					<Link
+						to={"/communityRegistration"}
+						className="flex justify-center items-center w-[7rem] h-[2rem] mt-2 mb-4 py-1 bg-red-500 rounded-md font-bold text-white text-center text-xs   "
+					>
+						후기
+					</Link>
 				</div>
 			</div>
 		</>

@@ -2,6 +2,9 @@ import { ReactComponent as User } from "@assets/svg/user.svg";
 import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { IMyCommunityItem } from "@/interface/myPageCommunity";
+import { ReactComponent as Communication } from "@assets/svg/comment.svg";
+import { ReactComponent as Promotion } from "@assets/svg/invite.svg";
+import { ReactComponent as Review } from "@assets/svg/review.svg";
 
 interface Iprops {
 	communityItem: IMyCommunityItem;
@@ -18,7 +21,23 @@ const CommunityItem = ({ communityItem }: Iprops) => {
 				/>
 			</div>
 			<div className="flex justify-center items-center mt-6 text-black-400 text-sm text-center">
-				소통해요
+				{communityItem.category === "communication" && (
+					<>
+						<Communication width={20} height={20} className="mr-1" /> 소통해요
+					</>
+				)}
+				{communityItem.category === "promotion" && (
+					<>
+						<Promotion width={20} height={20} className="mr-1" />
+						홍보해요
+					</>
+				)}
+				{communityItem.category === "review" && (
+					<>
+						<Review width={20} height={20} className="mr-1" />
+						후기남겨요
+					</>
+				)}
 			</div>
 			<p className="mt-2 mb-4 text-lg font-bold community-overflow text-center">
 				{communityItem.title}

@@ -12,6 +12,7 @@ interface IProps {
 }
 
 const CommunityItem = ({ communityItem }: IProps) => {
+	console.log(communityItem);
 	return (
 		<Link
 			to={`/communityDetail/${communityItem.id}`}

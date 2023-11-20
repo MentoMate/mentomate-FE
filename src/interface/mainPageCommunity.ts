@@ -5,5 +5,6 @@ export interface ICommunityItem {
 	readonly postId: number;
 	readonly postLikesCount: number;
 	readonly title: string;
-	readonly writer: string | null;
+	readonly writer: string;
+	readonly uploadUrl: string;
 }
