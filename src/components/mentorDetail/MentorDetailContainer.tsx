@@ -1,12 +1,11 @@
+import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
 import { useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
 import MentorInfo from "./MentorInfo";
 import MentorIntroduce from "./MentorIntroduce";
-import PastMentoringContainer from "./pastMentoring/PastMentoringContainer";
-import useAxios from "@/hooks/useAxios";
-import { useNavigate, useParams } from "react-router-dom";
 import MentorReviewContainer from "./mentorReview/MentorReviewContainer";
-import { alertHandler } from "@/utils/alert";
-import { useEffect } from "react";
+import PastMentoringContainer from "./pastMentoring/PastMentoringContainer";
 
 const MentorDetailContainer = () => {
 	const { mentorId } = useParams();
