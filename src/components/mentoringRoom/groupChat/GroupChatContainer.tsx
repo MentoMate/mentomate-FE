@@ -9,7 +9,7 @@ import { CompatClient } from "@stomp/stompjs";
 import { MutableRefObject, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useInput from "@/hooks/useInput";
-console.log("asd");
+
 interface IProps {
 	readonly client: MutableRefObject<CompatClient | undefined>;
 }

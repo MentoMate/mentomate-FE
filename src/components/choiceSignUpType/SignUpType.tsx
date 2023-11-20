@@ -2,7 +2,7 @@ import { ReactComponent as Email } from "@assets/svg/email.svg";
 import { ReactComponent as KakaoTalkLogo } from "@assets/svg/kakaoTalkLogo.svg";
 import { ReactComponent as NaverLogo } from "@assets/svg/naverLogo.svg";
 import { Link } from "react-router-dom";
-console.log("asd");
+
 const SignUpType = () => {
 	return (
 		<div>

@@ -34,7 +34,9 @@ const NaverCallback = () => {
 					response.headers.get("Authorization-refresh"),
 				);
 				setLoginState(true);
-				navigate("/");
+
+				const previousLocation = sessionStorage.getItem("previousLocation");
+				previousLocation ? navigate(previousLocation) : navigate("/");
 			} else {
 				navigate("/successSignUp");
 			}

@@ -31,6 +31,7 @@ const ScheduleEdit = ({
 			mentoringId: eventInfo.extendedProps.mentoringId,
 		});
 	}, []);
+
 	const [descriptionText, setDescriptionText] = useState(
 		eventInfo.extendedProps.content,
 	);
@@ -77,6 +78,7 @@ const ScheduleEdit = ({
 		}
 		window.location.reload();
 	};
+
 	const updateSubmitHandler = async () => {
 		const imageArr = new Array();
 
@@ -102,7 +104,6 @@ const ScheduleEdit = ({
 			uploadFolder: form.uploadFolder,
 			uploadImg: imageArr,
 		};
-		console.log(data);
 
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "PUT",
@@ -117,7 +118,8 @@ const ScheduleEdit = ({
 		}
 		window.location.reload();
 	};
-	const onDeleteScduleHandler = () => {
+
+	const onDeleteScheduleHandler = () => {
 		Swal.fire({
 			icon: "question",
 			text: "일정을 삭제 하시겠습니까?",
@@ -130,7 +132,8 @@ const ScheduleEdit = ({
 			}
 		});
 	};
-	const onUpdateScduleHandler = () => {
+
+	const onUpdateScheduleHandler = () => {
 		Swal.fire({
 			icon: "question",
 			text: "일정을 수정 하시겠습니까?",
@@ -143,6 +146,7 @@ const ScheduleEdit = ({
 			}
 		});
 	};
+
 	const reactQuillImageHandler = async () => {
 		const inputDOM = document.createElement("input");
 		inputDOM.setAttribute("type", "file");
@@ -169,6 +173,7 @@ const ScheduleEdit = ({
 			}
 		});
 	};
+
 	const uploadImageHandler = async (file: File) => {
 		if (file.size >= 500000) {
 			alertHandler(
@@ -217,6 +222,7 @@ const ScheduleEdit = ({
 			},
 		};
 	}, []);
+
 	const formats = useMemo(() => {
 		return [
 			"header",
@@ -229,6 +235,7 @@ const ScheduleEdit = ({
 			"color",
 		];
 	}, []);
+
 	return (
 		<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[20rem] lg:w-[40rem]">
 			<div className=" flex items-center mt-2 border rounded-md  text-sm mb-4">
@@ -255,14 +262,14 @@ const ScheduleEdit = ({
 			</div>
 			<div className="flex justify-between h-[5rem] mt-12">
 				<button
-					onClick={onUpdateScduleHandler}
+					onClick={onUpdateScheduleHandler}
 					className="h-[3rem] lg:h-[5rem] w-[7rem] lg:w-[19rem] lg:px-3 lg:py-4 bg-main-color rounded-md font-bold text-white text-lg"
 				>
 					수정하기
 				</button>
 				<button
-					onClick={onDeleteScduleHandler}
-					className="h-[3rem] lg:h-[5rem] w-[7rem] lg:w-[19rem] lg:px-3 lg:py-4 bg-main-color rounded-md font-bold text-white text-lg bg-red-100"
+					onClick={onDeleteScheduleHandler}
+					className="h-[3rem] lg:h-[5rem] w-[7rem] lg:w-[19rem] lg:px-3 lg:py-4 bg-main-color rounded-md font-bold text-white text-lg"
 				>
 					삭제하기
 				</button>

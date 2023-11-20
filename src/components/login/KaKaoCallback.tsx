@@ -21,7 +21,7 @@ const KaKaoCallback = () => {
 				method: "GET",
 			},
 		);
-		console.log(response);
+
 		if (response && response.status === 200) {
 			if (!response.headers.get("isSignUp")) {
 				const data = await response.json();
@@ -32,8 +32,11 @@ const KaKaoCallback = () => {
 					"refreshToken",
 					response.headers.get("Authorization-refresh"),
 				);
+
 				setLoginState(true);
-				navigate("/");
+
+				const previousLocation = sessionStorage.getItem("previousLocation");
+				previousLocation ? navigate(previousLocation) : navigate("/");
 			} else {
 				navigate("/successSignUp");
 			}

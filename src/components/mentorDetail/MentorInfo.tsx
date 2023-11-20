@@ -1,6 +1,7 @@
 import { categories } from "@/constants/categories";
 import useAxios from "@/hooks/useAxios";
 import { IMentorItemProps } from "@/interface/mentorItem";
+import { alertHandler } from "@/utils/alert";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -16,22 +17,34 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 		careerMonth: 0,
 	});
 	const params = useParams();
-	console.log(params);
 	const { fetchDataUseAxios } = useAxios();
+
 	const onClickFavoriteMentorHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
-			url: `user/${params.mentorId}`,
+			url: `/user/${params.mentorId}`,
 		});
-		if (response && response.status === 200) {
-			console.log(response);
-			return response.data;
-		} else {
-			console.log(response);
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 401 || status === 403) {
+				alertHandler("error", "로그인 이후 팔로우 가능합니다.");
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+			}
 		}
 	};
+
 	const calculateCareer = () => {
-		console.log(mentorItem.career);
 		const careerYear = Math.floor(mentorItem.career / 12);
 		const careerMonth = mentorItem.career % 12;
 

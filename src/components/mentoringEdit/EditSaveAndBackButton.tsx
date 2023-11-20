@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 import { selectedCategoryState } from "@/state/selectedCategory";
 
-// TODO: reactQuill type 찾기
 interface IProps {
 	readonly reactQuillRef: any;
 }

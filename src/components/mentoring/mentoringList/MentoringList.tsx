@@ -5,7 +5,7 @@ import MentoringItem from "./MentoringItem";
 export interface IMentoringProps {
 	readonly data: IMentoringItem[];
 }
-console.log("asd");
+
 const MentoringList = ({ data }: IMentoringProps) => {
 	return (
 		<>
