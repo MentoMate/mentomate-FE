@@ -1,20 +1,53 @@
+import useAxios from "@/hooks/useAxios";
 import { loginState } from "@/state/loginState";
+import { alertHandler } from "@/utils/alert";
 import { ReactComponent as RightArrow } from "@assets/svg/rightArrow.svg";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 const MentorRegister = () => {
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();
+	const { fetchDataUseAxios } = useAxios();
+	const [isMentor, setIsMentor] = useState<boolean>(false);
 
 	const isNotLogin = () => {
-		sessionStorage.setItem("previousLocation", "/mentorRegistration");
+		sessionStorage.setItem("previousLocation", "/mentor");
 		navigate("/login");
 	};
 
 	const clickRegisterMentorHandler = () => {
-		isLogin ? navigate("/mentorRegistration") : isNotLogin();
+		if (isLogin) {
+			if (isMentor) {
+				alertHandler("info", "이미 멘토로 등록되어있습니다.");
+				return;
+			} else {
+				navigate("/mentorRegistration");
+			}
+		} else {
+			isNotLogin();
+		}
 	};
+
+	const getMentorAuth = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: "/user/profile/mentor",
+		});
+
+		if (response) {
+			if (response.status === 200) {
+				setIsMentor(response.data);
+			}
+		}
+	};
+
+	useEffect(() => {
+		if (isLogin) {
+			getMentorAuth();
+		}
+	}, [isLogin]);
 
 	return (
 		<>
