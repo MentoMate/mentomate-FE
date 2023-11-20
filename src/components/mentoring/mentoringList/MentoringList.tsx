@@ -7,7 +7,6 @@ export interface IMentoringProps {
 }
 
 const MentoringList = ({ data }: IMentoringProps) => {
-	console.log(data);
 	return (
 		<>
 			<div className="pt-4 grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 place-items-center mb-32">

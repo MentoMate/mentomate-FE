@@ -2,6 +2,7 @@ import useAxios from "@/hooks/useAxios";
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
 import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
 import { loginState } from "@/state/loginState";
+import { alertHandler } from "@/utils/alert";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";
@@ -119,12 +120,42 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	};
 
 	const onClickFavoriteMentoringHandler = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "POST",
-			url: `/mentoring/${mentoringId}`,
-		});
-		if (response && response.status === 200) {
-			return response.data;
+		if (!isLogin) {
+			Swal.fire({
+				icon: "question",
+				text: "로그인 이후 이용 가능합니다. 로그인을 하시겠습니까?",
+				showCancelButton: true,
+				confirmButtonText: "확인",
+				cancelButtonText: "취소",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					sessionStorage.setItem(
+						"previousLocation",
+						`/mentoringDetail/${mentoringId}`,
+					);
+					navigate("/login");
+				}
+			});
+		} else {
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "POST",
+				url: `/mentoring/${mentoringId}`,
+			});
+			if (response) {
+				const status = response.status;
+
+				if (status === 200) {
+					return response.data;
+				}
+
+				if (status === 500) {
+					alertHandler(
+						"error",
+						"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+					);
+					return;
+				}
+			}
 		}
 	};
 

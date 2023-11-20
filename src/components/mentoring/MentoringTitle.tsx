@@ -45,7 +45,9 @@ const MentoringTitle = () => {
 		});
 
 		if (response) {
-			if (response.status === 200) {
+			const status = response.status;
+
+			if (status === 200) {
 				setIsMentor(response.data);
 			}
 		}

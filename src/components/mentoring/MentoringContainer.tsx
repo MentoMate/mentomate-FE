@@ -10,6 +10,7 @@ import SortAndSearch from "../common/search/SortAndSearch";
 import MentoringTitle from "./MentoringTitle";
 import MentoringList from "./mentoringList/MentoringList";
 import NonExistMentoringList from "./mentoringList/NonExistMentoringList";
+import { alertHandler } from "@/utils/alert";
 
 const MentoringContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -23,8 +24,24 @@ const MentoringContainer = () => {
 			method: "GET",
 		});
 
-		if (response && response.status === 200) {
-			return response.data;
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+
+				return {
+					totalPages: 1,
+					items: [],
+				};
+			}
 		}
 	};
 

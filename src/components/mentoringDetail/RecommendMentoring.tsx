@@ -32,7 +32,9 @@ const RecommendMentoring = () => {
 		});
 
 		if (response) {
-			if (response.status === 200) {
+			const status = response.status;
+
+			if (status === 200) {
 				const result: IRecommendMentoring[] = new Array();
 
 				for (let i = 0; i < 3; i++) {
@@ -40,6 +42,10 @@ const RecommendMentoring = () => {
 				}
 
 				return result;
+			}
+
+			if (status === 500) {
+				return [];
 			}
 		}
 	};
