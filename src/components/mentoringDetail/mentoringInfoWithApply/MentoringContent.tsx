@@ -1,5 +1,5 @@
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
-
+console.log("asd");
 const MentoringContent = ({ data }: IMentoringDetailProps) => {
 	return (
 		<div className="lg:w-[40rem] md:w-[25rem] sm:w-[20rem] sm:mx-0 mx-4">

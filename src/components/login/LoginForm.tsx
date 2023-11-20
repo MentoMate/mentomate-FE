@@ -13,7 +13,7 @@ interface ILoginFormValues {
 	readonly email: string;
 	readonly password: string;
 }
-
+console.log("asd");
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const setLoginState = useSetRecoilState(loginState);

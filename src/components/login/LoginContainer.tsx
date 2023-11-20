@@ -5,7 +5,7 @@ import Spinner from "@components/common/spinner/Spinner";
 
 const LoginForm = lazy(() => import("./LoginForm"));
 const SocialLogin = lazy(() => import("./SocialLogin"));
-
+console.log("asd");
 const LoginContainer = () => {
 	return (
 		<div className="flex flex-col justify-center items-center w-screen min-h-screen">

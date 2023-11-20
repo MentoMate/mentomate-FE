@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
-
+console.log("asd");
 const CommentSubmit = () => {
 	const queryClient = useQueryClient();
 	const isLogin = useRecoilValue(loginState);

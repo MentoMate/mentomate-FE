@@ -11,7 +11,7 @@ const Pagination = ({ totalPages }: IProps) => {
 		onClickPageHandler,
 		onClickNextOrPrevBtnHandler,
 	} = usePagination(totalPages);
-
+	console.log("asd");
 	return (
 		<div className="my-12 h-20 flex justify-center items-center">
 			<button

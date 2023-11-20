@@ -1,5 +1,5 @@
 import { ReactComponent as NotFoundIcon } from "@assets/svg/notFound.svg";
-
+console.log("asd");
 const NotFound404 = () => {
 	return (
 		<div className="min-h-min-height">

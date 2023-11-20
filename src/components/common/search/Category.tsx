@@ -14,6 +14,8 @@ const Category = () => {
 		setOpenCategoryModalState(true);
 	};
 
+	console.log("asd");
+
 	return (
 		<>
 			<div

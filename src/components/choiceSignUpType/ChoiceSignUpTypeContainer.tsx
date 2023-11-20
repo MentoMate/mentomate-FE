@@ -5,7 +5,7 @@ import { lazy, Suspense } from "react";
 import Spinner from "@components/common/spinner/Spinner";
 
 const SignUpType = lazy(() => import("./SignUpType"));
-
+console.log("asd");
 const ChoiceSignUpTypeContainer = () => {
 	return (
 		<div className="flex flex-col items-center md:mt-20 sm:mt-12 min-h-screen">

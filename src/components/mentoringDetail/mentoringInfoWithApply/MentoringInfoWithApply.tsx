@@ -2,7 +2,7 @@ import { IMentoringDetailProps } from "@/interface/mentoringInfo";
 import MentorProfile from "../MentorProfile";
 import Button from "./Button";
 import MentoringInfo from "./MentoringInfo";
-
+console.log("asd");
 const MentoringInfoWithApply = ({ data }: IMentoringDetailProps) => {
 	console.log(data);
 	return (

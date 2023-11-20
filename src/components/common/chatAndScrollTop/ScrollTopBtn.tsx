@@ -4,7 +4,7 @@ const ScrollTopBtn = () => {
 	const onClickScrollTopBtn = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
-
+	console.log("asd");
 	return (
 		<div className="my-1.5">
 			<button

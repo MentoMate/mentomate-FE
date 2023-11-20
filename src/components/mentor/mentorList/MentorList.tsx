@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 interface IProps {
 	readonly mentorList: IMentorItem[];
 }
-
+console.log("asd");
 const MentorList = ({ mentorList }: IProps) => {
 	return (
 		<div className="mx-2 mt-10">
