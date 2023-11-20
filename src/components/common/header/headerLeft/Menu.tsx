@@ -20,6 +20,8 @@ const menus = [
 	},
 ];
 
+console.log("asd");
+
 const Menu = () => {
 	const location = useLocation();
 	const [selectedMenu, setSelectedMenu] = useState<string>(location.pathname);

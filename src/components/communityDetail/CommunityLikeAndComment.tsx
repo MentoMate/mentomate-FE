@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 interface IProps {
 	readonly communityInfo: ICommunityItem;
 }
-
+console.log("asd");
 const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 	const queryClient = useQueryClient();
 	const { communityId } = useParams();

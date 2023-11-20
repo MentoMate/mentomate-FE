@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Spinner from "@/components/common/spinner/Spinner";
 
 const SignUpForm = lazy(() => import("./SignUpForm"));
-
+console.log("asd");
 const SignUpContainer = () => {
 	return (
 		<div className="flex flex-col justify-center items-center w-full min-h-screen">

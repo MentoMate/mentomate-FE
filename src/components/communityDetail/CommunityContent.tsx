@@ -1,5 +1,5 @@
 import { ICommunityProps } from "@/interface/community";
-
+console.log("asd");
 const CommunityContent = ({ communityInfo }: ICommunityProps) => {
 	return (
 		<div>

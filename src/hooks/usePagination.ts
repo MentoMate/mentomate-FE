@@ -1,7 +1,7 @@
 import { pagination } from "@/state/pagination";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-
+console.log("asd");
 const usePagination = (pageCnt: number) => {
 	const [pageArray, setPageArray] = useState<number[]>([]);
 	const [currentPage, setCurrentPage] = useRecoilState(pagination);

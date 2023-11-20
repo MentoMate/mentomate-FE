@@ -20,7 +20,7 @@ import { handleNextMonth, handlePrevMonth } from "@/utils/CalendarUtils";
 import { useParams } from "react-router-dom";
 import MentoringEndButton from "./MentoringEndButton";
 import GroupChatBtn from "./groupChat/GroupChatBtn";
-
+console.log("asd");
 interface IMentoringPeriod {
 	startDate: string | "";
 	endDate: string | "";

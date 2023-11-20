@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const IMAGE_SRC = "/src/assets/svg/user.svg";
-
+console.log("asd");
 const Comment = ({ comment }: ICommentProps) => {
 	const { communityId } = useParams();
 	const { fetchDataUseAxios } = useAxios();

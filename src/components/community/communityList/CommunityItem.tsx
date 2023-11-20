@@ -6,7 +6,7 @@ import { ReactComponent as Communication } from "@assets/svg/comment.svg";
 import { ReactComponent as Promotion } from "@assets/svg/invite.svg";
 import { ReactComponent as Review } from "@assets/svg/review.svg";
 import { Link } from "react-router-dom";
-
+console.log("asd");
 interface IProps {
 	readonly communityItem: ICommunityItem;
 }
