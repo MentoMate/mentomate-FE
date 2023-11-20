@@ -49,6 +49,10 @@ const usePagination = (pageCnt: number) => {
 		initMakePagination();
 	}, [pageCnt]);
 
+	useEffect(() => {
+		initMakePagination();
+	}, [currentPage]);
+
 	return {
 		pageArray,
 		currentPage,
