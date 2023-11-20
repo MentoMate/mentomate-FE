@@ -1,11 +1,11 @@
 import MypageMain from "@components/mypage/myPageMain/MyPageMain";
-import Mypageinfo from "@components/mypage/myPageInfo/MypageInfo";
-import MypageMyMentoring from "@components/mypage/myPageMyMentoring/MypageMyMentoring";
-import MypageReview from "@components/mypage/myPageReview/MypageReview";
-import MypageAlarm from "@components/mypage/myPageAlarm/MypageAlarm";
-import MypageFavoriteMentoring from "@components/mypage/myPageFavoriteMentoring/MypageFavoriteMentoring";
-import MypageFollow from "@components/mypage/myPageFollow/MypageFollow";
-import MypagePayment from "@components/mypage/myPagePayment/MypagePayment";
+import Mypageinfo from "@/components/mypage/myPageInfo/MyPageInfo";
+import MypageMyMentoring from "@/components/mypage/myPageMyMentoring/MyPageMyMentoring";
+import MypageReview from "@/components/mypage/myPageReview/MyPageReview";
+import MypageAlarm from "@/components/mypage/myPageAlarm/MyPageAlarm";
+import MypageFavoriteMentoring from "@/components/mypage/myPageFavoriteMentoring/MyPageFavoriteMentoring";
+import MypageFollow from "@/components/mypage/myPageFollow/MyPageFollow";
+import MypagePayment from "@/components/mypage/myPagePayment/MyPagePayment";
 import MypageWriting from "@components/mypage/myPageWriting/MypageWriting";
 import MypageApplyMentoring from "@components/mypage/myPageApplyMentoring/MyPageApplyMentoring";
 
@@ -27,7 +27,7 @@ const MypageContent = ({ selectedItem }: ISelectedItemProps) => {
 			<div className="h-full md:text-base text-sm">
 				{selectedItem.label === "마이페이지" && <MypageMain />}
 				{selectedItem.label === "회원 정보" && <Mypageinfo />}
-				{selectedItem.label === "나의 멘토링" && <MypageMyMentoring />}
+				{selectedItem.label === "내가 등록한 멘토링" && <MypageMyMentoring />}
 				{selectedItem.label === "내가 신청한 멘토링" && (
 					<MypageApplyMentoring />
 				)}

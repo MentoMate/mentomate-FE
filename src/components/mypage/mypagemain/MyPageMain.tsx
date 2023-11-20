@@ -1,5 +1,5 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "@components/mypage/myPageMain/MypageMentoringList";
+import MypageMentoringList from "@/components/mypage/myPageMain/MyPageMentoringList";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
@@ -19,7 +19,7 @@ interface Iprops {
 
 const MypageMain = () => {
 	const [userInfo, setUserInfo] = useState<INickname>();
-	const [notification, setNotification] = useState<Iprops>();
+	const [notification, setNotification] = useState<Iprops | null>();
 
 	const { fetchDataUseAxios } = useAxios();
 	const getUserInfoData = async () => {
@@ -58,12 +58,16 @@ const MypageMain = () => {
 		["mypageMentoringList", "/mentoring/history"],
 		getMyMentoringData,
 	);
-
 	useEffect(() => {
 		getMyMentoringData();
-		getUserInfoData();
+	}, [data]);
+	useEffect(() => {
 		getMyNotificationData();
+	}, [notification]);
+	useEffect(() => {
+		getUserInfoData();
 	}, []);
+
 	return (
 		<>
 			<div className="flex items-center mb-12">
@@ -89,7 +93,7 @@ const MypageMain = () => {
 				<div className=" flex justify-between items-center mb-6 md:text-2xl text-xl font-bold">
 					최근 알림
 				</div>
-				{data.content.length !== 0 ? (
+				{notification !== undefined ? (
 					<>
 						{notification && (
 							<div dangerouslySetInnerHTML={{ __html: notification.content }} />

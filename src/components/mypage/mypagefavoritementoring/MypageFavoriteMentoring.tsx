@@ -1,5 +1,5 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "@/components/mypage/myPageFavoriteMentoring/MypageMentoringList";
+import MypageMentoringList from "@/components/mypage/myPageFavoriteMentoring/MyPageMentoringList";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
@@ -31,6 +31,7 @@ const MypageFavoriteMentoring = () => {
 	useEffect(() => {
 		transformationUrl();
 	}, [currentPage]);
+
 	const transformationUrl = () => {
 		setUrl(`/mentoring/follow?page=${currentPage}&pageSize=2`);
 	};

@@ -3,7 +3,7 @@ import { ReactComponent as Star } from "@assets/svg/star.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { useState } from "react";
-import StarRating from "@components/mypage/myPageReview/starRating";
+import StarRating from "@/components/mypage/myPageReview/StarRating";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 import { IEndMentoringItem } from "@/interface/myPageEndMentoring";
 import { Link } from "react-router-dom";

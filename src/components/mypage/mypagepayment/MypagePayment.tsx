@@ -1,7 +1,7 @@
 import useAxios from "@/hooks/useAxios";
 import usePagination from "@/hooks/usePagination";
 import { IMyPaymentItem } from "@/interface/myPagePayment";
-import MypagePaymentCard from "@components/mypage/myPagePayment/MypagePaymentCard";
+import MypagePaymentCard from "@/components/mypage/myPagePayment/MyPagePaymentCard";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import MyPageNonePayment from "./MyPageNonePayment";
@@ -28,7 +28,7 @@ const MypagePayment = () => {
 
 	useEffect(() => {
 		getMyPayData();
-	}, []);
+	}, [data]);
 	const {
 		pageArray,
 		currentPage,

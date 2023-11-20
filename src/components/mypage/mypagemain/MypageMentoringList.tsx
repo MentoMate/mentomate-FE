@@ -2,7 +2,7 @@ import {
 	IMyMentoringItem,
 	IMyMentoringItemProps,
 } from "@/interface/myPageMyMentoring";
-import MypageMentoring from "@components/mypage/myPageMain/MypageMentoring";
+import MypageMentoring from "@/components/mypage/myPageMain/MyPageMentoring";
 import { Link } from "react-router-dom";
 
 const MentoringList = ({ data }: IMyMentoringItemProps) => {

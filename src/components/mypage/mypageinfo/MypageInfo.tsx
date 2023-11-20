@@ -152,12 +152,15 @@ const Mypageinfo = () => {
 					/>
 				</label>
 
-				<div
-					className="text-center mt-4 px-3 py-2 bg-main-color rounded-md font-bold text-white text-sm cursor-pointer"
+				<button
+					className={`text-center mt-4 px-3 py-2 rounded-md font-bold text-white ml-3 text-sm  ${
+						!previewImg ? "bg-gray-300 cursor-not-allowed" : "bg-main-color"
+					}`}
+					disabled={!previewImg}
 					onClick={() => onClickEditProfile()}
 				>
-					변경
-				</div>
+					이미지변경
+				</button>
 			</div>
 			<div className="flex flex-col ">
 				<div className="lg:text-base md:text-sm text-black-400">이름</div>

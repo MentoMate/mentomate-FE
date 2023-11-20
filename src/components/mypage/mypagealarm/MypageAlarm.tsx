@@ -27,9 +27,10 @@ const MypageAlarm = () => {
 	};
 
 	const { data } = useQuery(["myNotificationList", url], getMyNotificationData);
+	console.log(data);
 	useEffect(() => {
 		getMyNotificationData();
-	}, []);
+	}, [data]);
 	const {
 		pageArray,
 		currentPage,

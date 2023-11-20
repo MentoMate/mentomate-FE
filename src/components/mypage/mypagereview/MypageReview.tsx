@@ -1,6 +1,6 @@
 import useAxios from "@/hooks/useAxios";
 import usePagination from "@/hooks/usePagination";
-import MypageMentoringList from "@components/mypage/myPageReview/MypageMentoringList";
+import MypageMentoringList from "@/components/mypage/myPageReview/MyPageMentoringList";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import MyPageNoneReviewMentoring from "@components/mypage/myPageReview/MyPageNoneReviewMentoring";
@@ -28,7 +28,7 @@ const MypageReview = () => {
 
 	useEffect(() => {
 		getMyReviewMentoringData();
-	}, []);
+	}, [data]);
 	const {
 		pageArray,
 		currentPage,

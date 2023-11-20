@@ -39,7 +39,7 @@ const MypageFollow = () => {
 	};
 	useEffect(() => {
 		getMentorFollowData();
-	}, []);
+	}, [data]);
 	return (
 		<>
 			{data.content.length !== 0 ? (

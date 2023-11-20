@@ -1,4 +1,4 @@
-import MypageMentoring from "@/components/mypage/myPageFavoriteMentoring/MypageMentoring";
+import MypageMentoring from "@/components/mypage/myPageFavoriteMentoring/MyPageMentoring";
 import {
 	IMyMentoringItem,
 	IMyMentoringItemProps,

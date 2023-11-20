@@ -24,7 +24,7 @@ const MypageWriting = () => {
 
 	useEffect(() => {
 		getMyWritingData();
-	}, []);
+	}, [data]);
 	const {
 		pageArray,
 		currentPage,

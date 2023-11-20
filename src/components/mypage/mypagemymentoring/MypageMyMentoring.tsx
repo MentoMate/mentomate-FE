@@ -1,9 +1,9 @@
 import useAxios from "@/hooks/useAxios";
-import MypageMentoringList from "@components/mypage/myPageMyMentoring/MypageMentoringList";
+import MypageMentoringList from "@/components/mypage/myPageMyMentoring/MyPageMentoringList";
 import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
 import { useEffect, useState } from "react";
-import MypageNoneMentoring from "@components/mypage/myPageMyMentoring/MypageNoneMentoring";
+import MypageNoneMentoring from "@/components/mypage/myPageMyMentoring/MyPageNoneMentoring";
 const MypageMyMentoring = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const userId = localStorage.getItem("userId");
@@ -27,7 +27,7 @@ const MypageMyMentoring = () => {
 
 	useEffect(() => {
 		getMyMentoringData();
-	}, []);
+	}, [data]);
 	const {
 		pageArray,
 		currentPage,
@@ -47,7 +47,7 @@ const MypageMyMentoring = () => {
 			{data.content.length !== 0 ? (
 				<>
 					<MypageMentoringList data={data.content} />
-					<div className="my-12 h-20 flex justify-center items-center">
+					<div className="my-12 h-30  flex justify-center items-center">
 						<button
 							type="button"
 							onClick={() => onClickNextOrPrevBtnHandler("prev")}
