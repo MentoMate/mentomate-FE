@@ -41,7 +41,7 @@ const AfterLogin = () => {
 	return (
 		<>
 			<div className="flex justify-center items-center font-semibold">
-				<Link to={"/mypage"}>
+				<Link to={"/userMyPage"}>
 					<div className="mx-2 text-white hover:text-black-200">마이페이지</div>
 				</Link>
 				<div

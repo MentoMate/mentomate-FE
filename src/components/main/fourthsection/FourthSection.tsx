@@ -1,5 +1,5 @@
 import { ICommunityItemInProps } from "@/interface/mainPageInterface";
-import { ReactComponent as Arrow } from "@assets/svg/mainArrow.svg";
+import { ReactComponent as Arrow } from "@assets/svg/mainArrowIcon.svg";
 import { Link } from "react-router-dom";
 import CommunityItemList from "./CommunityItemList";
 

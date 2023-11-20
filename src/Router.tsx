@@ -3,7 +3,7 @@ import NaverCallback from "@components/login/NaverCallback";
 import ChoiceSignUpTypePage from "@pages/ChoiceSignUpTypePage";
 import LoginPage from "@pages/LoginPage";
 import MentoringRoom from "@pages/MentoringRoomPage";
-import Mypage from "@pages/MyPage";
+import UserMyPage from "@/pages/UserMyPage";
 import PaymentSuccessPage from "@pages/PaymentSuccessPage";
 import SignUpPage from "@pages/SignUpPage";
 import SuccessSignUpPage from "@pages/SuccessSignUpPage";
@@ -59,7 +59,7 @@ const EditCommunityPage = lazy(() => import("@pages/EditCommunityPage"));
 const ChatAndScrollContainer = lazy(
 	() => import("@components/common/chatAndScrollTop/ChatAndScrollContainer"),
 );
-console.log("asd");
+
 function Router() {
 	const location = useLocation();
 	const setReceiveNotificationState = useSetRecoilState(notification);
@@ -180,7 +180,7 @@ function Router() {
 							path="/communityEdit/:communityId"
 							element={<EditCommunityPage />}
 						/>
-						<Route path="/mypage" element={<Mypage />} />
+						<Route path="/userMyPage" element={<UserMyPage />} />
 						<Route path="/payment/:paymentId" element={<PaymentPage />} />
 						<Route path="/paymentSuccess" element={<PaymentSuccessPage />} />
 						<Route
