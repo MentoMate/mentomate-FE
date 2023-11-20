@@ -79,6 +79,7 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 						width={16}
 						height={16}
 						onClick={onClickLikeHandler}
+						fill="#8A8A8A"
 						className="cursor-pointer"
 					/>
 				)}

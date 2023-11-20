@@ -1,12 +1,13 @@
 import useAxios from "@/hooks/useAxios";
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
-import { openChatModalState } from "@/state/chatState";
+import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
+import { loginState } from "@/state/loginState";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { ReactComponent as Group } from "@assets/svg/people.svg";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 
 interface IReplaceAmountAndHeadCount {
@@ -24,6 +25,8 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	const { mentoringId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
 	const setIsOpenChatList = useSetRecoilState(openChatModalState);
+	const setPrivateChatId = useSetRecoilState(selectedPrivateChatId);
+	const isLogin = useRecoilValue(loginState);
 
 	const [replaceAmountAndHeadCount, setReplaceAmountAndHeadCount] =
 		useState<IReplaceAmountAndHeadCount>({
@@ -76,22 +79,41 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	};
 
 	const createChat1On1Handler = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "POST",
-			url: "/chat/room/private",
-			data: {
-				mentorId: data.userId,
-				mentoringId: data.mentoringId,
-			},
-		});
+		if (!isLogin) {
+			Swal.fire({
+				icon: "question",
+				text: "로그인 이후 이용 가능합니다. 로그인을 하시겠습니까?",
+				showCancelButton: true,
+				confirmButtonText: "확인",
+				cancelButtonText: "취소",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					sessionStorage.setItem(
+						"previousLocation",
+						`/mentoringDetail/${mentoringId}`,
+					);
+					navigate("/login");
+				}
+			});
+		} else {
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "POST",
+				url: "/chat/room/private",
+				data: {
+					mentorId: data.userId,
+					mentoringId: data.mentoringId,
+				},
+			});
 
-		if (response) {
-			if (response.status === 200) {
-				setIsOpenChatList(true);
-			}
+			if (response) {
+				if (response.status === 200) {
+					setIsOpenChatList(true);
+				}
 
-			if (response.status === 400) {
-				setIsOpenChatList(true);
+				if (response.status === 400) {
+					setIsOpenChatList(true);
+					setPrivateChatId(response.data.privateChatRoomId);
+				}
 			}
 		}
 	};
@@ -99,7 +121,7 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	const onClickFavoriteMentoringHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "POST",
-			url: `mentoring/${mentoringId}`,
+			url: `/mentoring/${mentoringId}`,
 		});
 		if (response && response.status === 200) {
 			return response.data;
