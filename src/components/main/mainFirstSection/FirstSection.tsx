@@ -4,7 +4,6 @@ import MentoringCardList from "./MentoringCardList";
 import { Link } from "react-router-dom";
 
 const FirstSection = ({ data }: IMentoringCardInProps) => {
-	console.log(data);
 	return (
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem] mt-20">

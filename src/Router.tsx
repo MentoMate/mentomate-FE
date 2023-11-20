@@ -181,7 +181,7 @@ function Router() {
 							element={<EditCommunityPage />}
 						/>
 						<Route path="/userMyPage" element={<UserMyPage />} />
-						<Route path="/payment/:paymentId" element={<PaymentPage />} />
+						<Route path="/payment/:mentoringId" element={<PaymentPage />} />
 						<Route path="/paymentSuccess" element={<PaymentSuccessPage />} />
 						<Route
 							path="/mentorRegistration"

@@ -5,7 +5,6 @@ interface IProps {
 }
 
 const PastMentoringItem = ({ pastMentoring }: IProps) => {
-	console.log("asd");
 	return (
 		<div className="md:mt-4 mt-8 w-[12rem]">
 			<div className="w-full h-[15rem] object-cover">

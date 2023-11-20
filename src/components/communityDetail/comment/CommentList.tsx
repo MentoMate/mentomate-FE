@@ -1,6 +1,6 @@
 import { IComment, ICommentsProps } from "@/interface/comment";
 import Comment from "./Comment";
-console.log("asd");
+
 const CommentList = ({ comments }: ICommentsProps) => {
 	return (
 		<div>

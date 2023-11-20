@@ -3,6 +3,7 @@ import NonExistsPastMentoring from "./NonExistsPastMentoring";
 import PastMentoringList from "./PastMentoringList";
 import { useState, useEffect } from "react";
 import { IPastMentoring } from "@/interface/MentoringDetail";
+import { alertHandler } from "@/utils/alert";
 
 interface IProps {
 	userId: number;
@@ -21,9 +22,18 @@ const PastMentoringContainer = ({ userId }: IProps) => {
 		});
 
 		if (response) {
-			if (response.status === 200) {
-				console.log("asd");
+			const status = response.status;
+
+			if (status === 200) {
 				setPastMentoringList(response.data.content);
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 조회해주세요.",
+				);
+				setPastMentoringList([]);
 			}
 		}
 	};

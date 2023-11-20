@@ -6,8 +6,6 @@ interface IProps {
 }
 
 const MentorReviewItems = ({ review }: IProps) => {
-	console.log("asd");
-
 	return (
 		<div className="mb-4 p-4 border border-black-200 rounded-md">
 			<div className="flex items-center mb-1">

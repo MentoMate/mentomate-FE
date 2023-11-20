@@ -1,7 +1,7 @@
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
 import MentorProfile from "../MentorProfile";
 import MentoringInfo from "./MentoringInfo";
-console.log("asd");
+
 const MentoringInfoWithApply = ({ data }: IMentoringDetailProps) => {
 	return (
 		<div className="block md:sticky bottom-[5rem] lg:ml-8 md:mx-0 mx-4 lg:w-[19rem] h-[40rem]">

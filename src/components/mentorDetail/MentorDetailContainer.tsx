@@ -26,7 +26,6 @@ const MentorDetailContainer = () => {
 			}
 
 			if (status === 400) {
-				console.log("asd");
 				alertHandler("error", "존재하지 않는 멘토입니다.");
 				navigate("/mentor");
 			}

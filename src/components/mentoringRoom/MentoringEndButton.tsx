@@ -25,7 +25,7 @@ const MentoringEndButton = () => {
 		<>
 			<div
 				role="button"
-				className="absolute top-0 right-10 bg-red-500 hover:bg-sky-700 text-white py-2 px-4 rounded-full z-10 shadow-lg hidden lg:flex "
+				className="hidden lg:flex items-center mx-1 bg-red-100 hover:bg-red-400 text-white py-2 px-4 rounded-[0.3rem] z-10 transition duration-200"
 				onClick={() => onClickMentoringEndHandler()}
 			>
 				멘토링 종료

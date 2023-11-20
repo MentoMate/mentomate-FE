@@ -20,21 +20,21 @@ import MentoringInfoModal from "./MentoringInfoModal";
 import ScheduleAddModal from "./ScheduleAddModal";
 import ScheduleReadModal from "./ScheduleReadModal";
 import GroupChatBtn from "./groupChat/GroupChatBtn";
-console.log("asd");
+import { ReactComponent as Arrow } from "@assets/svg/arrow.svg";
+
 interface IMentoringPeriod {
-	startDate: string | "";
-	endDate: string | "";
+	readonly startDate: string;
+	readonly endDate: string;
 }
 
 const today = new Date();
 
 const MyCalendar = () => {
-	const params = useParams();
-
-	const MENTORING_PERIOD: IMentoringPeriod = {
-		startDate: params.startDate || "",
-		endDate: params.endDate || "",
-	};
+	const { startDate, endDate, id } = useParams();
+	const [mentoringPeriod, setMentoringPeriod] = useState<IMentoringPeriod>({
+		startDate: "",
+		endDate: "",
+	});
 
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const [hoveredDate, setHoveredDate] = useState(""); //Hover된 일정 날짜
@@ -48,30 +48,31 @@ const MyCalendar = () => {
 		year: today.getFullYear(),
 		month: today.getMonth() + 1,
 	});
+
 	// 시작 기간과 종료 기간을 각각 년도와 달로 분리
-	const startYear = parseInt(MENTORING_PERIOD.startDate.split("-")[0]);
-	const startMonth = parseInt(MENTORING_PERIOD.startDate.split("-")[1]);
-	const endYear = parseInt(MENTORING_PERIOD.endDate.split("-")[0]);
-	const endMonth = parseInt(MENTORING_PERIOD.endDate.split("-")[1]);
+	const startYear = parseInt(mentoringPeriod.startDate.split("-")[0]);
+	const startMonth = parseInt(mentoringPeriod.startDate.split("-")[1]);
+	const endYear = parseInt(mentoringPeriod.endDate.split("-")[0]);
+	const endMonth = parseInt(mentoringPeriod.endDate.split("-")[1]);
 
 	// 시작 기간과 종료 기간의 년도와 달이 같은지 비교
 	const isValidRange = startYear === endYear && startMonth === endMonth;
 
 	const validEnd = isValidRange
-		? MENTORING_PERIOD.endDate
+		? mentoringPeriod.endDate
 		: `${
 				scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
 		  }-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`;
 
 	const [validRange, setValidRange] = useState({
-		start: MENTORING_PERIOD.startDate,
+		start: mentoringPeriod.startDate,
 		end: validEnd,
 	});
 
 	const scheduleReadHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: `/mentoring/${params.id}/schedule?startDate=${validRange.start}&endDate=${validRange.end}`,
+			url: `/mentoring/${id}/schedule?startDate=${validRange.start}&endDate=${validRange.end}`,
 		});
 
 		if (response) {
@@ -84,7 +85,7 @@ const MyCalendar = () => {
 	const prevMonthHandler = () => {
 		handlePrevMonth(
 			scheduleDate,
-			MENTORING_PERIOD,
+			mentoringPeriod,
 			setScheduleDate,
 			setValidRange,
 		);
@@ -93,7 +94,7 @@ const MyCalendar = () => {
 	const nextMonthHandler = () => {
 		handleNextMonth(
 			scheduleDate,
-			MENTORING_PERIOD,
+			mentoringPeriod,
 			setScheduleDate,
 			setValidRange,
 		);
@@ -148,16 +149,41 @@ const MyCalendar = () => {
 		scheduleReadHandler();
 	}, [validRange]);
 
+	useEffect(() => {
+		if (startDate && endDate) {
+			setMentoringPeriod({
+				startDate: startDate,
+				endDate: endDate,
+			});
+		}
+	}, []);
+
 	return (
 		<>
 			{isLoading && <Loading />}
 			<div className="relative mx-auto mt-10 mb-20 lg:w-[60rem] ">
-				<button className="bg-main-color" onClick={prevMonthHandler}>
-					이전 달
-				</button>
-				<button className="bg-main-color" onClick={nextMonthHandler}>
-					다음 달
-				</button>
+				<div className="flex justify-between mb-2">
+					<div className="flex">
+						<button
+							className="flex items-center mx-1 px-4 py-3 bg-main-color rounded-[0.3rem] text-sm font-semibold text-white hover:bg-purple-100 transition-all duration-200"
+							onClick={prevMonthHandler}
+						>
+							<Arrow width={15} height={15} className="rotate-180 mr-1.5" />
+							이전 달
+						</button>
+						<button
+							className="flex items-center mx-1 px-4 py-3 bg-main-color rounded-[0.3rem] text-sm font-semibold text-white hover:bg-purple-100 transition-all duration-200"
+							onClick={nextMonthHandler}
+						>
+							다음 달
+							<Arrow width={15} height={15} className="ml-1.5" />
+						</button>
+					</div>
+					<div className="flex">
+						<MentoringInfoModal />
+						<MentoringEndButton />
+					</div>
+				</div>
 				<FullCalendar
 					plugins={[interactionPlugin, dayGridPlugin]}
 					initialView="dayGridMonth"
@@ -175,10 +201,7 @@ const MyCalendar = () => {
 					eventMouseEnter={eventMouseEnterHandler} // 마우스가 이벤트에 진입할 때
 					eventMouseLeave={eventMouseLeaveHandler} // 마우스가 이벤트를 떠날 때
 				/>
-				<MentoringInfoModal />
-				<MentoringEndButton />
 			</div>
-
 			{isScheduleAddModalOpen && (
 				<ScheduleAddModal
 					scheduleReadHandler={scheduleReadHandler}

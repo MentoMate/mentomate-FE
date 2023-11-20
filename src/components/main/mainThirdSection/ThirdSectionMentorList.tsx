@@ -1,6 +1,6 @@
 import { IMentorItemInProps } from "@/interface/mainPageInterface";
 import { IMentorItem } from "@/interface/mainPageMentor";
-import MentorItem from "@components/main/thirdsection/ThirdSectionMentorItem";
+import MentorItem from "@/components/main/mainThirdSection/ThirdSectionMentorItem";
 import { Link } from "react-router-dom";
 
 const ThirdSectionMentorList = ({ data }: IMentorItemInProps) => {

@@ -22,11 +22,12 @@ const ScheduleAddModal = ({
 	closeModal,
 	scheduleReadHandler,
 }: IScheduleAddModalProps) => {
+	const [form, setForm] = useRecoilState(scheduleRegistrationForm);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
 	const { fetchDataUseAxios } = useAxios();
 	const reactQuillRef = useRef<any>(null);
 	const divRef = useRef<HTMLDivElement>(null);
-	const [form, setForm] = useRecoilState(scheduleRegistrationForm);
+	const scheduleRef = useRef<HTMLDivElement>(null);
 
 	const onChangeContentHandler = (value: string) => {
 		setForm({
@@ -137,13 +138,26 @@ const ScheduleAddModal = ({
 		};
 	}, []);
 
+	const onClickCloseBtnHandler = (e: Event) => {
+		setForm({
+			title: "",
+			content: "",
+			start: "",
+			mentoringId: 0,
+			uploadFolder: "",
+		});
+		cancelLockScroll();
+		closeModal();
+		e.stopPropagation();
+	};
+
 	useEffect(() => {
 		setForm({
 			title: "",
 			content: "",
 			start: "",
 			uploadFolder: "",
-			mentoringId: 1,
+			mentoringId: 0,
 		});
 		makeRandomKeyHandler();
 	}, []);
@@ -157,27 +171,35 @@ const ScheduleAddModal = ({
 			});
 		}
 	}, [form.content]);
+
+	useEffect(() => {
+		const outSideClickHandler = (e: Event) => {
+			if (
+				scheduleRef.current &&
+				!scheduleRef.current.contains(e.target as Node)
+			) {
+				cancelLockScroll();
+				closeModal();
+			}
+		};
+
+		document.addEventListener("mousedown", outSideClickHandler);
+
+		return () => {
+			document.removeEventListener("mousedown", outSideClickHandler);
+		};
+	}, [scheduleRef]);
+
 	return (
 		<>
-			<div className="fixed inset-0 flex items-center  justify-center z-20 ">
-				<div className="absolute inset-0 bg-black opacity-50 "></div>
-				<div className="z-10 bg-white p-8 rounded-lg mt-20 ">
-					{/*모달 전체 박스*/}
+			<div className="fixed inset-0 flex items-center  justify-center z-[100] ">
+				<div className="absolute inset-0 bg-black opacity-50 " />
+				<div ref={scheduleRef} className="z-10 bg-white p-8 rounded-lg mt-20 ">
 					<div className="flex justify-between items-center  w-[15rem] lg:w-[40rem]">
 						<h2 className="text-sm lg:text-lg font-semibold mb-2">일정 추가</h2>
 						<Close
-							onClick={(e) => {
-								setForm({
-									title: "",
-									content: "",
-									start: "",
-									mentoringId: 1,
-									uploadFolder: "",
-								});
-								cancelLockScroll();
-								closeModal();
-								e.stopPropagation(); // 다른 부모 요소로의 이벤트 전파 중지
-							}}
+							className="cursor-pointer"
+							onClick={() => onClickCloseBtnHandler}
 							width={20}
 							height={20}
 						/>

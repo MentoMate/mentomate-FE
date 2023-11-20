@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import SockJS from "sockjs-client";
 import GroupChatContainer from "./GroupChatContainer";
-console.log("asd");
+
 const GroupChatBtn = () => {
 	const { id } = useParams();
 	const client = useRef<CompatClient>();

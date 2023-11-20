@@ -1,13 +1,11 @@
 import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
 import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
 import { ReactComponent as Cash } from "@assets/svg/cash.svg";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
-const mentoringName = "대기업 프로젝트 개발자와 함께하는 면접 트레이닝";
-const mentorName = "조인성";
-const mentoringDuration = "2022.10.18 ~ 2023.11.31";
-const paymentAmount = "59,900";
 const payData = {
 	pg: "kakaopay.TC0ONETIME",
 	pay_method: "card",
@@ -22,11 +20,10 @@ const payData = {
 };
 
 const PaymentConfirmation = () => {
-	const { paymentId } = useParams();
+	const { mentoringId } = useParams();
 	const navigate = useNavigate();
 	const [agreed, setAgreed] = useState(false);
 	const { fetchDataUseAxios } = useAxios();
-	console.log(paymentId);
 
 	const toggleAgreement = () => {
 		setAgreed(!agreed);
@@ -37,16 +34,13 @@ const PaymentConfirmation = () => {
 		IMP.init("imp24880013");
 
 		IMP.request_pay(payData, async (res: any) => {
-			console.log(res);
-
 			const response = await fetchDataUseAxios("useTokenAxios", {
 				method: "POST",
-				url: `/pay/complete?mentoring_id=${paymentId}&imp_uid=${res.imp_uid}`,
+				url: `/pay/complete?mentoring_id=${mentoringId}&imp_uid=${res.imp_uid}`,
 			});
 
 			if (response && response.status === 200) {
 				if (res.paid_amount === response.data.response.amount) {
-					console.log(response.data.response.amount);
 					navigate("/paymentSuccess");
 					return response.data;
 				}
@@ -54,17 +48,41 @@ const PaymentConfirmation = () => {
 		});
 	};
 
+	const getMentoringInfo = async () => {
+		const response = await fetchDataUseAxios("defaultAxios", {
+			method: "GET",
+			url: `/mentoring/${mentoringId}`,
+		});
+
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 401 || status === 403) {
+				alertHandler("error", "asd");
+			}
+		}
+	};
+
+	const { data } = useQuery(
+		["mentoringInfoInPayment", mentoringId],
+		getMentoringInfo,
+	);
+
 	useEffect(() => {
-		const JQUERY = document.createElement("script");
-		JQUERY.src = "http://code.jquery.com/jquery-1.12.4.min.js";
-		const IAMPORT = document.createElement("script");
-		IAMPORT.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
-		document.head.appendChild(JQUERY);
-		document.head.appendChild(IAMPORT);
+		const queryDOM = document.createElement("script");
+		queryDOM.src = "http://code.jquery.com/jquery-1.12.4.min.js";
+		const iAmPortDOM = document.createElement("script");
+		iAmPortDOM.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+		document.head.appendChild(queryDOM);
+		document.head.appendChild(iAmPortDOM);
 
 		return () => {
-			document.head.removeChild(JQUERY);
-			document.head.removeChild(IAMPORT);
+			document.head.removeChild(queryDOM);
+			document.head.removeChild(iAmPortDOM);
 		};
 	}, []);
 
@@ -75,26 +93,26 @@ const PaymentConfirmation = () => {
 				<div>
 					<div className="mb-8">
 						<p className="font-bold">멘토링 명</p>
-						<p> {mentoringName}</p>
+						<p> {data.title}</p>
 					</div>
 					<div className="mb-8">
 						<p className="font-bold ">멘토 </p>
-						<p> {mentorName + " 멘토"}</p>
+						<p> {data.name} 멘토</p>
 					</div>
 					<div className="mb-8">
 						<p className=" font-bold mb-2"> 멘토링 기간</p>
 						<p className="flex items-center">
 							<Calendar width={20} height={20} />
-							<div className="text-xs lg:text-sm ml-2">{mentoringDuration}</div>
+							<div className="text-xs lg:text-sm ml-2">
+								{data.startDate} ~ {data.endDate}{" "}
+							</div>
 						</p>
 					</div>
 					<div className="mb-8">
 						<p className="font-bold mb-2">결제 금액</p>
 						<p className="flex">
 							<Cash width={20} height={20} />
-							<div className="text-xs lg:text-sm ml-2">
-								{paymentAmount} {"₩"}
-							</div>
+							<div className="text-xs lg:text-sm ml-2">{data.amount} ₩</div>
 						</p>
 					</div>
 					<label className="flex justify-center items-center">

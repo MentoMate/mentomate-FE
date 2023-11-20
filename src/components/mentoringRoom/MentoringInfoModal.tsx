@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactComponent as Close } from "@/assets/svg/close.svg";
 import { ReactComponent as Search } from "@/assets/svg/search.svg";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
 
 const MentoringInfoModal = () => {
+	const mentoringInfoModalRef = useRef<HTMLDivElement>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const onClickOpenModal = () => {
@@ -16,37 +17,56 @@ const MentoringInfoModal = () => {
 		setIsModalOpen(false);
 	};
 
+	useEffect(() => {
+		const outSideClickHandler = (e: Event) => {
+			if (
+				mentoringInfoModalRef.current &&
+				!mentoringInfoModalRef.current.contains(e.target as Node)
+			) {
+				cancelLockScroll();
+				setIsModalOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", outSideClickHandler);
+
+		return () => {
+			document.removeEventListener("mousedown", outSideClickHandler);
+		};
+	}, [mentoringInfoModalRef]);
+
 	return (
 		<>
 			<button
 				title="mentoring_info"
-				className="absolute top-0 right-40 bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded-full z-10 shadow-lg hidden lg:flex "
+				className="hidden lg:flex items-center mx-1 bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded-[0.3rem] z-10 transition duration-200"
 				onClick={onClickOpenModal}
 			>
 				멘토링 정보
 			</button>
 			<button
 				title="mentoring_info"
-				className="flex absolute top-10 right-0 bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded-full z-10 shadow-lg lg:hidden "
+				className="flex lg:hidden bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded-full z-10 shadow-lg transition duration-200"
 				onClick={onClickOpenModal}
 			>
 				<Search width={15} height={15} />
 			</button>
 			{isModalOpen && (
-				<div className="fixed inset-0 flex items-center  justify-center z-20 ">
-					<div className="absolute inset-0 bg-black opacity-50 "></div>
-					<div className="z-10 bg-white p-8 rounded-lg mt-20 ">
-						{/*모달 전체 박스*/}
-						<div className="flex justify-between items-center  w-[15rem] lg:w-[30rem]">
+				<div className="fixed inset-0 flex items-center justify-center z-[100] ">
+					<div className="absolute inset-0 bg-black opacity-50" />
+					<div
+						ref={mentoringInfoModalRef}
+						className="bg-white p-8 rounded-lg mt-20 z-10"
+					>
+						<div className="flex justify-between items-center w-[15rem] lg:w-[30rem]">
 							<h2 className="text-sm lg:text-lg font-semibold mb-2">
 								치어리더가 되기 위한 준비 과정 그리고 노하우
 							</h2>
 							<Close
-								onClick={() => {
-									onClickCloseModal();
-								}}
+								onClick={onClickCloseModal}
 								width={20}
 								height={20}
+								className="cursor-pointer"
 							/>
 						</div>
 						<div className="flex items-center w-[15rem] lg:w-[30rem] border-b-2">

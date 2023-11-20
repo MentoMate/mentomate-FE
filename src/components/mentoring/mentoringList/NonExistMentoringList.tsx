@@ -7,5 +7,5 @@ const NonExistMentoringList = () => {
 		</>
 	);
 };
-console.log("asd");
+
 export default NonExistMentoringList;

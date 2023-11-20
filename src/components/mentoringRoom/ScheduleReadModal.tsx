@@ -27,6 +27,12 @@ const ScheduleReadModal = ({
 		setIsEditing(false);
 	};
 
+	const onClickCloseBtnHandler = (e: Event) => {
+		cancelLockScroll();
+		closeModal();
+		e.stopPropagation();
+	};
+
 	return (
 		<>
 			<div className="fixed inset-0 flex items-center  justify-center z-20 ">
@@ -50,11 +56,7 @@ const ScheduleReadModal = ({
 							/>
 							<Close
 								className="cursor-pointer"
-								onClick={(e) => {
-									cancelLockScroll();
-									closeModal();
-									e.stopPropagation();
-								}}
+								onClick={() => onClickCloseBtnHandler}
 								width={20}
 								height={20}
 							/>
