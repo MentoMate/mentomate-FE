@@ -10,6 +10,7 @@ import Pagination from "../common/pagination/Pagination";
 import MentorRegister from "./MentorRegister";
 import MentorList from "./mentorList/MentorList";
 import NonExistMentorList from "./mentorList/NonExistMentorList";
+import { alertHandler } from "@/utils/alert";
 
 const MentorContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -22,8 +23,22 @@ const MentorContainer = () => {
 			method: "GET",
 			url,
 		});
-		if (response && response.status === 200) {
-			return response.data;
+		if (response) {
+			const status = response.status;
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 조회해주세요.",
+				);
+				return {
+					items: [],
+					totalPages: 1,
+				};
+			}
 		}
 	};
 
