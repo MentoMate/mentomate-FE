@@ -81,29 +81,25 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 					/>
 				</div>
 				<div className="flex flex-col justify-center ml-6">
-					<div className="lg:text-base md:text-sm text-black-400">
-						{categoryName}
-					</div>
+					<div className="text-[0.8rem] text-main-color">{categoryName}</div>
 					<div className="mt-0.5 lg:text-lg md:text-base text-lg font-semibold">
 						{mentorItem.name}
-						<span className="ml-1 lg:text-sm md:text-[0.8rem] text-sm font-medium">
-							멘토
-						</span>
+						<span className="ml-1 text-[0.8rem] font-medium">멘토</span>
 					</div>
-					<div className="mt-0.5 md:text-sm text-base text-black-400">
+					<div className="mt-2 text-[0.8rem] text-black-400">
 						<p>
 							경력 : <span>{career.careerYear}년 </span>
 							<span>{career.careerMonth}개월</span>
 						</p>
 					</div>
-					<div className="mt-0.5 md:text-sm text-base text-black-400">
-						팔로워 18명
+					<div className="mt-0.5 text-[0.8rem] text-black-400">
+						팔로워 : {mentorItem.followers} 명
 					</div>
 				</div>
 			</div>
 			<button
 				onClick={() => onClickFavoriteMentorHandler()}
-				className="mt-6 bg-main-color lg:px-20 md:px-14 px-20 py-2 text-white text-lg font-bold rounded-sm"
+				className="mt-6 bg-main-color lg:px-20 md:px-14 px-20 py-3 text-white text-sm font-bold rounded-[0.3rem] hover:bg-purple-100 transition duration-200"
 			>
 				팔로우
 			</button>
