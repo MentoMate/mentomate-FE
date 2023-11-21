@@ -40,7 +40,7 @@ const MentorItem = ({ mentorItem }: IMentorItemProps) => {
 						</div>
 					</div>
 					<p className="ml-3 text-md font-medium">
-						{mentorItem.name}{" "}
+						{mentorItem.name}
 						<span className="text-[0.8rem] text-black-400">멘토</span>
 					</p>
 				</div>

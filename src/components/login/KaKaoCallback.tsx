@@ -16,7 +16,7 @@ const KaKaoCallback = () => {
 
 	const getToken = async () => {
 		const response = await fetchCall(
-			`/api/user/login/oauth/callback/kakao?code=${code}`,
+			`/user/login/oauth/callback/kakao?code=${code}`,
 			{
 				method: "GET",
 			},

@@ -1,4 +1,4 @@
-import { useFetch } from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
 import { useEffect, useState } from "react";
 import ErrorMsg from "../common/errorMsg/ErrorMsg";
@@ -22,7 +22,7 @@ const EmailAuthentication = ({
 	isEmailAuthentication,
 	setIsEmailAuthentication,
 }: IProps) => {
-	const { fetchCall } = useFetch();
+	const { fetchDataUseAxios } = useAxios();
 	const [authenticationNumber, setAuthenticationNumber] = useInput("");
 	const [inputDisabled, setInputDisabled] = useState<boolean>(false);
 	const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
@@ -34,12 +34,10 @@ const EmailAuthentication = ({
 	const second = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, "0");
 
 	const emailAuthenticationHandler = async () => {
-		const response = await fetchCall(
-			`/api/user/join/email/auth/verify?authCode=${authenticationNumber}&email=${email}`,
-			{
-				method: "POST",
-			},
-		);
+		const response = await fetchDataUseAxios("defaultAxios", {
+			method: "POST",
+			url: `/user/join/email/auth/verify?authCode=${authenticationNumber}&email=${email}`,
+		});
 
 		if (response) {
 			if (response.status === 200) {

@@ -17,7 +17,7 @@ const NaverCallback = () => {
 		const code = new URLSearchParams(location.search).get("code");
 
 		const response = await fetchCall(
-			`/api/user/login/oauth/callback/naver?code=${code}`,
+			`/user/login/oauth/callback/naver?code=${code}`,
 			{
 				method: "GET",
 			},
