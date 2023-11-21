@@ -70,12 +70,15 @@ function Router() {
 	const init = () => {
 		const ACCESS_TOKEN = getCookie("accessToken");
 
-		const eventSource = new EventSourcePolyfill(`/api/subscribe`, {
-			headers: {
-				Authorization: `Bearer ${ACCESS_TOKEN}`,
+		const eventSource = new EventSourcePolyfill(
+			`https://mentormate.site/subscribe`,
+			{
+				headers: {
+					Authorization: `Bearer ${ACCESS_TOKEN}`,
+				},
+				heartbeatTimeout: 1000 * 60 * 60,
 			},
-			heartbeatTimeout: 1000 * 60 * 60,
-		});
+		);
 
 		eventSource.onmessage = (event) => {
 			const message = JSON.parse(event.data);
