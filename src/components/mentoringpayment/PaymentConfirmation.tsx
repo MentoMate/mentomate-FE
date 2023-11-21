@@ -74,9 +74,9 @@ const PaymentConfirmation = () => {
 
 	useEffect(() => {
 		const queryDOM = document.createElement("script");
-		queryDOM.src = "http://code.jquery.com/jquery-1.12.4.min.js";
+		queryDOM.src = "https://code.jquery.com/jquery-1.12.4.min.js";
 		const iAmPortDOM = document.createElement("script");
-		iAmPortDOM.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+		iAmPortDOM.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
 		document.head.appendChild(queryDOM);
 		document.head.appendChild(iAmPortDOM);
 
