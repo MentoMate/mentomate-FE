@@ -1,12 +1,10 @@
-import BannerSection from "./BannerSection";
-import FirstSection from "@/components/main/mainFirstSection/FirstSection";
-import SecondSection from "@/components/main/mainSecondSection/SecondSection";
-import ThirdSection from "@/components/main/mainThirdSection/ThirdSection";
-import FourthSection from "@/components/main/mainFourthSection/FourthSection";
 import FifthSection from "@/components/main/mainFifthSection/FifthSection";
-import SixSection from "@/components/main/mainSixSection/SixSection";
+import FirstSection from "@/components/main/mainFirstSection/FirstSection";
+import FourthSection from "@/components/main/mainFourthSection/FourthSection";
+import ThirdSection from "@/components/main/mainThirdSection/ThirdSection";
 import useAxios from "@/hooks/useAxios";
 import { useQuery } from "react-query";
+import BannerSection from "./BannerSection";
 
 const Main = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -25,15 +23,13 @@ const Main = () => {
 	});
 
 	return (
-		<>
+		<div className="bg-black-100 min-h-min-height">
 			<BannerSection />
 			<FirstSection data={data.MentoringByCountWatch} />
-			<SecondSection />
 			<ThirdSection data={data.MentorByRating} />
 			<FourthSection data={data.PostRegisterDateTime} />
 			<FifthSection data={data.MentoringByEndDate} />
-			<SixSection data={data.Count} />
-		</>
+		</div>
 	);
 };
 

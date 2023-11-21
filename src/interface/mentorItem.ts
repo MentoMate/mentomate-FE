@@ -7,6 +7,7 @@ export interface IMentorItem {
 	readonly middleCategory: string;
 	readonly name: string;
 	readonly rating: number;
+	readonly followers: number;
 }
 
 export interface IMentorItemProps {

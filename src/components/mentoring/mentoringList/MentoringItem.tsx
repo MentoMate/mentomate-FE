@@ -75,10 +75,10 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 	}, []);
 
 	return (
-		<div className="mt-12 pb-4 w-[14rem] bg-white shadow-sm hover:shadow-lg border-b rounded-t-lg text-black-500 duration-100 hover:scale-105">
+		<div className="mt-6 pb-4 w-[14rem] bg-white shadow-sm hover:shadow-lg border-b rounded-t-lg text-black-500 duration-100 hover:scale-105">
 			<img
 				src={mentoringItem.uploadUrl}
-				alt="asd"
+				alt="mentoringImage"
 				className="relative w-[14rem] h-[15rem] rounded-lg object-cover z-20"
 			/>
 			<div className="flex bottom-4 mt-3 mx-4">
