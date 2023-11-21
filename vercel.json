@@ -3,7 +3,7 @@
 		{
 			"source": "/api/:path*",
 			"destination": "https://mentormate.site/:path*"
-		},
-		{ "source": "/:path*", "destination": "/" }
-	]
+		}
+	],
+	"routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }

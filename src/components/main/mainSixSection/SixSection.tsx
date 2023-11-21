@@ -7,15 +7,12 @@ interface IProps {
 
 const SixSection = ({ data }: IProps) => {
 	return (
-		<>
-			<div className="flex justify-between items-center mx-auto lg:w-[60rem] sm:w-[40rem] mt-40">
-				<div className="font-bold mx-auto lg:ml-5 lg:text-3xl md:text-base">
-					현재 등록된 멘토링 데이터
-				</div>
+		<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem] pb-40">
+			<div className="font-bold mx-auto lg:text-2xl md:text-base">
+				현재 등록된 멘토링 데이터
 			</div>
-
 			<AllMentoringDataList dataCount={data[0]} />
-		</>
+		</div>
 	);
 };
 
