@@ -1,17 +1,17 @@
 import { getCookie } from "@/utils/cookies";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { useState } from "react";
-console.log("asd");
+
 const useAxios = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [config, setConfig] = useState<AxiosRequestConfig | null>(null);
 
 	const defaultAxios: AxiosInstance = axios.create({
-		baseURL: "/api",
+		baseURL: "https://mentormate.site",
 	});
 
 	const useTokenAxios: AxiosInstance = axios.create({
-		baseURL: "/api",
+		baseURL: "https://mentormate.site",
 		headers: {
 			Authorization: `Bearer ${getCookie("accessToken")}`,
 		},

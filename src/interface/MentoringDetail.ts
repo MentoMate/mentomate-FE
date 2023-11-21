@@ -19,5 +19,3 @@ export interface IReview {
 	readonly rating: number;
 	readonly updateDate: string;
 }
-
-const asd = "asd";

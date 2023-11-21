@@ -23,7 +23,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			"/api": {
-				target: "http://43.202.208.73:8080",
+				target: "https://mentormate.site/",
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ""),
 				ws: true,
