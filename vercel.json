@@ -1,0 +1,7 @@
+{
+	"rewrites": [
+		{ "source": "/api", "destination": "https://mentormate.site" },
+		{ "source": "/(.*)", "destination": "/" }
+	],
+	"routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+}
