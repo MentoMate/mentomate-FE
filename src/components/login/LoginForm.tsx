@@ -83,6 +83,7 @@ const LoginForm = () => {
 				<input
 					id="password"
 					type="password"
+					autoComplete="off"
 					className={`my-1 p-4 border border-black-200 rounded-md placeholder:text-sm ${
 						errors.password
 							? "border-red-100 focus:outline-red-100"

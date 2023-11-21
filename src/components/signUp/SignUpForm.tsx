@@ -242,6 +242,7 @@ const SignUpForm = () => {
 					</p>
 					<input
 						type="password"
+						autoComplete="off"
 						className={`p-3 border border-black-200 ${
 							errors.password
 								? "border-red-100 focus:outline-red-100"
@@ -258,6 +259,7 @@ const SignUpForm = () => {
 					</label>
 					<input
 						type="password"
+						autoComplete="off"
 						className={`p-3 border border-black-200 ${
 							errors.checkPassword
 								? "border-red-100 focus:outline-red-100"
