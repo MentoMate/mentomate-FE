@@ -19,7 +19,7 @@ const UserMyPageFavoriteMentoring = () => {
 		}
 	};
 
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["myPageFavoriteMentoringList", url],
 		getFavoriteMentoringData,
 	);
@@ -41,8 +41,15 @@ const UserMyPageFavoriteMentoring = () => {
 
 	useEffect(() => {
 		getFavoriteMentoringData();
-	}, []);
+	}, [url]);
 
+	useEffect(() => {
+		refetch(); // Manually refetch data when URL changes
+	}, [url, refetch]);
+
+	useEffect(() => {
+		refetch(); // Initial fetch
+	}, []);
 	return (
 		<div className="mb-12">
 			{data.content.length !== 0 ? (

@@ -24,6 +24,7 @@ const UserMyPageInfo = () => {
 	const [previewImg, setPreviewImg] = useState<string | undefined>(undefined);
 	const [userImg, setUserImg] = useState<null | File>();
 	const {
+		register,
 		setError,
 		setFocus,
 		clearErrors,
@@ -121,7 +122,12 @@ const UserMyPageInfo = () => {
 			}
 		}
 	};
-
+	const onKeyUpHandler = (type: string) => {
+		if (type === "nickName") {
+			setIsNickNameDuplicate(false);
+			clearErrors("nickName");
+		}
+	};
 	useEffect(() => {
 		getUserInfoData();
 	}, []);
@@ -183,9 +189,11 @@ const UserMyPageInfo = () => {
 							type="text"
 							className="w-[15rem] my-1 p-4 border border-black-200 rounded-md placeholder:text-sm focus:outline-main-color"
 							placeholder="닉네임을 변경하세요"
+							{...register("nickName")}
 							onChange={(e) => {
 								setText(e.target.value);
 							}}
+							onKeyDown={() => onKeyUpHandler("nickName")}
 						/>
 						{isNickNameDuplicate && (
 							<SuccessAuthenticationMsg message="닉네임 중복확인 완료" />

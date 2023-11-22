@@ -48,11 +48,13 @@ const ScheduleAddButton = ({ reactQuillRef, scheduleReadHandler }: IProps) => {
 				"Content-Type": "application/json",
 			},
 		});
-
-		if (response && response.status === 200) {
-			alertHandler("success", "일정 등록이 완료되었습니다.");
+		if (response) {
+			if (response && response.status === 200) {
+				alertHandler("success", "일정 등록이 완료되었습니다.");
+			} else {
+				alertHandler("error", response.data);
+			}
 		}
-
 		scheduleReadHandler();
 	};
 
@@ -70,7 +72,6 @@ const ScheduleAddButton = ({ reactQuillRef, scheduleReadHandler }: IProps) => {
 	};
 
 	const onClickRegisterHandler = () => {
-		console.log("onClickRegisterHandler called");
 		if (!checkFormHandler()) return;
 		Swal.fire({
 			icon: "question",
@@ -84,7 +85,6 @@ const ScheduleAddButton = ({ reactQuillRef, scheduleReadHandler }: IProps) => {
 			}
 		});
 	};
-	console.log(form);
 
 	return (
 		<>

@@ -22,10 +22,10 @@ const FileUpload = ({ scheduleId }: IProps) => {
 
 	const handleUpload = async () => {
 		if (selectedFile) {
-			if (selectedFile.size >= 500000) {
+			if (selectedFile.size >= 100000000) {
 				alertHandler(
 					"error",
-					"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
+					"크기가 100MB 이상인 파일은 업로드가 불가능합니다.",
 				);
 				return;
 			}

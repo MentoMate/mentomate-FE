@@ -20,7 +20,10 @@ const UserMyPageWriting = () => {
 		}
 	};
 
-	const { data } = useQuery(["myPageWritingList", url], getMyWritingData);
+	const { data, refetch } = useQuery(
+		["myPageWritingList", url],
+		getMyWritingData,
+	);
 
 	useEffect(() => {
 		getMyWritingData();
@@ -38,7 +41,15 @@ const UserMyPageWriting = () => {
 	const transformationUrl = () => {
 		setUrl(`/posts/myPage?page=${currentPage}&pageSize=4`);
 	};
-	console.log(data);
+
+	useEffect(() => {
+		refetch(); // Manually refetch data when URL changes
+	}, ["/mentoring/history", refetch]);
+
+	useEffect(() => {
+		refetch(); // Initial fetch
+	}, []);
+
 	return (
 		<>
 			{data.items.length !== 0 ? (

@@ -37,7 +37,7 @@ const UserMyPageAlarm = () => {
 
 	useEffect(() => {
 		getMyNotificationData();
-	}, [data]);
+	}, []);
 
 	const transformationUrl = () => {
 		setUrl(`/notification?page=${currentPage - 1}&size=8`);

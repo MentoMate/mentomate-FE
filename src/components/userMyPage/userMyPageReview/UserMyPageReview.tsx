@@ -11,7 +11,6 @@ const UserMyPageReview = () => {
 	const [url, setUrl] = useState<string>(`/mentoring/end?page=0&size=3`);
 
 	const getMyReviewMentoringData = async () => {
-		console.log(url);
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: url,
@@ -20,11 +19,10 @@ const UserMyPageReview = () => {
 			return response.data;
 		}
 	};
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["mypageMentoringList", url],
 		getMyReviewMentoringData,
 	);
-	console.log(data.totalPages);
 
 	useEffect(() => {
 		getMyReviewMentoringData();
@@ -42,7 +40,13 @@ const UserMyPageReview = () => {
 	const transformationUrl = () => {
 		setUrl(`/mentoring/end?page=${currentPage - 1}&size=3`);
 	};
+	useEffect(() => {
+		refetch(); // Manually refetch data when URL changes
+	}, ["/mentoring/history", refetch]);
 
+	useEffect(() => {
+		refetch(); // Initial fetch
+	}, []);
 	return (
 		<>
 			{data.content.length !== 0 ? (

@@ -21,7 +21,7 @@ const UserMyPageFollow = () => {
 		}
 	};
 
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["myPageMentorFollowList", url],
 		getMentorFollowData,
 	);
@@ -43,8 +43,15 @@ const UserMyPageFollow = () => {
 
 	useEffect(() => {
 		getMentorFollowData();
-	}, [data]);
+	}, []);
 
+	useEffect(() => {
+		refetch(); // Manually refetch data when URL changes
+	}, [url, refetch]);
+
+	useEffect(() => {
+		refetch(); // Initial fetch
+	}, []);
 	return (
 		<>
 			{data.content.length !== 0 ? (

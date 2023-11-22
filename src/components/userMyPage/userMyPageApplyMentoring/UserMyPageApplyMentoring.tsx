@@ -19,7 +19,7 @@ const UserMyPageApplyMentoring = () => {
 		}
 	};
 
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["myPageApplyMentoringList", url],
 		getMyMentoringData,
 	);
@@ -41,8 +41,14 @@ const UserMyPageApplyMentoring = () => {
 
 	useEffect(() => {
 		getMyMentoringData();
-	}, []);
+	}, [url]);
+	useEffect(() => {
+		refetch(); // Manually refetch data when URL changes
+	}, [url, refetch]);
 
+	useEffect(() => {
+		refetch(); // Initial fetch
+	}, []);
 	return (
 		<div className="mb-12">
 			{data.content.length !== 0 ? (

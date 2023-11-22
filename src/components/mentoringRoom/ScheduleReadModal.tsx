@@ -3,7 +3,7 @@ import { ReactComponent as EditIcon } from "@/assets/svg/edit.svg";
 import { ReactComponent as FileList } from "@/assets/svg/fileList.svg";
 import { IScheduleReadModalProps } from "@/interface/scheduleReadModalProps";
 import { cancelLockScroll } from "@/utils/controlBodyScroll";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import FileUpload from "./FileUpload";
 import MentoringFileList from "./MentoringFileList";
@@ -13,9 +13,11 @@ const ScheduleReadModal = ({
 	formattedDate,
 	closeModal,
 	eventInfo,
+	scheduleReadHandler,
 }: IScheduleReadModalProps) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOtherScreenVisible, setOtherScreenVisible] = useState(false);
+	const scheduleRef = useRef<HTMLDivElement>(null);
 
 	const onClickEditHandler = () => {
 		setIsEditing(!isEditing);
@@ -27,18 +29,35 @@ const ScheduleReadModal = ({
 		setIsEditing(false);
 	};
 
-	const onClickCloseBtnHandler = (e: Event) => {
+	const onClickCloseBtnHandler = () => {
 		cancelLockScroll();
 		closeModal();
-		e.stopPropagation();
 	};
+
+	useEffect(() => {
+		const outSideClickHandler = (e: Event) => {
+			if (
+				scheduleRef.current &&
+				!scheduleRef.current.contains(e.target as Node)
+			) {
+				cancelLockScroll();
+				closeModal();
+			}
+		};
+
+		document.addEventListener("mousedown", outSideClickHandler);
+
+		return () => {
+			document.removeEventListener("mousedown", outSideClickHandler);
+		};
+	}, [scheduleRef]);
 
 	return (
 		<>
 			<div className="fixed inset-0 flex items-center  justify-center z-20 ">
 				<div className="absolute inset-0 bg-black opacity-50 "></div>
 
-				<div className="z-10 bg-white p-8 rounded-lg mt-20 ">
+				<div ref={scheduleRef} className="z-10 bg-white p-8 rounded-lg mt-20 ">
 					<div className="flex justify-between items-center font-semibold mt-4 text-sm lg:text-lg mb-4 ">
 						날짜: {formattedDate}
 						<div className="flex justify-between items-center w-[5rem]">
@@ -56,7 +75,7 @@ const ScheduleReadModal = ({
 							/>
 							<Close
 								className="cursor-pointer"
-								onClick={() => onClickCloseBtnHandler}
+								onClick={onClickCloseBtnHandler}
 								width={20}
 								height={20}
 							/>
@@ -71,6 +90,7 @@ const ScheduleReadModal = ({
 							formattedDate={formattedDate}
 							closeModal={closeModal}
 							eventInfo={eventInfo}
+							scheduleReadHandler={scheduleReadHandler}
 						/>
 					) : (
 						<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">

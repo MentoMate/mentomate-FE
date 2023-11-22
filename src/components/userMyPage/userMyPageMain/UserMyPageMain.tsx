@@ -55,7 +55,7 @@ const UserMyPageMain = () => {
 		}
 	};
 
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["myPageMentoringList", "/mentoring/history"],
 		getMyMentoringData,
 	);
@@ -72,6 +72,13 @@ const UserMyPageMain = () => {
 		getUserInfoData();
 	}, []);
 
+	useEffect(() => {
+		refetch(); // Manually refetch data when URL changes
+	}, ["/mentoring/history", refetch]);
+
+	useEffect(() => {
+		refetch(); // Initial fetch
+	}, []);
 	return (
 		<>
 			<div className="flex items-center mb-12">
