@@ -2,7 +2,7 @@ import { communityRegistrationForm } from "@/data/communityRegistrationForm";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -42,19 +42,7 @@ const EditCommunityContainer = () => {
 		return new File([data], filename!, metadata);
 	};
 
-	const { data } = useQuery(["communityInfo"], getCommunityInfo, {
-		onSuccess: async (data) => {
-			const thumbNailImgFile = await convertURLtoFile(data.uploadUrl);
-			setForm({
-				category: data.category,
-				title: data.title,
-				content: data.content,
-				uploadFolder: data.uploadFolder,
-				thumbNailImgUrl: data.uploadUrl,
-				thumbNailImg: thumbNailImgFile,
-			});
-		},
-	});
+	const { data } = useQuery(["communityInfo"], getCommunityInfo);
 
 	const uploadImageHandler = async (file: File) => {
 		if (file.size >= 500000) {
@@ -140,6 +128,25 @@ const EditCommunityContainer = () => {
 			content,
 		});
 	};
+
+	const initSetFormHandler = async () => {
+		// const thumbNailImgFile = await convertURLtoFile(data.uploadUrl);
+		setForm({
+			category: data.category,
+			title: data.title,
+			content: data.content,
+			uploadFolder: data.uploadFolder,
+			thumbNailImgUrl: data.uploadUrl,
+			// thumbNailImg: thumbNailImgFile,
+			thumbNailImg: null,
+		});
+	};
+
+	useEffect(() => {
+		if (data) {
+			initSetFormHandler();
+		}
+	}, [data]);
 
 	return (
 		<>

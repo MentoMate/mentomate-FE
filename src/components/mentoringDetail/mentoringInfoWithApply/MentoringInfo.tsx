@@ -10,7 +10,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
-console.log("asd");
+import { ReactComponent as Save } from "@assets/svg/fillSave.svg";
+import { ReactComponent as NotSave } from "@assets/svg/emptySave.svg";
+
 interface IReplaceAmountAndHeadCount {
 	readonly replaceAmount: string;
 	readonly replaceHeadCount: string;
@@ -28,6 +30,9 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	const setIsOpenChatList = useSetRecoilState(openChatModalState);
 	const setPrivateChatId = useSetRecoilState(selectedPrivateChatId);
 	const isLogin = useRecoilValue(loginState);
+	const [isLikeMentoring, setIsLikeMentoring] = useState<boolean>(
+		data.mentoringLike,
+	);
 
 	const [replaceAmountAndHeadCount, setReplaceAmountAndHeadCount] =
 		useState<IReplaceAmountAndHeadCount>({
@@ -66,17 +71,35 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	};
 
 	const onClickApplyBtnHandler = () => {
-		Swal.fire({
-			icon: "question",
-			text: "멘토링을 신청 하시겠습니까?",
-			showCancelButton: true,
-			confirmButtonText: "확인",
-			cancelButtonText: "취소",
-		}).then((result) => {
-			if (result.isConfirmed) {
-				navigate(`/payment/${mentoringId}`);
-			}
-		});
+		if (!isLogin) {
+			Swal.fire({
+				icon: "question",
+				text: "로그인 후 신청 가능합니다. 로그인을 하시겠습니까?",
+				showCancelButton: true,
+				confirmButtonText: "확인",
+				cancelButtonText: "취소",
+			}).then((result) => {
+				sessionStorage.setItem(
+					"previousLocation",
+					`/mentoringDetail/${mentoringId}`,
+				);
+				if (result.isConfirmed) {
+					navigate(`/login`);
+				}
+			});
+		} else {
+			Swal.fire({
+				icon: "question",
+				text: "멘토링을 신청 하시겠습니까?",
+				showCancelButton: true,
+				confirmButtonText: "확인",
+				cancelButtonText: "취소",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					navigate(`/payment/${mentoringId}`);
+				}
+			});
+		}
 	};
 
 	const createChat1On1Handler = async () => {
@@ -112,6 +135,7 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 				}
 
 				if (response.status === 400) {
+					console.log("asd");
 					setIsOpenChatList(true);
 					setPrivateChatId(response.data.privateChatRoomId);
 				}
@@ -119,7 +143,7 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 		}
 	};
 
-	const onClickFavoriteMentoringHandler = async () => {
+	const onClickLikeMentoringHandler = async () => {
 		if (!isLogin) {
 			Swal.fire({
 				icon: "question",
@@ -141,11 +165,18 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 				method: "POST",
 				url: `/mentoring/${mentoringId}`,
 			});
+
 			if (response) {
 				const status = response.status;
 
 				if (status === 200) {
+					setIsLikeMentoring(!isLikeMentoring);
 					return response.data;
+				}
+
+				if (status === 400) {
+					alertHandler("error", "사용자 본인 멘토링은 찜할 수 없습니다.");
+					return;
 				}
 
 				if (status === 500) {
@@ -162,6 +193,10 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	useEffect(() => {
 		replaceHandler();
 	}, []);
+
+	useEffect(() => {
+		console.log(isLikeMentoring);
+	}, [isLikeMentoring]);
 
 	return (
 		<>
@@ -205,9 +240,14 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 					1:1 문의
 				</button>
 				<button
-					onClick={() => onClickFavoriteMentoringHandler()}
-					className="my-1 py-3 w-full bg-white border hover:bg-purple-100 border-main-color hover:border-white rounded-md text-sm text-main-color hover:text-white font-semibold text-center transition-all duration-250"
+					onClick={() => onClickLikeMentoringHandler()}
+					className="flex justify-center items-center my-1 py-2 w-full bg-white border hover:bg-purple-100 border-main-color hover:border-white rounded-md text-sm text-main-color hover:text-white font-semibold text-center transition-all duration-250"
 				>
+					{isLikeMentoring ? (
+						<Save width={30} height={30} className="mr-2" />
+					) : (
+						<NotSave width={30} height={30} className="mr-2" />
+					)}
 					멘토링 찜 하기
 				</button>
 			</div>

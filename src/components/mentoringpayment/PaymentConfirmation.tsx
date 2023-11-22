@@ -6,47 +6,30 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
-const payData = {
-	pg: "kakaopay.TC0ONETIME",
-	pay_method: "card",
-	merchant_uid: new Date().getTime(),
-	name: "대기업 프로젝트 개발자와 함께하는 면접 트레이닝",
-	amount: 1,
-	buyer_email: "test@naver.com",
-	buyer_name: "함창범",
-	buyer_tel: "010-1234-5678",
-	buyer_addr: "서울특별시",
-	buyer_postcode: "123-456",
-};
+interface IReplaceAmountAndHeadCount {
+	readonly replaceAmount: string;
+	readonly replaceHeadCount: string;
+}
+
+interface IReplaceDate {
+	readonly replaceStartDate: string;
+	readonly replaceEndDate: string;
+}
 
 const PaymentConfirmation = () => {
 	const { mentoringId } = useParams();
 	const navigate = useNavigate();
 	const [agreed, setAgreed] = useState(false);
 	const { fetchDataUseAxios } = useAxios();
-
-	const toggleAgreement = () => {
-		setAgreed(!agreed);
-	};
-
-	const requestPay = () => {
-		const { IMP }: any = window;
-		IMP.init("imp24880013");
-
-		IMP.request_pay(payData, async (res: any) => {
-			const response = await fetchDataUseAxios("useTokenAxios", {
-				method: "POST",
-				url: `/pay/complete?mentoring_id=${mentoringId}&imp_uid=${res.imp_uid}`,
-			});
-
-			if (response && response.status === 200) {
-				if (res.paid_amount === response.data.response.amount) {
-					navigate("/paymentSuccess");
-					return response.data;
-				}
-			}
+	const [replaceAmountAndHeadCount, setReplaceAmountAndHeadCount] =
+		useState<IReplaceAmountAndHeadCount>({
+			replaceAmount: "",
+			replaceHeadCount: "",
 		});
-	};
+	const [replaceDate, setReplaceDate] = useState<IReplaceDate>({
+		replaceStartDate: "",
+		replaceEndDate: "",
+	});
 
 	const getMentoringInfo = async () => {
 		const response = await fetchDataUseAxios("defaultAxios", {
@@ -62,7 +45,16 @@ const PaymentConfirmation = () => {
 			}
 
 			if (status === 401 || status === 403) {
-				alertHandler("error", "asd");
+				alertHandler("error", "재 로그인 후 다시 이용해주세요.");
+				navigate(`/mentoring/${mentoringId}`);
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+				navigate(`/mentoringDetail/${mentoringId}`);
 			}
 		}
 	};
@@ -71,6 +63,95 @@ const PaymentConfirmation = () => {
 		["mentoringInfoInPayment", mentoringId],
 		getMentoringInfo,
 	);
+
+	const replaceHandler = () => {
+		const replaceAmount = data.amount.toLocaleString();
+		const replaceHeadCount = data.numberOfPeople.toLocaleString();
+
+		const startDate = new Date(data.startDate);
+		const endDate = new Date(data.endDate);
+
+		const replaceStartDate = `${startDate.getFullYear()}년 ${
+			startDate.getMonth() + 1
+		}월 ${startDate.getDate()}일`;
+
+		const replaceEndDate = `${endDate.getFullYear()}년 ${
+			endDate.getMonth() + 1
+		}월 ${endDate.getDate()}일`;
+
+		setReplaceDate({
+			replaceStartDate,
+			replaceEndDate,
+		});
+
+		setReplaceAmountAndHeadCount({
+			replaceAmount,
+			replaceHeadCount,
+		});
+	};
+
+	const toggleAgreement = () => {
+		setAgreed(!agreed);
+	};
+
+	const requestPay = () => {
+		const payData = {
+			pg: "kakaopay.TC0ONETIME",
+			pay_method: "card",
+			merchant_uid: new Date().getTime(),
+			name: data.title,
+			amount: data.amount,
+			buyer_email: data.email,
+			buyer_name: data.name,
+			buyer_tel: "010-1234-5678",
+			buyer_addr: "서울특별시",
+			buyer_postcode: "123-456",
+		};
+
+		const { IMP }: any = window;
+
+		IMP.init("imp24880013");
+
+		IMP.request_pay(payData, async (res: any) => {
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "POST",
+				url: `/pay/complete?mentoring_id=${mentoringId}&imp_uid=${res.imp_uid}`,
+			});
+
+			if (response) {
+				const status = response.status;
+
+				if (status === 200) {
+					if (res.paid_amount === response.data.response.amount) {
+						navigate("/paymentSuccess");
+
+						await fetchDataUseAxios("useTokenAxios", {
+							method: "POST",
+							url: "/publish/notification",
+							data: {
+								receiverEmail: data.email,
+								content: `${data.title} 멘토링에 신청자가 생겼습니다.`,
+								notificationType: "PAY",
+							},
+						});
+					}
+				}
+
+				if (status === 401 || status === 403) {
+					alertHandler("error", "재로그인 후 이용해주세요.");
+					navigate("/mentor");
+				}
+
+				if (status === 500) {
+					alertHandler(
+						"error",
+						"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+					);
+					return;
+				}
+			}
+		});
+	};
 
 	useEffect(() => {
 		const queryDOM = document.createElement("script");
@@ -86,10 +167,16 @@ const PaymentConfirmation = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (data) {
+			replaceHandler();
+		}
+	}, [data]);
+
 	return (
-		<div className="flex items-center justify-center min-h-screen lg:h-[64.5rem] bg-gray-100">
-			<div className="flex flex-col items-center justify-center p-12 w-[17rem] md:w-[30rem] lg:w-[40rem] h-[40rem] md:h-[39rem] bg-white rounded-md shadow-md">
-				<h2 className="text-xl font-semibold mb-10 lg:mb-20">결제 내용</h2>
+		<div className="flex items-center justify-center py-8 min-h-min-height bg-gray-100">
+			<div className="flex flex-col items-center justify-center p-12 w-[17rem] md:w-[30rem] lg:w-[40rem] h-[40rem] bg-white rounded-md shadow-md">
+				<h2 className="text-xl font-semibold mb-10 lg:mb-12">결제 내용</h2>
 				<div>
 					<div className="mb-8">
 						<p className="font-bold">멘토링 명</p>
@@ -104,7 +191,7 @@ const PaymentConfirmation = () => {
 						<p className="flex items-center">
 							<Calendar width={20} height={20} />
 							<div className="text-xs lg:text-sm ml-2">
-								{data.startDate} ~ {data.endDate}{" "}
+								{replaceDate.replaceStartDate} ~ {replaceDate.replaceEndDate}
 							</div>
 						</p>
 					</div>
@@ -112,7 +199,9 @@ const PaymentConfirmation = () => {
 						<p className="font-bold mb-2">결제 금액</p>
 						<p className="flex">
 							<Cash width={20} height={20} />
-							<div className="text-xs lg:text-sm ml-2">{data.amount} ₩</div>
+							<div className="text-xs lg:text-sm ml-2">
+								{replaceAmountAndHeadCount.replaceAmount} ₩
+							</div>
 						</p>
 					</div>
 					<label className="flex justify-center items-center">

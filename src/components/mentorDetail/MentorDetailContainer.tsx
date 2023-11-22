@@ -40,7 +40,7 @@ const MentorDetailContainer = () => {
 		}
 	};
 
-	const { data } = useQuery(["mentorInfo"], getMentorInfoHandler);
+	const { data } = useQuery(["mentorInfo", mentorId], getMentorInfoHandler);
 
 	return (
 		<div className="relative flex md:flex-row flex-col mt-16 mx-auto lg:w-[60rem] md:w-[40rem] w-[20rem]">

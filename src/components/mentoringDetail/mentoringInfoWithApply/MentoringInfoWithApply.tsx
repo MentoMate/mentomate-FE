@@ -1,6 +1,6 @@
 import { IMentoringDetailProps } from "@/interface/mentoringInfo";
-import MentorProfile from "../MentorProfile";
 import MentoringInfo from "./MentoringInfo";
+import MentorProfile from "../MentorProfile";
 
 const MentoringInfoWithApply = ({ data }: IMentoringDetailProps) => {
 	return (

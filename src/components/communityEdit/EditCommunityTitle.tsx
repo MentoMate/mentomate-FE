@@ -1,6 +1,6 @@
 import { communityRegistrationForm } from "@/data/communityRegistrationForm";
 import { useRecoilState } from "recoil";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 
 const EditCommunityTitle = () => {
 	const [form, setForm] = useRecoilState(communityRegistrationForm);
@@ -8,6 +8,10 @@ const EditCommunityTitle = () => {
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		setForm({ ...form, title: e.target.value });
 	};
+
+	useEffect(() => {
+		console.log(form);
+	}, [form]);
 
 	return (
 		<div className="flex items-center mt-4 border rounded-md sm:text-base text-sm">

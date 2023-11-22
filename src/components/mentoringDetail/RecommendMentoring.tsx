@@ -1,6 +1,6 @@
 import useAxios from "@/hooks/useAxios";
-import RecommendMentoringItem from "./RecommendMentoringItem";
 import { useQuery } from "react-query";
+import RecommendMentoringItem from "./RecommendMentoringItem";
 
 interface IRecommendMentoring {
 	readonly mentoringId: number;
@@ -38,7 +38,7 @@ const RecommendMentoring = () => {
 				const result: IRecommendMentoring[] = new Array();
 				const recommendMentoringList = response.data.MentoringByCountWatch;
 
-				if (recommendMentoringList.length === 3) {
+				if (recommendMentoringList.length >= 3) {
 					for (let i = 0; i < 3; i++) {
 						result.push(recommendMentoringList[i]);
 					}
@@ -79,7 +79,7 @@ const RecommendMentoring = () => {
 						</div>
 					))
 				) : (
-					<div>
+					<div className="flex justify-center items-center lg:w-[40rem] md:w-[25rem] sm:w-[20rem] h-[10rem] mx-auto text-center text-black-400">
 						<p>현재 등록된 멘토링이 없습니다.</p>
 					</div>
 				)}

@@ -13,8 +13,14 @@ const MentoringPeriod = () => {
 	const onChangeDateHandler = (type: string, date: Date) => {
 		if (type === "startDate") {
 			const today = new Date();
+
 			if (today > date) {
 				alertHandler("error", "오늘날짜보다 더 빨리 시작할 수 없습니다.");
+				return;
+			}
+
+			if (date > form.endDate) {
+				alertHandler("error", "시작일자는 종료일자보다 클 수 없습니다.");
 				return;
 			}
 
@@ -25,8 +31,6 @@ const MentoringPeriod = () => {
 		}
 
 		if (type === "endDate") {
-			console.log(form.startDate);
-			console.log(date);
 			if (date < form.startDate) {
 				alertHandler("error", "종료일자는 시작일자보다 빠를 수 없습니다.");
 				return;

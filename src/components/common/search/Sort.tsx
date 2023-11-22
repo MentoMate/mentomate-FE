@@ -115,7 +115,7 @@ const Sort = () => {
 		<>
 			<div
 				ref={sortRef}
-				className="flex justify-center items-center relative md:mt-0 mt-2 md:py-1 py-2 px-4 md:w-[6rem] w-full bg-white hover:bg-black-100 border border-black-200 rounded-[0.3rem] text-[0.75rem] cursor-pointer transition duration-150"
+				className="flex justify-center items-center relative md:mt-0 mt-2 md:py-1 py-2 px-4 md:w-[7rem] w-full bg-white hover:bg-black-100 border border-black-200 rounded-[0.3rem] text-[0.75rem] cursor-pointer transition duration-150"
 				onClick={() => setIsOpenSort(!isOpenSort)}
 			>
 				<div className="grow flex justify-center items-center text-main-color text-center font-semibold">
