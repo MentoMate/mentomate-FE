@@ -23,6 +23,7 @@ const EditMentoringContainer = () => {
 	const { mentoringId } = useParams();
 	const reactQuillRef = useRef<any>(null);
 	const divRef = useRef<HTMLDivElement>(null);
+	const [isInit, setIsInit] = useState<boolean>(true);
 
 	const findCategoryByKey = (formCategory: string) => {
 		for (let categoryType in categories) {
@@ -40,7 +41,10 @@ const EditMentoringContainer = () => {
 	};
 
 	const convertURLtoFile = async (url: string) => {
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			method: "POST",
+			mode: "cors",
+		});
 		const data = await response.blob();
 		const ext = url.split(".").pop();
 		const filename = url.split("/").pop();
@@ -78,6 +82,7 @@ const EditMentoringContainer = () => {
 					thumbNailImg: thumbNailImgFile,
 					uploadFolder: data.uploadFolder,
 				});
+				setIsInit(false);
 			},
 		},
 	);
@@ -88,7 +93,7 @@ const EditMentoringContainer = () => {
 				"error",
 				"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
 			);
-			return;
+			return "";
 		}
 
 		const formData = new FormData();
@@ -106,6 +111,7 @@ const EditMentoringContainer = () => {
 				"error",
 				"이미지 업로드에 실패하였습니다. 잠시 후에 다시 시도해주세요.",
 			);
+			return "";
 		}
 	};
 
@@ -122,9 +128,12 @@ const EditMentoringContainer = () => {
 
 					const file = inputDOM.files[0];
 					const imageUrl = await uploadImageHandler(file);
-					const editor = reactQuillRef.current.getEditor();
-					const range = editor.getSelection();
-					editor.insertEmbed(range.index, "image", imageUrl);
+
+					if (imageUrl !== "") {
+						const editor = reactQuillRef.current.getEditor();
+						const range = editor.getSelection();
+						editor.insertEmbed(range.index, "image", imageUrl);
+					}
 				} catch (error) {
 					alertHandler(
 						"error",
@@ -161,10 +170,12 @@ const EditMentoringContainer = () => {
 	}, []);
 
 	const onChangeContentHandler = (content: string) => {
-		setForm({
-			...form,
-			content,
-		});
+		if (!isInit) {
+			setForm({
+				...form,
+				content,
+			});
+		}
 	};
 
 	useEffect(() => {

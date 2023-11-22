@@ -48,7 +48,7 @@ const MentoringRegistrationContainer = () => {
 				"error",
 				"크기가 500KB 이상인 이미지는 업로드가 불가능합니다.",
 			);
-			return;
+			return "";
 		}
 
 		const formData = new FormData();
@@ -67,6 +67,7 @@ const MentoringRegistrationContainer = () => {
 				"error",
 				"이미지 업로드에 실패하였습니다. 잠시 후에 다시 시도해주세요.",
 			);
+			return "";
 		}
 	};
 
@@ -83,14 +84,17 @@ const MentoringRegistrationContainer = () => {
 
 					const file = inputDOM.files[0];
 					const imageUrl = await uploadImageHandler(file);
-					const editor = reactQuillRef.current.getEditor();
-					const range = editor.getSelection();
-					editor.insertEmbed(range.index, "image", imageUrl);
+					if (imageUrl !== "") {
+						const editor = reactQuillRef.current.getEditor();
+						const range = editor.getSelection();
+						editor.insertEmbed(range.index, "image", imageUrl);
+					}
 				} catch (error) {
 					alertHandler(
 						"error",
 						"이미지 업로드가 실패하였습니다. 다시 시도해주세요.",
 					);
+					return;
 				} finally {
 					setIsImgUploading(false);
 					cancelLockScroll();

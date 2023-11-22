@@ -8,6 +8,7 @@ export interface IMentorItem {
 	readonly name: string;
 	readonly rating: number;
 	readonly followers: number;
+	readonly mentorFollow: boolean;
 }
 
 export interface IMentorItemProps {

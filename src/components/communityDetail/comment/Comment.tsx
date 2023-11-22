@@ -1,10 +1,12 @@
 import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
 import { ICommentProps } from "@/interface/comment";
+import { communityLikeAndCommentCnt } from "@/state/followStats";
 import { alertHandler } from "@/utils/alert";
 import { FormEvent, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
+import { useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
 
 const IMAGE_SRC = "/src/assets/svg/user.svg";
@@ -14,6 +16,10 @@ const Comment = ({ comment }: ICommentProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [editComment, setEditComment] = useInput(comment.comment);
+	const navigate = useNavigate();
+	const [likeAndCommentCnt, setLikeAndCommentCnt] = useRecoilState(
+		communityLikeAndCommentCnt,
+	);
 	const queryClient = useQueryClient();
 
 	const submitEditCommentHandler = async () => {
@@ -27,7 +33,6 @@ const Comment = ({ comment }: ICommentProps) => {
 
 		if (response) {
 			if (response.status === 200) {
-				queryClient.invalidateQueries("communityComment");
 				alertHandler("success", "댓글 수정이 되었습니다.");
 				setIsEdit(false);
 			}
@@ -45,15 +50,37 @@ const Comment = ({ comment }: ICommentProps) => {
 		});
 
 		if (response) {
-			if (response.status === 200) {
+			const status = response.status;
+
+			if (status === 200) {
 				queryClient.invalidateQueries("communityComment");
+				const deepCopyCommentsCnt = { ...likeAndCommentCnt };
+
+				setLikeAndCommentCnt({
+					...likeAndCommentCnt,
+					commentCnt: deepCopyCommentsCnt.commentCnt - 1,
+				});
 				alertHandler("success", "댓글을 삭제하였습니다.");
+			}
+
+			if (status === 400) {
+				alertHandler("error", "잠시 후에 다시 시도해주세요.");
+			}
+
+			if (status === 401 || status === 403) {
+				alertHandler("error", "재 로그인 후 사용해주세요.");
+				navigate("/login");
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 이용해주세요.",
+				);
+				return;
 			}
 		}
 	};
-
-	const deleteComment = useMutation(() => deleteCommentHandler());
-	const updateComment = useMutation(() => submitEditCommentHandler());
 
 	const editCommentBtnHandler = () => {
 		setIsEdit(!isEdit);
@@ -68,7 +95,7 @@ const Comment = ({ comment }: ICommentProps) => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				deleteComment.mutate();
+				deleteCommentHandler();
 			}
 		});
 	};
@@ -83,7 +110,7 @@ const Comment = ({ comment }: ICommentProps) => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				updateComment.mutate();
+				submitEditCommentHandler();
 			}
 		});
 	};

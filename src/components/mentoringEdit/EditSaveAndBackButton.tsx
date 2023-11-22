@@ -47,8 +47,6 @@ const EditSaveAndBackButton = ({ reactQuillRef }: IProps) => {
 			uploadImg: imageArr,
 		};
 
-		console.log(data);
-
 		const formData = new FormData();
 		formData.append(
 			"mentoringSave",

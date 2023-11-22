@@ -1,13 +1,13 @@
 import useAxios from "@/hooks/useAxios";
 import { ICommunityItem } from "@/interface/community";
+import { communityLike, communityLikeAndCommentCnt } from "@/state/followStats";
 import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
 import { ReactComponent as EmptyHeart } from "@assets/svg/emptyHeart.svg";
 import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
-import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 
 interface IProps {
@@ -15,11 +15,14 @@ interface IProps {
 }
 
 const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
-	const queryClient = useQueryClient();
 	const { communityId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();
+	const [isLike, setIsLike] = useRecoilState(communityLike);
+	const [likeAndCommentCnt, setLikeAndCommentCnt] = useRecoilState(
+		communityLikeAndCommentCnt,
+	);
 
 	const submitLikeHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -29,7 +32,19 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 
 		if (response) {
 			if (response.status === 200) {
-				queryClient.invalidateQueries("communityDetail");
+				setIsLike(!isLike);
+
+				if (!isLike === true) {
+					setLikeAndCommentCnt({
+						...likeAndCommentCnt,
+						postLikeCnt: likeAndCommentCnt.postLikeCnt + 1,
+					});
+				} else {
+					setLikeAndCommentCnt({
+						...likeAndCommentCnt,
+						postLikeCnt: likeAndCommentCnt.postLikeCnt - 1,
+					});
+				}
 			}
 
 			if (response.status !== 200) {
@@ -37,8 +52,6 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 			}
 		}
 	};
-
-	const submitLike = useMutation(() => submitLikeHandler());
 
 	const onClickLikeHandler = async () => {
 		!isLogin
@@ -57,7 +70,7 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 						navigate("/login");
 					}
 			  })
-			: submitLike.mutate();
+			: submitLikeHandler();
 	};
 
 	return (
@@ -67,7 +80,7 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 				<div className="mx-1 text-sm font-bold">{communityInfo.countWatch}</div>
 			</div>
 			<div className="flex items-center mx-2">
-				{communityInfo.like ? (
+				{isLike ? (
 					<FillHeart
 						width={16}
 						height={16}
@@ -86,14 +99,14 @@ const CommunityLikeAndComment = ({ communityInfo }: IProps) => {
 
 				<div className="ml-1 text-sm">좋아요</div>
 				<div className="mx-1.5 text-sm font-bold">
-					{communityInfo.postLikesCount}
+					{likeAndCommentCnt.postLikeCnt}
 				</div>
 			</div>
 			<div className="flex items-center">
 				<Comment width={16} height={16} fill="#8A8A8A" className="mx-1" />
 				<div className="text-sm">댓글</div>
 				<div className="mx-1.5 text-sm font-bold">
-					{communityInfo.commentCount}
+					{likeAndCommentCnt.commentCnt}
 				</div>
 			</div>
 		</div>

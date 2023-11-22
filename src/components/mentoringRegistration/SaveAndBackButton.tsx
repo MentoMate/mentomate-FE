@@ -37,8 +37,8 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 		const data = {
 			title: form.title,
 			content: form.content,
-			startDate: "2023-11-06",
-			endDate: "2023-11-07",
+			startDate: form.startDate,
+			endDate: form.endDate,
 			numberOfPeople: form.numberOfPeople,
 			amount: form.amount,
 			category: category.selectedCategory,
@@ -61,9 +61,26 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 			data: formData,
 		});
 
-		if (response && response.status === 200) {
-			alertHandler("success", "멘토링 등록이 완료되었습니다.");
-			navigate(`/mentoringDetail/${response.data.id}`);
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				alertHandler("success", "멘토링 등록이 완료되었습니다.");
+				navigate(`/mentoringDetail/${response.data.id}`);
+			}
+
+			if (status === 400) {
+				alertHandler("error", "필수 입력란을 입력 해주세요.");
+				return;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 시도해주세요.",
+				);
+				return;
+			}
 		}
 	};
 

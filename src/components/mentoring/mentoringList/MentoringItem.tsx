@@ -34,7 +34,7 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 
 	const replaceHandler = () => {
 		const replaceAmount = mentoringItem.amount.toLocaleString();
-		const replaceHeadCount = mentoringItem.amount.toLocaleString();
+		const replaceHeadCount = mentoringItem.numberOfPeople.toLocaleString();
 
 		const startDate = new Date(mentoringItem.startDate);
 		const endDate = new Date(mentoringItem.endDate);
@@ -102,11 +102,11 @@ const MentoringItem = ({ mentoringItem }: IProps) => {
 				<Calendar width={15} height={15} />
 				<div>
 					<div className="ml-1.5">
-						{replaceDate.replaceStartDate}{" "}
+						{replaceDate.replaceStartDate}
 						<span className="text-[0.65rem] text-black-400">부터</span>
 					</div>
 					<div className="ml-1.5">
-						{replaceDate.replaceEndDate}{" "}
+						{replaceDate.replaceEndDate}
 						<span className="text-[0.65rem] text-black-400">까지</span>
 					</div>
 				</div>

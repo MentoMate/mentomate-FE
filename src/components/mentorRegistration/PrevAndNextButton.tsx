@@ -87,17 +87,31 @@ const PrevAndNextButton = ({ reactQuillRef }: IProps) => {
 			data: formData,
 		});
 
-		if (response && response.status === 200) {
-			alertHandler("success", "멘토등록이 완료되었습니다.");
-			navigate("/mentor");
-		}
+		if (response) {
+			const status = response.status;
 
-		if (response && response.status === 500) {
-			alertHandler(
-				"warning",
-				"서버 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-			);
-			return;
+			if (status === 200) {
+				alertHandler("success", "멘토등록이 완료되었습니다.");
+				navigate("/mentor");
+			}
+
+			if (status === 400) {
+				alertHandler("error", "필수 정보를 입력해주세요.");
+				return;
+			}
+
+			if (status === 401 || status === 403) {
+				alertHandler("error", "재 로그인 후 이용해주세요.");
+				return;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"warning",
+					"서버 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+				return;
+			}
 		}
 	};
 

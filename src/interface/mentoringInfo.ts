@@ -26,4 +26,6 @@ export interface IMentoringInfo {
 	readonly name: string;
 	readonly owner: boolean;
 	readonly useProfileImg: string;
+	readonly mentoringLike: boolean;
+	readonly mentorFollow: boolean;
 }

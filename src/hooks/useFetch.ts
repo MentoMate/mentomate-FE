@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useFetch = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isError, setIsError] = useState<boolean>(false);
-	console.log("asd");
+
 	const fetchCall = async (url: string, options: RequestInit | any) => {
 		try {
 			setIsLoading(true);

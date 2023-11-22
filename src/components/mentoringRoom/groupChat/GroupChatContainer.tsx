@@ -103,15 +103,19 @@ const GroupChatContainer = ({ client }: IProps) => {
 			<div className="flex justify-center">
 				<div
 					ref={chatRef}
-					className="bg-white sm:w-[20rem] w-[14rem] h-[28rem] rounded-md overflow-auto"
+					className={`${
+						chats.length === 0 && "flex justify-center items-center"
+					} bg-white sm:w-[20rem] w-[14rem] h-[28rem] rounded-md overflow-auto`}
 				>
 					{chats.length === 0 ? (
-						<p>아직 진행중인 채팅이 없습니다. </p>
+						<p className="h-[5rem] text-center">
+							아직 진행중인 채팅이 없습니다.{" "}
+						</p>
 					) : (
 						chats.map((chat, index) => (
 							<div
 								key={index}
-								className={`flex flex-col mt-2 ${
+								className={`flex flex-col ${
 									String(chat.senderUserId) === loginUserId
 										? "items-end mr-4"
 										: "items-start ml-4"
