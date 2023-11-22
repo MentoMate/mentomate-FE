@@ -4,10 +4,13 @@ import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
 import { useEffect, useState } from "react";
 import MyPageNoneApplyMentoring from "@/components/userMyPage/userMyPageApplyMentoring/UserMyPageNoneApplyMentoring";
+import Pagination from "@/components/common/pagination/Pagination";
 
 const UserMyPageApplyMentoring = () => {
 	const { fetchDataUseAxios } = useAxios();
-	const [url, setUrl] = useState<string>(`/mentoring/history`);
+	const [url, setUrl] = useState<string>(
+		`/mentoring/history?page=1&pageSize=3`,
+	);
 
 	const getMyMentoringData = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -25,15 +28,10 @@ const UserMyPageApplyMentoring = () => {
 	);
 
 	const transformationUrl = () => {
-		setUrl(`/mentoring/history`);
+		setUrl(`/mentoring/history?page=${currentPage}&pageSize=3`);
 	};
 
-	const {
-		pageArray,
-		currentPage,
-		onClickPageHandler,
-		onClickNextOrPrevBtnHandler,
-	} = usePagination(data.totalPages);
+	const { currentPage } = usePagination(data.totalPages);
 
 	useEffect(() => {
 		transformationUrl();
@@ -43,48 +41,18 @@ const UserMyPageApplyMentoring = () => {
 		getMyMentoringData();
 	}, [url]);
 	useEffect(() => {
-		refetch(); // Manually refetch data when URL changes
+		refetch();
 	}, [url, refetch]);
 
 	useEffect(() => {
-		refetch(); // Initial fetch
+		refetch();
 	}, []);
 	return (
 		<div className="mb-12">
 			{data.content.length !== 0 ? (
 				<>
 					<MyPageApplyMentoringList data={data.content} />
-					<div className="my-12 h-20 flex justify-center items-center">
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("prev")}
-							disabled={currentPage === 1 ? true : false}
-							className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
-						>
-							이전
-						</button>
-						{pageArray.map((page: number) => (
-							<div
-								key={page}
-								className={`mx-1 text-lg ${
-									currentPage === page
-										? "text-main-color font-semibold"
-										: "text-black"
-								} cursor-pointer`}
-								onClick={() => onClickPageHandler(page)}
-							>
-								{page}
-							</div>
-						))}
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("next")}
-							disabled={currentPage === data.totalPages ? true : false}
-							className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
-						>
-							다음
-						</button>
-					</div>
+					<Pagination totalPages={data.totalPages} />
 				</>
 			) : (
 				<MyPageNoneApplyMentoring />

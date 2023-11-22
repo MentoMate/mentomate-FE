@@ -4,16 +4,16 @@ import { useQuery } from "react-query";
 import usePagination from "@/hooks/usePagination";
 import { useEffect, useState } from "react";
 import UserMyPageNoneMentoring from "@/components/userMyPage/userMyPageMyMentoring/UserMyPageNoneMentoring";
+import Pagination from "@/components/common/pagination/Pagination";
 
 const UserMyPageMyMentoring = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const userId = localStorage.getItem("userId");
 	const [url, setUrl] = useState<string>(
-		`/mentoring/${userId}/history?page=1&pageSize=6`,
+		`/mentoring/${userId}/history?page=1&pageSize=3`,
 	);
 
 	const getMyMentoringData = async () => {
-		console.log(url);
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: url,
@@ -23,62 +23,37 @@ const UserMyPageMyMentoring = () => {
 		}
 	};
 
-	const { data } = useQuery(["myPageMentoringList", url], getMyMentoringData);
+	const { data, refetch } = useQuery(
+		["myPageMentoringList", url],
+		getMyMentoringData,
+	);
 
-	const {
-		pageArray,
-		currentPage,
-		onClickPageHandler,
-		onClickNextOrPrevBtnHandler,
-	} = usePagination(data.totalPages);
+	const { currentPage } = usePagination(data.totalPages);
 
 	useEffect(() => {
 		getMyMentoringData();
-	}, [data]);
+	}, []);
 
 	useEffect(() => {
 		transformationUrl();
 	}, [currentPage]);
 	const transformationUrl = () => {
-		setUrl(`/mentoring/${userId}/history?page=${currentPage}&pageSize=6`);
+		setUrl(`/mentoring/${userId}/history?page=${currentPage}&pageSize=3`);
 	};
+	useEffect(() => {
+		refetch();
+	}, [url, refetch]);
+
+	useEffect(() => {
+		refetch();
+	}, []);
 
 	return (
 		<div className="mb-12">
 			{data.content.length !== 0 ? (
 				<>
 					<UserMyPageMentoringList data={data.content} />
-					<div className="my-12 h-30  flex justify-center items-center">
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("prev")}
-							disabled={currentPage === 1 ? true : false}
-							className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
-						>
-							이전
-						</button>
-						{pageArray.map((page: number) => (
-							<div
-								key={page}
-								className={`mx-1 text-lg ${
-									currentPage === page
-										? "text-main-color font-semibold"
-										: "text-black"
-								} cursor-pointer`}
-								onClick={() => onClickPageHandler(page)}
-							>
-								{page}
-							</div>
-						))}
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("next")}
-							disabled={currentPage === data.totalPages ? true : false}
-							className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
-						>
-							다음
-						</button>
-					</div>
+					<Pagination totalPages={data.totalPages} />
 				</>
 			) : (
 				<UserMyPageNoneMentoring />
