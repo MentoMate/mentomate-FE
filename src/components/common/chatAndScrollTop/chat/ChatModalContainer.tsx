@@ -3,12 +3,14 @@ import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
 import { ReactComponent as Close } from "@assets/svg/close.svg";
 import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
 import { useEffect, useRef, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import Chat1On1 from "./Chat1On1";
 import ChatListContainer from "./chatList/ChatListContainer";
 
 const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
-	const setPrivateChatId = useSetRecoilState(selectedPrivateChatId);
+	const [privateChatId, setPrivateChatId] = useRecoilState(
+		selectedPrivateChatId,
+	);
 	const [isOpenChat, setIsOpenChat] = useRecoilState(openChatModalState);
 	const [selectedChatMenu, setSelectedChatMenu] = useState<string>("list");
 	const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -38,6 +40,14 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 			document.removeEventListener("mousedown", outSideClickHandler);
 		};
 	}, [chatContainerRef]);
+
+	useEffect(() => {
+		if (privateChatId !== null) {
+			setSelectedChatMenu("chat");
+		} else {
+			setSelectedChatMenu("list");
+		}
+	}, [privateChatId]);
 
 	return (
 		<div

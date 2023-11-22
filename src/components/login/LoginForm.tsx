@@ -45,6 +45,7 @@ const LoginForm = () => {
 
 				localStorage.setItem("userId", response.data.userId);
 				localStorage.setItem("nickName", response.data.nickname);
+				localStorage.setItem("email", response.data.email);
 
 				setLoginState(true);
 

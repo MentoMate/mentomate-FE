@@ -42,7 +42,7 @@ const Chat1On1 = ({ client, setSelectedChatMenu }: IClientProps) => {
 					Authorization: `Bearer ${TOKEN}`,
 				},
 				JSON.stringify({
-					privateChatRoomId: 15,
+					privateChatRoomId: privateChatRoomId,
 					userId: loginUserId,
 					message: message,
 				}),

@@ -138,8 +138,13 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 				}
 
 				if (response.status === 400) {
-					setIsOpenChatList(true);
-					setPrivateChatId(response.data.privateChatRoomId);
+					if (!response.data.privateChatRoomId) {
+						setIsOpenChatList(false);
+						alertHandler("error", "본인과 1:1 채팅은 불가능합니다.");
+					} else {
+						setIsOpenChatList(true);
+						setPrivateChatId(response.data.privateChatRoomId);
+					}
 				}
 			}
 		}
