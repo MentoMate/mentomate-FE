@@ -9,7 +9,7 @@ const URLS = [
 	"/mentoringRegistration",
 	"/payment",
 ];
-console.log("asd");
+
 const useCheckAuth = (url: string) => {
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();

@@ -15,7 +15,7 @@ const SORT_TYPES = {
 			sortName: "평점순",
 		},
 		{
-			key: "price",
+			key: "cost",
 			sortName: "금액순",
 		},
 	],

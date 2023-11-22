@@ -34,9 +34,6 @@ const SaveAndBackButton = ({ reactQuillRef }: IProps) => {
 			}
 		}
 
-		console.log(form.startDate);
-		console.log(form.endDate);
-
 		const data = {
 			title: form.title,
 			content: form.content,

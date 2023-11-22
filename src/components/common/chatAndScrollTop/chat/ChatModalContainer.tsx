@@ -1,18 +1,14 @@
 import { IChatListClientProps } from "@/interface/chat";
 import { openChatModalState, selectedPrivateChatId } from "@/state/chatState";
-import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
-import { ReactComponent as ChatComment } from "@assets/svg/chatComment.svg";
 import { ReactComponent as Close } from "@assets/svg/close.svg";
-import { ReactComponent as List } from "@assets/svg/list.svg";
-import { useState, useRef, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import Chat1On1 from "./Chat1On1";
 import ChatListContainer from "./chatList/ChatListContainer";
 
 const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
-	const [privateChatRoomId, setPrivateChatId] = useRecoilState(
-		selectedPrivateChatId,
-	);
+	const setPrivateChatId = useSetRecoilState(selectedPrivateChatId);
 	const [isOpenChat, setIsOpenChat] = useRecoilState(openChatModalState);
 	const [selectedChatMenu, setSelectedChatMenu] = useState<string>("list");
 	const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -20,13 +16,6 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 	const onClickChatHandler = (type: string, id: number) => {
 		setSelectedChatMenu(type);
 		setPrivateChatId(id);
-	};
-
-	const onClickMenuHandler = (type: string) => {
-		if (privateChatRoomId === null) {
-			return;
-		}
-		setSelectedChatMenu(type);
 	};
 
 	const onClickCloseChatHandler = () => {
@@ -72,42 +61,8 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 					chatList={chatList}
 				/>
 			) : (
-				<Chat1On1 client={client} />
+				<Chat1On1 client={client} setSelectedChatMenu={setSelectedChatMenu} />
 			)}
-			<div className="flex justify-center py-4">
-				<button
-					type="button"
-					onClick={() => onClickMenuHandler("list")}
-					className={`flex flex-col justify-center items-center mx-6 ${
-						selectedChatMenu === "list" && "text-blue-700"
-					}`}
-				>
-					<List
-						width={25}
-						height={25}
-						className={`mb-0.5 ${
-							selectedChatMenu === "list" && "fill-blue-700"
-						}`}
-					/>
-					목록
-				</button>
-				<button
-					type="button"
-					onClick={() => onClickMenuHandler("chat")}
-					className={`flex flex-col justify-center items-center mx-6 ${
-						selectedChatMenu === "chat" && "text-blue-700"
-					}`}
-				>
-					<ChatComment
-						width={25}
-						height={25}
-						className={`mb-0.5 ${
-							selectedChatMenu === "chat" && "fill-blue-700"
-						}`}
-					/>
-					대화
-				</button>
-			</div>
 		</div>
 	);
 };

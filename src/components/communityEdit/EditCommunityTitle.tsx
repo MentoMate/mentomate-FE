@@ -1,6 +1,6 @@
 import { communityRegistrationForm } from "@/data/communityRegistrationForm";
-import { useRecoilState } from "recoil";
 import { ChangeEvent, useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 const EditCommunityTitle = () => {
 	const [form, setForm] = useRecoilState(communityRegistrationForm);

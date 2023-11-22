@@ -33,7 +33,6 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 	const [isLikeMentoring, setIsLikeMentoring] = useState<boolean>(
 		data.mentoringLike,
 	);
-
 	const [replaceAmountAndHeadCount, setReplaceAmountAndHeadCount] =
 		useState<IReplaceAmountAndHeadCount>({
 			replaceAmount: "",
@@ -43,6 +42,8 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 		replaceStartDate: "",
 		replaceEndDate: "",
 	});
+	const [isAvailableMentoringApply, setIsAvailableMentoringApply] =
+		useState<boolean>(false);
 
 	const replaceHandler = () => {
 		const replaceAmount = data.amount.toLocaleString();
@@ -87,7 +88,9 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 					navigate(`/login`);
 				}
 			});
-		} else {
+		}
+
+		if (isLogin && isAvailableMentoringApply) {
 			Swal.fire({
 				icon: "question",
 				text: "멘토링을 신청 하시겠습니까?",
@@ -135,7 +138,6 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 				}
 
 				if (response.status === 400) {
-					console.log("asd");
 					setIsOpenChatList(true);
 					setPrivateChatId(response.data.privateChatRoomId);
 				}
@@ -167,6 +169,7 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 			});
 
 			if (response) {
+				console.log(response);
 				const status = response.status;
 
 				if (status === 200) {
@@ -190,13 +193,44 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 		}
 	};
 
+	const isPayCheckUserInfo = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: `/pay/check/user?mentoringId=${mentoringId}`,
+		});
+
+		if (response) {
+			const status = response.status;
+			if (status === 200) {
+				setIsAvailableMentoringApply(response.data);
+			}
+
+			if (status === 401 || status === 403) {
+				alertHandler("error", "재 로그인 후 다시 시도해주세요.");
+				return;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+				return;
+			}
+		}
+	};
+
 	useEffect(() => {
 		replaceHandler();
 	}, []);
 
 	useEffect(() => {
-		console.log(isLikeMentoring);
-	}, [isLikeMentoring]);
+		if (isLogin) {
+			isPayCheckUserInfo();
+		} else {
+			setIsAvailableMentoringApply(false);
+		}
+	}, [isLogin]);
 
 	return (
 		<>
@@ -227,7 +261,8 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 				</div>
 				<button
 					type="button"
-					className="mt-8 my-1 py-3 w-full border bg-main-color hover:bg-purple-100 rounded-md text-sm text-white font-semibold text-center transition-all duration-250"
+					disabled={!isAvailableMentoringApply}
+					className="mt-8 my-1 py-3 w-full border bg-main-color disabled:bg-black-300 hover:bg-purple-100 rounded-md text-sm text-white font-semibold text-center transition-all duration-250"
 					onClick={onClickApplyBtnHandler}
 				>
 					멘토링 신청

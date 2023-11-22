@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 
 const useInput = (initialValue: string) => {
 	const [value, setValue] = useState<string>(initialValue);
-	console.log("asd");
+
 	const onChangeHandler = (e: ChangeEvent<HTMLInputElement> | string) => {
 		if (typeof e === "string") {
 			setValue(e);

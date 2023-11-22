@@ -1,3 +1,4 @@
+import { FORMATS } from "@/constants/reactQuill";
 import { communityRegistrationForm } from "@/data/communityRegistrationForm";
 import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
@@ -12,7 +13,6 @@ import Loading from "../common/spinner/Loading";
 import EditCommunitySaveAndBackButton from "./EditCommunitySaveAndBackButton";
 import EditCommunityTitle from "./EditCommunityTitle";
 import EditEssentialInfoContainer from "./essentialInfo/EditEssentialInfoContainer";
-import { FORMATS } from "@/constants/reactQuill";
 
 const EditCommunityContainer = () => {
 	const reactQuillRef = useRef<any>(null);
@@ -20,6 +20,7 @@ const EditCommunityContainer = () => {
 	const [form, setForm] = useRecoilState(communityRegistrationForm);
 	const { fetchDataUseAxios } = useAxios();
 	const { communityId } = useParams();
+	const [isInit, setIsInit] = useState<boolean>(true);
 
 	const getCommunityInfo = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -28,13 +29,15 @@ const EditCommunityContainer = () => {
 		});
 
 		if (response && response.status === 200) {
-			console.log(response);
 			return response.data;
 		}
 	};
 
 	const convertURLtoFile = async (url: string) => {
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			method: "POST",
+			mode: "cors",
+		});
 		const data = await response.blob();
 		const ext = url.split(".").pop();
 		const filename = url.split("/").pop();
@@ -123,23 +126,25 @@ const EditCommunityContainer = () => {
 	}, []);
 
 	const onChangeContentHandler = (content: string) => {
-		setForm({
-			...form,
-			content,
-		});
+		if (!isInit) {
+			setForm({
+				...form,
+				content,
+			});
+		}
 	};
 
 	const initSetFormHandler = async () => {
-		// const thumbNailImgFile = await convertURLtoFile(data.uploadUrl);
+		const thumbNailImgFile = await convertURLtoFile(data.uploadUrl);
 		setForm({
 			category: data.category,
 			title: data.title,
 			content: data.content,
 			uploadFolder: data.uploadFolder,
 			thumbNailImgUrl: data.uploadUrl,
-			// thumbNailImg: thumbNailImgFile,
-			thumbNailImg: null,
+			thumbNailImg: thumbNailImgFile,
 		});
+		setIsInit(false);
 	};
 
 	useEffect(() => {

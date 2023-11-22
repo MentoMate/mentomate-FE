@@ -15,12 +15,12 @@ const CommunityItem = ({ communityItem }: IProps) => {
 	return (
 		<Link
 			to={`/communityDetail/${communityItem.id}`}
-			className="my-4 py-6 w-[18.5rem] bg-white border-b border-black-200 rounded-md shadow-sm hover:shadow-lg duration-100 hover:scale-105 cursor-pointer"
+			className="my-4 pb-6 w-[18.5rem] bg-white border-b border-black-200 rounded-md shadow-sm hover:shadow-lg duration-100 hover:scale-105 cursor-pointer"
 		>
 			<img
 				src={communityItem.uploadUrl}
 				alt="썸네일"
-				className="w-[18.5rem] h-[10rem] object-cover rounded-lg"
+				className="w-[18.5rem] h-[12rem] object-cover rounded-lg"
 			/>
 
 			<div className="flex justify-center items-center mt-6 text-black-400 text-[0.7rem] text-center">
