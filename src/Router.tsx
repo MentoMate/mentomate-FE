@@ -12,17 +12,17 @@ import { Suspense, lazy, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import Footer from "./components/common/footer/Footer";
-import Header from "./components/common/header/Header";
-import LazyLoading from "./components/common/spinner/lazyLoading";
+import Footer from "@components/common/footer/Footer";
+import Header from "@components/common/header/Header";
+import LazyLoading from "@components/common/spinner/lazyLoading";
 import {
 	NO_USE_CHAT_SCROLL_LOCATION,
 	NO_USE_FOOTER_LOCATION,
 	NO_USE_HEADER_LOCATION,
 } from "./constants/commonComponentLocation";
 import useAxios from "./hooks/useAxios";
-import NotFound404Page from "./pages/NotFound404Page";
-import PaymentPage from "./pages/PaymentPage";
+import NotFound404Page from "@pages/NotFound404Page";
+import PaymentPage from "@pages/PaymentPage";
 import { loginState } from "./state/loginState";
 import { notification, notificationEmitterId } from "./state/notification";
 import { getCookie } from "./utils/cookies";
