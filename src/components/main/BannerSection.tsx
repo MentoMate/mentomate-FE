@@ -1,15 +1,18 @@
+import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
+
 const BannerSection = () => {
 	return (
 		<>
-			<div className="flex justify-center items-center bg-main-color lg:py-12">
-				<div className="text-center lg:w-[30rem] md:text-xl text-lg font-bold hidden lg:block mr-16">
-					<div>멘토와 멘티들을 이어주는 매칭 플랫폼</div>
-					<p className="mt-4">멘토 메이트</p>
+			<div className="flex flex-col justify-center items-center relative pt-6 pb-12 w-full bg-white">
+				<div className="flex items-center">
+					<Logo className="w-44 h-24" />
+					<p className="ml-4 text-2xl font-bold">
+						멘토 & 멘티 매칭 플랫폼 - MENTORMATE :)
+					</p>
 				</div>
-
 				<img
-					className=" w-[30rem] lg:w-[25rem] md:w-[40rem] object-cover"
-					src="https://www.robertwalters.co.kr/content/dam/robert-walters/country/japan/images/website-update-2019/mentor-system.jpg"
+					className="w-[30rem] lg:w-[60rem] md:w-[40rem] h-[20rem] object-cover"
+					src="/src/assets/image/mentorMateBanner.jpg"
 					alt="card image"
 				/>
 			</div>

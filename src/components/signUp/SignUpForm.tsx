@@ -87,6 +87,7 @@ const SignUpForm = () => {
 		});
 
 		if (response && response.status === 200) {
+			cancelLockScroll();
 			navigate("/successSignUp");
 		}
 	};

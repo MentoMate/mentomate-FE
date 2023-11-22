@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import SockJS from "sockjs-client";
 import GroupChatContainer from "./GroupChatContainer";
+import { checkAuthToken } from "@/utils/checkAuthToken";
 
 const GroupChatBtn = () => {
 	const { id } = useParams();
@@ -45,6 +46,9 @@ const GroupChatBtn = () => {
 		const socket = new SockJS("https://mentormate.site/ws/chat");
 		const stompClient = Stomp.over(socket);
 		client.current = stompClient;
+
+		checkAuthToken();
+
 		const TOKEN = getCookie("accessToken");
 
 		stompClient.connect(

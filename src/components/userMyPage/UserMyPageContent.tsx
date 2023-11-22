@@ -20,7 +20,7 @@ interface ISelectedItemProps {
 
 const UserMyPageContent = ({ selectedItem }: ISelectedItemProps) => {
 	return (
-		<div className="md:mx-0 mx-4 lg:w-[45rem] md:w-[25rem] w-[17rem] h-full lg:h-[70rem] ">
+		<div className="md:mx-0 mx-4 lg:w-[45rem] md:w-[25rem] w-[17rem] lg:h-[70rem] ">
 			<h1 className="mb-6 md:text-2xl text-xl font-bold">
 				{selectedItem.label}
 			</h1>

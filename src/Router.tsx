@@ -26,6 +26,7 @@ import PaymentPage from "./pages/PaymentPage";
 import { loginState } from "./state/loginState";
 import { notification, notificationEmitterId } from "./state/notification";
 import { getCookie } from "./utils/cookies";
+import { checkAuthToken } from "./utils/checkAuthToken";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -68,6 +69,8 @@ function Router() {
 	const [emitterId, setEmitterId] = useRecoilState(notificationEmitterId);
 
 	const init = () => {
+		checkAuthToken();
+
 		const ACCESS_TOKEN = getCookie("accessToken");
 
 		const eventSource = new EventSourcePolyfill(

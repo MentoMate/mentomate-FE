@@ -52,9 +52,10 @@ const UserMyPageAlarm = () => {
 					{data.content.map((notificationItem: IProps) => (
 						<div
 							key={notificationItem.notificationId}
-							className="h-[3rem] mb-12 border-b-2"
-							dangerouslySetInnerHTML={{ __html: notificationItem.content }}
-						/>
+							className="py-6 border-b-2"
+						>
+							{notificationItem.content}
+						</div>
 					))}
 					<Pagination totalPages={data.totalPages} />
 				</>

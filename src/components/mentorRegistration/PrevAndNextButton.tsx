@@ -6,6 +6,7 @@ import { alertHandler } from "@/utils/alert";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
+import Loading from "../common/spinner/Loading";
 
 interface IProps {
 	readonly reactQuillRef: any;
@@ -15,7 +16,7 @@ const PrevAndNextButton = ({ reactQuillRef }: IProps) => {
 	const selectedCategoryType = useRecoilValue(selectedCategoryState);
 	const [step, setStep] = useRecoilState(registrationStep);
 	const form = useRecoilValue(mentorRegistrationForm);
-	const { fetchDataUseAxios } = useAxios();
+	const { isLoading, fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 
 	const onClickPrevNextBtnHandler = (type: string) => {
@@ -140,33 +141,36 @@ const PrevAndNextButton = ({ reactQuillRef }: IProps) => {
 	};
 
 	return (
-		<div className="flex justify-center fixed bottom-0 w-full py-4 bg-white border-t">
-			<button
-				type="button"
-				className="mx-2 px-8 py-4 bg-black-300 rounded-sm font-semibold text-lg text-white cursor-pointer"
-				onClick={() => onClickPrevNextBtnHandler("prev")}
-				disabled={step === 1 ? true : false}
-			>
-				이전
-			</button>
-			{step === 3 ? (
+		<>
+			<div className="flex justify-center fixed bottom-0 w-full py-4 bg-white border-t">
 				<button
 					type="button"
-					className="mx-2 px-8 py-4 bg-main-color rounded-sm font-semibold text-lg text-white"
-					onClick={onClickRegisterHandler}
+					className="mx-2 px-8 py-4 bg-black-300 rounded-sm font-semibold text-lg text-white cursor-pointer"
+					onClick={() => onClickPrevNextBtnHandler("prev")}
+					disabled={step === 1 ? true : false}
 				>
-					멘토등록
+					이전
 				</button>
-			) : (
-				<button
-					type="button"
-					className="mx-2 px-8 py-4 bg-main-color rounded-sm font-semibold text-lg text-white"
-					onClick={() => onClickPrevNextBtnHandler("next")}
-				>
-					다음
-				</button>
-			)}
-		</div>
+				{step === 3 ? (
+					<button
+						type="button"
+						className="mx-2 px-8 py-4 bg-main-color rounded-sm font-semibold text-lg text-white"
+						onClick={onClickRegisterHandler}
+					>
+						멘토등록
+					</button>
+				) : (
+					<button
+						type="button"
+						className="mx-2 px-8 py-4 bg-main-color rounded-sm font-semibold text-lg text-white"
+						onClick={() => onClickPrevNextBtnHandler("next")}
+					>
+						다음
+					</button>
+				)}
+			</div>
+			{isLoading && <Loading />}
+		</>
 	);
 };
 

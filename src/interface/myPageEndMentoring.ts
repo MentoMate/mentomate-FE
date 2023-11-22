@@ -17,6 +17,7 @@ export interface IEndMentoringItem {
 	readonly uploadFolder: number;
 	readonly uploadUrl: string;
 	readonly userId: number;
+	readonly mentoringId: number;
 }
 
 export interface IEndMentoringItemProps {
