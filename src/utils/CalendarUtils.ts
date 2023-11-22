@@ -15,12 +15,14 @@ export const handlePrevMonth = (
 		prevYear -= 1;
 		prevMonth = 12;
 	}
+
 	const fullDate = mentoringPeriod.startDate;
 	const dateArray = fullDate.split("-");
 
 	const startDate = `${prevYear}-${String(prevMonth).padStart(2, "0")}-${
 		dateArray[1] === String(prevMonth).padStart(2, "0") ? dateArray[2] : "01"
 	}`;
+
 	const endOfMonth = new Date(prevYear, prevMonth, 0);
 
 	const endDate = `${prevYear}-${String(prevMonth).padStart(

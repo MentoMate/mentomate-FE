@@ -48,21 +48,17 @@ const UserMyPageMain = () => {
 	const getMyMentoringData = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
-			url: "/mentoring/history",
+			url: "/mentoring/history?size=1&pageSize=3",
 		});
 		if (response && response.status === 200) {
 			return response.data;
 		}
 	};
 
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["myPageMentoringList", "/mentoring/history"],
 		getMyMentoringData,
 	);
-
-	useEffect(() => {
-		getMyMentoringData();
-	}, [data]);
 
 	useEffect(() => {
 		getMyNotificationData();
@@ -71,6 +67,10 @@ const UserMyPageMain = () => {
 	useEffect(() => {
 		getUserInfoData();
 	}, []);
+
+	useEffect(() => {
+		refetch();
+	}, ["/mentoring/history", refetch]);
 
 	return (
 		<>

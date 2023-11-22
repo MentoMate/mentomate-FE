@@ -1,7 +1,9 @@
 export interface IEndMentoringItem {
 	readonly amount: number;
-	readonly category: number;
+	readonly category: string;
 	readonly content: string;
+	readonly grade: number;
+	readonly name: string;
 	readonly countWatch: string;
 	readonly deleteDate: string;
 	readonly endDate: string;

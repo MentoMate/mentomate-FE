@@ -138,7 +138,7 @@ const ScheduleAddModal = ({
 		};
 	}, []);
 
-	const onClickCloseBtnHandler = (e: Event) => {
+	const onClickCloseBtnHandler = () => {
 		setForm({
 			title: "",
 			content: "",
@@ -148,7 +148,6 @@ const ScheduleAddModal = ({
 		});
 		cancelLockScroll();
 		closeModal();
-		e.stopPropagation();
 	};
 
 	useEffect(() => {
@@ -199,7 +198,7 @@ const ScheduleAddModal = ({
 						<h2 className="text-sm lg:text-lg font-semibold mb-2">일정 추가</h2>
 						<Close
 							className="cursor-pointer"
-							onClick={() => onClickCloseBtnHandler}
+							onClick={onClickCloseBtnHandler} // 함수 자체를 전달
 							width={20}
 							height={20}
 						/>

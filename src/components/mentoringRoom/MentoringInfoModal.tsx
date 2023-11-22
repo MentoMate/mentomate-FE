@@ -2,11 +2,55 @@ import { useEffect, useRef, useState } from "react";
 import { ReactComponent as Close } from "@/assets/svg/close.svg";
 import { ReactComponent as Search } from "@/assets/svg/search.svg";
 import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
+import { useParams } from "react-router-dom";
+import useAxios from "@/hooks/useAxios";
+import { alertHandler } from "@/utils/alert";
+import { useQuery } from "react-query";
+import { categories } from "@/constants/categories";
 
 const MentoringInfoModal = () => {
+	const { id } = useParams();
+	const { fetchDataUseAxios } = useAxios();
 	const mentoringInfoModalRef = useRef<HTMLDivElement>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [categoryName, setCategoryName] = useState<string>("");
 
+	const getMentoringInfo = async () => {
+		const response = await fetchDataUseAxios("defaultAxios", {
+			url: `/mentoring/${id}`,
+			method: "GET",
+		});
+
+		if (response) {
+			const status = response.status;
+
+			if (status === 200) {
+				return response.data;
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				);
+			}
+		}
+	};
+	const { data } = useQuery(
+		["mentoringList", `/mentoring/${id}`],
+		getMentoringInfo,
+	);
+
+	const getCategoryNameHandler = () => {
+		for (let key in categories) {
+			categories[key].find((category) => {
+				if (category.key === data.category) {
+					setCategoryName(category.categoryName);
+					return;
+				}
+			});
+		}
+	};
 	const onClickOpenModal = () => {
 		lockScroll();
 		setIsModalOpen(true);
@@ -16,6 +60,9 @@ const MentoringInfoModal = () => {
 		cancelLockScroll();
 		setIsModalOpen(false);
 	};
+	useEffect(() => {
+		getCategoryNameHandler();
+	}, []);
 
 	useEffect(() => {
 		const outSideClickHandler = (e: Event) => {
@@ -54,13 +101,14 @@ const MentoringInfoModal = () => {
 			{isModalOpen && (
 				<div className="fixed inset-0 flex items-center justify-center z-[100] ">
 					<div className="absolute inset-0 bg-black opacity-50" />
+
 					<div
 						ref={mentoringInfoModalRef}
 						className="bg-white p-8 rounded-lg mt-20 z-10"
 					>
 						<div className="flex justify-between items-center w-[15rem] lg:w-[30rem]">
 							<h2 className="text-sm lg:text-lg font-semibold mb-2">
-								치어리더가 되기 위한 준비 과정 그리고 노하우
+								{data.title}
 							</h2>
 							<Close
 								onClick={onClickCloseModal}
@@ -73,18 +121,24 @@ const MentoringInfoModal = () => {
 							<h2 className="text-sm lg:text-lg mr-2 mb-2">멘토링 정보</h2>
 						</div>
 						<div className="font-semibold mt-4 text-sm lg:text-lg ">멘토</div>
-						<div>김도아 멘토</div>
-						<div className="font-semibold mt-4 text-sm lg:text-lg  ">이력</div>
-						<div>4년 6개월</div>
-						<div className="font-semibold mt-4 text-sm lg:text-lg   ">소개</div>
-						<div className="text-sm lg:text-lg w-[15rem] lg:w-[30rem]">
-							안녕하세요. 멘토링 주제와 관련하여 궁금하신 부분들을 제 경험에
-							빗대어 성실히 답변드리겠습니다~~
+						<div> {data.name} 멘토</div>
+						<div className="font-semibold mt-4 text-sm lg:text-lg  ">
+							멘토링 기간
 						</div>
+						<div>
+							{data.startDate} ~ {data.endDate}
+						</div>
+						<div className="font-semibold mt-4 text-sm lg:text-lg">소개</div>
+						<div
+							className={`text-sm lg:text-lg  w-[15rem] lg:w-[30rem] overflow-auto ${
+								data.content.length < 100 ? "h-[2rem] " : "h-[20rem] "
+							}`}
+							dangerouslySetInnerHTML={{ __html: data.content }}
+						/>
 						<div className="font-semibold mt-4 text-sm lg:text-lg  ">
 							대화 주제
 						</div>
-						<div>디자인/예술</div>
+						<div>{categoryName}</div>
 					</div>
 				</div>
 			)}

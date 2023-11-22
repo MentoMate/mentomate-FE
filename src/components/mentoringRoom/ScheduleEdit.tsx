@@ -12,6 +12,7 @@ import { IScheduleReadModalProps } from "@/interface/scheduleReadModalProps";
 const ScheduleEdit = ({
 	eventInfo,
 	formattedDate,
+	scheduleReadHandler,
 }: IScheduleReadModalProps) => {
 	const { fetchDataUseAxios } = useAxios();
 	const [form, setForm] = useRecoilState(scheduleEditForm);
@@ -76,7 +77,7 @@ const ScheduleEdit = ({
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 삭제가 완료되었습니다.");
 		}
-		window.location.reload();
+		scheduleReadHandler();
 	};
 
 	const updateSubmitHandler = async () => {
@@ -116,7 +117,7 @@ const ScheduleEdit = ({
 		if (response && response.status === 200) {
 			alertHandler("success", "일정 수정이 완료되었습니다.");
 		}
-		window.location.reload();
+		scheduleReadHandler();
 	};
 
 	const onDeleteScheduleHandler = () => {
