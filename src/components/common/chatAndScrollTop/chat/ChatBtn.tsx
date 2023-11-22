@@ -10,6 +10,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import SockJS from "sockjs-client";
 import ChatModalContainer from "./ChatModalContainer";
 import { useQuery } from "react-query";
+import { checkAuthToken } from "@/utils/checkAuthToken";
 
 const ChatBtn = () => {
 	const isLogin = useRecoilValue(loginState);
@@ -61,6 +62,9 @@ const ChatBtn = () => {
 		const socket = new SockJS("https://mentormate.site/ws/chat");
 		const stompClient = Stomp.over(socket);
 		client.current = stompClient;
+
+		checkAuthToken();
+
 		const TOKEN = getCookie("accessToken");
 
 		stompClient.connect(

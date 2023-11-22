@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import Chat1On1 from "./Chat1On1";
 import ChatListContainer from "./chatList/ChatListContainer";
+import { useQueryClient } from "react-query";
 
 const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 	const [privateChatId, setPrivateChatId] = useRecoilState(
@@ -14,6 +15,7 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 	const [isOpenChat, setIsOpenChat] = useRecoilState(openChatModalState);
 	const [selectedChatMenu, setSelectedChatMenu] = useState<string>("list");
 	const chatContainerRef = useRef<HTMLDivElement>(null);
+	const queryClient = useQueryClient();
 
 	const onClickChatHandler = (type: string, id: number) => {
 		setSelectedChatMenu(type);
@@ -43,6 +45,7 @@ const ChatModalContainer = ({ client, chatList }: IChatListClientProps) => {
 
 	useEffect(() => {
 		if (privateChatId !== null) {
+			queryClient.invalidateQueries(["chatList"]);
 			setSelectedChatMenu("chat");
 		} else {
 			setSelectedChatMenu("list");

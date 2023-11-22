@@ -62,7 +62,7 @@ const UserMyPageMain = () => {
 
 	useEffect(() => {
 		getMyNotificationData();
-	}, [notification]);
+	}, []);
 
 	useEffect(() => {
 		getUserInfoData();
@@ -87,14 +87,16 @@ const UserMyPageMain = () => {
 					<div className="mt-0.5 lg:text-lg md:text-base text-lg font-semibold">
 						{userInfo && userInfo.name}
 					</div>
-					<div className="lg:text-base md:text-sm text-black-400">이메일</div>
+					<div className="mt-2 lg:text-base md:text-sm text-black-400">
+						이메일
+					</div>
 					<div className="mt-0.5 lg:text-lg md:text-base text-lg font-semibold">
 						{userInfo && userInfo.email}
 					</div>
 				</div>
 			</div>
 			<div>
-				<div className=" flex justify-between items-center mb-6 md:text-2xl text-xl font-bold">
+				<div className=" flex justify-between items-center mb-6 text-xl font-bold">
 					최근 알림
 				</div>
 				{notification !== undefined ? (
@@ -110,7 +112,7 @@ const UserMyPageMain = () => {
 				)}
 			</div>
 			<div>
-				<div className=" flex justify-between items-center mb-6 md:text-2xl text-xl font-bold mt-16">
+				<div className=" flex justify-between items-center mb-6 text-xl font-bold mt-16">
 					진행중인 멘토링
 				</div>
 				{data.content.length !== 0 ? (
@@ -118,7 +120,7 @@ const UserMyPageMain = () => {
 						<UserMyPageMentoringList data={data.content} />
 					</>
 				) : (
-					<div className="flex flex-col justify-center items-center mb-6 min-h-[20rem] text-xl">
+					<div className="flex flex-col justify-center items-center mb-6 min-h-[20rem] text-sm">
 						진행중인 멘토링이 없습니다
 					</div>
 				)}

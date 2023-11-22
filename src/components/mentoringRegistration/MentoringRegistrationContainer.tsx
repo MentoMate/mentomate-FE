@@ -15,7 +15,7 @@ import { FORMATS } from "@/constants/reactQuill";
 const MentoringRegistrationContainer = () => {
 	const [form, setForm] = useRecoilState(mentoringRegistrationForm);
 	const [isImgUploading, setIsImgUploading] = useState<boolean>(false);
-	const { fetchDataUseAxios } = useAxios();
+	const { isLoading, fetchDataUseAxios } = useAxios();
 	const reactQuillRef = useRef<any>(null);
 	const divRef = useRef<HTMLDivElement>(null);
 
@@ -179,7 +179,7 @@ const MentoringRegistrationContainer = () => {
 				</div>
 				<SaveAndBackButton reactQuillRef={reactQuillRef} />
 			</div>
-			{isImgUploading && <Loading />}
+			{(isImgUploading || isLoading) && <Loading />}
 		</>
 	);
 };
