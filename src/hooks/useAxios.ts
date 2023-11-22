@@ -1,3 +1,4 @@
+import { checkAuthToken } from "@/utils/checkAuthToken";
 import { getCookie } from "@/utils/cookies";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { useState } from "react";
@@ -20,13 +21,14 @@ const useAxios = () => {
 		type: string,
 		configParams: AxiosRequestConfig,
 	) => {
-		setIsLoading(true);
 		try {
+			setIsLoading(true);
 			if (type === "defaultAxios") {
 				const response = await defaultAxios.request(configParams);
 				return response;
 			}
 			if (type === "useTokenAxios") {
+				checkAuthToken();
 				const response = await useTokenAxios.request(configParams);
 				return response;
 			}

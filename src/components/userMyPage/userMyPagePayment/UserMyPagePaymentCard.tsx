@@ -1,9 +1,55 @@
 import { IMyPaymentItem } from "@/interface/myPagePayment";
+import { useState, useEffect } from "react";
 
 interface IProps {
 	readonly payItem: IMyPaymentItem;
 }
+interface IReplace {
+	readonly replaceAmount: string;
+	readonly replacePaymentDate: string;
+	readonly replaceStartDate: string;
+	readonly replaceEndDate: string;
+}
+
 const UserMyPagePaymentCard = ({ payItem }: IProps) => {
+	const [replaceValue, setReplaceValue] = useState<IReplace>({
+		replaceAmount: "",
+		replacePaymentDate: "",
+		replaceStartDate: "",
+		replaceEndDate: "",
+	});
+
+	const replaceHandler = () => {
+		const replaceAmount = payItem.amount.toLocaleString();
+
+		const startDate = new Date(payItem.mentoringStartDate);
+		const endDate = new Date(payItem.mentoringEndDate);
+		const paymentDate = new Date(payItem.paymentDate);
+
+		const replaceStartDate = `${startDate.getFullYear()}년 ${
+			startDate.getMonth() + 1
+		}월 ${startDate.getDate()}일`;
+
+		const replaceEndDate = `${endDate.getFullYear()}년 ${
+			endDate.getMonth() + 1
+		}월 ${endDate.getDate()}일`;
+
+		const replacePaymentDate = `${paymentDate.getFullYear()}년 ${
+			endDate.getMonth() + 1
+		}월 ${endDate.getDate()}일`;
+
+		setReplaceValue({
+			replaceStartDate,
+			replaceEndDate,
+			replaceAmount,
+			replacePaymentDate,
+		});
+	};
+
+	useEffect(() => {
+		replaceHandler();
+	}, []);
+
 	return (
 		<>
 			<div className="mb-12">
@@ -23,16 +69,18 @@ const UserMyPagePaymentCard = ({ payItem }: IProps) => {
 						<span className="hidden lg:block"> 멘토링 일자</span>
 						<span>
 							{" "}
-							{payItem.mentoringStartDate} ~ {payItem.mentoringEndDate}{" "}
+							{replaceValue.replaceStartDate} ~ {replaceValue.replaceEndDate}
 						</span>
 					</div>
 					<div className="flex justify-between px-4 pt-2  ">
 						<span className="hidden lg:block font-bold"> 결제 일자</span>
-						<span className="font-bold">{payItem.paymentDate} </span>
+						<span className="font-bold">
+							{replaceValue.replacePaymentDate}{" "}
+						</span>
 					</div>
 					<div className="flex justify-between px-4 pt-2  ">
 						<span className="hidden lg:block font-bold"> 결제 금액</span>
-						<span className="font-bold">{payItem.amount} ₩ </span>
+						<span className="font-bold">{replaceValue.replaceAmount} ₩ </span>
 					</div>
 				</div>
 			</div>

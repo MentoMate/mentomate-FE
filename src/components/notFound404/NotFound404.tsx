@@ -1,6 +1,12 @@
+import { checkAuthToken } from "@/utils/checkAuthToken";
 import { ReactComponent as NotFoundIcon } from "@assets/svg/notFound.svg";
+import { useEffect } from "react";
 
 const NotFound404 = () => {
+	useEffect(() => {
+		checkAuthToken();
+	}, []);
+
 	return (
 		<div className="flex flex-col justify-center items-center min-h-min-height">
 			<NotFoundIcon className="w-[10rem] h-[10rem]" />

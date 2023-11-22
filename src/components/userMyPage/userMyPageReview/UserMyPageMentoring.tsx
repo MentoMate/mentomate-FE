@@ -1,13 +1,12 @@
-import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
-import { ReactComponent as Star } from "@assets/svg/star.svg";
-import { ReactComponent as Group } from "@assets/svg/people.svg";
-import { ReactComponent as Cash } from "@assets/svg/cash.svg";
-import { useEffect, useState } from "react";
 import StarRating from "@/components/userMyPage/userMyPageReview/UserStarRating";
-import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
-import { IEndMentoringItem } from "@/interface/myPageEndMentoring";
-import { Link } from "react-router-dom";
 import { categories } from "@/constants/categories";
+import { IEndMentoringItem } from "@/interface/myPageEndMentoring";
+import { cancelLockScroll, lockScroll } from "@/utils/controlBodyScroll";
+import { ReactComponent as Calendar } from "@assets/svg/blackCalendar.svg";
+import { ReactComponent as Cash } from "@assets/svg/cash.svg";
+import { ReactComponent as Group } from "@assets/svg/people.svg";
+import { ReactComponent as Star } from "@assets/svg/star.svg";
+import { useEffect, useState } from "react";
 
 interface IProps {
 	readonly mentoringItem: IEndMentoringItem;
@@ -89,7 +88,11 @@ const UserMyPageMentoring = ({ mentoringItem }: IProps) => {
 	return (
 		<div className="mt-6 pb-4 w-[14rem] bg-white shadow-sm  border-b rounded-t-lg text-black-500  ">
 			{showModal && (
-				<StarRating show={showModal} onClose={closeModalHandler}></StarRating>
+				<StarRating
+					show={showModal}
+					onClose={closeModalHandler}
+					mentoringId={mentoringItem.mentoringId}
+				/>
 			)}
 
 			<img
@@ -139,19 +142,13 @@ const UserMyPageMentoring = ({ mentoringItem }: IProps) => {
 					{replaceAmountAndHeadCount.replaceHeadCount} 명
 				</div>
 			</div>
-			<div className="flex justify-between mx-2">
+			<div className="flex justify-center items-center">
 				<button
 					onClick={ratingClickHandler}
-					className="w-[7rem] h-[2rem] mt-2 mr-2 mb-4 py-1 bg-main-color rounded-md font-bold text-white text-xs cursor-pointer "
+					className="w-[7rem] mt-4 my-2 mr-2 py-1 bg-white hover:bg-purple-100 border border-main-color rounded-md text-main-color hover:text-white text-[0.7rem] cursor-pointer transition duration-200"
 				>
-					평점
+					평점 & 후기
 				</button>
-				<Link
-					to={"/communityRegistration"}
-					className="flex justify-center items-center w-[7rem] h-[2rem] mt-2 mb-4 py-1 bg-red-500 rounded-md font-bold text-white text-center text-xs   "
-				>
-					후기
-				</Link>
 			</div>
 		</div>
 	);

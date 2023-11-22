@@ -31,8 +31,8 @@ const UserMyPageContainer = () => {
 	];
 
 	return (
-		<>
-			<div className="relative flex md:flex-row flex-col mt-16 mx-auto lg:w-[65rem] md:w-[40rem] w-[20rem]">
+		<div className="bg-black-100">
+			<div className="relative flex md:flex-row flex-col pt-16 mx-auto lg:w-[65rem] md:w-[40rem] w-[20rem]">
 				<div className="md:flex hidden mr-12">
 					<UserMyPageList
 						myPageItems={myPageItems}
@@ -51,7 +51,7 @@ const UserMyPageContainer = () => {
 					<UserMyPageContent selectedItem={myPageItems[selectedItemIndex]} />
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 
