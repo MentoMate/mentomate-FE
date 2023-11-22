@@ -33,7 +33,7 @@ const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
 		if (response && response.status === 200) {
 			alertHandler("success", "파일 삭제가 완료되었습니다.");
 		}
-		window.location.reload();
+		scheduleReadHandler();
 	};
 
 	const downloadFile = (url: string, filename: string) => {
@@ -73,26 +73,30 @@ const MentoringFileList = ({ scheduleId }: { scheduleId: number }) => {
 	useEffect(() => {
 		scheduleReadHandler();
 	}, []);
-	console.log(fileList);
+
 	return (
 		<>
-			<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[15rem] lg:w-[40rem]">
-				<p className="mb-6">파일 리스트</p>
+			<div className="flex flex-col mt-2 mx-auto lg:h-[40rem] w-[25rem] lg:w-[40rem] bg-gray-100 rounded-md p-4">
+				<p className="mb-4 text-xl font-semibold text-center">파일 리스트</p>
 
 				{fileList.map((file) => (
 					<div
 						key={file.fileId}
-						className="flex w-[20rem] justify-between bg-main-color"
+						className="flex items-center justify-between py-2 px-4 bg-white shadow-md rounded-md mb-2"
 					>
-						<div>{file.fileName}</div>
-						<div className="flex">
+						<div className="flex-grow">{file.fileName}</div>
+						<div className="flex items-center space-x-4">
 							<a
 								onClick={() => downloadFile(file.uploadUrl, file.fileName)}
 								download={file.fileName}
+								className="cursor-pointer"
 							>
 								<Download className="cursor-pointer" width={30} />
 							</a>
-							<div onClick={() => onClickRegisterHandler(file.fileId)}>
+							<div
+								onClick={() => onClickRegisterHandler(file.fileId)}
+								className="cursor-pointer"
+							>
 								<Delete className="cursor-pointer" width={30} />
 							</div>
 						</div>

@@ -1,5 +1,6 @@
 import useAxios from "@/hooks/useAxios";
 import { ICommunityItem } from "@/interface/community";
+import { communityLike, communityLikeAndCommentCnt } from "@/state/followStats";
 import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as Comment } from "@assets/svg/comment.svg";
@@ -7,9 +8,8 @@ import { ReactComponent as EmptyHeart } from "@assets/svg/emptyHeart.svg";
 import { ReactComponent as FillHeart } from "@assets/svg/fillHeart.svg";
 import { ReactComponent as Share } from "@assets/svg/share.svg";
 import { RefObject } from "react";
-import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 
 interface IProps {
@@ -17,12 +17,15 @@ interface IProps {
 	readonly communityInfo: ICommunityItem;
 }
 
-const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
-	const queryClient = useQueryClient();
+const CommunitySideBar = ({ commentRef }: IProps) => {
 	const { communityId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
 	const isLogin = useRecoilValue(loginState);
 	const navigate = useNavigate();
+	const [isLike, setIsLike] = useRecoilState(communityLike);
+	const [likeAndCommentCnt, setLikeAndCommentCnt] = useRecoilState(
+		communityLikeAndCommentCnt,
+	);
 
 	const submitLikeHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -31,17 +34,41 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 		});
 
 		if (response) {
-			if (response.status === 200) {
-				queryClient.invalidateQueries("communityDetail");
-			}
+			if (response) {
+				const status = response.status;
 
-			if (response.status !== 200) {
-				alertHandler("error", "잠시 후에 다시 시도해주세요.");
+				if (status === 200) {
+					setIsLike(!isLike);
+
+					if (!isLike === true) {
+						setLikeAndCommentCnt({
+							...likeAndCommentCnt,
+							postLikeCnt: likeAndCommentCnt.postLikeCnt + 1,
+						});
+					} else {
+						setLikeAndCommentCnt({
+							...likeAndCommentCnt,
+							postLikeCnt: likeAndCommentCnt.postLikeCnt - 1,
+						});
+					}
+				}
+
+				if (status === 401 || status === 403) {
+					alertHandler(
+						"error",
+						"로그인 이후 가능합니다. 로그인을 하시겠습니까?",
+					);
+				}
+
+				if (status === 500) {
+					alertHandler(
+						"error",
+						"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+					);
+				}
 			}
 		}
 	};
-
-	const submitLike = useMutation(() => submitLikeHandler());
 
 	const onClickLikeHandler = async () => {
 		!isLogin
@@ -60,7 +87,7 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 						navigate("/login");
 					}
 			  })
-			: submitLike.mutate();
+			: submitLikeHandler();
 	};
 
 	const onClickMoveHandler = () => {
@@ -90,7 +117,7 @@ const CommunitySideBar = ({ commentRef, communityInfo }: IProps) => {
 				className="flex justify-center items-center my-2 lg:w-[5rem] md:w-[4rem] sm:w-[3rem] lg:h-[5rem] md:h-[4rem] sm:h-[3rem] bg-white hover:bg-black-200 border rounded-full"
 				onClick={onClickLikeHandler}
 			>
-				{communityInfo.like ? (
+				{isLike ? (
 					<FillHeart width={30} height={30} />
 				) : (
 					<EmptyHeart width={30} height={30} fill="#8A8A8A" />

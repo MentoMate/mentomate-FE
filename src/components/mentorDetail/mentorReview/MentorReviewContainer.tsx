@@ -13,7 +13,7 @@ const MentorReviewContainer = () => {
 	const getMentorReview = async () => {
 		const response = await fetchDataUseAxios("defaultAxios", {
 			method: "GET",
-			url: `/mentoring/mentor/review?mentorId=${mentorId}&page=1&pageSize=4&sortBy=latest`,
+			url: `/mentoring/mentor/review?mentorId=${mentorId}&page=1&pageSize=3&sortBy=latest`,
 		});
 
 		if (response) {

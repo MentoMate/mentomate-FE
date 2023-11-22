@@ -1,21 +1,26 @@
 import useAxios from "@/hooks/useAxios";
 import useInput from "@/hooks/useInput";
+import { communityLikeAndCommentCnt } from "@/state/followStats";
 import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
 import { ReactComponent as CommentIcon } from "@assets/svg/comment.svg";
 import { FormEvent, useRef } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 
 const CommentSubmit = () => {
-	const queryClient = useQueryClient();
 	const isLogin = useRecoilValue(loginState);
 	const { fetchDataUseAxios } = useAxios();
 	const [comment, setComment] = useInput("");
 	const { communityId } = useParams();
 	const inputCommentRef = useRef<HTMLInputElement>(null);
+	const [likeAndCommentCnt, setLikeAndCommentCnt] = useRecoilState(
+		communityLikeAndCommentCnt,
+	);
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	const submitHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -27,21 +32,41 @@ const CommentSubmit = () => {
 		});
 
 		if (response) {
-			if (response.status === 200) {
-				queryClient.invalidateQueries("communityComment");
+			const status = response.status;
+
+			if (status === 200) {
 				setComment("");
 				if (inputCommentRef.current) {
 					inputCommentRef.current.value = "";
 				}
+				queryClient.invalidateQueries("communityComment");
+
+				const commentsCnt = likeAndCommentCnt.commentCnt + 1;
+
+				setLikeAndCommentCnt({
+					...likeAndCommentCnt,
+					commentCnt: commentsCnt,
+				});
 			}
 
-			if (response.status !== 200) {
+			if (status === 400) {
 				alertHandler("error", "잠시 후에 다시 시도해주세요.");
+			}
+
+			if (status === 401 || status === 403) {
+				alertHandler("error", "재 로그인 후 사용해주세요.");
+				navigate("/login");
+			}
+
+			if (status === 500) {
+				alertHandler(
+					"error",
+					"서버에 오류가 발생하였습니다. 잠시 후에 이용해주세요.",
+				);
+				return;
 			}
 		}
 	};
-
-	const submitComment = useMutation(() => submitHandler());
 
 	const submitCommentHandler = async (e: FormEvent) => {
 		e.preventDefault();
@@ -56,7 +81,7 @@ const CommentSubmit = () => {
 			cancelButtonText: "취소",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				submitComment.mutate();
+				submitHandler();
 			}
 		});
 	};

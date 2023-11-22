@@ -1,19 +1,23 @@
 import useAxios from "@/hooks/useAxios";
-import { useRef } from "react";
+import { communityLike, communityLikeAndCommentCnt } from "@/state/followStats";
+import { alertHandler } from "@/utils/alert";
+import { useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import CommunityContent from "./CommunityContent";
 import CommunityLikeAndComment from "./CommunityLikeAndComment";
 import CommunitySideBar from "./CommunitySideBar";
 import CommunityWriterInfo from "./CommunityWriterInfo";
 import CommentContainer from "./comment/CommentContainer";
-import { alertHandler } from "@/utils/alert";
 
 const CommunityDetailContainer = () => {
 	const { communityId } = useParams();
 	const commentRef = useRef<HTMLDivElement>(null);
 	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
+	const setLike = useSetRecoilState(communityLike);
+	const setLikeAndCommentCnt = useSetRecoilState(communityLikeAndCommentCnt);
 
 	const getInfo = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -44,6 +48,19 @@ const CommunityDetailContainer = () => {
 	};
 
 	const { data } = useQuery(["communityDetail", communityId], getInfo);
+
+	useEffect(() => {
+		if (data) {
+			setLike(data.like);
+		}
+	}, [data]);
+
+	useEffect(() => {
+		setLikeAndCommentCnt({
+			postLikeCnt: data.postLikesCount,
+			commentCnt: data.commentCount,
+		});
+	}, []);
 
 	return (
 		<div className="flex lg:w-[60rem] md:w-[40rem] sm:w-[30rem] w-[15rem] mx-auto my-20">

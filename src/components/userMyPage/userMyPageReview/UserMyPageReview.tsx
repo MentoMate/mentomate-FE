@@ -4,6 +4,7 @@ import MypageMentoringList from "@/components/userMyPage/userMyPageReview/UserMy
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import MyPageNoneReviewMentoring from "@/components/userMyPage/userMyPageReview/UserMyPageNoneReviewMentoring";
+import Pagination from "@/components/common/pagination/Pagination";
 
 const UserMyPageReview = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -11,7 +12,6 @@ const UserMyPageReview = () => {
 	const [url, setUrl] = useState<string>(`/mentoring/end?page=0&size=3`);
 
 	const getMyReviewMentoringData = async () => {
-		console.log(url);
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			method: "GET",
 			url: url,
@@ -20,28 +20,24 @@ const UserMyPageReview = () => {
 			return response.data;
 		}
 	};
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["mypageMentoringList", url],
 		getMyReviewMentoringData,
 	);
-	console.log(data.totalPages);
 
-	useEffect(() => {
-		getMyReviewMentoringData();
-	}, [data]);
-	const {
-		pageArray,
-		currentPage,
-		onClickPageHandler,
-		onClickNextOrPrevBtnHandler,
-	} = usePagination(data.totalPages);
+	const { currentPage } = usePagination(data.totalPages);
+
+	const transformationUrl = () => {
+		setUrl(`/mentoring/end?page=${currentPage - 1}&size=3`);
+	};
 
 	useEffect(() => {
 		transformationUrl();
 	}, [currentPage]);
-	const transformationUrl = () => {
-		setUrl(`/mentoring/end?page=${currentPage - 1}&size=3`);
-	};
+
+	useEffect(() => {
+		refetch();
+	}, ["/mentoring/history", refetch]);
 
 	return (
 		<>
@@ -49,37 +45,7 @@ const UserMyPageReview = () => {
 				<>
 					<div>종료된 멘토링에 평점 & 후기를 남겨주세요</div>
 					<MypageMentoringList data={data.content} />
-					<div className="my-12 h-20 flex justify-center items-center">
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("prev")}
-							disabled={currentPage === 1 ? true : false}
-							className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
-						>
-							이전
-						</button>
-						{pageArray.map((page: number) => (
-							<div
-								key={page}
-								className={`mx-1 text-lg ${
-									currentPage === page
-										? "text-main-color font-semibold"
-										: "text-black"
-								} cursor-pointer`}
-								onClick={() => onClickPageHandler(page)}
-							>
-								{page}
-							</div>
-						))}
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("next")}
-							disabled={currentPage === data.totalPages ? true : false}
-							className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
-						>
-							다음
-						</button>
-					</div>
+					<Pagination totalPages={data.totalPages} />
 				</>
 			) : (
 				<MyPageNoneReviewMentoring />

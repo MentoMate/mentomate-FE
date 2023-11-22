@@ -31,9 +31,10 @@ const today = new Date();
 
 const MyCalendar = () => {
 	const { startDate, endDate, id } = useParams();
+
 	const [mentoringPeriod, setMentoringPeriod] = useState<IMentoringPeriod>({
-		startDate: "",
-		endDate: "",
+		startDate: `${startDate}`,
+		endDate: `${endDate}`,
 	});
 
 	const { isLoading, fetchDataUseAxios } = useAxios();
@@ -49,6 +50,8 @@ const MyCalendar = () => {
 		month: today.getMonth() + 1,
 	});
 
+	const [prevButtonState, setPrevButtonState] = useState(false);
+	const [nextButtonState, setNextButtonState] = useState(false);
 	// 시작 기간과 종료 기간을 각각 년도와 달로 분리
 	const startYear = parseInt(mentoringPeriod.startDate.split("-")[0]);
 	const startMonth = parseInt(mentoringPeriod.startDate.split("-")[1]);
@@ -57,7 +60,7 @@ const MyCalendar = () => {
 
 	// 시작 기간과 종료 기간의 년도와 달이 같은지 비교
 	const isValidRange = startYear === endYear && startMonth === endMonth;
-
+	// 2023-05-04- 2023-05-12
 	const validEnd = isValidRange
 		? mentoringPeriod.endDate
 		: `${
@@ -65,8 +68,8 @@ const MyCalendar = () => {
 		  }-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`;
 
 	const [validRange, setValidRange] = useState({
-		start: mentoringPeriod.startDate,
-		end: validEnd,
+		start: String(startDate),
+		end: String(validEnd),
 	});
 
 	const scheduleReadHandler = async () => {
@@ -79,6 +82,7 @@ const MyCalendar = () => {
 			if (response.status === 200) {
 				setEvent(response.data);
 			}
+		} else {
 		}
 	};
 
@@ -100,6 +104,14 @@ const MyCalendar = () => {
 		);
 	};
 
+	useEffect(() => {
+		if (startDate && endDate) {
+			setMentoringPeriod({
+				startDate: startDate,
+				endDate: endDate,
+			});
+		}
+	}, []);
 	const customDayCellContent = (
 		arg: CustomContentGenerator<DayCellContentArg>,
 	) => (
@@ -147,16 +159,9 @@ const MyCalendar = () => {
 
 	useEffect(() => {
 		scheduleReadHandler();
+		setPrevButtonState(mentoringPeriod.startDate === validRange.start);
+		setNextButtonState(mentoringPeriod.endDate === validRange.end);
 	}, [validRange]);
-
-	useEffect(() => {
-		if (startDate && endDate) {
-			setMentoringPeriod({
-				startDate: startDate,
-				endDate: endDate,
-			});
-		}
-	}, []);
 
 	return (
 		<>
@@ -165,15 +170,27 @@ const MyCalendar = () => {
 				<div className="flex justify-between mb-2">
 					<div className="flex">
 						<button
-							className="flex items-center mx-1 px-4 py-3 bg-main-color rounded-[0.3rem] text-sm font-semibold text-white hover:bg-purple-100 transition-all duration-200"
+							className={`flex items-center mx-1 px-4 py-3 rounded-[0.3rem] text-sm font-semibold
+  ${
+		prevButtonState
+			? "bg-gray-400 text-gray-700 cursor-not-allowed"
+			: "bg-main-color text-white hover:bg-main-color  hover:bg-purple-100 transition-all duration-200"
+	}`}
 							onClick={prevMonthHandler}
+							disabled={prevButtonState}
 						>
 							<Arrow width={15} height={15} className="rotate-180 mr-1.5" />
 							이전 달
 						</button>
 						<button
-							className="flex items-center mx-1 px-4 py-3 bg-main-color rounded-[0.3rem] text-sm font-semibold text-white hover:bg-purple-100 transition-all duration-200"
+							className={`flex items-center mx-1 px-4 py-3 rounded-[0.3rem] text-sm font-semibold
+  ${
+		nextButtonState
+			? "bg-gray-400 text-gray-700 cursor-not-allowed"
+			: "bg-main-color text-white hover:bg-main-color  hover:bg-purple-100 transition-all duration-200"
+	}`}
 							onClick={nextMonthHandler}
+							disabled={nextButtonState}
 						>
 							다음 달
 							<Arrow width={15} height={15} className="ml-1.5" />
@@ -214,6 +231,7 @@ const MyCalendar = () => {
 					formattedDate={selectedEventDate}
 					closeModal={() => setIsScheduleReadModalOpen(false)}
 					eventInfo={eventInfo}
+					scheduleReadHandler={scheduleReadHandler}
 				/>
 			)}
 			<div className="fixed my-1.5 bottom-20 lg:right-40 md:right-20 right-10 z-[98]">

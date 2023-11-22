@@ -14,7 +14,7 @@ const MentoringEndButton = () => {
 
 		if (response) {
 			if (response.status === 200) {
-				console.log(response);
+				alertHandler("success", "멘토링이 종료되었습니다");
 			} else {
 				alertHandler("error", response.data);
 			}

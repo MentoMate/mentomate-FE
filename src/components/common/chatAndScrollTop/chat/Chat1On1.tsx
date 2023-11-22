@@ -4,12 +4,15 @@ import useInput from "@/hooks/useInput";
 import { IClientProps } from "@/interface/chat";
 import { selectedPrivateChatId } from "@/state/chatState";
 import { getCookie } from "@/utils/cookies";
+import { ReactComponent as ExitChat } from "@assets/svg/leftArrow.svg";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
-const Chat1On1 = ({ client }: IClientProps) => {
+const Chat1On1 = ({ client, setSelectedChatMenu }: IClientProps) => {
 	const { fetchDataUseAxios } = useAxios();
-	const privateChatRoomId = useRecoilValue(selectedPrivateChatId);
+	const [privateChatRoomId, setPrivateChatRoomId] = useRecoilState(
+		selectedPrivateChatId,
+	);
 	const [message, setMessage] = useInput("");
 	const chatRef = useRef<HTMLDivElement>(null);
 	const messageInputRef = useRef<HTMLInputElement>(null);
@@ -32,7 +35,6 @@ const Chat1On1 = ({ client }: IClientProps) => {
 	const sendMessageHandler = async (e: FormEvent) => {
 		e.preventDefault();
 		const TOKEN = getCookie("accessToken");
-
 		if (client.current) {
 			client.current.send(
 				"/publish/chat/message/private",
@@ -50,6 +52,11 @@ const Chat1On1 = ({ client }: IClientProps) => {
 				setMessage("");
 			}
 		}
+	};
+
+	const exitChatBtnHandler = () => {
+		setPrivateChatRoomId(null);
+		setSelectedChatMenu("list");
 	};
 
 	useEffect(() => {
@@ -72,10 +79,18 @@ const Chat1On1 = ({ client }: IClientProps) => {
 
 	return (
 		<div className="grow">
-			<div className="mt-4 mx-auto w-[21rem] h-[18rem] bg-white rounded-3xl shadow-sm">
+			<button type="button" className="sticky top-0 ml-4">
+				<ExitChat
+					width={20}
+					height={20}
+					onClick={exitChatBtnHandler}
+					className="fill-black-400 hover:fill-main-color duration-200 transition"
+				/>
+			</button>
+			<div className="mt-1 mx-auto w-[21rem] h-[21rem] bg-white rounded-3xl shadow-sm">
 				<div
 					ref={chatRef}
-					className="px-4 py-4 w-[21rem] h-[14.5rem] overflow-auto"
+					className="px-4 py-4 w-[21rem] h-[17rem] overflow-auto"
 				>
 					{chats.map((chat) => (
 						<div

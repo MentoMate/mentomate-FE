@@ -22,4 +22,5 @@ export interface IChatListHandlerProps {
 
 export interface IClientProps {
 	readonly client: MutableRefObject<CompatClient | undefined>;
+	readonly setSelectedChatMenu: (type: string) => void;
 }

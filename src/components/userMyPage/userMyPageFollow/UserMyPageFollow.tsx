@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import UserMyPageNoneFollow from "./UserMyPageNoneFollow";
+import Pagination from "@/components/common/pagination/Pagination";
 
 const UserMyPageFollow = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -21,20 +22,15 @@ const UserMyPageFollow = () => {
 		}
 	};
 
-	const { data } = useQuery(
+	const { data, refetch } = useQuery(
 		["myPageMentorFollowList", url],
 		getMentorFollowData,
 	);
 
-	const {
-		pageArray,
-		currentPage,
-		onClickPageHandler,
-		onClickNextOrPrevBtnHandler,
-	} = usePagination(data.totalPages);
+	const { currentPage } = usePagination(data.totalPages);
 
 	const transformationUrl = () => {
-		setUrl(`/user/profile/follow?page=${currentPage}&pageSize=5`);
+		setUrl(`/user/profile/follow?page=${currentPage}&pageSize=6`);
 	};
 
 	useEffect(() => {
@@ -42,8 +38,8 @@ const UserMyPageFollow = () => {
 	}, [currentPage]);
 
 	useEffect(() => {
-		getMentorFollowData();
-	}, [data]);
+		refetch();
+	}, [url]);
 
 	return (
 		<>
@@ -59,37 +55,7 @@ const UserMyPageFollow = () => {
 							</Link>
 						))}
 					</div>
-					<div className="my-12 h-20 flex justify-center items-center">
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("prev")}
-							disabled={currentPage === 1 ? true : false}
-							className="mr-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white"
-						>
-							이전
-						</button>
-						{pageArray.map((page: number) => (
-							<div
-								key={page}
-								className={`mx-1 text-lg ${
-									currentPage === page
-										? "text-main-color font-semibold"
-										: "text-black"
-								} cursor-pointer`}
-								onClick={() => onClickPageHandler(page)}
-							>
-								{page}
-							</div>
-						))}
-						<button
-							type="button"
-							onClick={() => onClickNextOrPrevBtnHandler("next")}
-							disabled={currentPage === data.totalPages ? true : false}
-							className="ml-3 px-2 py-1.5 bg-black-500 hover:bg-black-400 disabled:bg-black-300 rounded-md text-white "
-						>
-							다음
-						</button>
-					</div>
+					<Pagination totalPages={data.totalPages} />
 				</>
 			) : (
 				<UserMyPageNoneFollow />

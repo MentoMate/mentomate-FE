@@ -16,8 +16,10 @@ export interface ICommentsInfo {
 
 export interface ICommentsProps {
 	readonly comments: ICommentsInfo;
+	readonly setCommentList: (commentList: ICommentsInfo) => void;
 }
 
-export interface ICommentProps {
+export interface ICommentProps extends ICommentsProps {
 	readonly comment: IComment;
+	readonly index: number;
 }

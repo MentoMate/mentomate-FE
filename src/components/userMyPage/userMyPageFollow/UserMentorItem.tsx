@@ -9,65 +9,45 @@ interface IProps {
 
 const UserMentorItem = ({ mentorItem }: IProps) => {
 	const [categoryName, setCategoryName] = useState<string>("");
-	const getCategoryName = (
-		mainCategory: string | null,
-		middleCategory: string | null,
-	) => {
-		if (!mainCategory || !middleCategory) {
-			return "없음";
-		} else {
-			const categoryData = categories[mainCategory];
 
-			if (categoryData) {
-				const category = categoryData.find(
-					(item) => item.key === middleCategory,
-				);
-				return category ? category.categoryName : "없음";
-			} else {
-				return "없음";
-			}
+	const getCategoryNameHandler = () => {
+		for (let key in categories) {
+			categories[key].find((category) => {
+				if (category.key === mentorItem.middleCategory) {
+					setCategoryName(category.categoryName);
+					return;
+				}
+			});
 		}
 	};
 
-	const init = () => {
-		const mainCategory = mentorItem.mainCategory;
-		const middleCategory = mentorItem.middleCategory;
-
-		const categoryName = getCategoryName(mainCategory, middleCategory);
-		setCategoryName(categoryName);
-	};
-
 	useEffect(() => {
-		init();
+		getCategoryNameHandler();
 	}, []);
 
 	return (
 		<>
-			<div className=" w-[14rem] bg-black-100 rounded-lg duration-100 hover:scale-105 mb-4">
+			<div className="mt-12 py-4 w-[14rem] bg-white border border-black-100 shadow-sm hover:shadow-lg border-b rounded-t-lg text-black-500 duration-100 hover:scale-105">
 				<img
 					src={mentorItem.uploadUrl}
-					alt="asd"
-					className="w-full h-[15rem] rounded-t-lg object-cover"
+					alt="멘토 이미지"
+					className="mx-auto w-[8rem] h-[8rem] rounded-full object-cover"
 				/>
-				<div className="flex justify-center items-center mt-2 text-sm font-bold">
+				<div className="flex justify-center items-center mt-6 mb-1 text-[0.8rem] font-semibold text-main-color">
 					{categoryName}
 				</div>
-				<div className="flex justify-center items-center mt-2">
-					<div className="flex justify-center items-center px-2 py-1 bg-white rounded-xl shadow-sm">
-						<Star width={20} height={20} className="mr-1" />
-						<div className="font-semibold text-sm">
-							{mentorItem.grade ? mentorItem.grade : 0}
+				<div className="flex justify-center items-center">
+					<div className="flex justify-center items-center px-2 py-1">
+						<Star width={13} height={13} className="mr-1" />
+						<div className="font-semibold text-[0.8rem]">
+							{mentorItem.grade === null ? "0.0" : mentorItem.grade}
 						</div>
 					</div>
-					<div className="ml-3 text-md font-semibold">
-						{mentorItem.name} 멘토
-					</div>
+					<p className="ml-3 text-md font-medium">
+						{mentorItem.name}
+						<span className="text-[0.8rem] text-black-400">멘토</span>
+					</p>
 				</div>
-				<p className="w-[13rem] h-[3rem] mx-3 mt-2 mb-4 font-semibold title-overflow">
-					{mentorItem.introduce
-						? mentorItem.introduce.replace(/<\/?[^>]+(>|$)/g, "")
-						: ""}
-				</p>
 			</div>
 		</>
 	);

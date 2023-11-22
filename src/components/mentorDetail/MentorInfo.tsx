@@ -3,7 +3,13 @@ import useAxios from "@/hooks/useAxios";
 import { IMentorItemProps } from "@/interface/mentorItem";
 import { alertHandler } from "@/utils/alert";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ReactComponent as Follow } from "@assets/svg/fillFollow.svg";
+import { ReactComponent as NotFollow } from "@assets/svg/emptyFollow.svg";
+import { loginState } from "@/state/loginState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import Swal from "sweetalert2";
+import { followState } from "@/state/followStats";
 
 interface ICareer {
 	readonly careerYear: number;
@@ -12,39 +18,68 @@ interface ICareer {
 
 const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 	const [categoryName, setCategoryName] = useState<string>("");
+	const [isFollow, setIsFollow] = useRecoilState(followState);
 	const [career, setCareer] = useState<ICareer>({
 		careerYear: 0,
 		careerMonth: 0,
 	});
-	const params = useParams();
+	const { mentorId } = useParams();
 	const { fetchDataUseAxios } = useAxios();
+	const isLogin = useRecoilValue(loginState);
+	const navigate = useNavigate();
 
-	const onClickFavoriteMentorHandler = async () => {
-		const response = await fetchDataUseAxios("useTokenAxios", {
-			method: "POST",
-			url: `/user/${params.mentorId}`,
-		});
-		if (response) {
-			const status = response.status;
+	const onClickFollowMentorHandler = async () => {
+		if (!isLogin) {
+			Swal.fire({
+				icon: "question",
+				text: "로그인 이후 이용 가능합니다. 로그인 하시겠습니까?",
+				showCancelButton: true,
+				confirmButtonText: "확인",
+				cancelButtonText: "취소",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					sessionStorage.setItem(
+						"previousLocation",
+						`/mentorDetail/${mentorId}`,
+					);
+					navigate("/login");
+				}
+			});
+		} else {
+			const response = await fetchDataUseAxios("useTokenAxios", {
+				method: "POST",
+				url: `/user/${mentorId}`,
+			});
 
-			if (status === 200) {
-				return response.data;
-			}
+			if (response) {
+				const status = response.status;
 
-			if (status === 401 || status === 403) {
-				alertHandler("error", "로그인 이후 팔로우 가능합니다.");
-			}
+				if (status === 200) {
+					setIsFollow(!isFollow);
+				}
 
-			if (status === 500) {
-				alertHandler(
-					"error",
-					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-				);
+				if (status === 400) {
+					alertHandler("error", "본인은 팔로우 할 수 없습니다.");
+					return;
+				}
+
+				if (status === 401 || status === 403) {
+					alertHandler("error", "로그인 이후 팔로우 가능합니다.");
+					return;
+				}
+
+				if (status === 500) {
+					alertHandler(
+						"error",
+						"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+					);
+					return;
+				}
 			}
 		}
 	};
 
-	const calculateCareer = () => {
+	const init = () => {
 		const careerYear = Math.floor(mentorItem.career / 12);
 		const careerMonth = mentorItem.career % 12;
 
@@ -52,9 +87,7 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 			careerYear,
 			careerMonth,
 		});
-	};
 
-	const getCategoryNameHandler = () => {
 		for (let key in categories) {
 			categories[key].find((category) => {
 				if (category.key === mentorItem.middleCategory) {
@@ -63,11 +96,12 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 				}
 			});
 		}
+
+		setIsFollow(mentorItem.mentorFollow);
 	};
 
 	useEffect(() => {
-		calculateCareer();
-		getCategoryNameHandler();
+		init();
 	}, []);
 
 	return (
@@ -98,9 +132,14 @@ const MentorInfo = ({ mentorItem }: IMentorItemProps) => {
 				</div>
 			</div>
 			<button
-				onClick={() => onClickFavoriteMentorHandler()}
-				className="mt-6 bg-main-color lg:px-20 md:px-14 px-20 py-3 text-white text-sm font-bold rounded-[0.3rem] hover:bg-purple-100 transition duration-200"
+				onClick={() => onClickFollowMentorHandler()}
+				className="flex items-center mt-6 bg-white lg:px-16 md:px-14 px-20 py-2 text-main-color text-sm font-bold border border-main-color rounded-[0.3rem] hover:bg-purple-100 transition duration-200"
 			>
+				{isFollow ? (
+					<Follow width={30} height={30} className="mr-2" />
+				) : (
+					<NotFollow width={30} height={30} className="mr-2" />
+				)}
 				팔로우
 			</button>
 		</div>
