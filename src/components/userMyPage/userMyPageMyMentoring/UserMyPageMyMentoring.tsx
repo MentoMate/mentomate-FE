@@ -30,23 +30,16 @@ const UserMyPageMyMentoring = () => {
 
 	const { currentPage } = usePagination(data.totalPages);
 
-	useEffect(() => {
-		getMyMentoringData();
-	}, []);
-
-	useEffect(() => {
-		transformationUrl();
-	}, [currentPage]);
 	const transformationUrl = () => {
 		setUrl(`/mentoring/${userId}/history?page=${currentPage}&pageSize=3`);
 	};
 	useEffect(() => {
-		refetch();
-	}, [url, refetch]);
+		transformationUrl();
+	}, [currentPage]);
 
 	useEffect(() => {
 		refetch();
-	}, []);
+	}, [url]);
 
 	return (
 		<div className="mb-12">

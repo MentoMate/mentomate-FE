@@ -38,15 +38,8 @@ const UserMyPageApplyMentoring = () => {
 	}, [currentPage]);
 
 	useEffect(() => {
-		getMyMentoringData();
+		refetch();
 	}, [url]);
-	useEffect(() => {
-		refetch();
-	}, [url, refetch]);
-
-	useEffect(() => {
-		refetch();
-	}, []);
 	return (
 		<div className="mb-12">
 			{data.content.length !== 0 ? (

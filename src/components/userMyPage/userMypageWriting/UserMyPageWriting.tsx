@@ -26,25 +26,23 @@ const UserMyPageWriting = () => {
 		getMyWritingData,
 	);
 
-	useEffect(() => {
-		getMyWritingData();
-	}, []);
 	const { currentPage } = usePagination(data.totalPages);
 
-	useEffect(() => {
-		transformationUrl();
-	}, [currentPage]);
 	const transformationUrl = () => {
 		setUrl(`/posts/myPage?page=${currentPage}&pageSize=4`);
 	};
 
 	useEffect(() => {
-		refetch();
-	}, ["/mentoring/history", refetch]);
+		getMyWritingData();
+	}, [data]);
+
+	useEffect(() => {
+		transformationUrl();
+	}, [currentPage]);
 
 	useEffect(() => {
 		refetch();
-	}, []);
+	}, ["/mentoring/history"]);
 
 	return (
 		<>

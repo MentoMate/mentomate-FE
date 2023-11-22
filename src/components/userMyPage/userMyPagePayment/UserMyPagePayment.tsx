@@ -24,24 +24,20 @@ const UserMyPagePayment = () => {
 
 	const { data, refetch } = useQuery(["myPayList", url], getMyPayData);
 
-	useEffect(() => {
-		getMyPayData();
-	}, []);
 	const { currentPage } = usePagination(data.totalPages);
 
 	useEffect(() => {
 		transformationUrl();
 	}, [currentPage]);
+
 	const transformationUrl = () => {
 		setUrl(`/pay/list?page=${currentPage - 1}&size=3`);
 	};
-	useEffect(() => {
-		refetch();
-	}, [url, refetch]);
 
 	useEffect(() => {
 		refetch();
-	}, []);
+	}, [url]);
+
 	return (
 		<>
 			{data.content.length !== 0 ? (

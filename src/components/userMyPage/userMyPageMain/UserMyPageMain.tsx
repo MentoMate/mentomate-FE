@@ -72,9 +72,6 @@ const UserMyPageMain = () => {
 		refetch();
 	}, ["/mentoring/history", refetch]);
 
-	useEffect(() => {
-		refetch();
-	}, []);
 	return (
 		<>
 			<div className="flex items-center mb-12">

@@ -27,13 +27,12 @@ const UserMyPageAlarm = () => {
 		}
 	};
 
-	const { data } = useQuery(["myNotificationList", url], getMyNotificationData);
+	const { data, refetch } = useQuery(
+		["myNotificationList", url],
+		getMyNotificationData,
+	);
 
 	const { currentPage } = usePagination(data.totalPages);
-
-	useEffect(() => {
-		getMyNotificationData();
-	}, []);
 
 	const transformationUrl = () => {
 		setUrl(`/notification?page=${currentPage - 1}&size=8`);
@@ -43,6 +42,9 @@ const UserMyPageAlarm = () => {
 		transformationUrl();
 	}, [currentPage]);
 
+	useEffect(() => {
+		refetch();
+	}, [url]);
 	return (
 		<>
 			{data.content.length !== 0 ? (

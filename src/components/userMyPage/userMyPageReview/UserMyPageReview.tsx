@@ -25,24 +25,20 @@ const UserMyPageReview = () => {
 		getMyReviewMentoringData,
 	);
 
-	useEffect(() => {
-		getMyReviewMentoringData();
-	}, [data]);
 	const { currentPage } = usePagination(data.totalPages);
+
+	const transformationUrl = () => {
+		setUrl(`/mentoring/end?page=${currentPage - 1}&size=3`);
+	};
 
 	useEffect(() => {
 		transformationUrl();
 	}, [currentPage]);
-	const transformationUrl = () => {
-		setUrl(`/mentoring/end?page=${currentPage - 1}&size=3`);
-	};
+
 	useEffect(() => {
 		refetch();
 	}, ["/mentoring/history", refetch]);
 
-	useEffect(() => {
-		refetch();
-	}, []);
 	return (
 		<>
 			{data.content.length !== 0 ? (

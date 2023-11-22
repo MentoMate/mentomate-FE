@@ -38,16 +38,9 @@ const UserMyPageFollow = () => {
 	}, [currentPage]);
 
 	useEffect(() => {
-		getMentorFollowData();
-	}, []);
+		refetch();
+	}, [url]);
 
-	useEffect(() => {
-		refetch(); // Manually refetch data when URL changes
-	}, [url, refetch]);
-
-	useEffect(() => {
-		refetch(); // Initial fetch
-	}, []);
 	return (
 		<>
 			{data.content.length !== 0 ? (

@@ -27,25 +27,17 @@ const UserMyPageFavoriteMentoring = () => {
 
 	const { currentPage } = usePagination(data.totalPages);
 
-	useEffect(() => {
-		transformationUrl();
-	}, [currentPage]);
-
 	const transformationUrl = () => {
 		setUrl(`/mentoring/follow?page=${currentPage}&pageSize=2`);
 	};
 
 	useEffect(() => {
-		getFavoriteMentoringData();
+		transformationUrl();
+	}, [currentPage]);
+
+	useEffect(() => {
+		refetch();
 	}, [url]);
-
-	useEffect(() => {
-		refetch();
-	}, [url, refetch]);
-
-	useEffect(() => {
-		refetch();
-	}, []);
 	return (
 		<div className="mb-12">
 			{data.content.length !== 0 ? (
