@@ -42,7 +42,7 @@ const GroupChatBtn = () => {
 	};
 
 	const connect = async () => {
-		const socket = new SockJS("http://43.202.208.73:8080/ws/chat");
+		const socket = new SockJS("https://mentormate.site/ws/chat");
 		const stompClient = Stomp.over(socket);
 		client.current = stompClient;
 		const TOKEN = getCookie("accessToken");
