@@ -8,11 +8,15 @@ import MentoringInfoWithApply from "./mentoringInfoWithApply/MentoringInfoWithAp
 import useAxios from "@/hooks/useAxios";
 import Swal from "sweetalert2";
 import { alertHandler } from "@/utils/alert";
+import { useQueryClient } from "react-query";
+import useUrl from "@/hooks/useUrl";
 
 const MentoringDetailContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
 	const navigate = useNavigate();
 	const { mentoringId } = useParams();
+	const { url } = useUrl("mentoring");
+	const queryClient = useQueryClient();
 
 	const { data } = useQuery(["mentoringInfo", mentoringId], async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -48,6 +52,7 @@ const MentoringDetailContainer = () => {
 		});
 
 		if (response && response.status === 200) {
+			queryClient.invalidateQueries(["mentoringList", url]);
 			alertHandler("success", "멘토링이 삭제 되었습니다.");
 			navigate("/mentoring");
 		}

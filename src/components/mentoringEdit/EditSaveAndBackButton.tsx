@@ -6,6 +6,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import Loading from "../common/spinner/Loading";
 import { selectedCategoryState } from "@/state/selectedCategory";
+import { useQueryClient } from "react-query";
 
 interface IProps {
 	readonly reactQuillRef: any;
@@ -17,6 +18,7 @@ const EditSaveAndBackButton = ({ reactQuillRef }: IProps) => {
 	const navigate = useNavigate();
 	const [form, setForm] = useRecoilState(mentoringEditForm);
 	const setCategory = useSetRecoilState(selectedCategoryState);
+	const queryClient = useQueryClient();
 
 	const submit = async () => {
 		const imageArr = new Array();
@@ -81,6 +83,7 @@ const EditSaveAndBackButton = ({ reactQuillRef }: IProps) => {
 				selectedCategory: "all",
 				selectedCategoryName: "카테고리 전체",
 			});
+			queryClient.invalidateQueries(["mentoringInfo", mentoringId]);
 			alertHandler("success", "멘토링 수정이 완료 되었습니다.");
 			navigate(`/mentoringDetail/${mentoringId}`);
 		}
