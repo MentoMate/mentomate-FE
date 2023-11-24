@@ -1,6 +1,6 @@
 import useAxios from "@/hooks/useAxios";
 import usePagination from "@/hooks/usePagination";
-import MypageMentoringList from "@/components/userMyPage/userMyPageReview/UserMyPageMentoringList";
+import UserMyPageMentoringList from "@/components/userMyPage/userMyPageReview/UserMyPageMentoringList";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import MyPageNoneReviewMentoring from "@/components/userMyPage/userMyPageReview/UserMyPageNoneReviewMentoring";
@@ -21,7 +21,7 @@ const UserMyPageReview = () => {
 		}
 	};
 	const { data, refetch } = useQuery(
-		["mypageMentoringList", url],
+		["myPageMentoringList", url],
 		getMyReviewMentoringData,
 	);
 
@@ -44,7 +44,7 @@ const UserMyPageReview = () => {
 			{data.content.length !== 0 ? (
 				<>
 					<div>종료된 멘토링에 평점 & 후기를 남겨주세요</div>
-					<MypageMentoringList data={data.content} />
+					<UserMyPageMentoringList data={data.content} />
 					<Pagination totalPages={data.totalPages} />
 				</>
 			) : (

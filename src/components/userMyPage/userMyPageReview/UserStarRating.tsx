@@ -107,11 +107,11 @@ const UserStarRating = ({ onClose, show, mentoringId }: StarRatingProps) => {
 					))}
 				</div>
 				<textarea
-					className="w-[10rem] h-[10rem] border border-black-200 rounded-[0.3rem] outline-none resize-none"
+					className="mt-6 mx-auto w-[15rem] h-[10rem] border border-black-200 rounded-[0.3rem] outline-none resize-none shadow-md"
 					onChange={onChangeReviewTextHandler}
 				/>
 				<button
-					className="mt-4 px-3 py-2 ml-20 bg-main-color rounded-md font-bold text-white text-sm"
+					className="mt-4 px-3 py-2 bg-main-color rounded-md font-bold text-white text-sm"
 					onClick={() => submitHandler()}
 				>
 					제출하기
