@@ -1,7 +1,7 @@
 import { LOGIN_SCHEMA } from "@/constants/schema";
 import useAxios from "@/hooks/useAxios";
 import { loginState } from "@/state/loginState";
-import { setCookie } from "@/utils/cookies";
+import { successLogin } from "@/utils/tokenAndInfo";
 import ErrorMsg from "@components/common/errorMsg/ErrorMsg";
 import Loading from "@components/common/spinner/Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -40,13 +40,7 @@ const LoginForm = () => {
 
 		if (response) {
 			if (response.status === 200) {
-				setCookie("accessToken", response.headers.authorization);
-				setCookie("refreshToken", response.headers["authorization-refresh"]);
-
-				localStorage.setItem("userId", response.data.userId);
-				localStorage.setItem("nickName", response.data.nickname);
-				localStorage.setItem("email", response.data.email);
-
+				successLogin(response);
 				setLoginState(true);
 
 				const previousLocation = sessionStorage.getItem("previousLocation");

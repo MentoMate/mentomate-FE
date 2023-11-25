@@ -1,5 +1,5 @@
-import { checkAuthToken } from "@/utils/checkAuthToken";
-import { getCookie } from "@/utils/cookies";
+import { getCookie, setCookie } from "@/utils/cookies";
+import { checkExpireToken } from "@/utils/tokenAndInfo";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { useState } from "react";
 
@@ -28,13 +28,33 @@ const useAxios = () => {
 				return response;
 			}
 			if (type === "useTokenAxios") {
-				checkAuthToken();
-				const response = await useTokenAxios.request(configParams);
-				return response;
+				const refreshToken = checkExpireToken();
+
+				if (refreshToken === "") {
+					const response = await useTokenAxios.request(configParams);
+					return response;
+				} else {
+					const response = await useTokenAxios.request({
+						...configParams,
+						headers: {
+							Authorization: `Bearer ${refreshToken}`,
+						},
+					});
+					if (
+						response.headers.authorization &&
+						response.headers["authorization-refresh"]
+					) {
+						setCookie("accessToken", response.headers.authorization);
+						setCookie(
+							"refreshToken",
+							response.headers["authorization-refresh"],
+						);
+					}
+					return response;
+				}
 			}
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				console.log(error);
 				const axiosError: AxiosError = error;
 				return axiosError.response;
 			}
