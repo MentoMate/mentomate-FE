@@ -23,7 +23,7 @@ const LocationWithCreate = () => {
 	};
 
 	return (
-		<div className="flex justify-between items-center mt-10 mb-4 mx-auto lg:w-[60rem] md:w-[30rem] w-[15rem] text-black-500">
+		<div className="flex justify-between items-center mt-10 mb-4 mx-auto lg:w-[60rem] md:w-[30rem] w-[17rem] text-black-500">
 			<div className="flex items-center font-bold">
 				<div className="mx-1">커뮤니티</div>
 				<Right width={12} height={12} className="mt-0.5 mx-1" />
