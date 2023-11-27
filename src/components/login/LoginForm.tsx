@@ -44,9 +44,7 @@ const LoginForm = () => {
 				setLoginState(true);
 
 				const previousLocation = sessionStorage.getItem("previousLocation");
-				if (previousLocation !== null) {
-					navigate(previousLocation);
-				}
+				previousLocation ? navigate(previousLocation) : navigate("/");
 			}
 
 			if (response.status === 400) {

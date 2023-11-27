@@ -1,7 +1,7 @@
-import { useFetch } from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import { loginState } from "@/state/loginState";
 import { alertHandler } from "@/utils/alert";
-import { setCookie } from "@/utils/cookies";
+import { successLogin } from "@/utils/tokenAndInfo";
 import Loading from "@components/common/spinner/Loading";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,30 +11,19 @@ const NaverCallback = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const setLoginState = useSetRecoilState(loginState);
-	const { fetchCall } = useFetch();
+	const { fetchDataUseAxios } = useAxios();
 
 	const getToken = async () => {
 		const code = new URLSearchParams(location.search).get("code");
 
-		const response = await fetchCall(
-			`/user/login/oauth/callback/naver?code=${code}`,
-			{
-				method: "GET",
-			},
-		);
+		const response = await fetchDataUseAxios("defaultAxios", {
+			url: `/user/login/oauth/callback/naver?code=${code}`,
+			method: "GET",
+		});
 
 		if (response && response.status === 200) {
-			if (!response.headers.get("isSignUp")) {
-				const data = await response.json();
-				localStorage.setItem("userId", data.userId);
-				localStorage.setItem("nickName", data.nickname);
-				localStorage.setItem("email", data.email);
-
-				setCookie("accessToken", response.headers.get("Authorization"));
-				setCookie(
-					"refreshToken",
-					response.headers.get("Authorization-refresh"),
-				);
+			if (!response.headers.isSignUp) {
+				successLogin(response);
 				setLoginState(true);
 
 				const previousLocation = sessionStorage.getItem("previousLocation");
@@ -42,12 +31,10 @@ const NaverCallback = () => {
 			} else {
 				navigate("/successSignUp");
 			}
-		}
-
-		if (response && response.status === 500) {
+		} else {
 			alertHandler(
-				"warning",
-				"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+				"error",
+				"서버에 오류가 발생하였습니다. 잠시 후에 시도해주세요.",
 			);
 		}
 	};
