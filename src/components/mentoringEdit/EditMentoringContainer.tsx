@@ -53,7 +53,7 @@ const EditMentoringContainer = () => {
 	};
 
 	const { data } = useQuery(
-		["mentoringInfo"],
+		["mentoringInfo", mentoringId],
 		async () => {
 			const response = await fetchDataUseAxios("useTokenAxios", {
 				method: "GET",

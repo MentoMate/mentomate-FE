@@ -54,7 +54,7 @@ const MentorRegister = () => {
 			<div className="flex justify-center items-center w-full md:h-[18rem] bg-black-500">
 				<div className="flex md:flex-row flex-col items-center md:my-0 my-8">
 					<img
-						src="src/assets/image/mentoringImage.jpg"
+						src="public/mentoringImage.jpg"
 						alt="mentoring"
 						className="w-[20rem] h-[16rem]"
 					/>

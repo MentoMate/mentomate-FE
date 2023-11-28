@@ -74,7 +74,7 @@ function Router() {
 		const ACCESS_TOKEN = getCookie("accessToken");
 
 		const eventSource = new EventSourcePolyfill(
-			`https://mentormate.site/subscribe`,
+			`${import.meta.env.VITE_SERVER_URI}/subscribe`,
 			{
 				headers: {
 					Authorization: `Bearer ${ACCESS_TOKEN}`,

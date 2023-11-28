@@ -1,15 +1,14 @@
-import { Suspense } from "react";
-import { useQuery } from "react-query";
+import useAxios from "@/hooks/useAxios";
+import useUrl from "@/hooks/useUrl";
+import { alertHandler } from "@/utils/alert";
+import { Suspense, useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import Spinner from "../common/spinner/Spinner";
 import RecommendMentoring from "./RecommendMentoring";
 import MentoringContent from "./mentoringInfoWithApply/MentoringContent";
 import MentoringInfoWithApply from "./mentoringInfoWithApply/MentoringInfoWithApply";
-import useAxios from "@/hooks/useAxios";
-import Swal from "sweetalert2";
-import { alertHandler } from "@/utils/alert";
-import { useQueryClient } from "react-query";
-import useUrl from "@/hooks/useUrl";
 
 const MentoringDetailContainer = () => {
 	const { fetchDataUseAxios } = useAxios();
@@ -18,7 +17,7 @@ const MentoringDetailContainer = () => {
 	const { url } = useUrl("mentoring");
 	const queryClient = useQueryClient();
 
-	const { data } = useQuery(["mentoringInfo", mentoringId], async () => {
+	const getMentoringDetailInfo = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
 			url: `/mentoring/${mentoringId}`,
 			method: "GET",
@@ -32,7 +31,6 @@ const MentoringDetailContainer = () => {
 
 			if (status === 400) {
 				alertHandler("error", "존재하지 않는 멘토링입니다.");
-				navigate("/mentoring");
 			}
 
 			if (status === 500) {
@@ -40,10 +38,16 @@ const MentoringDetailContainer = () => {
 					"error",
 					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
 				);
-				navigate("/mentoring");
 			}
+
+			return "";
 		}
-	});
+	};
+
+	const { data } = useQuery(
+		["mentoringInfo", mentoringId],
+		getMentoringDetailInfo,
+	);
 
 	const deleteHandler = async () => {
 		const response = await fetchDataUseAxios("useTokenAxios", {
@@ -71,6 +75,12 @@ const MentoringDetailContainer = () => {
 			}
 		});
 	};
+
+	useEffect(() => {
+		if (data === "") {
+			navigate("/mentoring");
+		}
+	}, [data]);
 
 	return (
 		<Suspense fallback={<Spinner />}>

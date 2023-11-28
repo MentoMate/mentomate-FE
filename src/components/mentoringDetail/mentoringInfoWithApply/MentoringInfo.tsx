@@ -175,7 +175,6 @@ const MentoringInfo = ({ data }: IMentoringDetailProps) => {
 			});
 
 			if (response) {
-				console.log(response);
 				const status = response.status;
 
 				if (status === 200) {

@@ -8,7 +8,9 @@ const ThirdSection = ({ data }: IMentorItemInProps) => {
 		<>
 			<div className="mx-auto lg:w-[60rem] sm:w-[30rem] w-[15rem] mb-20">
 				<div className="flex justify-between items-center">
-					<h1 className="mx-2 text-2xl font-bold">이런 멘토는 어때요 ?</h1>
+					<h1 className="mx-2 sm:text-2xl text-xl font-bold">
+						이런 멘토는 어때요 ?
+					</h1>
 					<Link to={"/mentor"}>
 						<div className="hidden lg:block mx-2 text-lg font-semibold text-main-color">
 							<div className="flex justify-center items-center ">
