@@ -12,7 +12,7 @@ const BannerSection = () => {
 				</div>
 				<img
 					className="w-[20rem] lg:w-[60rem] md:w-[40rem] h-[20rem] object-cover"
-					src="/src/assets/image/mentorMateBanner.jpg"
+					src="public/mentorMateBanner.jpg"
 					alt="card image"
 				/>
 			</div>
