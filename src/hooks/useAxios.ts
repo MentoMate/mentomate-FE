@@ -7,11 +7,11 @@ const useAxios = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const defaultAxios: AxiosInstance = axios.create({
-		baseURL: "https://mentormate.site",
+		baseURL: import.meta.env.VITE_SERVER_URI,
 	});
 
 	const useTokenAxios: AxiosInstance = axios.create({
-		baseURL: "https://mentormate.site",
+		baseURL: import.meta.env.VITE_SERVER_URI,
 		headers: {
 			Authorization: `Bearer ${getCookie("accessToken")}`,
 		},

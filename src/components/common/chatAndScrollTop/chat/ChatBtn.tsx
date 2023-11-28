@@ -59,7 +59,7 @@ const ChatBtn = () => {
 	};
 
 	const connect = () => {
-		const socket = new SockJS("https://mentormate.site/ws/chat");
+		const socket = new SockJS(`${import.meta.env.VITE_SERVER_URI}/ws/chat`);
 		const stompClient = Stomp.over(socket);
 		client.current = stompClient;
 

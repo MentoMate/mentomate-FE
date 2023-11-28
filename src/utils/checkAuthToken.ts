@@ -7,7 +7,7 @@ export const checkAuthToken = async () => {
 	const userEmail = localStorage.getItem("email");
 
 	const response = await axios.get(
-		`https://mentormate.site/user/jwt/check?email=${userEmail}`,
+		`${import.meta.env.VITE_SERVER_URI}/user/jwt/check?email=${userEmail}`,
 		{
 			headers: {
 				AccessTokenCheck: `Bearer ${accessToken}`,
