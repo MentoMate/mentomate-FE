@@ -6,6 +6,7 @@ import MentorInfo from "./MentorInfo";
 import MentorIntroduce from "./MentorIntroduce";
 import MentorReviewContainer from "./mentorReview/MentorReviewContainer";
 import PastMentoringContainer from "./pastMentoring/PastMentoringContainer";
+import { useEffect } from "react";
 
 const MentorDetailContainer = () => {
 	const { mentorId } = useParams();
@@ -27,7 +28,6 @@ const MentorDetailContainer = () => {
 
 			if (status === 400) {
 				alertHandler("error", "존재하지 않는 멘토입니다.");
-				navigate("/mentor");
 			}
 
 			if (status === 500) {
@@ -35,12 +35,19 @@ const MentorDetailContainer = () => {
 					"error",
 					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
 				);
-				navigate("/mentor");
 			}
+
+			return "";
 		}
 	};
 
 	const { data } = useQuery(["mentorInfo", mentorId], getMentorInfoHandler);
+
+	useEffect(() => {
+		if (data === "") {
+			navigate("/mentor");
+		}
+	}, [data]);
 
 	return (
 		<div className="relative flex md:flex-row flex-col mt-16 mx-auto lg:w-[60rem] md:w-[40rem] w-[20rem]">

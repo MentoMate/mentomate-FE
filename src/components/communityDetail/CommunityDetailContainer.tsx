@@ -34,7 +34,6 @@ const CommunityDetailContainer = () => {
 
 			if (status === 400) {
 				alertHandler("error", "존재하지 않는 게시글입니다.");
-				navigate("/community");
 			}
 
 			if (status === 500) {
@@ -42,15 +41,20 @@ const CommunityDetailContainer = () => {
 					"error",
 					"서버에 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
 				);
-				navigate("/community");
 			}
+
+			return "";
 		}
 	};
 
 	const { data } = useQuery(["communityDetail", communityId], getInfo);
 
 	useEffect(() => {
-		if (data) {
+		if (data === "") {
+			navigate("/community");
+		}
+
+		if (data && data !== "") {
 			setLike(data.like);
 		}
 	}, [data]);
