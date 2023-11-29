@@ -5,6 +5,7 @@ import { ReactComponent as RightArrow } from "@assets/svg/rightArrow.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import MentorImage from "@assets/image/mentoringImage.jpg";
 
 const MentorRegister = () => {
 	const isLogin = useRecoilValue(loginState);
@@ -54,7 +55,7 @@ const MentorRegister = () => {
 			<div className="flex justify-center items-center w-full md:h-[18rem] bg-black-500">
 				<div className="flex md:flex-row flex-col items-center md:my-0 my-8">
 					<img
-						src="public/mentoringImage.jpg"
+						src={MentorImage}
 						alt="mentoring"
 						className="w-[20rem] h-[16rem]"
 					/>
