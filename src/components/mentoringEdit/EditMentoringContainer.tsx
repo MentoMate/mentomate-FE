@@ -25,6 +25,22 @@ const EditMentoringContainer = () => {
 	const divRef = useRef<HTMLDivElement>(null);
 	const [isInit, setIsInit] = useState<boolean>(true);
 
+	const getMentoringDetailInfo = async () => {
+		const response = await fetchDataUseAxios("useTokenAxios", {
+			method: "GET",
+			url: `/mentoring/${mentoringId}`,
+		});
+
+		if (response && response.status === 200) {
+			return response.data;
+		}
+	};
+
+	const { data } = useQuery(
+		["mentoringInfo", mentoringId],
+		getMentoringDetailInfo,
+	);
+
 	const findCategoryByKey = (formCategory: string) => {
 		for (let categoryType in categories) {
 			const categoryList = categories[categoryType];
@@ -51,41 +67,6 @@ const EditMentoringContainer = () => {
 		const metadata = { type: `image/${ext}` };
 		return new File([data], filename!, metadata);
 	};
-
-	const { data } = useQuery(
-		["mentoringInfo", mentoringId],
-		async () => {
-			const response = await fetchDataUseAxios("useTokenAxios", {
-				method: "GET",
-				url: `/mentoring/${mentoringId}`,
-			});
-
-			if (response && response.status === 200) {
-				return response.data;
-			}
-		},
-		{
-			onSuccess: async (data) => {
-				const thumbNailImgFile = await convertURLtoFile(data.uploadUrl);
-				findCategoryByKey(data.category);
-
-				setForm({
-					mentoringId: data.mentoringId,
-					title: data.title,
-					content: data.content,
-					startDate: new Date(data.startDate),
-					endDate: new Date(data.endDate),
-					numberOfPeople: data.numberOfPeople,
-					amount: data.amount,
-					category: data.category,
-					thumbNailImgUrl: data.uploadUrl,
-					thumbNailImg: thumbNailImgFile,
-					uploadFolder: data.uploadFolder,
-				});
-				setIsInit(false);
-			},
-		},
-	);
 
 	const uploadImageHandler = async (file: File) => {
 		if (file.size >= 500000) {
@@ -178,6 +159,27 @@ const EditMentoringContainer = () => {
 		}
 	};
 
+	const initSetFormHandler = async () => {
+		console.log("asd");
+		const thumbNailImgFile = await convertURLtoFile(data.uploadUrl);
+		findCategoryByKey(data.category);
+
+		setForm({
+			mentoringId: data.mentoringId,
+			title: data.title,
+			content: data.content,
+			startDate: new Date(data.startDate),
+			endDate: new Date(data.endDate),
+			numberOfPeople: data.numberOfPeople,
+			amount: data.amount,
+			category: data.category,
+			thumbNailImgUrl: data.uploadUrl,
+			thumbNailImg: thumbNailImgFile,
+			uploadFolder: data.uploadFolder,
+		});
+		setIsInit(false);
+	};
+
 	useEffect(() => {
 		if (divRef.current) {
 			divRef.current.scrollIntoView({
@@ -187,6 +189,12 @@ const EditMentoringContainer = () => {
 			});
 		}
 	}, [form.content]);
+
+	useEffect(() => {
+		if (data) {
+			initSetFormHandler();
+		}
+	}, [data]);
 
 	return (
 		<Suspense fallback={<Loading />}>
