@@ -8,6 +8,8 @@ import "react-quill/dist/quill.snow.css";
 import FileUpload from "./FileUpload";
 import MentoringFileList from "./MentoringFileList";
 import ScheduleEdit from "./ScheduleEdit";
+import { useRecoilValue } from "recoil";
+import { mentorState } from "@/state/mentorState";
 
 const ScheduleReadModal = ({
 	formattedDate,
@@ -17,6 +19,8 @@ const ScheduleReadModal = ({
 }: IScheduleReadModalProps) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOtherScreenVisible, setOtherScreenVisible] = useState(false);
+	const mentorCheck = useRecoilValue(mentorState);
+
 	const scheduleRef = useRef<HTMLDivElement>(null);
 
 	const onClickEditHandler = () => {
@@ -60,21 +64,23 @@ const ScheduleReadModal = ({
 				<div ref={scheduleRef} className="z-10 bg-white p-8 rounded-lg mt-20 ">
 					<div className="flex justify-between items-center font-semibold mt-4 text-sm lg:text-lg mb-4 ">
 						날짜: {formattedDate}
-						<div className="flex justify-between items-center w-[5rem]">
-							<EditIcon
-								className="cursor-pointer"
-								onClick={onClickEditHandler}
-								width={20}
-								height={20}
-							/>
+						<div className="flex justify-evenly items-center w-[5rem]">
+							{mentorCheck ? (
+								<EditIcon
+									className="cursor-pointer"
+									onClick={onClickEditHandler}
+									width={20}
+									height={20}
+								/>
+							) : null}
 							<FileList
-								className="cursor-pointer"
+								className="cursor-pointer "
 								onClick={onClickFileListHandler}
 								width={20}
 								height={20}
 							/>
 							<Close
-								className="cursor-pointer"
+								className="cursor-pointer "
 								onClick={onClickCloseBtnHandler}
 								width={20}
 								height={20}

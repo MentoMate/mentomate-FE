@@ -27,8 +27,6 @@ interface IMentoringPeriod {
 	readonly endDate: string;
 }
 
-const today = new Date();
-
 const MyCalendar = () => {
 	const { startDate, endDate, id } = useParams();
 
@@ -37,6 +35,15 @@ const MyCalendar = () => {
 		endDate: `${endDate}`,
 	});
 
+	const startYear = parseInt(mentoringPeriod.startDate.split("-")[0]);
+	const startMonth = parseInt(mentoringPeriod.startDate.split("-")[1]);
+	const endYear = parseInt(mentoringPeriod.endDate.split("-")[0]);
+	const endMonth = parseInt(mentoringPeriod.endDate.split("-")[1]);
+
+	const [scheduleDate, setScheduleDate] = useState({
+		year: startYear,
+		month: startMonth,
+	});
 	const { isLoading, fetchDataUseAxios } = useAxios();
 	const [hoveredDate, setHoveredDate] = useState(""); //Hover된 일정 날짜
 	const [isScheduleAddModalOpen, setIsScheduleAddModalOpen] = useState(false); //선택된 일정에 대한 모달 상태
@@ -45,27 +52,18 @@ const MyCalendar = () => {
 	const [eventInfo, setEventInfo] = useState<EventImpl | null>(null); // 선택된 이벤트 제목
 	const [isScheduleReadModalOpen, setIsScheduleReadModalOpen] = useState(false); //선택된 이벤트에 대한 모달 상태
 	const [event, setEvent] = useState([]);
-	const [scheduleDate, setScheduleDate] = useState({
-		year: today.getFullYear(),
-		month: today.getMonth() + 1,
-	});
-
 	const [prevButtonState, setPrevButtonState] = useState(false);
 	const [nextButtonState, setNextButtonState] = useState(false);
 	// 시작 기간과 종료 기간을 각각 년도와 달로 분리
-	const startYear = parseInt(mentoringPeriod.startDate.split("-")[0]);
-	const startMonth = parseInt(mentoringPeriod.startDate.split("-")[1]);
-	const endYear = parseInt(mentoringPeriod.endDate.split("-")[0]);
-	const endMonth = parseInt(mentoringPeriod.endDate.split("-")[1]);
 
 	// 시작 기간과 종료 기간의 년도와 달이 같은지 비교
 	const isValidRange = startYear === endYear && startMonth === endMonth;
 	// 2023-05-04- 2023-05-12
 	const validEnd = isValidRange
 		? mentoringPeriod.endDate
-		: `${
-				scheduleDate.month === 12 ? scheduleDate.year + 1 : scheduleDate.year
-		  }-${String((scheduleDate.month % 12) + 1).padStart(2, "0")}-01`;
+		: `${endMonth === 12 ? endYear + 1 : endYear}-${String(
+				(endMonth % 12) + 1,
+		  ).padStart(2, "0")}-01`;
 
 	const [validRange, setValidRange] = useState({
 		start: String(startDate),
@@ -104,14 +102,6 @@ const MyCalendar = () => {
 		);
 	};
 
-	useEffect(() => {
-		if (startDate && endDate) {
-			setMentoringPeriod({
-				startDate: startDate,
-				endDate: endDate,
-			});
-		}
-	}, []);
 	const customDayCellContent = (
 		arg: CustomContentGenerator<DayCellContentArg>,
 	) => (
