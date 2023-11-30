@@ -1,4 +1,5 @@
 import { ReactComponent as Logo } from "@assets/svg/logoMainColor.svg";
+import BannerImage from "@assets/image/mentorMateBanner.jpg";
 
 const BannerSection = () => {
 	return (
@@ -12,7 +13,7 @@ const BannerSection = () => {
 				</div>
 				<img
 					className="w-[20rem] lg:w-[60rem] md:w-[40rem] h-[20rem] object-cover"
-					src="public/mentorMateBanner.jpg"
+					src={BannerImage}
 					alt="card image"
 				/>
 			</div>

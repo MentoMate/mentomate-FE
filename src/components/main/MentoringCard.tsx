@@ -72,7 +72,7 @@ const MentoringCard = ({ mentoringCard }: IProps) => {
 	}, []);
 
 	return (
-		<div className="pb-4 w-[14rem] bg-white shadow-sm hover:shadow-lg border-b rounded-t-lg text-black-500 duration-100 hover:scale-105">
+		<div className="my-4 pb-4 w-[14rem] bg-white shadow-sm hover:shadow-lg border-b rounded-t-lg text-black-500 duration-100 hover:scale-105">
 			<img
 				src={mentoringCard.uploadUrl}
 				alt="mentoringImage"
