@@ -18,8 +18,18 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"typeRoots": ["@types"],
+
+		"baseUrl": "./src",
+		"paths": {
+			"@/*": ["*"],
+			"@assets/*": ["assets/*"],
+			"@components/*": ["components/*"],
+			"@pages/*": ["pages/*"]
+		},
+		"forceConsistentCasingInFileNames": false
 	},
-	"include": ["src"],
+	"include": ["src", "svg.d.ts", "src/Router.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

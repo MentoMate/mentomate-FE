@@ -1,9 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import Router from "./Router.tsx";
+import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import { CookiesProvider } from "react-cookie";
+import "./input.css";
+import "react-quill/dist/quill.snow.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<App />
+		<CookiesProvider>
+			<BrowserRouter>
+				<RecoilRoot>
+					<Router />
+				</RecoilRoot>
+			</BrowserRouter>
+		</CookiesProvider>
 	</React.StrictMode>,
 );
