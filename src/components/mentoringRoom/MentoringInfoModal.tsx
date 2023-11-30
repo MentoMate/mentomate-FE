@@ -7,6 +7,8 @@ import useAxios from "@/hooks/useAxios";
 import { alertHandler } from "@/utils/alert";
 import { useQuery } from "react-query";
 import { categories } from "@/constants/categories";
+import { mentorState } from "@/state/mentorState";
+import { useRecoilState } from "recoil";
 
 const MentoringInfoModal = () => {
 	const { id } = useParams();
@@ -14,9 +16,10 @@ const MentoringInfoModal = () => {
 	const mentoringInfoModalRef = useRef<HTMLDivElement>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [categoryName, setCategoryName] = useState<string>("");
+	const [, setIsMentor] = useRecoilState(mentorState);
 
 	const getMentoringInfo = async () => {
-		const response = await fetchDataUseAxios("defaultAxios", {
+		const response = await fetchDataUseAxios("useTokenAxios", {
 			url: `/mentoring/${id}`,
 			method: "GET",
 		});
@@ -36,6 +39,7 @@ const MentoringInfoModal = () => {
 			}
 		}
 	};
+
 	const { data } = useQuery(
 		["mentoringList", `/mentoring/${id}`],
 		getMentoringInfo,
@@ -61,6 +65,7 @@ const MentoringInfoModal = () => {
 		setIsModalOpen(false);
 	};
 	useEffect(() => {
+		setIsMentor(data.owner);
 		getCategoryNameHandler();
 	}, []);
 
@@ -131,7 +136,7 @@ const MentoringInfoModal = () => {
 						<div className="font-semibold mt-4 text-sm lg:text-lg">소개</div>
 						<div
 							className={`text-sm lg:text-lg  w-[15rem] lg:w-[30rem] overflow-auto ${
-								data.content.length < 100 ? "h-[2rem] " : "h-[20rem] "
+								data.content.length < 200 ? "h-[8rem] " : "h-[10rem] "
 							}`}
 							dangerouslySetInnerHTML={{ __html: data.content }}
 						/>
